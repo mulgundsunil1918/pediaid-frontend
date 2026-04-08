@@ -16,9 +16,13 @@ import {
   Menu,
   X,
   ShieldCheck,
+  UserPlus,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
-import { usePlatformStats } from './hooks/useAdmin';
+import {
+  usePlatformStats,
+  useAdminPendingApplicants,
+} from './hooks/useAdmin';
 
 // ---------------------------------------------------------------------------
 // Badge pill
@@ -81,11 +85,13 @@ function NavItem({ to, icon, label, badge = 0, onClick }: NavItemProps) {
 
 function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const { data: stats } = usePlatformStats();
+  const { data: pendingApplicants } = useAdminPendingApplicants();
 
   const pendingCredentials = stats?.usersByRole
     ? (stats.usersByRole['pending_credentials'] ?? 0)
     : 0;
   const pendingChapters = stats?.chaptersByStatus?.['pending'] ?? 0;
+  const pendingApplicationsCount = pendingApplicants?.length ?? 0;
 
   return (
     <div className="flex flex-col h-full">
@@ -118,6 +124,13 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           to="/academics/admin/users"
           icon={<Users size={17} />}
           label="Users"
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/pending-applications"
+          icon={<UserPlus size={17} />}
+          label="Pending Applications"
+          badge={pendingApplicationsCount}
           onClick={onNavClick}
         />
         <NavItem

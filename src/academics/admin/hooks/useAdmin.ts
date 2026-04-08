@@ -74,7 +74,13 @@ export interface TaxonomyTree {
 export interface AdminUser {
   id: string;
   email: string;
-  role: 'reader' | 'author' | 'moderator' | 'admin';
+  role:
+    | 'reader'
+    | 'author'
+    | 'moderator'
+    | 'admin'
+    | 'pending_author'
+    | 'pending_moderator';
   isActive: boolean;
   isVerified: boolean;
   fullName: string;
@@ -85,6 +91,20 @@ export interface AdminUser {
   chaptersPublished: number;
   chaptersPending: number;
   memberSince: string;
+}
+
+export interface PendingApplicant {
+  id: string;
+  email: string;
+  role: 'pending_author' | 'pending_moderator';
+  fullName: string | null;
+  qualification: string | null;
+  specialty: string | null;
+  institution: string | null;
+  bio: string | null;
+  registrationReason: string | null;
+  /** ISO timestamp */
+  submittedAt: string;
 }
 
 export interface AdminUsersResponse {
@@ -443,6 +463,57 @@ export function useChangeUserRole() {
         body: JSON.stringify({ role }),
       }),
     onSuccess: () => { void qc.invalidateQueries({ queryKey: adminKeys.all }); },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Pending role applications — list + approve + reject
+// ---------------------------------------------------------------------------
+
+/** GET /admin/users/pending — everyone awaiting author/moderator approval */
+export function useAdminPendingApplicants() {
+  return useQuery<PendingApplicant[], Error>({
+    queryKey: ['admin', 'pending-applicants'],
+    queryFn: async () => {
+      const res = await apiFetch<{ data: PendingApplicant[] }>(
+        '/api/academics/admin/users/pending',
+      );
+      return res.data;
+    },
+    staleTime: 30_000,
+  });
+}
+
+/** PUT /admin/users/:id/approve-role — promote pending_* + send welcome email */
+export function useApprovePendingApplicant() {
+  const qc = useQueryClient();
+  return useMutation<
+    void,
+    Error,
+    { id: string; role: 'author' | 'moderator' }
+  >({
+    mutationFn: ({ id, role }) =>
+      apiFetch<void>(`/api/academics/admin/users/${id}/approve-role`, {
+        method: 'PUT',
+        body: JSON.stringify({ role }),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin'] });
+    },
+  });
+}
+
+/** PUT /admin/users/:id/reject-role — demote pending_* back to reader */
+export function useRejectPendingApplicant() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, string>({
+    mutationFn: (id) =>
+      apiFetch<void>(`/api/academics/admin/users/${id}/reject-role`, {
+        method: 'PUT',
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin'] });
+    },
   });
 }
 

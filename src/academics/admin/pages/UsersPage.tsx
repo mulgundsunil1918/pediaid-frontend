@@ -51,6 +51,12 @@ function roleBadgeClass(role: AdminUser['role']): string {
       return 'bg-yellow-100 text-yellow-700';
     case 'admin':
       return 'bg-red-100 text-red-700';
+    case 'pending_author':
+      return 'bg-blue-50 text-blue-600 border border-blue-200';
+    case 'pending_moderator':
+      return 'bg-amber-50 text-amber-700 border border-amber-200';
+    default:
+      return 'bg-gray-100 text-gray-700';
   }
 }
 

@@ -59,6 +59,7 @@ const CredentialsPage = lazy(() => import('./academics/admin/pages/CredentialsPa
 const ContentOversightPage = lazy(() => import('./academics/admin/pages/ContentOversightPage').then(m => ({ default: m.ContentOversightPage })));
 const CMEAdminPage = lazy(() => import('./academics/admin/pages/CMEAdminPage').then(m => ({ default: m.CMEAdminPage })));
 const RoleRequestsPage = lazy(() => import('./academics/admin/pages/RoleRequestsPage').then(m => ({ default: m.RoleRequestsPage })));
+const PendingApplicationsPage = lazy(() => import('./academics/admin/pages/PendingApplicationsPage').then(m => ({ default: m.PendingApplicationsPage })));
 
 // ---------------------------------------------------------------------------
 // React Query client
@@ -174,6 +175,7 @@ export default function App() {
             <Route path="/academics/admin" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AdminOverviewPage /></Suspense>} />
             <Route path="/academics/admin/taxonomy" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><TaxonomyPage /></Suspense>} />
             <Route path="/academics/admin/users" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><UsersPage /></Suspense>} />
+            <Route path="/academics/admin/pending-applications" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><PendingApplicationsPage /></Suspense>} />
             <Route path="/academics/admin/credentials" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CredentialsPage /></Suspense>} />
             <Route path="/academics/admin/content" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><ContentOversightPage /></Suspense>} />
             <Route path="/academics/admin/cme" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CMEAdminPage /></Suspense>} />
