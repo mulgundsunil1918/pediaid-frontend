@@ -8,18 +8,25 @@ import { ChevronLeft } from 'lucide-react';
 import { useMyChapters } from './hooks/useDashboard';
 import type { MyChapter } from './hooks/useDashboard';
 import { MyChaptersList } from './components/MyChaptersList';
-import { RejectionFeedbackModal } from './components/RejectionFeedbackModal';
+import { ReviewFeedbackModal } from './components/ReviewFeedbackModal';
 
 // ---------------------------------------------------------------------------
 // Tab definitions
 // ---------------------------------------------------------------------------
 
-type TabFilter = 'all' | 'draft' | 'pending' | 'approved' | 'rejected';
+type TabFilter =
+  | 'all'
+  | 'draft'
+  | 'pending'
+  | 'changes_requested'
+  | 'approved'
+  | 'rejected';
 
 const TABS: { value: TabFilter; label: string }[] = [
   { value: 'all', label: 'All' },
   { value: 'draft', label: 'Draft' },
   { value: 'pending', label: 'Pending' },
+  { value: 'changes_requested', label: 'Changes Requested' },
   { value: 'approved', label: 'Published' },
   { value: 'rejected', label: 'Rejected' },
 ];
@@ -76,13 +83,13 @@ export function MyChaptersPage() {
         <MyChaptersList
           chapters={chapters}
           isLoading={isLoading}
-          onViewRejectionFeedback={(chapter) => setFeedbackChapter(chapter)}
+          onViewFeedback={(chapter) => setFeedbackChapter(chapter)}
         />
       </div>
 
-      {/* Rejection feedback modal */}
+      {/* Reviewer feedback modal — handles both rejected and changes_requested */}
       {feedbackChapter && (
-        <RejectionFeedbackModal
+        <ReviewFeedbackModal
           chapter={feedbackChapter}
           onClose={() => setFeedbackChapter(null)}
           onEdit={() => setFeedbackChapter(null)}

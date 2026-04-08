@@ -218,7 +218,7 @@ function DashboardContent({
               <MyChaptersList
                 chapters={previewChapters}
                 isLoading={chaptersLoading}
-                onViewRejectionFeedback={(chapter) =>
+                onViewFeedback={(chapter) =>
                   setFeedbackChapter(chapter)
                 }
               />

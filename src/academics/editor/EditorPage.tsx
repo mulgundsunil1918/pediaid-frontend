@@ -6,6 +6,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams, Navigate, useNavigate } from 'react-router-dom';
+import { AlertCircle, XCircle, History, X } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useEditorStore, buildPayload } from './store/editorStore';
 import {
@@ -13,6 +14,7 @@ import {
   useCreateChapter,
   useSaveDraft,
 } from './hooks/useChapterEditor';
+import { ReviewHistoryModal } from '../dashboard/components/ReviewHistoryModal';
 
 // Layout components
 import { TopBar } from './components/TopBar';
@@ -173,8 +175,11 @@ export function EditorPage() {
     isNew ? null : (chapterId ?? null),
   );
   const [chapterStatus, setChapterStatus] = useState<
-    'draft' | 'pending' | 'approved' | 'rejected' | 'archived'
+    'draft' | 'pending' | 'approved' | 'rejected' | 'changes_requested' | 'archived'
   >('draft');
+  const [moderatorNotes, setModeratorNotes] = useState<string | null>(null);
+  const [feedbackBannerDismissed, setFeedbackBannerDismissed] = useState(false);
+  const [showReviewHistory, setShowReviewHistory] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [saveError, setSaveError] = useState('');
@@ -210,6 +215,8 @@ export function EditorPage() {
       }
       loadDraft(chapterData);
       setChapterStatus(chapterData.status);
+      setModeratorNotes(chapterData.moderatorNotes ?? null);
+      setFeedbackBannerDismissed(false);
     }
   }, [chapterData]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -340,6 +347,72 @@ export function EditorPage() {
       {/* Editor canvas                                                         */}
       {/* -------------------------------------------------------------------- */}
       <main className="max-w-reading mx-auto px-4 sm:px-6 py-8">
+        {/* ------------------------------------------------------------------ */}
+        {/* Reviewer feedback banner                                             */}
+        {/*                                                                      */}
+        {/* Shows the latest moderator notes when the author reopens a chapter  */}
+        {/* that was rejected or sent back with "Request Changes". The banner   */}
+        {/* is dismissible for the current session but re-appears on reload.    */}
+        {/* ------------------------------------------------------------------ */}
+        {!feedbackBannerDismissed &&
+          moderatorNotes &&
+          (chapterStatus === 'rejected' || chapterStatus === 'changes_requested') && (
+            <div
+              className={[
+                'mb-6 rounded-xl border-l-4 p-4 flex gap-3',
+                chapterStatus === 'rejected'
+                  ? 'border-danger bg-red-50'
+                  : 'border-orange-500 bg-orange-50',
+              ].join(' ')}
+              role="alert"
+            >
+              <div className="shrink-0 pt-0.5">
+                {chapterStatus === 'rejected' ? (
+                  <XCircle size={18} className="text-danger" aria-hidden="true" />
+                ) : (
+                  <AlertCircle size={18} className="text-orange-600" aria-hidden="true" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p
+                  className={[
+                    'text-sm font-semibold mb-1',
+                    chapterStatus === 'rejected' ? 'text-danger' : 'text-orange-700',
+                  ].join(' ')}
+                >
+                  {chapterStatus === 'rejected'
+                    ? 'Chapter rejected'
+                    : 'Changes requested by reviewer'}
+                </p>
+                <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">
+                  {moderatorNotes}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowReviewHistory(true)}
+                  className="
+                    mt-2 inline-flex items-center gap-1 text-xs font-medium
+                    text-ink-muted hover:text-ink transition-colors
+                  "
+                >
+                  <History size={12} />
+                  View full review history
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFeedbackBannerDismissed(true)}
+                className="
+                  shrink-0 p-1 rounded-md text-ink-muted hover:text-ink
+                  hover:bg-white/60 transition-colors
+                "
+                aria-label="Dismiss reviewer feedback"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          )}
+
         {/* Title input */}
         <input
           type="text"
@@ -440,7 +513,11 @@ export function EditorPage() {
               setShowSubmitModal(true);
             }
           }}
-          disabled={chapterStatus !== 'draft' && chapterStatus !== 'rejected'}
+          disabled={
+            chapterStatus !== 'draft' &&
+            chapterStatus !== 'rejected' &&
+            chapterStatus !== 'changes_requested'
+          }
           className="px-6 py-2.5 text-sm font-bold text-white rounded-xl
                      transition-colors disabled:opacity-40 disabled:cursor-not-allowed
                      whitespace-nowrap"
@@ -461,6 +538,14 @@ export function EditorPage() {
       )}
 
       {showPreview && <PreviewPane onClose={() => setShowPreview(false)} />}
+
+      {showReviewHistory && savedChapterId && (
+        <ReviewHistoryModal
+          chapterId={savedChapterId}
+          chapterTitle={draft.title || undefined}
+          onClose={() => setShowReviewHistory(false)}
+        />
+      )}
     </div>
   );
 }

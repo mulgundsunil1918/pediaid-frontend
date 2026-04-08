@@ -4,7 +4,30 @@
 // =============================================================================
 
 export type AcadUserRole = 'reader' | 'author' | 'moderator' | 'admin';
-export type ChapterStatus = 'draft' | 'pending' | 'approved' | 'rejected' | 'archived';
+export type ChapterStatus =
+  | 'draft'
+  | 'pending'
+  | 'approved'
+  | 'rejected'
+  | 'changes_requested'
+  | 'archived';
+
+// ---------------------------------------------------------------------------
+// Review history (moderation log timeline)
+// ---------------------------------------------------------------------------
+
+export type ReviewAction = 'approved' | 'rejected' | 'request_changes' | 'archived';
+
+export interface ChapterReviewLogEntry {
+  id: string;
+  action: ReviewAction;
+  notes: string | null;
+  /** ISO timestamp */
+  performedAt: string;
+  moderatorId: string;
+  moderatorName: string;
+  moderatorRole: AcadUserRole | null;
+}
 
 // ---------------------------------------------------------------------------
 // Taxonomy

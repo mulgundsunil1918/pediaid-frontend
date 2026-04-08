@@ -29,6 +29,13 @@ const CONFIG: Record<
     label: 'Rejected',
     className: 'bg-red-50 text-danger',
   },
+  // Distinct from rejected — the moderator has asked for revisions and the
+  // author can re-submit after fixing. Amber/orange to sit visually between
+  // yellow "pending" and red "rejected".
+  changes_requested: {
+    label: 'Changes Requested',
+    className: 'bg-orange-50 text-orange-600',
+  },
   archived: {
     label: 'Archived',
     className: 'bg-gray-100 text-gray-500 italic',
@@ -36,7 +43,12 @@ const CONFIG: Record<
 };
 
 export function StatusBadge({ status, className = '' }: StatusBadgeProps) {
-  const config = CONFIG[status];
+  // Defensive default for any unknown status string that might arrive from
+  // an older backend build — render a neutral badge rather than crashing.
+  const config = CONFIG[status] ?? {
+    label: String(status),
+    className: 'bg-gray-100 text-gray-600',
+  };
   return (
     <span
       className={[

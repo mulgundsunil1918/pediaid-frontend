@@ -2,10 +2,19 @@
 // academics/dashboard/components/MyChaptersList.tsx — Author's chapter list
 // =============================================================================
 
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, Pencil, MessageSquare, Clock, BookOpen } from 'lucide-react';
+import {
+  Eye,
+  Pencil,
+  MessageSquare,
+  Clock,
+  BookOpen,
+  History,
+} from 'lucide-react';
 import { StatusBadge } from '../../browse/components/StatusBadge';
 import type { MyChapter } from '../hooks/useDashboard';
+import { ReviewHistoryModal } from './ReviewHistoryModal';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -42,12 +51,23 @@ function SkeletonRow() {
 
 interface ChapterCardProps {
   chapter: MyChapter;
-  onViewRejectionFeedback: (chapter: MyChapter) => void;
+  onViewFeedback: (chapter: MyChapter) => void;
 }
 
-function ChapterCard({ chapter, onViewRejectionFeedback }: ChapterCardProps) {
+function ChapterCard({ chapter, onViewFeedback }: ChapterCardProps) {
   const isApproved = chapter.status === 'approved';
-  const isEditable = chapter.status === 'draft' || chapter.status === 'rejected';
+  // Author can open the editor on any re-workable state
+  const isEditable =
+    chapter.status === 'draft' ||
+    chapter.status === 'rejected' ||
+    chapter.status === 'changes_requested';
+  // Moderator left notes — show the Feedback button
+  const hasReviewerFeedback =
+    chapter.status === 'rejected' || chapter.status === 'changes_requested';
+  // Any chapter that has been submitted at least once has a timeline worth viewing
+  const hasReviewHistory = chapter.status !== 'draft';
+
+  const [showHistory, setShowHistory] = useState(false);
 
   const titleHref = isApproved
     ? `/academics/c/${chapter.slug}`
@@ -105,8 +125,8 @@ function ChapterCard({ chapter, onViewRejectionFeedback }: ChapterCardProps) {
       </div>
 
       {/* Action buttons */}
-      {(isEditable || chapter.status === 'rejected') && (
-        <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
+      {(isEditable || hasReviewerFeedback || hasReviewHistory) && (
+        <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-border">
           {isEditable && (
             <Link
               to={`/academics/editor/${chapter.id}`}
@@ -122,22 +142,47 @@ function ChapterCard({ chapter, onViewRejectionFeedback }: ChapterCardProps) {
               Edit
             </Link>
           )}
-          {chapter.status === 'rejected' && (
+
+          {hasReviewerFeedback && (
             <button
-              onClick={() => onViewRejectionFeedback(chapter)}
-              className="
-                flex items-center gap-1.5
-                px-3 py-1.5 rounded-xl
-                border border-red-200 text-xs font-medium text-danger
-                hover:bg-red-50
-                transition-all duration-150
-              "
+              onClick={() => onViewFeedback(chapter)}
+              className={[
+                'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium',
+                'transition-all duration-150',
+                chapter.status === 'rejected'
+                  ? 'border border-red-200 text-danger hover:bg-red-50'
+                  : 'border border-orange-200 text-orange-600 hover:bg-orange-50',
+              ].join(' ')}
             >
               <MessageSquare size={13} aria-hidden="true" />
               View Feedback
             </button>
           )}
+
+          {hasReviewHistory && (
+            <button
+              onClick={() => setShowHistory(true)}
+              className="
+                flex items-center gap-1.5
+                px-3 py-1.5 rounded-xl
+                border border-border text-xs font-medium text-ink-muted
+                hover:text-ink hover:border-accent/40 hover:bg-gray-50
+                transition-all duration-150
+              "
+            >
+              <History size={13} aria-hidden="true" />
+              Review History
+            </button>
+          )}
         </div>
+      )}
+
+      {showHistory && (
+        <ReviewHistoryModal
+          chapterId={chapter.id}
+          chapterTitle={chapter.title}
+          onClose={() => setShowHistory(false)}
+        />
       )}
     </div>
   );
@@ -150,13 +195,13 @@ function ChapterCard({ chapter, onViewRejectionFeedback }: ChapterCardProps) {
 interface MyChaptersListProps {
   chapters: MyChapter[];
   isLoading: boolean;
-  onViewRejectionFeedback: (chapter: MyChapter) => void;
+  onViewFeedback: (chapter: MyChapter) => void;
 }
 
 export function MyChaptersList({
   chapters,
   isLoading,
-  onViewRejectionFeedback,
+  onViewFeedback,
 }: MyChaptersListProps) {
   if (isLoading) {
     return (
@@ -192,7 +237,7 @@ export function MyChaptersList({
         <ChapterCard
           key={chapter.id}
           chapter={chapter}
-          onViewRejectionFeedback={onViewRejectionFeedback}
+          onViewFeedback={onViewFeedback}
         />
       ))}
     </div>

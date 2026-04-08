@@ -3,11 +3,21 @@
 // =============================================================================
 
 import { useState, useRef, useEffect } from 'react';
-import { CheckCircle2, RotateCcw, XCircle, AlertTriangle } from 'lucide-react';
+import {
+  CheckCircle2,
+  RotateCcw,
+  XCircle,
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp,
+  History,
+} from 'lucide-react';
 import { ReviewChecklist } from './ReviewChecklist';
 import { useApproveChapter, useRejectChapter, useRequestChanges } from '../hooks/useModeration';
 import { useNavigate } from 'react-router-dom';
 import type { ReaderChapter } from '../../reader/hooks/useChapterReader';
+import { useChapterReviews } from '../../editor/hooks/useChapterEditor';
+import type { ChapterReviewLogEntry, ReviewAction } from '../../types';
 
 interface ReviewActionPanelProps {
   chapter: ReaderChapter;
@@ -101,6 +111,103 @@ function RejectModal({
 }
 
 // ---------------------------------------------------------------------------
+// Previous review rounds (collapsible, shown only if non-empty)
+// ---------------------------------------------------------------------------
+//
+// When a chapter is re-submitted after a rejection or request_changes, the
+// moderator needs context from the previous round(s): what was asked for and
+// by whom. This panel pulls GET /chapters/:id/reviews and displays a compact
+// timeline above the action area.
+
+const ACTION_LABEL: Record<ReviewAction, string> = {
+  approved: 'Approved',
+  rejected: 'Rejected',
+  request_changes: 'Changes requested',
+  archived: 'Archived',
+};
+
+const ACTION_COLOR: Record<ReviewAction, string> = {
+  approved: 'text-success',
+  rejected: 'text-danger',
+  request_changes: 'text-orange-600',
+  archived: 'text-gray-500',
+};
+
+function formatShort(iso: string): string {
+  return new Date(iso).toLocaleString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+}
+
+function PreviousRoundsPanel({ chapterId }: { chapterId: string }) {
+  const { data: entries = [], isLoading } = useChapterReviews(chapterId);
+  const [expanded, setExpanded] = useState(true);
+
+  if (isLoading) return null;
+  if (entries.length === 0) return null;
+
+  return (
+    <div className="rounded-xl border border-border bg-white overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        className="
+          w-full flex items-center justify-between gap-2
+          px-4 py-3 text-left
+          hover:bg-gray-50 transition-colors
+        "
+      >
+        <span className="flex items-center gap-2 text-sm font-semibold text-ink">
+          <History size={14} className="text-ink-muted" />
+          Previous review rounds
+          <span className="text-xs font-medium text-ink-muted">
+            ({entries.length})
+          </span>
+        </span>
+        {expanded ? (
+          <ChevronUp size={16} className="text-ink-muted" />
+        ) : (
+          <ChevronDown size={16} className="text-ink-muted" />
+        )}
+      </button>
+
+      {expanded && (
+        <ol className="list-none m-0 p-0 border-t border-border">
+          {entries.map((entry: ChapterReviewLogEntry) => (
+            <li
+              key={entry.id}
+              className="px-4 py-3 border-b last:border-b-0 border-border"
+            >
+              <div className="flex flex-wrap items-baseline gap-x-2">
+                <span
+                  className={`text-xs font-semibold ${ACTION_COLOR[entry.action]}`}
+                >
+                  {ACTION_LABEL[entry.action]}
+                </span>
+                <span className="text-xs text-ink-muted">
+                  by <span className="text-ink">{entry.moderatorName}</span>
+                </span>
+                <span className="text-xs text-ink-muted ml-auto">
+                  {formatShort(entry.performedAt)}
+                </span>
+              </div>
+              {entry.notes && entry.notes.trim() !== '' && (
+                <p className="mt-1 text-xs text-ink leading-relaxed whitespace-pre-wrap">
+                  {entry.notes}
+                </p>
+              )}
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // ReviewActionPanel
 // ---------------------------------------------------------------------------
 
@@ -171,6 +278,9 @@ export function ReviewActionPanel({ chapter, queueLength, nextChapterId }: Revie
 
   return (
     <div className="space-y-5">
+      {/* Previous rounds (only if this chapter has prior moderation entries) */}
+      <PreviousRoundsPanel chapterId={chapter.id} />
+
       {/* Meta */}
       <div className="bg-gray-50 rounded-xl p-4 text-sm space-y-1.5">
         <p><span className="text-ink-muted">Author:</span>{' '}

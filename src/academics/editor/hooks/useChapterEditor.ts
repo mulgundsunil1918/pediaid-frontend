@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '../../../store/authStore';
 import { AcademicsApiError } from '../../api/academics.api';
 import type { ChapterDetail, ChapterPayload } from '../types/editor.types';
+import type { ChapterReviewLogEntry } from '../../types';
 
 const BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
 
@@ -62,6 +63,32 @@ export function useChapterDraft(chapterId: string | undefined) {
       apiFetch<ChapterDetail>(`/api/academics/chapters/id/${chapterId}`),
     enabled: Boolean(chapterId),
     staleTime: Infinity, // Editor owns this copy; no background refetch
+    retry: false,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// useChapterReviews — load the moderation timeline for a chapter
+// ---------------------------------------------------------------------------
+//
+// Used by:
+//   • EditorPage feedback banner + "View full review history" link
+//   • MyChaptersPage ReviewHistoryModal on the author dashboard
+//   • ReviewPage "Previous review rounds" panel for re-review context
+//
+// Backend returns `{ data: ChapterReviewLogEntry[] }`. This hook unwraps it.
+
+export function useChapterReviews(chapterId: string | undefined) {
+  return useQuery<ChapterReviewLogEntry[], AcademicsApiError>({
+    queryKey: ['editor', 'chapter-reviews', chapterId],
+    queryFn: async () => {
+      const res = await apiFetch<{ data: ChapterReviewLogEntry[] }>(
+        `/api/academics/chapters/${chapterId}/reviews`,
+      );
+      return res.data;
+    },
+    enabled: Boolean(chapterId),
+    staleTime: 30 * 1_000,
     retry: false,
   });
 }

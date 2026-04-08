@@ -30,7 +30,7 @@ export interface MyChapter {
   id: string;
   title: string;
   slug: string;
-  status: 'draft' | 'pending' | 'approved' | 'rejected' | 'archived';
+  status: 'draft' | 'pending' | 'approved' | 'rejected' | 'changes_requested' | 'archived';
   topicName: string;
   systemName: string;
   subjectCode: string;

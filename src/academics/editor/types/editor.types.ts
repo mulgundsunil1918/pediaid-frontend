@@ -121,7 +121,7 @@ export interface ChapterDetail {
   id: string;
   title: string;
   topicId: string;
-  status: 'draft' | 'pending' | 'approved' | 'rejected' | 'archived';
+  status: 'draft' | 'pending' | 'approved' | 'rejected' | 'changes_requested' | 'archived';
   authorId: string;
   content: { blocks: ApiBlock[] };
   chapterReferences: ChapterReference[];
@@ -129,4 +129,6 @@ export interface ChapterDetail {
   subject: { id: string; name: string; code: string };
   system: { id: string; name: string };
   topic: { id: string; name: string };
+  /** Populated after the moderator rejects or requests changes */
+  moderatorNotes?: string | null;
 }
