@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback, type ReactNode, type MouseEvent } fro
 import { Link } from 'react-router-dom';
 import { X, Loader2, CheckCircle2, AlertCircle, BookOpen, ShieldCheck, Settings2 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { API_BASE } from '../../lib/apiBase';
 import type { AcadUserRole } from '../types';
 
 // ---------------------------------------------------------------------------
@@ -198,7 +199,7 @@ export function RoleRequestModal({ open, onClose }: RoleRequestModalProps) {
 
     try {
       const token = useAuthStore.getState().accessToken;
-      const res = await fetch('/api/academics/dashboard/request-role', {
+      const res = await fetch(`${API_BASE}/api/academics/dashboard/request-role`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

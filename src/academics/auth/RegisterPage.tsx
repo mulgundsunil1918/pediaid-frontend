@@ -5,6 +5,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
+import { API_BASE } from '../../lib/apiBase';
 import type { AuthResponse } from '../types';
 
 // ---------------------------------------------------------------------------
@@ -38,7 +39,7 @@ export function RegisterPage() {
     if (institution.trim()) body.institution = institution.trim();
 
     try {
-      const res = await fetch('/api/academics/auth/register', {
+      const res = await fetch(`${API_BASE}/api/academics/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

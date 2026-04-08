@@ -9,6 +9,7 @@ import { useSubjects } from './hooks/useBrowse';
 import { SkeletonGrid } from './SkeletonCard';
 import type { Subject } from '../types';
 import { useAuthStore } from '../../store/authStore';
+import { API_BASE } from '../../lib/apiBase';
 import { RoleRequestModal } from '../auth/RoleRequestModal';
 
 // ---------------------------------------------------------------------------
@@ -119,7 +120,7 @@ function useHasPendingRoleRequest(authenticated: boolean): {
 
     const token = useAuthStore.getState().accessToken;
 
-    fetch('/api/academics/dashboard/my-role-requests', {
+    fetch(`${API_BASE}/api/academics/dashboard/my-role-requests`, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
       .then((res) => (res.ok ? res.json() : Promise.resolve([])))
