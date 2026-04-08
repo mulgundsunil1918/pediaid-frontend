@@ -2,7 +2,8 @@
 // editor/components/SubmitModal.tsx
 // =============================================================================
 
-import { CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { CheckCircle2, XCircle, AlertTriangle, Send } from 'lucide-react';
 import { useEditorStore } from '../store/editorStore';
 import { useSubmitChapter } from '../hooks/useChapterEditor';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +22,11 @@ export function SubmitModal({ chapterId, onClose }: SubmitModalProps) {
   const { draft } = useEditorStore();
   const submitMutation = useSubmitChapter();
   const navigate = useNavigate();
+
+  // Once the mutation succeeds, the modal switches to a success state that
+  // thanks the author and offers a button back to the dashboard. The
+  // previous behaviour navigated away immediately — authors had no feedback.
+  const [submitted, setSubmitted] = useState(false);
 
   // ---------------------------------------------------------------------------
   // Pre-submission checklist
@@ -64,12 +70,14 @@ export function SubmitModal({ chapterId, onClose }: SubmitModalProps) {
   async function handleConfirm() {
     try {
       await submitMutation.mutateAsync(chapterId);
-      navigate('/academics/me/dashboard', {
-        state: { toast: 'Chapter submitted for review!' },
-      });
+      setSubmitted(true);
     } catch {
       // Error shown inline
     }
+  }
+
+  function handleGoToDashboard() {
+    navigate('/academics/dashboard');
   }
 
   return (
@@ -79,6 +87,59 @@ export function SubmitModal({ chapterId, onClose }: SubmitModalProps) {
       aria-modal="true"
       aria-labelledby="submit-modal-title"
     >
+      {submitted ? (
+        // ------------------------------------------------------------------
+        // Success state — shown after the submit mutation resolves.
+        // The checklist modal is replaced, not dismissed, so the author
+        // sees an unambiguous confirmation and a clear path forward.
+        // ------------------------------------------------------------------
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+          {/* Header */}
+          <div className="bg-green-50 border-b border-green-100 px-6 py-5 flex items-center gap-3">
+            <CheckCircle2 size={24} className="text-success shrink-0" aria-hidden="true" />
+            <h2
+              id="submit-modal-title"
+              className="font-bold text-lg text-success font-sans"
+            >
+              Thank you for submitting!
+            </h2>
+          </div>
+
+          {/* Body */}
+          <div className="px-6 py-6 space-y-3">
+            <p className="text-sm text-ink leading-relaxed">
+              Your chapter is under review.
+            </p>
+            <p className="text-sm text-ink-muted leading-relaxed">
+              We'll notify you once a moderator approves it. You can track its
+              progress on your dashboard — the chapter will move to the
+              <strong className="text-ink"> Pending </strong>
+              tab while it waits in the moderation queue.
+            </p>
+
+            <div className="flex items-center gap-2 text-xs text-ink-muted pt-2">
+              <Send size={13} aria-hidden="true" />
+              <span>Moderators have been notified by email.</span>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="px-6 pb-6 flex justify-end">
+            <button
+              type="button"
+              onClick={handleGoToDashboard}
+              className="
+                px-5 py-2.5 text-sm font-bold text-white rounded-xl
+                transition-colors
+              "
+              style={{ backgroundColor: '#1e3a5f' }}
+              autoFocus
+            >
+              Back to Dashboard →
+            </button>
+          </div>
+        </div>
+      ) : (
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
         {/* Header */}
         <div className="px-6 py-5 border-b border-border">
@@ -170,6 +231,7 @@ export function SubmitModal({ chapterId, onClose }: SubmitModalProps) {
           </button>
         </div>
       </div>
+      )}
     </div>
   );
 }

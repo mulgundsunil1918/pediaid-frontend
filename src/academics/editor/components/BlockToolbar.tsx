@@ -10,7 +10,6 @@ import {
   List,
   ListOrdered,
   Image,
-  BookOpen,
 } from 'lucide-react';
 import { useEditorStore } from '../store/editorStore';
 import type { BlockType } from '../types/editor.types';
@@ -59,12 +58,9 @@ const BUTTONS: ToolbarButton[] = [
     tooltip: 'Image block (upload or URL)',
     icon: <Image size={15} aria-hidden="true" />,
   },
-  {
-    type: 'reference_block',
-    label: 'References',
-    tooltip: 'Cite references from the references list below',
-    icon: <BookOpen size={15} aria-hidden="true" />,
-  },
+  // Reference-block button intentionally removed: references are now
+  // managed as plain-text entries in the References section at the bottom
+  // of the editor page, not inserted inline as content blocks.
 ];
 
 interface ToolbarBtnProps extends ToolbarButton {
