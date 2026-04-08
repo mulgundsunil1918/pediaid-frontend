@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f7fafc;
+    color: #2d3748;
+  }
+
+  /* Smooth scrolling for anchor navigation */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent layout shift from scrollbar appearing */
+  html {
+    overflow-y: scroll;
+  }
+}
+
+@layer components {
+  /* Reading body text uses Georgia */
+  .prose-reading {
+    font-family: Georgia, Cambria, serif;
+    line-height: 1.8;
+    font-size: 1.0625rem;
+    color: #2d3748;
+  }
+
+  /* Card base — used across subject/chapter/topic cards */
+  .acad-card {
+    @apply bg-white border border-border rounded-card shadow-card
+           transition-all duration-200 ease-out;
+  }
+
+  .acad-card:hover {
+    @apply shadow-card-hover -translate-y-0.5;
+  }
+
+  /* Pill badge base */
+  .acad-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
+           uppercase tracking-wide;
+  }
+}
