@@ -107,7 +107,7 @@ export type ApiBlock =
 export interface ChapterPayload {
   title: string;
   topicId: string;
-  content: { blocks: ApiBlock[] };
+  content: ApiBlock[];
   references: Omit<ChapterReference, 'refNumber'>[];
   featuredImageUrl: string;
 }

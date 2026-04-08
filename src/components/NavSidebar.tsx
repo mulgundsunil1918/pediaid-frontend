@@ -6,14 +6,10 @@
 import { NavLink } from 'react-router-dom';
 import {
   BookOpen,
-  Calculator,
-  BarChart2,
-  Pill,
   GraduationCap,
   Menu,
   X,
   LayoutDashboard,
-  Award,
 } from 'lucide-react';
 import { useState } from 'react';
 import { GlobalSearchBar } from '../academics/search/GlobalSearchBar';
@@ -26,22 +22,6 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   {
-    label: 'Calculators',
-    href: '/calculators',
-    icon: <Calculator size={18} aria-hidden="true" />,
-  },
-  {
-    label: 'Growth Charts',
-    href: '/charts',
-    icon: <BarChart2 size={18} aria-hidden="true" />,
-  },
-  {
-    label: 'Formulary',
-    href: '/formulary',
-    icon: <Pill size={18} aria-hidden="true" />,
-  },
-  // ← PediAid Academics entry added here
-  {
     label: 'Academics',
     href: '/academics',
     icon: <GraduationCap size={18} aria-hidden="true" />,
@@ -50,11 +30,6 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Dashboard',
     href: '/academics/dashboard',
     icon: <LayoutDashboard size={18} aria-hidden="true" />,
-  },
-  {
-    label: 'CME Events',
-    href: '/academics/cme',
-    icon: <Award size={18} aria-hidden="true" />,
   },
 ];
 

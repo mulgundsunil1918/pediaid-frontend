@@ -321,7 +321,7 @@ export function buildPayload(store: EditorStore) {
   return {
     title: draft.title,
     topicId: draft.topicId,
-    content: { blocks: apiBlocks },
+    content: apiBlocks,
     references: draft.references,
     featuredImageUrl: draft.featuredImageUrl,
   };
