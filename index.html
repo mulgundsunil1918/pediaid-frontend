@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PediAid Academics</title>
+    <script>
+      // Restore path encoded by 404.html redirect
+      (function() {
+        var p = window.location.search.match(/p=([^&]*)/);
+        if (p) {
+          window.history.replaceState(null, null,
+            '/' + decodeURIComponent(p[1]) + window.location.hash
+          );
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
