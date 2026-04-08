@@ -55,7 +55,7 @@ export function DashboardPage() {
 
   // Auth guard — redirect unauthenticated users
   if (!isAuthenticated()) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to="/academics/login" replace />;
   }
 
   const isReader = user?.role === 'reader';

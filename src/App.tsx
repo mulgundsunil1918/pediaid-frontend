@@ -31,6 +31,9 @@ import { ModerationQueuePage } from './academics/moderation/ModerationQueuePage'
 import { ReviewPage } from './academics/moderation/ReviewPage';
 import { HistoryPage } from './academics/moderation/HistoryPage';
 
+// Academics auth pages
+import { LoginPage, RegisterPage } from './academics/auth/index';
+
 // Academics dashboard pages
 import { DashboardPage } from './academics/dashboard/DashboardPage';
 import { MyChaptersPage } from './academics/dashboard/MyChaptersPage';
@@ -51,6 +54,7 @@ const UsersPage = lazy(() => import('./academics/admin/pages/UsersPage').then(m 
 const CredentialsPage = lazy(() => import('./academics/admin/pages/CredentialsPage').then(m => ({ default: m.CredentialsPage })));
 const ContentOversightPage = lazy(() => import('./academics/admin/pages/ContentOversightPage').then(m => ({ default: m.ContentOversightPage })));
 const CMEAdminPage = lazy(() => import('./academics/admin/pages/CMEAdminPage').then(m => ({ default: m.CMEAdminPage })));
+const RoleRequestsPage = lazy(() => import('./academics/admin/pages/RoleRequestsPage').then(m => ({ default: m.RoleRequestsPage })));
 
 // ---------------------------------------------------------------------------
 // React Query client
@@ -109,6 +113,10 @@ export default function App() {
             {/* Default redirect */}
             <Route path="/" element={<Navigate to="/academics" replace />} />
 
+            {/* ── PediAid Academics auth routes ── */}
+            <Route path="/academics/login" element={<LoginPage />} />
+            <Route path="/academics/register" element={<RegisterPage />} />
+
             {/* ── PediAid Academics browse routes ── */}
             <Route path="/academics" element={<SubjectsPage />} />
             <Route
@@ -159,6 +167,7 @@ export default function App() {
             <Route path="/academics/admin/credentials" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CredentialsPage /></Suspense>} />
             <Route path="/academics/admin/content" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><ContentOversightPage /></Suspense>} />
             <Route path="/academics/admin/cme" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CMEAdminPage /></Suspense>} />
+            <Route path="/academics/admin/role-requests" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><RoleRequestsPage /></Suspense>} />
 
             {/* Placeholder routes for other PediAid sections */}
             <Route

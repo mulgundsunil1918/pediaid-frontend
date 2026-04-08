@@ -15,6 +15,7 @@ import {
   ArrowLeft,
   Menu,
   X,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { usePlatformStats } from './hooks/useAdmin';
@@ -137,6 +138,13 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           to="/academics/admin/cme"
           icon={<Award size={17} />}
           label="CME Events"
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/role-requests"
+          icon={<ShieldCheck size={17} />}
+          label="Role Requests"
+          badge={stats?.pendingRoleRequests ?? 0}
           onClick={onNavClick}
         />
       </nav>

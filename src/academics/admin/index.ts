@@ -9,3 +9,4 @@ export { UsersPage } from './pages/UsersPage';
 export { CredentialsPage } from './pages/CredentialsPage';
 export { ContentOversightPage } from './pages/ContentOversightPage';
 export { CMEAdminPage } from './pages/CMEAdminPage';
+export { RoleRequestsPage } from './pages/RoleRequestsPage';

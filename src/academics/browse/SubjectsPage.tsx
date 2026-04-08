@@ -2,12 +2,14 @@
 // browse/SubjectsPage.tsx — /academics
 // =============================================================================
 
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, BookOpen, ChevronRight } from 'lucide-react';
+import { Search, BookOpen, ChevronRight, Clock, Users } from 'lucide-react';
 import { useSubjects } from './hooks/useBrowse';
 import { SkeletonGrid } from './SkeletonCard';
 import type { Subject } from '../types';
+import { useAuthStore } from '../../store/authStore';
+import { RoleRequestModal } from '../auth/RoleRequestModal';
 
 // ---------------------------------------------------------------------------
 // SubjectCard
@@ -90,13 +92,144 @@ function ErrorState({ message }: { message: string }) {
 }
 
 // ---------------------------------------------------------------------------
+// Pending role-request shape (subset of what the API returns)
+// ---------------------------------------------------------------------------
+
+interface RoleRequest {
+  id: string;
+  status: 'pending' | 'approved' | 'rejected';
+}
+
+// ---------------------------------------------------------------------------
+// Hook: check whether the authenticated user has any pending role requests
+// ---------------------------------------------------------------------------
+
+function useHasPendingRoleRequest(authenticated: boolean): {
+  hasPending: boolean;
+  isLoading: boolean;
+} {
+  const [hasPending, setHasPending] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authenticated) return;
+
+    let cancelled = false;
+    setIsLoading(true);
+
+    const token = useAuthStore.getState().accessToken;
+
+    fetch('/api/academics/dashboard/my-role-requests', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
+      .then((res) => (res.ok ? res.json() : Promise.resolve([])))
+      .then((data: RoleRequest[]) => {
+        if (!cancelled) {
+          setHasPending(Array.isArray(data) && data.some((r) => r.status === 'pending'));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setHasPending(false);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authenticated]);
+
+  return { hasPending, isLoading };
+}
+
+// ---------------------------------------------------------------------------
+// JoinBanner — shown for authenticated readers (or non-privileged users)
+// ---------------------------------------------------------------------------
+
+interface JoinBannerProps {
+  hasPending: boolean;
+  isPendingLoading: boolean;
+  onOpenModal: () => void;
+}
+
+function JoinBanner({ hasPending, isPendingLoading, onOpenModal }: JoinBannerProps) {
+  if (isPendingLoading) return null;
+
+  if (hasPending) {
+    return (
+      <div
+        className="flex items-center gap-3 px-5 py-3.5 rounded-xl border
+                   border-amber-200 bg-amber-50 mb-6"
+        role="status"
+      >
+        <Clock size={18} className="text-amber-600 shrink-0" aria-hidden="true" />
+        <p className="text-sm font-medium text-amber-800">
+          Role request pending review — we'll notify you by email.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4
+                 px-5 py-4 rounded-xl border mb-6"
+      style={{ borderColor: '#93c5fd', backgroundColor: '#eff6ff' }}
+    >
+      <div className="flex items-center gap-3">
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+          style={{ backgroundColor: '#1e3a5f' }}
+        >
+          <Users size={18} className="text-white" aria-hidden="true" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-primary">
+            Contribute to PediAid Academics
+          </p>
+          <p className="text-xs text-ink-muted mt-0.5">
+            Apply to become an Author, Moderator, or Admin.
+          </p>
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={onOpenModal}
+        className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
+                   text-sm font-semibold text-white transition-colors"
+        style={{ backgroundColor: '#1e3a5f' }}
+        onMouseEnter={(e) =>
+          ((e.currentTarget as HTMLButtonElement).style.backgroundColor = '#162d4a')
+        }
+        onMouseLeave={(e) =>
+          ((e.currentTarget as HTMLButtonElement).style.backgroundColor = '#1e3a5f')
+        }
+      >
+        Join as Author / Moderator / Admin
+      </button>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 
 export function SubjectsPage() {
   const { data: subjects, isLoading, isError, error } = useSubjects();
   const [query, setQuery] = useState('');
+  const [roleModalOpen, setRoleModalOpen] = useState(false);
   const navigate = useNavigate();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const userRole = useAuthStore((s) => s.user?.role);
+
+  // Show the join banner only for authenticated users who are readers
+  // (i.e. not already author/moderator/admin)
+  const authenticated = isAuthenticated();
+  const isReader = authenticated && (userRole === 'reader' || userRole === undefined);
+
+  const { hasPending, isLoading: isPendingLoading } = useHasPendingRoleRequest(isReader);
 
   function handleSearch(e: FormEvent) {
     e.preventDefault();
@@ -119,6 +252,20 @@ export function SubjectsPage() {
         style={{ backgroundColor: '#1e3a5f' }}
       >
         <div className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+          {/* Sign in / Register button — top-right, only when not authenticated */}
+          {!isAuthenticated() && (
+            <div className="flex justify-end mb-4">
+              <Link
+                to="/academics/login"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                           text-sm font-semibold border border-white/30 text-white
+                           hover:bg-white/10 transition-colors"
+              >
+                Sign in / Register
+              </Link>
+            </div>
+          )}
+
           <h1 className="font-sans font-bold text-3xl sm:text-4xl text-white mb-2">
             PediAid Academics
           </h1>
@@ -178,6 +325,16 @@ export function SubjectsPage() {
       {/* Subject grid                                                         */}
       {/* ------------------------------------------------------------------ */}
       <main className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        {/* Join banner — authenticated readers only */}
+        {isReader && (
+          <JoinBanner
+            hasPending={hasPending}
+            isPendingLoading={isPendingLoading}
+            onOpenModal={() => setRoleModalOpen(true)}
+          />
+        )}
+
         <h2 className="text-xs font-semibold text-ink-muted uppercase tracking-widest mb-5">
           Specialties
         </h2>
@@ -210,6 +367,14 @@ export function SubjectsPage() {
           ))}
         </div>
       </main>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Role request modal                                                   */}
+      {/* ------------------------------------------------------------------ */}
+      <RoleRequestModal
+        open={roleModalOpen}
+        onClose={() => setRoleModalOpen(false)}
+      />
     </div>
   );
 }

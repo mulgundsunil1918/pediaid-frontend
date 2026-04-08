@@ -145,6 +145,7 @@ export interface PlatformStats {
   totalViews: number;
   totalComments: number;
   totalCMEEvents: number;
+  pendingRoleRequests: number;
   recentActivity: RecentActivityEntry[];
   topChapters: TopChapter[];
   pendingReview: number;
@@ -586,5 +587,77 @@ export function useIssueCertificates() {
         body: JSON.stringify({ attendees }),
       }),
     onSuccess: () => { void qc.invalidateQueries({ queryKey: adminKeys.all }); },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Role Requests types
+// ---------------------------------------------------------------------------
+
+export type RoleRequestStatus = 'pending' | 'approved' | 'rejected';
+
+export interface RoleRequest {
+  id: string;
+  requested_role: 'author' | 'moderator' | 'admin';
+  reason: string;
+  status: RoleRequestStatus;
+  review_note: string | null;
+  created_at: string;
+  reviewed_at: string | null;
+  user_email: string;
+  user_name: string;
+  qualification: string | null;
+  institution: string | null;
+  current_role: string;
+  reviewer_email: string | null;
+}
+
+// ---------------------------------------------------------------------------
+// Role Requests query key
+// ---------------------------------------------------------------------------
+
+// Extend adminKeys inline so tree-shaking still works for the rest of the file.
+export const roleRequestKeys = {
+  list: (status: string) => ['admin', 'role-requests', status] as const,
+};
+
+// ---------------------------------------------------------------------------
+// Role Requests — queries & mutations
+// ---------------------------------------------------------------------------
+
+export function useRoleRequests(status = 'pending') {
+  return useQuery<RoleRequest[], Error>({
+    queryKey: roleRequestKeys.list(status),
+    queryFn: () =>
+      apiFetch<RoleRequest[]>(`/api/academics/admin/role-requests?status=${encodeURIComponent(status)}`),
+    staleTime: 30 * 1_000,
+  });
+}
+
+export function useApproveRoleRequest() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: string; note?: string }>({
+    mutationFn: ({ id, note }) =>
+      apiFetch<void>(`/api/academics/admin/role-requests/${id}/approve`, {
+        method: 'POST',
+        body: JSON.stringify({ note }),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'role-requests'] });
+    },
+  });
+}
+
+export function useRejectRoleRequest() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: string; note?: string }>({
+    mutationFn: ({ id, note }) =>
+      apiFetch<void>(`/api/academics/admin/role-requests/${id}/reject`, {
+        method: 'POST',
+        body: JSON.stringify({ note }),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'role-requests'] });
+    },
   });
 }

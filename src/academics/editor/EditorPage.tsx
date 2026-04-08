@@ -147,7 +147,7 @@ export function EditorPage() {
   // Auth guard
   const { isAuthenticated, canAuthor, user } = useAuthStore();
   if (!isAuthenticated() || !canAuthor()) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to="/academics/login" replace />;
   }
 
   const store = useEditorStore();
