@@ -5,7 +5,10 @@
 import { useParams, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { ArrowLeft, Layers } from 'lucide-react';
 import { useChapterForReview } from './hooks/useModeration';
-import { ReviewActionPanel } from './components/ReviewActionPanel';
+import {
+  ReviewActionPanel,
+  ReviewTopActionBar,
+} from './components/ReviewActionPanel';
 import { ChapterRenderer } from '../reader/components/ChapterRenderer';
 import { ReferencesDisplay } from '../reader/components/ReferencesDisplay';
 import { useAuthStore } from '../../store/authStore';
@@ -93,6 +96,41 @@ export function ReviewPage() {
           )}
         </button>
       </div>
+
+      {/* Sticky action bar — three big buttons up top, as requested.
+           Each button scrolls the moderator to the notes textarea in the
+           side panel below so they can type notes then confirm. The actual
+           confirmation still happens inside the side panel to preserve the
+           reject-modal safety flow and keyboard shortcuts. */}
+      {!isLoading && chapter && (
+        <ReviewTopActionBar
+          isSubmitting={false}
+          onApprove={() => {
+            document
+              .getElementById('mod-action-panel')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+              document.getElementById('mod-approve-btn')?.click();
+            }, 350);
+          }}
+          onRequestChanges={() => {
+            document
+              .getElementById('mod-action-panel')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+              document.getElementById('mod-notes')?.focus();
+            }, 350);
+          }}
+          onReject={() => {
+            document
+              .getElementById('mod-action-panel')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+              document.getElementById('mod-notes')?.focus();
+            }, 350);
+          }}
+        />
+      )}
 
       {/* Two-column layout */}
       <div className="flex max-w-screen-xl mx-auto">

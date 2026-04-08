@@ -15,6 +15,7 @@ import {
 import { StatusBadge } from '../../browse/components/StatusBadge';
 import type { MyChapter } from '../hooks/useDashboard';
 import { ReviewHistoryModal } from './ReviewHistoryModal';
+import { useAuthStore } from '../../../store/authStore';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -55,8 +56,12 @@ interface ChapterCardProps {
 }
 
 function ChapterCard({ chapter, onViewFeedback }: ChapterCardProps) {
+  const canModerate = useAuthStore((s) => s.canModerate());
   const isApproved = chapter.status === 'approved';
-  // Author can open the editor on any re-workable state
+
+  // Author can open the editor on any re-workable state. Moderators viewing
+  // the same card (e.g. reviewing a chapter from their queue) don't "edit" —
+  // they use the review page instead, so the Edit button gets remapped.
   const isEditable =
     chapter.status === 'draft' ||
     chapter.status === 'rejected' ||
@@ -69,9 +74,13 @@ function ChapterCard({ chapter, onViewFeedback }: ChapterCardProps) {
 
   const [showHistory, setShowHistory] = useState(false);
 
-  const titleHref = isApproved
-    ? `/academics/c/${chapter.slug}`
+  // Destination when the card's title or Edit button is clicked. Moderators
+  // go to the dedicated review page; authors go to the editor; approved
+  // chapters always open in the public reader.
+  const editHref = canModerate
+    ? `/academics/moderator/review/${chapter.id}`
     : `/academics/editor/${chapter.id}`;
+  const titleHref = isApproved ? `/academics/c/${chapter.slug}` : editHref;
 
   return (
     <div
@@ -129,7 +138,7 @@ function ChapterCard({ chapter, onViewFeedback }: ChapterCardProps) {
         <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-border">
           {isEditable && (
             <Link
-              to={`/academics/editor/${chapter.id}`}
+              to={editHref}
               className="
                 flex items-center gap-1.5
                 px-3 py-1.5 rounded-xl
@@ -139,7 +148,7 @@ function ChapterCard({ chapter, onViewFeedback }: ChapterCardProps) {
               "
             >
               <Pencil size={13} aria-hidden="true" />
-              Edit
+              {canModerate ? 'Review' : 'Edit'}
             </Link>
           )}
 

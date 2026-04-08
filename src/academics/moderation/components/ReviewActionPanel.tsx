@@ -208,6 +208,84 @@ function PreviousRoundsPanel({ chapterId }: { chapterId: string }) {
 }
 
 // ---------------------------------------------------------------------------
+// ReviewTopActionBar — sticky bar at the top of the review page
+// ---------------------------------------------------------------------------
+//
+// Three big click targets (Approve / Request Changes / Reject) that jump
+// the moderator's focus to the notes textarea in the side panel below and
+// optionally open the confirm state for that action. This keeps the core
+// interaction model of the existing side panel while satisfying the
+// "action buttons at the top" requirement — moderators who know what they
+// want can click once at the top, tab into the notes textarea, and go.
+
+interface ReviewTopActionBarProps {
+  onApprove: () => void;
+  onRequestChanges: () => void;
+  onReject: () => void;
+  isSubmitting: boolean;
+}
+
+export function ReviewTopActionBar({
+  onApprove,
+  onRequestChanges,
+  onReject,
+  isSubmitting,
+}: ReviewTopActionBarProps) {
+  return (
+    <div
+      className="
+        sticky top-[57px] z-20
+        bg-white border-b border-border
+        px-4 sm:px-6 py-3
+      "
+    >
+      <div className="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between gap-3">
+        <p className="text-xs text-ink-muted font-medium uppercase tracking-wide">
+          Review actions
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={onApprove}
+            disabled={isSubmitting}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                       text-sm font-semibold text-white transition-colors
+                       disabled:opacity-50"
+            style={{ backgroundColor: '#38a169' }}
+          >
+            <CheckCircle2 size={15} aria-hidden="true" />
+            Approve
+          </button>
+          <button
+            type="button"
+            onClick={onRequestChanges}
+            disabled={isSubmitting}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                       text-sm font-semibold text-white transition-colors
+                       disabled:opacity-50"
+            style={{ backgroundColor: '#d69e2e' }}
+          >
+            <RotateCcw size={15} aria-hidden="true" />
+            Request Changes
+          </button>
+          <button
+            type="button"
+            onClick={onReject}
+            disabled={isSubmitting}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                       text-sm font-semibold text-white bg-danger transition-colors
+                       disabled:opacity-50"
+          >
+            <XCircle size={15} aria-hidden="true" />
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // ReviewActionPanel
 // ---------------------------------------------------------------------------
 
@@ -277,7 +355,7 @@ export function ReviewActionPanel({ chapter, queueLength, nextChapterId }: Revie
   const submittedAt = (chapter as unknown as { submittedAt?: string }).submittedAt ?? chapter.publishedAt ?? '';
 
   return (
-    <div className="space-y-5">
+    <div id="mod-action-panel" className="space-y-5 scroll-mt-24">
       {/* Previous rounds (only if this chapter has prior moderation entries) */}
       <PreviousRoundsPanel chapterId={chapter.id} />
 
@@ -356,7 +434,11 @@ export function ReviewActionPanel({ chapter, queueLength, nextChapterId }: Revie
             </div>
           </div>
         ) : (
-          <button type="button" onClick={() => setConfirm('approve')} disabled={isSubmitting}
+          <button
+            id="mod-approve-btn"
+            type="button"
+            onClick={() => setConfirm('approve')}
+            disabled={isSubmitting}
             className="w-full flex items-center justify-between px-5 py-3 rounded-xl
                        font-semibold text-sm text-white transition-colors disabled:opacity-50"
             style={{ backgroundColor: '#38a169' }}>

@@ -3,7 +3,15 @@
 // Mirrors the backend's DB/API shape exactly.
 // =============================================================================
 
-export type AcadUserRole = 'reader' | 'author' | 'moderator' | 'admin';
+export type AcadUserRole =
+  | 'reader'
+  | 'author'
+  | 'moderator'
+  | 'admin'
+  // Intermediate states: visitor registered as Author or Moderator on the
+  // landing page. They cannot write or moderate until an admin approves.
+  | 'pending_author'
+  | 'pending_moderator';
 export type ChapterStatus =
   | 'draft'
   | 'pending'

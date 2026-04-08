@@ -17,6 +17,7 @@ import { UpgradePrompt } from './components/UpgradePrompt';
 import { MyChaptersList } from './components/MyChaptersList';
 import { RejectionFeedbackModal } from './components/RejectionFeedbackModal';
 import { NewChapterTopicSelector } from './components/NewChapterTopicSelector';
+import { ModeratorHistoryCard } from './components/ModeratorHistoryCard';
 
 // ---------------------------------------------------------------------------
 // Role badge
@@ -47,7 +48,7 @@ function RoleBadge({ role }: { role: string }) {
 // ---------------------------------------------------------------------------
 
 export function DashboardPage() {
-  const { user, isAuthenticated, canAuthor } = useAuthStore();
+  const { user, isAuthenticated, canAuthor, canModerate } = useAuthStore();
 
   const [feedbackChapter, setFeedbackChapter] = useState<MyChapter | null>(null);
   const [showTopicSelector, setShowTopicSelector] = useState(false);
@@ -56,6 +57,22 @@ export function DashboardPage() {
   // Auth guard — redirect unauthenticated users
   if (!isAuthenticated()) {
     return <Navigate to="/academics/login" replace />;
+  }
+
+  // Role guard — the dashboard is for approved authors / moderators / admins.
+  // Readers and applicants still awaiting admin approval get bounced back to
+  // the public Academics page with a message shown via router state.
+  if (!canAuthor()) {
+    return (
+      <Navigate
+        to="/academics"
+        replace
+        state={{
+          toast:
+            'Access restricted. Only approved authors and moderators can access the dashboard.',
+        }}
+      />
+    );
   }
 
   const isReader = user?.role === 'reader';
@@ -67,6 +84,7 @@ export function DashboardPage() {
       isReader={isReader}
       displayName={displayName}
       canAuthorFn={canAuthor}
+      canModerateFn={canModerate}
       feedbackChapter={feedbackChapter}
       setFeedbackChapter={setFeedbackChapter}
       showTopicSelector={showTopicSelector}
@@ -86,6 +104,7 @@ interface ContentProps {
   isReader: boolean;
   displayName: string;
   canAuthorFn: () => boolean;
+  canModerateFn: () => boolean;
   feedbackChapter: MyChapter | null;
   setFeedbackChapter: (c: MyChapter | null) => void;
   showTopicSelector: boolean;
@@ -99,6 +118,7 @@ function DashboardContent({
   isReader,
   displayName,
   canAuthorFn,
+  canModerateFn,
   feedbackChapter,
   setFeedbackChapter,
   showTopicSelector,
@@ -223,6 +243,9 @@ function DashboardContent({
                 }
               />
             </section>
+
+            {/* Moderation history — only for moderators and admins */}
+            {canModerateFn() && <ModeratorHistoryCard />}
           </>
         )}
       </div>

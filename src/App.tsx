@@ -46,6 +46,7 @@ import { CertificatePage } from './academics/cme/CertificatePage';
 
 // Search page
 import { SearchPage } from './academics/search/SearchPage';
+import { AboutPage } from './academics/about/AboutPage';
 
 // Nelson TOC browser
 const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then(m => ({ default: m.NelsonBrowser })));
@@ -119,6 +120,9 @@ export default function App() {
             {/* ── PediAid Academics auth routes ── */}
             <Route path="/academics/login" element={<LoginPage />} />
             <Route path="/academics/register" element={<RegisterPage />} />
+
+            {/* ── About Me page (public) ── */}
+            <Route path="/academics/about" element={<AboutPage />} />
 
             {/* ── PediAid Academics browse routes ── */}
             <Route path="/academics" element={<SubjectsPage />} />

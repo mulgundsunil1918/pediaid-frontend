@@ -10,9 +10,11 @@ import {
   Menu,
   X,
   LayoutDashboard,
+  Info,
 } from 'lucide-react';
 import { useState } from 'react';
 import { GlobalSearchBar } from '../academics/search/GlobalSearchBar';
+import { useAuthStore } from '../store/authStore';
 
 interface NavItem {
   label: string;
@@ -20,22 +22,36 @@ interface NavItem {
   icon: React.ReactNode;
   /** If true, the link is only active on an exact URL match (passed to NavLink's `end`). */
   end?: boolean;
+  /** Roles permitted to see this nav entry; omit for public. */
+  showWhen?: () => boolean;
 }
 
-const NAV_ITEMS: NavItem[] = [
-  {
-    label: 'Academics',
-    href: '/academics',
-    icon: <GraduationCap size={18} aria-hidden="true" />,
-    // Browse root — must be exact, otherwise it highlights on every /academics/* URL
-    end: true,
-  },
-  {
-    label: 'Dashboard',
-    href: '/academics/dashboard',
-    icon: <LayoutDashboard size={18} aria-hidden="true" />,
-  },
-];
+function useNavItems(): NavItem[] {
+  const canAuthor = useAuthStore((s) => s.canAuthor);
+
+  return [
+    {
+      label: 'Academics',
+      href: '/academics',
+      icon: <GraduationCap size={18} aria-hidden="true" />,
+      // Browse root — must be exact, otherwise it highlights on every /academics/* URL
+      end: true,
+    },
+    {
+      label: 'Dashboard',
+      href: '/academics/dashboard',
+      icon: <LayoutDashboard size={18} aria-hidden="true" />,
+      // Hidden from readers and from users whose role request is still
+      // pending admin approval — they cannot open the dashboard anyway.
+      showWhen: () => canAuthor(),
+    },
+    {
+      label: 'About',
+      href: '/academics/about',
+      icon: <Info size={18} aria-hidden="true" />,
+    },
+  ];
+}
 
 function NavItem({ item }: { item: NavItem }) {
   return (
@@ -63,6 +79,7 @@ function NavItem({ item }: { item: NavItem }) {
 // ---------------------------------------------------------------------------
 
 function MobileNav({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+  const navItems = useNavItems().filter((item) => !item.showWhen || item.showWhen());
   return (
     <>
       {/* Top bar */}
@@ -93,7 +110,7 @@ function MobileNav({ open, onToggle }: { open: boolean; onToggle: () => void }) 
           style={{ backgroundColor: '#1e3a5f' }}
           aria-label="Mobile navigation"
         >
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <NavItem key={item.href} item={item} />
           ))}
         </nav>
@@ -107,6 +124,7 @@ function MobileNav({ open, onToggle }: { open: boolean; onToggle: () => void }) 
 // ---------------------------------------------------------------------------
 
 function DesktopSidebar() {
+  const navItems = useNavItems().filter((item) => !item.showWhen || item.showWhen());
   return (
     <aside
       className="hidden sm:flex flex-col w-56 shrink-0 min-h-screen
@@ -121,7 +139,7 @@ function DesktopSidebar() {
       </div>
 
       <nav className="flex flex-col gap-1 px-2 flex-1">
-        {NAV_ITEMS.map((item) => (
+        {navItems.map((item) => (
           <NavItem key={item.href} item={item} />
         ))}
       </nav>

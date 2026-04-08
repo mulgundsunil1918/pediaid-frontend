@@ -89,53 +89,52 @@ export function SubmitModal({ chapterId, onClose }: SubmitModalProps) {
     >
       {submitted ? (
         // ------------------------------------------------------------------
-        // Success state — shown after the submit mutation resolves.
-        // The checklist modal is replaced, not dismissed, so the author
-        // sees an unambiguous confirmation and a clear path forward.
+        // Full success screen — big green check, clear copy, clear next step.
+        // Replaces the checklist modal after the submit mutation resolves.
         // ------------------------------------------------------------------
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-          {/* Header */}
-          <div className="bg-green-50 border-b border-green-100 px-6 py-5 flex items-center gap-3">
-            <CheckCircle2 size={24} className="text-success shrink-0" aria-hidden="true" />
+          <div className="px-8 pt-10 pb-6 text-center">
+            <div className="flex justify-center mb-5">
+              <div
+                className="w-20 h-20 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: '#dcfce7' }}
+              >
+                <CheckCircle2 size={44} className="text-success" aria-hidden="true" />
+              </div>
+            </div>
+
             <h2
               id="submit-modal-title"
-              className="font-bold text-lg text-success font-sans"
+              className="font-sans font-bold text-2xl text-ink mb-3"
             >
               Thank you for submitting!
             </h2>
-          </div>
 
-          {/* Body */}
-          <div className="px-6 py-6 space-y-3">
-            <p className="text-sm text-ink leading-relaxed">
-              Your chapter is under review.
+            <p className="text-sm text-ink-muted leading-relaxed mb-2">
+              Your chapter is awaiting moderator approval.
             </p>
             <p className="text-sm text-ink-muted leading-relaxed">
-              We'll notify you once a moderator approves it. You can track its
-              progress on your dashboard — the chapter will move to the
-              <strong className="text-ink"> Pending </strong>
-              tab while it waits in the moderation queue.
+              We'll notify you by email once it's reviewed.
             </p>
 
-            <div className="flex items-center gap-2 text-xs text-ink-muted pt-2">
+            <div className="flex items-center justify-center gap-2 text-xs text-ink-muted mt-6">
               <Send size={13} aria-hidden="true" />
-              <span>Moderators have been notified by email.</span>
+              <span>Moderators have been notified.</span>
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="px-6 pb-6 flex justify-end">
+          <div className="px-8 pb-8 flex justify-center">
             <button
               type="button"
               onClick={handleGoToDashboard}
               className="
-                px-5 py-2.5 text-sm font-bold text-white rounded-xl
-                transition-colors
+                px-6 py-3 text-sm font-bold text-white rounded-xl
+                transition-colors w-full
               "
               style={{ backgroundColor: '#1e3a5f' }}
               autoFocus
             >
-              Back to Dashboard →
+              Back to Dashboard
             </button>
           </div>
         </div>

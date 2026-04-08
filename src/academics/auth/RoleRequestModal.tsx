@@ -64,10 +64,14 @@ const ROLE_CARDS: RoleCard[] = [
   },
 ];
 
-// Role rank — higher number = higher privilege
+// Role rank — higher number = higher privilege. Pending applicants are
+// ranked as the role they applied for minus one tick so they can't request
+// a higher role while still awaiting admin approval.
 const ROLE_RANK: Record<AcadUserRole, number> = {
   reader: 0,
+  pending_author: 0.5,
   author: 1,
+  pending_moderator: 1.5,
   moderator: 2,
   admin: 3,
 };
