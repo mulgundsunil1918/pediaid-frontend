@@ -1,0 +1,5254 @@
+[
+  {
+    "roman": "I",
+    "number": 1,
+    "title": "The Field of Pediatrics",
+    "chapters": [
+      {
+        "number": "1",
+        "title": "Overview Of Pediatrics",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "1.1",
+            "title": "Innovations in Addressing Child Health and Survival in Low-Income Settings"
+          }
+        ]
+      },
+      {
+        "number": "2",
+        "title": "Quality And Safety In Healthcare For Children",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "3",
+        "title": "Ethics In Pediatric Care",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "4",
+        "title": "Cultural Issues In Pediatric Care",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "5",
+        "title": "Maximizing Children's Health: Screening, Anticipatory Guidance, And Counseling",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "5.1",
+            "title": "Injury Control"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roman": "II",
+    "number": 2,
+    "title": "Growth, Development, and Behavior",
+    "chapters": [
+      {
+        "number": "6",
+        "title": "Overview And Assessment Of Variability",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "7",
+        "title": "Cognitive Development: Domains And Theories",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "7.1",
+            "title": "The Reggio Emilia Educational Approach and Child Development and Learning"
+          }
+        ]
+      },
+      {
+        "number": "8",
+        "title": "Assessment Of Fetal Growth And Development",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "9",
+        "title": "The Newborn",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "10",
+        "title": "The First Year",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "11",
+        "title": "The Second Year",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "12",
+        "title": "The Preschool Years",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "13",
+        "title": "Middle Childhood",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "14",
+        "title": "Adolescence",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "15",
+        "title": "Assessment Of Growth",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "16",
+        "title": "Developmental-behavioral Screening And Surveillance",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "17",
+        "title": "Childcare: How Pediatricians Can Support Children And Families",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "18",
+        "title": "Loss, Separation, And Bereavement",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "19",
+        "title": "Sleep Medicine",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "III",
+    "number": 3,
+    "title": "Behavioral and Psychiatric Disorders",
+    "chapters": [
+      {
+        "number": "20",
+        "title": "Assessment And Interviewing",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "21",
+        "title": "Psychological Treatment Of Children And Adolescents",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "21.1",
+            "title": "Psychopharmacology"
+          },
+          {
+            "number": "21.2",
+            "title": "Psychotherapy"
+          },
+          {
+            "number": "21.3",
+            "title": "Psychiatric Hospitalization"
+          }
+        ]
+      },
+      {
+        "number": "22",
+        "title": "Somatic Symptom And Related Disorders",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "23",
+        "title": "Rumination And Pica",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "23.1",
+            "title": "Rumination Disorder"
+          },
+          {
+            "number": "23.2",
+            "title": "Pica"
+          },
+          {
+            "number": "23.3",
+            "title": "Enuresis (Bed-Wetting)"
+          },
+          {
+            "number": "23.4",
+            "title": "Encopresis"
+          }
+        ]
+      },
+      {
+        "number": "24",
+        "title": "Motor Disorders And Habits",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "24.1",
+            "title": "Tic Disorders"
+          },
+          {
+            "number": "24.2",
+            "title": "Stereotypic Movement Disorder"
+          }
+        ]
+      },
+      {
+        "number": "25",
+        "title": "Anxiety Disorders",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "26",
+        "title": "Mood Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "26.1",
+            "title": "Major and Other Depressive Disorders"
+          },
+          {
+            "number": "26.2",
+            "title": "Bipolar and Related Disorders"
+          }
+        ]
+      },
+      {
+        "number": "27",
+        "title": "Suicide And Attempted Suicide",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "28",
+        "title": "Eating Disorders",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "29",
+        "title": "Disruptive, Impulse-control, And Conduct Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "29.1",
+            "title": "Age-Specific Behavioral Disturbances"
+          }
+        ]
+      },
+      {
+        "number": "30",
+        "title": "Autism Spectrum Disorder",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "31",
+        "title": "Childhood Psychoses",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "31.1",
+            "title": "Schizophrenia Spectrum and Other Psychotic Disorders"
+          },
+          {
+            "number": "31.2",
+            "title": "Psychosis Associated with Epilepsy"
+          },
+          {
+            "number": "31.3",
+            "title": "Catatonia in Children and Adolescents"
+          },
+          {
+            "number": "31.4",
+            "title": "Acute Phobic Hallucinations of Childhood"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roman": "IV",
+    "number": 4,
+    "title": "Learning Disorders",
+    "chapters": [
+      {
+        "number": "32",
+        "title": "Neurodevelopmental Function And Dysfunction In The School-age Child",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "33",
+        "title": "Attention-deficit/hyperactivity Disorder",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "34",
+        "title": "Dyslexia",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "35",
+        "title": "Language Development And Communication Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "35.1",
+            "title": "Childhood-Onset Fluency Disorder: Dysfluency (Stuttering, Stammering)"
+          }
+        ]
+      },
+      {
+        "number": "36",
+        "title": "Intellectual Disability",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "V",
+    "number": 5,
+    "title": "Children with Special Needs",
+    "chapters": [
+      {
+        "number": "37",
+        "title": "Adoption",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "37.1",
+            "title": "Medical Evaluation of Immigrant (Foreign-Born) Children for Infectious Diseases"
+          }
+        ]
+      },
+      {
+        "number": "38",
+        "title": "Foster And Kinship Care",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "39",
+        "title": "Impact Of Violence On Children",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "39.1",
+            "title": "Bullying, Cyberbullying, and School Violence"
+          },
+          {
+            "number": "39.2",
+            "title": "Effects of War on Children"
+          }
+        ]
+      },
+      {
+        "number": "40",
+        "title": "Abused And Neglected Children",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "40.1",
+            "title": "Sexual Abuse"
+          },
+          {
+            "number": "40.2",
+            "title": "Medical Child Abuse (Factitious Disorder by Proxy, Munchausen Syndrome by Proxy)"
+          }
+        ]
+      },
+      {
+        "number": "41",
+        "title": "Failure To Thrive",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "42",
+        "title": "Chronic Illness In Childhood",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "43",
+        "title": "Pediatric Palliative Care",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "VI",
+    "number": 6,
+    "title": "Nutrition",
+    "chapters": [
+      {
+        "number": "44",
+        "title": "Nutritional Requirements",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "45",
+        "title": "Feeding Healthy Infants, Children, And Adolescents",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "46",
+        "title": "Nutrition, Food Security, And Health",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "46.1",
+            "title": "Refeeding Syndrome"
+          }
+        ]
+      },
+      {
+        "number": "47",
+        "title": "Overweight And Obesity",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "48",
+        "title": "Vitamin A Deficiencies And Excess",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "49",
+        "title": "Vitamin B Complex Deficiencies And Excess",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "49.1",
+            "title": "Thiamine (Vitamin B 1 )"
+          },
+          {
+            "number": "49.2",
+            "title": "Riboflavin (Vitamin B 2 )"
+          },
+          {
+            "number": "49.3",
+            "title": "Niacin (Vitamin B 3 )"
+          },
+          {
+            "number": "49.4",
+            "title": "Vitamin B 6 (Pyridoxine)"
+          },
+          {
+            "number": "49.5",
+            "title": "Biotin"
+          },
+          {
+            "number": "49.6",
+            "title": "Folate"
+          },
+          {
+            "number": "49.7",
+            "title": "Vitamin B 12 (Cobalamin)"
+          }
+        ]
+      },
+      {
+        "number": "50",
+        "title": "Vitamin C Ascorbic Acid)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "VII",
+    "number": 7,
+    "title": "Fluid and Electrolyte Disorders",
+    "chapters": [
+      {
+        "number": "55",
+        "title": "Electrolyte And Acid-base Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "55.1",
+            "title": "Composition of Body Fluids"
+          },
+          {
+            "number": "55.2",
+            "title": "Regulation of Osmolality and Volume"
+          },
+          {
+            "number": "55.3",
+            "title": "Sodium"
+          },
+          {
+            "number": "55.4",
+            "title": "Potassium"
+          },
+          {
+            "number": "55.5",
+            "title": "Magnesium"
+          },
+          {
+            "number": "55.6",
+            "title": "Phosphorus"
+          },
+          {
+            "number": "55.7",
+            "title": "Acid-Base Balance"
+          }
+        ]
+      },
+      {
+        "number": "56",
+        "title": "Maintenance And Replacement Therapy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "57",
+        "title": "Deficit Therapy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "58",
+        "title": "Fluid And Electrolyte Treatment Of Specific Disorders",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "VIII",
+    "number": 8,
+    "title": "Pediatric Drug Therapy",
+    "chapters": [
+      {
+        "number": "59",
+        "title": "Pediatric Pharmacogenetics, Pharmacogenomics, And Pharmacoproteomics",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "60",
+        "title": "Principles Of Drug Therapy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "61",
+        "title": "Anesthesia, Perioperative Care, And Sedation",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "61.1",
+            "title": "Sedation and Procedural Pain"
+          },
+          {
+            "number": "61.2",
+            "title": "Anesthetic Neurotoxicity"
+          }
+        ]
+      },
+      {
+        "number": "62",
+        "title": "Pediatric Pain Management",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "63",
+        "title": "Poisoning",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "64",
+        "title": "Complementary Therapies And Integrative Medicine",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "IX",
+    "number": 9,
+    "title": "The Acutely Ill Child",
+    "chapters": [
+      {
+        "number": "65",
+        "title": "Evaluation Of The Sick Child In The Office And Clinic",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "66",
+        "title": "Emergency Medical Services For Children",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "66.1",
+            "title": "Interfacility Transport of the Seriously Ill or Injured Pediatric Patient"
+          },
+          {
+            "number": "66.2",
+            "title": "Outcomes and Risk Adjustment"
+          },
+          {
+            "number": "66.3",
+            "title": "Principles Applicable to the Developing World"
+          }
+        ]
+      },
+      {
+        "number": "67",
+        "title": "Pediatric Emergencies And Resuscitation",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "68",
+        "title": "Neurologic Emergencies And Stabilization",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "68.1",
+            "title": "Brain Death"
+          }
+        ]
+      },
+      {
+        "number": "69",
+        "title": "Syncope",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "69.1",
+            "title": "Disorders of Orthostatic Intolerance"
+          }
+        ]
+      },
+      {
+        "number": "70",
+        "title": "Shock",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "71",
+        "title": "Respiratory Distress And Failure",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "71.1",
+            "title": "Mechanical Ventilation"
+          },
+          {
+            "number": "71.2",
+            "title": "Long-Term Mechanical Ventilation"
+          }
+        ]
+      },
+      {
+        "number": "72",
+        "title": "Acute Care Of The Victim Of Multiple Trauma",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "72.1",
+            "title": "Care of Abrasions and Minor Lacerations"
+          }
+        ]
+      },
+      {
+        "number": "73",
+        "title": "Altitude-associated Illness In Children Acute Mountain Sickness)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "X",
+    "number": 10,
+    "title": "Human Genetics",
+    "chapters": [
+      {
+        "number": "77",
+        "title": "Integration Of Genetics Into Pediatric Practice",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "77.1",
+            "title": "Genetic Counseling"
+          },
+          {
+            "number": "77.2",
+            "title": "Management and Treatment of Genetic Disorders"
+          }
+        ]
+      },
+      {
+        "number": "78",
+        "title": "The Genetic Approach In Pediatric Medicine",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "79",
+        "title": "The Human Genome",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "80",
+        "title": "Patterns Of Genetic Transmission",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "81",
+        "title": "Cytogenetics",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "81.1",
+            "title": "Methods of Chromosome Analysis"
+          },
+          {
+            "number": "81.2",
+            "title": "Down Syndrome and Other Abnormalities of Chromosome Number"
+          },
+          {
+            "number": "81.3",
+            "title": "Abnormalities of Chromosome Structure"
+          },
+          {
+            "number": "81.4",
+            "title": "Sex Chromosome Aneuploidy"
+          },
+          {
+            "number": "81.5",
+            "title": "Fragile Chromosome Sites"
+          },
+          {
+            "number": "81.6",
+            "title": "Mosaicism"
+          },
+          {
+            "number": "81.7",
+            "title": "Chromosome Instability Syndromes"
+          },
+          {
+            "number": "81.8",
+            "title": "Uniparental Disomy and Imprinting"
+          }
+        ]
+      },
+      {
+        "number": "82",
+        "title": "Genetics Of Common Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "82.1",
+            "title": "Major Genetic Approaches to the Study of Common Pediatric Disorders"
+          }
+        ]
+      },
+      {
+        "number": "83",
+        "title": "Genetic Approaches To Rare And Undiagnosed Diseases",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XI",
+    "number": 11,
+    "title": "Metabolic Disorders",
+    "chapters": [
+      {
+        "number": "84",
+        "title": "An Approach To Inborn Errors Of Metabolism",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "85",
+        "title": "Defects In Metabolism Of Amino Acids",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "85.1",
+            "title": "Phenylalanine"
+          },
+          {
+            "number": "85.2",
+            "title": "Tyrosine"
+          },
+          {
+            "number": "85.3",
+            "title": "Methionine"
+          },
+          {
+            "number": "85.4",
+            "title": "Cysteine/Cystine"
+          },
+          {
+            "number": "85.5",
+            "title": "Tryptophan"
+          },
+          {
+            "number": "85.6",
+            "title": "Valine, Leucine, Isoleucine, and Related Organic Acidemias"
+          },
+          {
+            "number": "85.7",
+            "title": "Glycine"
+          },
+          {
+            "number": "85.8",
+            "title": "Serine"
+          },
+          {
+            "number": "85.9",
+            "title": "Proline"
+          },
+          {
+            "number": "85.10",
+            "title": "Glutamic Acid"
+          },
+          {
+            "number": "85.11",
+            "title": "Genetic Disorders of Neurotransmitters"
+          },
+          {
+            "number": "85.12",
+            "title": "Urea Cycle and Hyperammonemia (Arginine, Citrulline, Ornithine)"
+          },
+          {
+            "number": "85.13",
+            "title": "Histidine"
+          },
+          {
+            "number": "85.14",
+            "title": "Lysine"
+          },
+          {
+            "number": "85.15",
+            "title": "Aspartic Acid (Canavan Disease)"
+          }
+        ]
+      },
+      {
+        "number": "86",
+        "title": "Defects In Metabolism Of Lipids",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "86.1",
+            "title": "Disorders of Mitochondrial Fatty Acid ß-Oxidation"
+          },
+          {
+            "number": "86.2",
+            "title": "Disorders of Very Long Chain Fatty Acids"
+          },
+          {
+            "number": "86.3",
+            "title": "Disorders of Lipoprotein Metabolism and Transport"
+          },
+          {
+            "number": "86.4",
+            "title": "Lipidoses (Lysosomal Storage Disorders)"
+          },
+          {
+            "number": "86.5",
+            "title": "Mucolipidoses"
+          }
+        ]
+      },
+      {
+        "number": "87",
+        "title": "Defects In Metabolism Of Carbohydrates",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "87.1",
+            "title": "Glycogen Storage Diseases"
+          },
+          {
+            "number": "87.2",
+            "title": "Defects in Galactose Metabolism"
+          },
+          {
+            "number": "87.3",
+            "title": "Defects in Fructose Metabolism"
+          },
+          {
+            "number": "87.4",
+            "title": "Defects in Intermediary Carbohydrate Metabolism Associated with Lactic Acidosis"
+          },
+          {
+            "number": "87.5",
+            "title": "Defects in Pentose Metabolism"
+          },
+          {
+            "number": "87.6",
+            "title": "Disorders of Glycoprotein Degradation and Structure"
+          }
+        ]
+      },
+      {
+        "number": "88",
+        "title": "Mucopolysaccharidoses",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "89",
+        "title": "Disorders Of Purine And Pyrimidine Metabolism",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "90",
+        "title": "Hutchinson-gilford Progeria Syndrome",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "91",
+        "title": "The Porphyrias",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "92",
+        "title": "Hypoglycemia",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XII",
+    "number": 12,
+    "title": "The Fetus and the Neonatal Infant",
+    "chapters": [
+      {
+        "number": "93",
+        "title": "Overview Of Mortality And Morbidity",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "94",
+        "title": "The Newborn Infant",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "94.1",
+            "title": "History in Neonatal Pediatrics"
+          },
+          {
+            "number": "94.2",
+            "title": "Physical Examination of the Newborn Infant"
+          },
+          {
+            "number": "94.3",
+            "title": "Routine Delivery Room and Initial Care"
+          },
+          {
+            "number": "94.4",
+            "title": "Nursery Care"
+          },
+          {
+            "number": "94.5",
+            "title": "Parent-Infant Bonding"
+          }
+        ]
+      },
+      {
+        "number": "95",
+        "title": "High-risk Pregnancies",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "96",
+        "title": "The Fetus",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "96.1",
+            "title": "Fetal Growth and Maturity"
+          },
+          {
+            "number": "96.2",
+            "title": "Fetal Distress"
+          },
+          {
+            "number": "96.3",
+            "title": "Maternal Disease and the Fetus"
+          },
+          {
+            "number": "96.4",
+            "title": "Maternal Medication and Toxin Exposure and the Fetus"
+          },
+          {
+            "number": "96.5",
+            "title": "Teratogens"
+          },
+          {
+            "number": "96.6",
+            "title": "Radiation"
+          },
+          {
+            "number": "96.7",
+            "title": "Intrauterine Diagnosis of Fetal Disease"
+          },
+          {
+            "number": "96.8",
+            "title": "Treatment and Prevention of Fetal Disease"
+          }
+        ]
+      },
+      {
+        "number": "97",
+        "title": "The High-risk Infant",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "97.1",
+            "title": "Multiple-Gestation Pregnancies"
+          },
+          {
+            "number": "97.2",
+            "title": "Prematurity and Intrauterine Growth Restriction"
+          },
+          {
+            "number": "97.3",
+            "title": "Postterm Infants"
+          },
+          {
+            "number": "97.4",
+            "title": "Large-for-Gestational-Age Infants"
+          },
+          {
+            "number": "97.5",
+            "title": "Infant Transport"
+          }
+        ]
+      },
+      {
+        "number": "98",
+        "title": "Clinical Manifestations Of Diseases In The Newborn Period",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "99",
+        "title": "Nervous System Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "99.1",
+            "title": "The Cranium"
+          },
+          {
+            "number": "99.2",
+            "title": "Traumatic, Epidural, Subdural, and Subarachnoid Hemorrhage"
+          },
+          {
+            "number": "99.3",
+            "title": "Intracranial-Intraventricular Hemorrhage and Periventricular Leukomalacia"
+          },
+          {
+            "number": "99.4",
+            "title": "Brain Injury from Inflammation, Infection, and Medications"
+          },
+          {
+            "number": "99.5",
+            "title": "Hypoxia-Ischemic Encephalopathy"
+          },
+          {
+            "number": "99.6",
+            "title": "Spine and Spinal Cord"
+          },
+          {
+            "number": "99.7",
+            "title": "Peripheral Nerve Injuries"
+          }
+        ]
+      },
+      {
+        "number": "100",
+        "title": "Delivery Room Emergencies",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "101",
+        "title": "Respiratory Tract Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "101.1",
+            "title": "Transition to Pulmonary Respiration"
+          },
+          {
+            "number": "101.2",
+            "title": "Apnea"
+          },
+          {
+            "number": "101.3",
+            "title": "Respiratory Distress Syndrome (Hyaline Membrane Disease)"
+          },
+          {
+            "number": "101.4",
+            "title": "Transient Tachypnea of the Newborn"
+          },
+          {
+            "number": "101.5",
+            "title": "Aspiration of Foreign Material (Fetal Aspiration Syndrome, Aspiration Pneumonia)"
+          },
+          {
+            "number": "101.6",
+            "title": "Meconium Aspiration"
+          },
+          {
+            "number": "101.7",
+            "title": "Persistent Pulmonary Hypertension of the Newborn (Persistent Fetal Circulation)"
+          },
+          {
+            "number": "101.8",
+            "title": "Diaphragmatic Hernia"
+          },
+          {
+            "number": "101.9",
+            "title": "Foramen of Morgagni Hernia"
+          },
+          {
+            "number": "101.10",
+            "title": "Paraesophageal Hernia"
+          },
+          {
+            "number": "101.11",
+            "title": "Eventration"
+          },
+          {
+            "number": "101.12",
+            "title": "Extrapulmonary Air Leaks (Pneumothorax, Pneumomediastinum, Pulmonary Interstitial Emphysema, Pneumopericardium)"
+          },
+          {
+            "number": "101.13",
+            "title": "Pulmonary Hemorrhage"
+          }
+        ]
+      },
+      {
+        "number": "102",
+        "title": "Digestive System Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "102.1",
+            "title": "Meconium Ileus in Cystic Fibrosis"
+          },
+          {
+            "number": "102.2",
+            "title": "Necrotizing Enterocolitis"
+          },
+          {
+            "number": "102.3",
+            "title": "Jaundice and Hyperbilirubinemia in the Newborn"
+          },
+          {
+            "number": "102.4",
+            "title": "Kernicterus"
+          }
+        ]
+      },
+      {
+        "number": "103",
+        "title": "Blood Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "103.1",
+            "title": "Anemia in the Newborn Infant"
+          },
+          {
+            "number": "103.2",
+            "title": "Hemolytic Disease of the Newborn (Erythroblastosis Fetalis)"
+          },
+          {
+            "number": "103.3",
+            "title": "Plethora in the Newborn Infant (Polycythemia)"
+          },
+          {
+            "number": "103.4",
+            "title": "Hemorrhage in the Newborn Infant"
+          }
+        ]
+      },
+      {
+        "number": "104",
+        "title": "Genitourinary System",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "105",
+        "title": "The Umbilicus",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "106",
+        "title": "Metabolic Disturbances",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "106.1",
+            "title": "Maternal Selective Serotonin Reuptake Inhibitors and Neonatal Behavioral Syndromes"
+          },
+          {
+            "number": "106.2",
+            "title": "Fetal Alcohol Syndrome"
+          }
+        ]
+      },
+      {
+        "number": "107",
+        "title": "The Endocrine System",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "107.1",
+            "title": "Infants of Diabetic Mothers"
+          }
+        ]
+      },
+      {
+        "number": "108",
+        "title": "Dysmorphology",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "109",
+        "title": "Infections Of The Neonatal Infant",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "109.1",
+            "title": "Pathogenesis and Epidemiology"
+          },
+          {
+            "number": "109.2",
+            "title": "Modes of Transmission and Pathogenesis"
+          },
+          {
+            "number": "109.3",
+            "title": "Immunity"
+          },
+          {
+            "number": "109.4",
+            "title": "Etiology of Fetal and Neonatal Infection"
+          },
+          {
+            "number": "109.5",
+            "title": "Epidemiology of Early- and Late-Onset Neonatal Infections"
+          },
+          {
+            "number": "109.6",
+            "title": "Healthcare−Associated Infections (HAI)"
+          },
+          {
+            "number": "109.7",
+            "title": "Clinical Manifestations of Transplacental Intrauterine Infections"
+          },
+          {
+            "number": "109.8",
+            "title": "Intrapartum and Peripartum Infections"
+          },
+          {
+            "number": "109.9",
+            "title": "Suspected Bacterial or Fungal Infections"
+          },
+          {
+            "number": "109.10",
+            "title": "Management"
+          },
+          {
+            "number": "109.11",
+            "title": "Complications and Prognosis"
+          },
+          {
+            "number": "109.12",
+            "title": "Prevention"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roman": "XIII",
+    "number": 13,
+    "title": "Adolescent Medicine",
+    "chapters": [
+      {
+        "number": "110",
+        "title": "Adolescent Development",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "110.1",
+            "title": "Adolescent Physical and Social Development"
+          },
+          {
+            "number": "110.2",
+            "title": "Sexual Identity Development"
+          },
+          {
+            "number": "110.3",
+            "title": "Gay, Lesbian, and Bisexual Adolescents"
+          }
+        ]
+      },
+      {
+        "number": "111",
+        "title": "The Epidemiology Of Adolescent Health Problems",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "112",
+        "title": "Delivery Of Healthcare To Adolescents",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "112.1",
+            "title": "Legal Issues"
+          },
+          {
+            "number": "112.2",
+            "title": "Screening Procedures"
+          },
+          {
+            "number": "112.3",
+            "title": "Transitioning to Adult Care"
+          }
+        ]
+      },
+      {
+        "number": "113",
+        "title": "Violent Behavior",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "114",
+        "title": "Substance Abuse",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "114.1",
+            "title": "Alcohol"
+          },
+          {
+            "number": "114.2",
+            "title": "Tobacco"
+          },
+          {
+            "number": "114.3",
+            "title": "Marijuana"
+          },
+          {
+            "number": "114.4",
+            "title": "Inhalants"
+          },
+          {
+            "number": "114.5",
+            "title": "Hallucinogens"
+          },
+          {
+            "number": "114.6",
+            "title": "Cocaine"
+          },
+          {
+            "number": "114.7",
+            "title": "Amphetamines"
+          },
+          {
+            "number": "114.8",
+            "title": "Opiates"
+          },
+          {
+            "number": "114.9",
+            "title": "Bath Salts"
+          }
+        ]
+      },
+      {
+        "number": "115",
+        "title": "The Breast",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "116",
+        "title": "Menstrual Problems",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "116.1",
+            "title": "Amenorrhea"
+          },
+          {
+            "number": "116.2",
+            "title": "Abnormal Uterine Bleeding (AUB)"
+          },
+          {
+            "number": "116.3",
+            "title": "Dysmenorrhea"
+          },
+          {
+            "number": "116.4",
+            "title": "Premenstrual Syndrome and Premenstrual Dysphoric Disorder"
+          }
+        ]
+      },
+      {
+        "number": "117",
+        "title": "Contraception",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "117.1",
+            "title": "Long-Acting Reversible Contraception"
+          },
+          {
+            "number": "117.2",
+            "title": "Other Progestin-Only Methods"
+          },
+          {
+            "number": "117.3",
+            "title": "Combined Hormonal Contraceptives"
+          },
+          {
+            "number": "117.4",
+            "title": "Emergency Contraception"
+          },
+          {
+            "number": "117.5",
+            "title": "Dual Protection"
+          },
+          {
+            "number": "117.6",
+            "title": "Other Barrier Methods"
+          },
+          {
+            "number": "117.7",
+            "title": "Other Methods"
+          }
+        ]
+      },
+      {
+        "number": "118",
+        "title": "Adolescent Pregnancy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "119",
+        "title": "Adolescent Rape",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "120",
+        "title": "Sexually Transmitted Infections",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "121",
+        "title": "Chronic Fatigue Syndrome",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XIV",
+    "number": 14,
+    "title": "Immunology",
+    "chapters": [
+      {
+        "number": "122",
+        "title": "Evaluation Of Suspected Immunodeficiency",
+        "section": "Section 1: Evaluation Of The Immune System",
+        "subchapters": []
+      },
+      {
+        "number": "123",
+        "title": "T Lymphocytes, B Lymphocytes, And Natural Killer Cells",
+        "section": "Section 2: The T-, B-, And Nk-Cell Systems",
+        "subchapters": []
+      },
+      {
+        "number": "124",
+        "title": "Primary Defects Of Antibody Production",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "124.1",
+            "title": "Treatment of B-Cell Defects"
+          }
+        ]
+      },
+      {
+        "number": "125",
+        "title": "Primary Defects Of Cellular Immunity",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "126",
+        "title": "Primary Combined Antibody And Cellular Immunodeficiencies",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "126.1",
+            "title": "Severe Combined Immunodeficiency"
+          },
+          {
+            "number": "126.2",
+            "title": "Combined Immunodeficiency"
+          },
+          {
+            "number": "126.3",
+            "title": "Defects of Innate Immunity"
+          },
+          {
+            "number": "126.4",
+            "title": "Treatment of Cellular or Combined Immunodeficiency"
+          },
+          {
+            "number": "126.5",
+            "title": "Immune Dysregulation with Autoimmunity or Lymphoproliferation"
+          }
+        ]
+      },
+      {
+        "number": "127",
+        "title": "Neutrophils",
+        "section": "Section 3: The Phagocytic System",
+        "subchapters": []
+      },
+      {
+        "number": "128",
+        "title": "Monocytes, Macrophages, And Dendritic Cells",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "129",
+        "title": "Eosinophils",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "130",
+        "title": "Disorders Of Phagocyte Function",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "131",
+        "title": "Leukopenia",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "132",
+        "title": "Leukocytosis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "133",
+        "title": "The Complement System",
+        "section": "Section 4: The Complement System",
+        "subchapters": []
+      },
+      {
+        "number": "134",
+        "title": "Disorders Of The Complement System",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "134.1",
+            "title": "Evaluation of the Complement System"
+          },
+          {
+            "number": "134.2",
+            "title": "Genetic Deficiencies of Complement Components"
+          },
+          {
+            "number": "134.3",
+            "title": "Deficiencies of Plasma, Membrane, or Serosal Complement Control Proteins"
+          },
+          {
+            "number": "134.4",
+            "title": "Secondary Disorders of Complement"
+          },
+          {
+            "number": "134.5",
+            "title": "Treatment of Complement Disorders"
+          }
+        ]
+      },
+      {
+        "number": "135",
+        "title": "Principles And Clinical Indications Of Hematopoietic Stem Cell Transplantation",
+        "section": "Section 5: Hematopoietic Stem Cell",
+        "subchapters": []
+      },
+      {
+        "number": "136",
+        "title": "Hematopoietic Stem Cell Transplantation From A Lternative S Ources A Nd D Onors, 1 066 Andrea Velardi And Franco Locatelli 137 Graft-versus-host Disease, Rejection, And Venoocclusive Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "138",
+        "title": "Infectious Complications Of Hematopoietic Stem Cell Transplantation",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "139",
+        "title": "Late Effects Of Hematopoietic Stem Cell Transplantation",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XV",
+    "number": 15,
+    "title": "Allergic Disorders",
+    "chapters": [
+      {
+        "number": "140",
+        "title": "Allergy And The Immunologic Basis Of Atopic Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "141",
+        "title": "Diagnosis Of Allergic Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "142",
+        "title": "Principles Of Treatment Of Allergic Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "143",
+        "title": "Allergic Rhinitis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "144",
+        "title": "Childhood Asthma",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "145",
+        "title": "Atopic Dermatitis Atopic Eczema)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XVI",
+    "number": 16,
+    "title": "Rheumatic Diseases of Childhood",
+    "chapters": [
+      {
+        "number": "153",
+        "title": "Evaluation Of Suspected Rheumatic Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "154",
+        "title": "Treatment Of Rheumatic Diseases",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "155",
+        "title": "Juvenile Idiopathic Arthritis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "156",
+        "title": "Ankylosing Spondylitis And Other Spondyloarthritides",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "157",
+        "title": "Reactive And Postinfectious Arthritis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "158",
+        "title": "Systemic Lupus Erythematosus",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "158.1",
+            "title": "Neonatal Lupus"
+          }
+        ]
+      },
+      {
+        "number": "159",
+        "title": "Juvenile Dermatomyositis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "160",
+        "title": "Scleroderma And Raynaud Phenomenon",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "161",
+        "title": "Behçet Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "162",
+        "title": "Sjögren Syndrome",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "163",
+        "title": "Hereditary Periodic Fever Syndromes And Other Systemic Autoinflammatory Diseases",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "164",
+        "title": "Amyloidosis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "165",
+        "title": "Sarcoidosis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "166",
+        "title": "Kawasaki Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "167",
+        "title": "Vasculitis Syndromes",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "167.1",
+            "title": "Henoch-Schönlein Purpura"
+          },
+          {
+            "number": "167.2",
+            "title": "Takayasu Arteritis"
+          },
+          {
+            "number": "167.3",
+            "title": "Polyarteritis Nodosa and Cutaneous Polyarteritis Nodosa"
+          },
+          {
+            "number": "167.4",
+            "title": "Antineutrophilic Cytoplasmic Antibody– Associated Vasculitis"
+          },
+          {
+            "number": "167.5",
+            "title": "Other Vasculitis Syndromes"
+          }
+        ]
+      },
+      {
+        "number": "168",
+        "title": "Musculoskeletal Pain Syndromes",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "168.1",
+            "title": "Growing Pains"
+          },
+          {
+            "number": "168.2",
+            "title": "Small Fiber Polyneuropathy"
+          },
+          {
+            "number": "168.3",
+            "title": "Fibromyalgia"
+          },
+          {
+            "number": "168.4",
+            "title": "Complex Regional Pain Syndrome"
+          },
+          {
+            "number": "168.5",
+            "title": "Erythromelalgia"
+          }
+        ]
+      },
+      {
+        "number": "169",
+        "title": "Miscellaneous Conditions Associated With Arthritis",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XVII",
+    "number": 17,
+    "title": "Infectious Diseases",
+    "chapters": [
+      {
+        "number": "170",
+        "title": "Diagnostic Microbiology",
+        "section": "Section 1: General Considerations",
+        "subchapters": []
+      },
+      {
+        "number": "171",
+        "title": "The Microbiome And Pediatric Health",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "172",
+        "title": "Immunization Practices",
+        "section": "Section 2: Preventive Measures",
+        "subchapters": [
+          {
+            "number": "172.1",
+            "title": "International Immunization Practices"
+          }
+        ]
+      },
+      {
+        "number": "173",
+        "title": "Infection Prevention And Control",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "174",
+        "title": "Childcare And Communicable Diseases",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "175",
+        "title": "Health Advice For Children Traveling Internationally",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "176",
+        "title": "Fever",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "177",
+        "title": "Fever Without A Focus",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "178",
+        "title": "Infections In Immunocompromised Persons",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "178.1",
+            "title": "Infections Occurring with Primary Immunodeficiencies"
+          },
+          {
+            "number": "178.2",
+            "title": "Infections Occurring with Acquired Immunodeficiencies"
+          },
+          {
+            "number": "178.3",
+            "title": "Prevention of Infection in Immunocompromised Persons"
+          }
+        ]
+      },
+      {
+        "number": "179",
+        "title": "Infection Associated With Medical Devices",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "180",
+        "title": "Principles Of Antibacterial Therapy",
+        "section": "Section 3: Antibiotic Therapy",
+        "subchapters": []
+      },
+      {
+        "number": "181",
+        "title": "Staphylococcus",
+        "section": "Section 4: Gram-Positive Bacterial Infections",
+        "subchapters": [
+          {
+            "number": "181.1",
+            "title": "Staphylococcus aureus"
+          },
+          {
+            "number": "181.2",
+            "title": "Toxic Shock Syndrome"
+          },
+          {
+            "number": "181.3",
+            "title": "Coagulase-Negative Staphylococci"
+          }
+        ]
+      },
+      {
+        "number": "182",
+        "title": "Streptococcus Pneumoniae Pneumococcus)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XVIII",
+    "number": 18,
+    "title": "The Digestive System",
+    "chapters": [
+      {
+        "number": "305",
+        "title": "Normal Digestive Tract Phenomena",
+        "section": "Section 1: Clinical Manifestations Of",
+        "subchapters": []
+      },
+      {
+        "number": "306",
+        "title": "Major Symptoms And Signs Of Digestive Tract Disorders",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "307",
+        "title": "Development And Developmental Anomalies Of The Teeth",
+        "section": "Section 2: The Oral Cavity",
+        "subchapters": []
+      },
+      {
+        "number": "308",
+        "title": "Disorders Of The Oral Cavity Associated With Other Conditions",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "309",
+        "title": "Malocclusion",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "310",
+        "title": "Cleft Lip And Palate",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "311",
+        "title": "Syndromes With Oral Manifestations",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "312",
+        "title": "Dental Caries",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "313",
+        "title": "Periodontal Diseases",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "314",
+        "title": "Dental Trauma",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "315",
+        "title": "Common Lesions Of The Oral Soft Tissues",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "316",
+        "title": "Diseases Of The Salivary Glands And Jaws",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "317",
+        "title": "Diagnostic Radiology In Dental Assessment",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "318",
+        "title": "Embryology, Anatomy, And Function Of The Esophagus",
+        "section": "Section 3: The Esophagus",
+        "subchapters": [
+          {
+            "number": "318.1",
+            "title": "Common Clinical Manifestations and Diagnostic Aids"
+          }
+        ]
+      },
+      {
+        "number": "319",
+        "title": "Congenital Anomalies",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "319.1",
+            "title": "Esophageal Atresia and Tracheoesophageal Fistula"
+          },
+          {
+            "number": "319.2",
+            "title": "Laryngotracheoesophageal Clefts"
+          }
+        ]
+      },
+      {
+        "number": "320",
+        "title": "Obstructing And Motility Disorders Of The Esophagus",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "321",
+        "title": "Dysmotility",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "322",
+        "title": "Hiatal Hernia",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "323",
+        "title": "Gastroesophageal Reflux Disease",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "323.1",
+            "title": "Complications of Gastroesophageal Reflux Disease"
+          }
+        ]
+      },
+      {
+        "number": "324",
+        "title": "Eosinophilic Esophagitis And Non– Gastroesophageal Reflux Disease Esophagitis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "325",
+        "title": "Esophageal Perforation",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "326",
+        "title": "Esophageal Varices",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "327",
+        "title": "Ingestions",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "327.1",
+            "title": "Foreign Bodies in the Esophagus"
+          },
+          {
+            "number": "327.2",
+            "title": "Caustic Ingestions"
+          }
+        ]
+      },
+      {
+        "number": "328",
+        "title": "Normal Development, Structure, And Function",
+        "section": "Section 4: Stomach And Intestines",
+        "subchapters": []
+      },
+      {
+        "number": "329",
+        "title": "Pyloric Stenosis And Other Congenital Anomalies Of The Stomach",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "329.1",
+            "title": "Hypertropic Pyloric Stenosis"
+          },
+          {
+            "number": "329.2",
+            "title": "Congenital Gastric Outlet Obstruction"
+          },
+          {
+            "number": "329.3",
+            "title": "Gastric Duplication"
+          },
+          {
+            "number": "329.4",
+            "title": "Gastric Volvulus"
+          },
+          {
+            "number": "329.5",
+            "title": "Hypertrophic Gastropathy"
+          }
+        ]
+      },
+      {
+        "number": "330",
+        "title": "Intestinal Atresia, Stenosis, And Malrotation",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "330.1",
+            "title": "Duodenal Obstruction"
+          },
+          {
+            "number": "330.2",
+            "title": "Jejunal and Ileal Atresia and Obstruction"
+          },
+          {
+            "number": "330.3",
+            "title": "Malrotation"
+          }
+        ]
+      },
+      {
+        "number": "331",
+        "title": "Intestinal Duplications, Meckel Diverticulum, And Other Remnants Of The Omphalomesenteric Duct",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "331.1",
+            "title": "Intestinal Duplication"
+          },
+          {
+            "number": "331.2",
+            "title": "Meckel Diverticulum and Other Remnants of the Omphalomesenteric Duct"
+          }
+        ]
+      },
+      {
+        "number": "332",
+        "title": "Motility Disorders And Hirschsprung Disease",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "332.1",
+            "title": "Chronic Intestinal Pseudoobstruction"
+          },
+          {
+            "number": "332.2",
+            "title": "Mitochondrial Neurogastrointestinal Encephalomyopathy"
+          },
+          {
+            "number": "332.3",
+            "title": "Encopresis and Functional Constipation"
+          },
+          {
+            "number": "332.4",
+            "title": "Congenital Aganglionic Megacolon (Hirschsprung Disease)"
+          },
+          {
+            "number": "332.5",
+            "title": "Intestinal Neuronal Dysplasia"
+          },
+          {
+            "number": "332.6",
+            "title": "Superior Mesenteric Artery Syndrome (Wilkie Syndrome, Cast Syndrome, Arteriomesenteric Duodenal Compression Syndrome)"
+          }
+        ]
+      },
+      {
+        "number": "333",
+        "title": "Ileus, Adhesions, Intussusception, And Closed-loop Obstructions",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "333.1",
+            "title": "Ileus"
+          },
+          {
+            "number": "333.2",
+            "title": "Adhesions"
+          },
+          {
+            "number": "333.3",
+            "title": "Intussusception"
+          },
+          {
+            "number": "333.4",
+            "title": "Closed-Loop Obstructions"
+          }
+        ]
+      },
+      {
+        "number": "334",
+        "title": "Foreign Bodies And Bezoars",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "334.1",
+            "title": "Foreign Bodies in the Stomach and Intestine"
+          },
+          {
+            "number": "334.2",
+            "title": "Bezoars"
+          }
+        ]
+      },
+      {
+        "number": "335",
+        "title": "Peptic Ulcer Disease In Children",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "335.1",
+            "title": "Zollinger-Ellison Syndrome"
+          }
+        ]
+      },
+      {
+        "number": "336",
+        "title": "Inflammatory Bowel Disease",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "336.1",
+            "title": "Chronic Ulcerative Colitis"
+          },
+          {
+            "number": "336.2",
+            "title": "Crohn Disease (Regional Enteritis, Regional Ileitis, Granulomatous Colitis)"
+          }
+        ]
+      },
+      {
+        "number": "337",
+        "title": "Eosinophilic Gastroenteritis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "338",
+        "title": "Disorders Of Malabsorption",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "338.1",
+            "title": "Evaluation of Children with Suspected Intestinal Malabsorption"
+          },
+          {
+            "number": "338.2",
+            "title": "Celiac Disease (Gluten-Sensitive Enteropathy)"
+          },
+          {
+            "number": "338.3",
+            "title": "Other Malabsorptive Syndromes"
+          },
+          {
+            "number": "338.4",
+            "title": "Intestinal Infections and Infestations Associated with Malabsorption"
+          },
+          {
+            "number": "338.5",
+            "title": "Immunodeficiency Disorders"
+          },
+          {
+            "number": "338.6",
+            "title": "Immunoproliferative Small Intestinal Disease"
+          },
+          {
+            "number": "338.7",
+            "title": "Short Bowel Syndrome"
+          },
+          {
+            "number": "338.8",
+            "title": "Chronic Malnutrition"
+          },
+          {
+            "number": "338.9",
+            "title": "Enzyme Deficiencies"
+          },
+          {
+            "number": "338.10",
+            "title": "Liver and Biliary Disorders Causing Malabsorption"
+          },
+          {
+            "number": "338.11",
+            "title": "Rare Inborn Defects Causing Malabsorption"
+          },
+          {
+            "number": "338.12",
+            "title": "Malabsorption in Eosinophilic Gastroenteritis"
+          },
+          {
+            "number": "338.13",
+            "title": "Malabsorption in Inflammatory Bowel Disease"
+          }
+        ]
+      },
+      {
+        "number": "339",
+        "title": "Intestinal Transplantation In Children With Intestinal Failure",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "340",
+        "title": "Acute Gastroenteritis In Children",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "340.1",
+            "title": "Traveler's Diarrhea"
+          }
+        ]
+      },
+      {
+        "number": "341",
+        "title": "Chronic Diarrhea",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "341.1",
+            "title": "Diarrhea from Neuroendocrine Tumors"
+          }
+        ]
+      },
+      {
+        "number": "342",
+        "title": "Functional Abdominal Pain Nonorganic Chronic Abdominal Pain)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XIX",
+    "number": 19,
+    "title": "Respiratory System",
+    "chapters": [
+      {
+        "number": "373",
+        "title": "Respiratory Pathophysiology And Regulation",
+        "section": "Section 1: Development And Function",
+        "subchapters": [
+          {
+            "number": "373.1",
+            "title": "Lung Volumes and Capacities in Health and Disease"
+          },
+          {
+            "number": "373.2",
+            "title": "Chest Wall"
+          },
+          {
+            "number": "373.3",
+            "title": "Pulmonary Mechanics and Work of Breathing in Health and Disease"
+          },
+          {
+            "number": "373.4",
+            "title": "Airway Dynamics in Health and Disease"
+          },
+          {
+            "number": "373.5",
+            "title": "Interpretation of Clinical Signs to Localize the Site of Pathology"
+          },
+          {
+            "number": "373.6",
+            "title": "Ventilation-Perfusion Relationship in Health and Disease"
+          },
+          {
+            "number": "373.7",
+            "title": "Gas Exchange in Health and Disease"
+          },
+          {
+            "number": "373.8",
+            "title": "Interpretation of Blood Gases"
+          },
+          {
+            "number": "373.9",
+            "title": "Pulmonary Vasculature in Health and Disease"
+          },
+          {
+            "number": "373.10",
+            "title": "Immune Response of the Lung to Injury"
+          },
+          {
+            "number": "373.11",
+            "title": "Regulation of Respiration"
+          }
+        ]
+      },
+      {
+        "number": "374",
+        "title": "Diagnostic Approach To Respiratory Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "375",
+        "title": "Sudden Infant Death Syndrome",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "376",
+        "title": "Congenital Disorders Of The Nose",
+        "section": "Section 2: Disorders Of The Respiratory Tract",
+        "subchapters": []
+      },
+      {
+        "number": "377",
+        "title": "Acquired Disorders Of The Nose",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "377.1",
+            "title": "Foreign Body"
+          },
+          {
+            "number": "377.2",
+            "title": "Epistaxis"
+          }
+        ]
+      },
+      {
+        "number": "378",
+        "title": "Nasal Polyps",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "379",
+        "title": "The Common Cold",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "380",
+        "title": "Sinusitis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "381",
+        "title": "Acute Pharyngitis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "382",
+        "title": "Retropharyngeal Abscess, Lateral Pharyngeal Parapharyngeal)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XX",
+    "number": 20,
+    "title": "The Cardiovascular System",
+    "chapters": [
+      {
+        "number": "420",
+        "title": "Cardiac Development",
+        "section": "Section 1: Developmental Biology Of The",
+        "subchapters": [
+          {
+            "number": "420.1",
+            "title": "Early Cardiac Morphogenesis"
+          },
+          {
+            "number": "420.2",
+            "title": "Cardiac Looping"
+          },
+          {
+            "number": "420.3",
+            "title": "Cardiac Septation"
+          },
+          {
+            "number": "420.4",
+            "title": "Aortic Arch Development"
+          },
+          {
+            "number": "420.5",
+            "title": "Cardiac Differentiation"
+          },
+          {
+            "number": "420.6",
+            "title": "Developmental Changes in Cardiac Function"
+          }
+        ]
+      },
+      {
+        "number": "421",
+        "title": "The Fetal To Neonatal Circulatory Transition",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "421.1",
+            "title": "The Fetal Circulation"
+          },
+          {
+            "number": "421.2",
+            "title": "The Transitional Circulation"
+          },
+          {
+            "number": "421.3",
+            "title": "The Neonatal Circulation"
+          },
+          {
+            "number": "421.4",
+            "title": "Persistent Pulmonary Hypertension of the Neonate (Persistence of Fetal Circulatory Pathways)"
+          }
+        ]
+      },
+      {
+        "number": "422",
+        "title": "History And Physical Examination",
+        "section": "Section 2: Evaluation Of The Cardiovascular",
+        "subchapters": []
+      },
+      {
+        "number": "423",
+        "title": "Laboratory Evaluation",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "423.1",
+            "title": "Radiologic Assessment"
+          },
+          {
+            "number": "423.2",
+            "title": "Electrocardiography"
+          },
+          {
+            "number": "423.3",
+            "title": "Hematologic Data"
+          },
+          {
+            "number": "423.4",
+            "title": "Echocardiography"
+          },
+          {
+            "number": "423.5",
+            "title": "Exercise Testing"
+          },
+          {
+            "number": "423.6",
+            "title": "MRI, MRA, CT, and Radionuclide Studies"
+          },
+          {
+            "number": "423.7",
+            "title": "Diagnostic and Interventional Cardiac Catheterization"
+          }
+        ]
+      },
+      {
+        "number": "424",
+        "title": "Epidemiology And Genetic Basis Of Congenital Heart Disease",
+        "section": "Section 3: Congenital Heart Disease",
+        "subchapters": []
+      },
+      {
+        "number": "425",
+        "title": "Evaluation And Screening Of The Infant Or Child With Congenital Heart Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "426",
+        "title": "Acyanotic Congenital Heart Disease: Left-to-right Shunt Lesions",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "426.1",
+            "title": "Atrial Septal Defect"
+          },
+          {
+            "number": "426.2",
+            "title": "Ostium Secundum Defect"
+          },
+          {
+            "number": "426.3",
+            "title": "Sinus Venosus Atrial Septal Defect"
+          },
+          {
+            "number": "426.4",
+            "title": "Partial Anomalous Pulmonary Venous Return"
+          },
+          {
+            "number": "426.5",
+            "title": "Atrioventricular Septal Defects (Ostium Primum and Atrioventricular Canal or Endocardial Cushion Defects)"
+          },
+          {
+            "number": "426.6",
+            "title": "Ventricular Septal Defect"
+          },
+          {
+            "number": "426.7",
+            "title": "Supracristal Ventricular Septal Defect with Aortic Insufficiency"
+          },
+          {
+            "number": "426.8",
+            "title": "Patent Ductus Arteriosus"
+          },
+          {
+            "number": "426.9",
+            "title": "Aortopulmonary Window Defect"
+          },
+          {
+            "number": "426.10",
+            "title": "Coronary Artery Fistula"
+          },
+          {
+            "number": "426.11",
+            "title": "Ruptured Sinus of Valsalva Aneurysm"
+          }
+        ]
+      },
+      {
+        "number": "427",
+        "title": "Acyanotic Congenital Heart Disease: Obstructive Lesions",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "427.1",
+            "title": "Pulmonary Valve Stenosis with Intact Ventricular Septum"
+          },
+          {
+            "number": "427.2",
+            "title": "Infundibular Pulmonary Stenosis and Double- Chamber Right Ventricle"
+          },
+          {
+            "number": "427.3",
+            "title": "Pulmonary Stenosis in Combination with an Intracardiac Shunt"
+          },
+          {
+            "number": "427.4",
+            "title": "Peripheral Pulmonary Stenosis"
+          },
+          {
+            "number": "427.5",
+            "title": "Aortic Stenosis"
+          },
+          {
+            "number": "427.6",
+            "title": "Coarctation of the Aorta"
+          },
+          {
+            "number": "427.7",
+            "title": "Coarctation with Ventricular Septal Defect"
+          },
+          {
+            "number": "427.8",
+            "title": "Coarctation with Other Cardiac Anomalies and Interrupted Aortic Arch"
+          },
+          {
+            "number": "427.9",
+            "title": "Congenital Mitral Stenosis"
+          },
+          {
+            "number": "427.10",
+            "title": "Pulmonary Venous Hypertension"
+          }
+        ]
+      },
+      {
+        "number": "428",
+        "title": "Acyanotic Congenital Heart Disease: Regurgitant Lesions",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "428.1",
+            "title": "Pulmonary Valvular Insufficiency and Congenital Absence of the Pulmonary Valve"
+          },
+          {
+            "number": "428.2",
+            "title": "Congenital Mitral Insufficiency"
+          },
+          {
+            "number": "428.3",
+            "title": "Mitral Valve Prolapse"
+          },
+          {
+            "number": "428.4",
+            "title": "Tricuspid Regurgitation"
+          }
+        ]
+      },
+      {
+        "number": "429",
+        "title": "Cyanotic Congenital Heart Disease: Evaluation Of The Critically Ill Neonate With C Yanosis A Nd R Espiratory D Istress, 2 211 Daniel Bernstein 430 Cyanotic Congenital Heart Lesions: Lesions Associated With Decreased Pulmonary Blood Flow",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "430.1",
+            "title": "Tetralogy of Fallot"
+          },
+          {
+            "number": "430.2",
+            "title": "Tetralogy o f F allot w ith P ulmonary A tresia"
+          },
+          {
+            "number": "430.3",
+            "title": "Pulmonary Atresia with Intact Ventricular Septum"
+          },
+          {
+            "number": "430.4",
+            "title": "Tricuspid Atresia"
+          },
+          {
+            "number": "430.5",
+            "title": "Double-Outlet Right Ventricle"
+          },
+          {
+            "number": "430.6",
+            "title": "Transposition of the Great Arteries with Ventricular Septal Defect and Pulmonary Stenosis"
+          },
+          {
+            "number": "430.7",
+            "title": "Ebstein Anomaly of the Tricuspid Valve"
+          }
+        ]
+      },
+      {
+        "number": "431",
+        "title": "Cyanotic Congenital Heart Disease: Lesions Associated With Increased Pulmonary Blood Flow",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "431.1",
+            "title": "D-Transposition of the Great Arteries"
+          },
+          {
+            "number": "431.2",
+            "title": "D-Transposition of the Great Arteries with Intact Ventricular Septum"
+          },
+          {
+            "number": "431.3",
+            "title": "Transposition of the Great Arteries with Ventricular Septal Defect"
+          },
+          {
+            "number": "431.4",
+            "title": "L-Transposition of the Great Arteries (Corrected Transposition)"
+          },
+          {
+            "number": "431.5",
+            "title": "Double-Outlet Right Ventricle Without Pulmonary Stenosis"
+          },
+          {
+            "number": "431.6",
+            "title": "Double-Outlet Right Ventricle with Malposition of the Great Arteries (Taussig-Bing Anomaly)"
+          },
+          {
+            "number": "431.7",
+            "title": "Total Anomalous Pulmonary Venous Return"
+          },
+          {
+            "number": "431.8",
+            "title": "Truncus Arteriosus"
+          },
+          {
+            "number": "431.9",
+            "title": "Single Ventricle (Double-Inlet Ventricle, Univentricular Heart)"
+          },
+          {
+            "number": "431.10",
+            "title": "Hypoplastic Left-Heart Syndrome"
+          },
+          {
+            "number": "431.11",
+            "title": "Abnormal Positions of the Heart and the Heterotaxy Syndromes (Asplenia, Polysplenia)"
+          }
+        ]
+      },
+      {
+        "number": "432",
+        "title": "Other Congenital Heart And Vascular Malformations",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "432.1",
+            "title": "Anomalies of the Aortic Arch"
+          },
+          {
+            "number": "432.2",
+            "title": "Anomalous Origin of the Coronary Arteries"
+          },
+          {
+            "number": "432.3",
+            "title": "Pulmonary Arteriovenous Fistula"
+          },
+          {
+            "number": "432.4",
+            "title": "Ectopia Cordis"
+          },
+          {
+            "number": "432.5",
+            "title": "Diverticulum of the Left Ventricle"
+          }
+        ]
+      },
+      {
+        "number": "433",
+        "title": "Pulmonary Hypertension",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "433.1",
+            "title": "Primary Pulmonary Hypertension"
+          },
+          {
+            "number": "433.2",
+            "title": "Pulmonary Vascular Disease (Eisenmenger Syndrome)"
+          }
+        ]
+      },
+      {
+        "number": "434",
+        "title": "General Principles Of Treatment Of Congenital Heart Disease",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "434.1",
+            "title": "Congenital Heart Disease in Adults"
+          }
+        ]
+      },
+      {
+        "number": "435",
+        "title": "Disturbances Of Rate And Rhythm Of The Heart",
+        "section": "Section 4: Cardiac Arrhythmias",
+        "subchapters": [
+          {
+            "number": "435.1",
+            "title": "Principles of Antiarrhythmic Therapy"
+          },
+          {
+            "number": "435.2",
+            "title": "Sinus Arrhythmias and Extrasystoles"
+          },
+          {
+            "number": "435.3",
+            "title": "Supraventricular Tachycardia"
+          },
+          {
+            "number": "435.4",
+            "title": "Ventricular Tachyarrhythmias"
+          },
+          {
+            "number": "435.5",
+            "title": "Long QT Syndromes"
+          },
+          {
+            "number": "435.6",
+            "title": "Sinus Node Dysfunction"
+          },
+          {
+            "number": "435.7",
+            "title": "AV Block"
+          }
+        ]
+      },
+      {
+        "number": "436",
+        "title": "Sudden Death",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "437",
+        "title": "Infective Endocarditis",
+        "section": "Section 5: Acquired Heart Disease",
+        "subchapters": []
+      },
+      {
+        "number": "438",
+        "title": "Rheumatic Heart Disease",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "439",
+        "title": "Diseases Of The Myocardium",
+        "section": "Section 6: Diseases Of The Myocardium And",
+        "subchapters": [
+          {
+            "number": "439.1",
+            "title": "Dilated Cardiomyopathy"
+          },
+          {
+            "number": "439.2",
+            "title": "Hypertrophic Cardiomyopathy"
+          },
+          {
+            "number": "439.3",
+            "title": "Restrictive Cardiomyopathy"
+          },
+          {
+            "number": "439.4",
+            "title": "Left Ventricular Noncompaction, Arrhythmogenic Right Ventricular Cardiomyopathy, and Endocardial Fibroelastosis"
+          },
+          {
+            "number": "439.5",
+            "title": "Myocarditis"
+          }
+        ]
+      },
+      {
+        "number": "440",
+        "title": "Diseases Of The Pericardium",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "440.1",
+            "title": "Acute Pericarditis"
+          },
+          {
+            "number": "440.2",
+            "title": "Constrictive Pericarditis"
+          }
+        ]
+      },
+      {
+        "number": "441",
+        "title": "Tumors Of The Heart",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "442",
+        "title": "Heart Failure",
+        "section": "Section 7: Cardiac Therapeutics",
+        "subchapters": [
+          {
+            "number": "442.1",
+            "title": "Cardiogenic Shock"
+          }
+        ]
+      },
+      {
+        "number": "443",
+        "title": "Pediatric Heart And Heart-lung Transplantation",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "443.1",
+            "title": "Pediatric Heart Transplantation"
+          },
+          {
+            "number": "443.2",
+            "title": "Heart-Lung and Lung Transplantation"
+          }
+        ]
+      },
+      {
+        "number": "444",
+        "title": "Diseases Of The Blood Vessels Aneurysms And Fistulas)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXI",
+    "number": 21,
+    "title": "Diseases of the Blood",
+    "chapters": [
+      {
+        "number": "446",
+        "title": "Development Of The Hematopoietic System",
+        "section": "Section 1: The Hematopoietic System",
+        "subchapters": []
+      },
+      {
+        "number": "447",
+        "title": "The Anemias",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "448",
+        "title": "Congenital Hypoplastic Anemia Diamond- Blackfan Anemia)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXII",
+    "number": 22,
+    "title": "Cancer and Benign Tumors",
+    "chapters": [
+      {
+        "number": "491",
+        "title": "Epidemiology Of Childhood And Adolescent Cancer",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "492",
+        "title": "Molecular And Cellular Biology Of Cancer",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "493",
+        "title": "Principles Of Diagnosis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "494",
+        "title": "Principles Of Treatment",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "495",
+        "title": "The Leukemias",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "495.1",
+            "title": "Acute Lymphoblastic Leukemia"
+          },
+          {
+            "number": "495.2",
+            "title": "Acute Myelogenous Leukemia"
+          },
+          {
+            "number": "495.3",
+            "title": "Down Syndrome and Acute Leukemia and Transient Myeloproliferative Disorder"
+          },
+          {
+            "number": "495.4",
+            "title": "Chronic Myelogenous Leukemia"
+          },
+          {
+            "number": "495.5",
+            "title": "Juvenile Myelomonocytic Leukemia"
+          },
+          {
+            "number": "495.6",
+            "title": "Infant Leukemia"
+          }
+        ]
+      },
+      {
+        "number": "496",
+        "title": "Lymphoma",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "496.1",
+            "title": "Hodgkin Lymphoma"
+          },
+          {
+            "number": "496.2",
+            "title": "Non-Hodgkin Lymphoma"
+          },
+          {
+            "number": "496.3",
+            "title": "Late Effects in Children and Adolescents with Lymphoma"
+          }
+        ]
+      },
+      {
+        "number": "497",
+        "title": "Brain Tumors In Childhood",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "498",
+        "title": "Neuroblastoma",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "499",
+        "title": "Neoplasms Of The Kidney",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "499.1",
+            "title": "Wilms Tumor"
+          },
+          {
+            "number": "499.2",
+            "title": "Other Pediatric Renal Tumors"
+          }
+        ]
+      },
+      {
+        "number": "500",
+        "title": "Soft Tissue Sarcomas",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "501",
+        "title": "Neoplasms Of Bone",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "501.1",
+            "title": "Malignant Tumors of Bone"
+          },
+          {
+            "number": "501.2",
+            "title": "Benign Tumors and Tumor-Like Processes of Bone"
+          }
+        ]
+      },
+      {
+        "number": "502",
+        "title": "Retinoblastoma",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "503",
+        "title": "Gonadal And Germ Cell Neoplasms",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "504",
+        "title": "Neoplasms Of The Liver",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "505",
+        "title": "Benign Vascular Tumors",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "505.1",
+            "title": "Hemangiomas"
+          },
+          {
+            "number": "505.2",
+            "title": "Lymphangiomas and Cystic Hygromas"
+          }
+        ]
+      },
+      {
+        "number": "506",
+        "title": "Rare Tumors",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "506.1",
+            "title": "Thyroid Tumors"
+          },
+          {
+            "number": "506.2",
+            "title": "Melanoma"
+          },
+          {
+            "number": "506.3",
+            "title": "Nasopharyngeal Carcinoma"
+          },
+          {
+            "number": "506.4",
+            "title": "Adenocarcinoma o f t he C olon a nd R ectum"
+          },
+          {
+            "number": "506.5",
+            "title": "Adrenal Tumors"
+          },
+          {
+            "number": "506.6",
+            "title": "Desmoplastic Small Round Cell Tumor"
+          }
+        ]
+      },
+      {
+        "number": "507",
+        "title": "H ISTIOCYTOSIS S YNDROMES O F C HILDHOOD, 2 484 Stephan Ladisch 507.1 Langerhans Cell Histiocytosis",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "507.2",
+            "title": "Hemophagocytic Lymphohistiocytosis"
+          },
+          {
+            "number": "507.3",
+            "title": "Other Histiocytoses"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roman": "XXIII",
+    "number": 23,
+    "title": "Nephrology",
+    "chapters": [
+      {
+        "number": "508",
+        "title": "Introduction To Glomerular Diseases",
+        "section": "Section 1: Glomerular Disease",
+        "subchapters": [
+          {
+            "number": "508.1",
+            "title": "Anatomy of the Glomerulus"
+          },
+          {
+            "number": "508.2",
+            "title": "Glomerular Filtration"
+          },
+          {
+            "number": "508.3",
+            "title": "Glomerular Diseases"
+          }
+        ]
+      },
+      {
+        "number": "509",
+        "title": "Clinical Evaluation Of The Child With Hematuria",
+        "section": "Section 2: Conditions Particularly Associated",
+        "subchapters": []
+      },
+      {
+        "number": "510",
+        "title": "Isolated Glomerular Diseases With Recurrent Gross Hematuria",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "510.1",
+            "title": "Immunoglobulin A Nephropathy (Berger Nephropathy)"
+          },
+          {
+            "number": "510.2",
+            "title": "Alport Syndrome"
+          },
+          {
+            "number": "510.3",
+            "title": "Thin Basement Membrane Disease"
+          }
+        ]
+      },
+      {
+        "number": "511",
+        "title": "Glomerulonephritis Associated With Infections",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "511.1",
+            "title": "Acute Poststreptococcal Glomerulonephritis"
+          },
+          {
+            "number": "511.2",
+            "title": "Other Chronic Infections"
+          }
+        ]
+      },
+      {
+        "number": "512",
+        "title": "Membranous Nephropathy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "513",
+        "title": "Membranoproliferative Glomerulonephritis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "514",
+        "title": "Glomerulonephritis Associated With Systemic Lupus Erythematosus",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "515",
+        "title": "Henoch-schönlein Purpura Nephritis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "516",
+        "title": "Rapidly Progressive Crescentic)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXIV",
+    "number": 24,
+    "title": "Urologic Disorders in Infants and",
+    "chapters": [
+      {
+        "number": "537",
+        "title": "Congenital Anomalies And Dysgenesis Of The Kidneys",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "538",
+        "title": "Urinary Tract Infections",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "539",
+        "title": "Vesicoureteral Reflux",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "540",
+        "title": "Obstruction Of The Urinary Tract",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "541",
+        "title": "Anomalies Of The Bladder",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "542",
+        "title": "Neuropathic Bladder",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "543",
+        "title": "Enuresis And Voiding Dysfunction",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "544",
+        "title": "Anomalies Of The Penis And Urethra",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "545",
+        "title": "Disorders And Anomalies Of The Scrotal Contents",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "546",
+        "title": "Trauma To The Genitourinary Tract",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "547",
+        "title": "Urinary Lithiasis",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXV",
+    "number": 25,
+    "title": "Gynecologic Problems of Childhood",
+    "chapters": [
+      {
+        "number": "548",
+        "title": "History And Physical Examination",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "549",
+        "title": "Vulvovaginitis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "550",
+        "title": "Bleeding",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "551",
+        "title": "Breast Concerns",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "552",
+        "title": "Polycystic Ovary Syndrome And Hirsutism",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "553",
+        "title": "Neoplasms And Adolescent Screening For Human Papillomavirus",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "554",
+        "title": "Vulvovaginal And Müllerian Anomalies",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "555",
+        "title": "Gynecologic Care For Girls With Special Needs",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "555.1",
+            "title": "Female Genital Mutilation/Cutting"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roman": "XXVI",
+    "number": 26,
+    "title": "The Endocrine System",
+    "chapters": [
+      {
+        "number": "556",
+        "title": "Hormones Of The Hypothalamus And Pituitary",
+        "section": "Section 1: Disorders Of The Hypothalamus",
+        "subchapters": []
+      },
+      {
+        "number": "557",
+        "title": "Hypopituitarism",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "558",
+        "title": "Diabetes Insipidus",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "559",
+        "title": "Other Abnormalities Of Arginine Vasopressin Metabolism And Action",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "560",
+        "title": "Hyperpituitarism, Tall Stature, And Overgrowth Syndromes",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "561",
+        "title": "Physiology Of Puberty",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "562",
+        "title": "Disorders Of Pubertal Development",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "562.1",
+            "title": "Central Precocious Puberty"
+          },
+          {
+            "number": "562.2",
+            "title": "Precocious Puberty Resulting from Organic Brain Lesions"
+          },
+          {
+            "number": "562.3",
+            "title": "Precocious Puberty Following Irradiation of the Brain"
+          },
+          {
+            "number": "562.4",
+            "title": "Syndrome of Precocious Puberty and Hypothyroidism"
+          },
+          {
+            "number": "562.5",
+            "title": "Chorionic G onadotropin-Secreting T umors"
+          },
+          {
+            "number": "562.6",
+            "title": "McCune-Albright Syndrome (Precocious Puberty with Polyostotic Fibrous Dysplasia and Abnormal Pigmentation)"
+          },
+          {
+            "number": "562.7",
+            "title": "Familial Male Gonadotropin-Independent Precocious Puberty"
+          },
+          {
+            "number": "562.8",
+            "title": "Incomplete (Partial) Precocious Development"
+          },
+          {
+            "number": "562.9",
+            "title": "Medicational Precocity"
+          }
+        ]
+      },
+      {
+        "number": "563",
+        "title": "Thyroid Development And Physiology",
+        "section": "Section 2: Disorders Of The Thyroid Gland",
+        "subchapters": [
+          {
+            "number": "563.1",
+            "title": "Thyroid Hormone Studies"
+          }
+        ]
+      },
+      {
+        "number": "564",
+        "title": "D EFECTS O F T HYROXINE-BINDING G LOBULIN, 2 665 Stephen H. LaFranchi and Stephen A. Huang 565 HYPOTHYROIDISM",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "566",
+        "title": "Thyroiditis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "567",
+        "title": "Goiter",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "567.1",
+            "title": "Congenital Goiter"
+          },
+          {
+            "number": "567.2",
+            "title": "Intratracheal Goiter"
+          },
+          {
+            "number": "567.3",
+            "title": "Endemic Goiter and Cretinism"
+          },
+          {
+            "number": "567.4",
+            "title": "Acquired Goiter"
+          }
+        ]
+      },
+      {
+        "number": "568",
+        "title": "Hyperthyroidism",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "568.1",
+            "title": "Graves Disease"
+          },
+          {
+            "number": "568.2",
+            "title": "Congenital Hyperthyroidism"
+          }
+        ]
+      },
+      {
+        "number": "569",
+        "title": "Carcinoma Of The Thyroid",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "569.1",
+            "title": "Solitary Thyroid Nodule"
+          },
+          {
+            "number": "569.2",
+            "title": "Medullary Thyroid Carcinoma"
+          }
+        ]
+      },
+      {
+        "number": "570",
+        "title": "Hormones And Peptides Of Calcium Homeostasis And Bone Metabolism",
+        "section": "Section 3: Disorders O F T He P Arathyroid G Land",
+        "subchapters": []
+      },
+      {
+        "number": "571",
+        "title": "Hypoparathyroidism",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "572",
+        "title": "Pseudohypoparathyroidism Albright Hereditary Osteodystrophy)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXVII",
+    "number": 27,
+    "title": "The Nervous System",
+    "chapters": [
+      {
+        "number": "590",
+        "title": "Neurologic Evaluation",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "591",
+        "title": "Congenital Anomalies Of The Central Nervous System",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "591.1",
+            "title": "Neural Tube Defects"
+          },
+          {
+            "number": "591.2",
+            "title": "Spina Bifida Occulta (Occult Spinal Dysraphism)"
+          },
+          {
+            "number": "591.3",
+            "title": "Meningocele"
+          },
+          {
+            "number": "591.4",
+            "title": "Myelomeningocele"
+          },
+          {
+            "number": "591.5",
+            "title": "Encephalocele"
+          },
+          {
+            "number": "591.6",
+            "title": "Anencephaly"
+          },
+          {
+            "number": "591.7",
+            "title": "Disorders of Neuronal Migration"
+          },
+          {
+            "number": "591.8",
+            "title": "Agenesis of the Corpus Callosum"
+          },
+          {
+            "number": "591.9",
+            "title": "Agenesis of the Cranial Nerves and Dysgenesis of the Posterior Fossa"
+          },
+          {
+            "number": "591.10",
+            "title": "Microcephaly"
+          },
+          {
+            "number": "591.11",
+            "title": "Hydrocephalus"
+          },
+          {
+            "number": "591.12",
+            "title": "Craniosynostosis"
+          }
+        ]
+      },
+      {
+        "number": "592",
+        "title": "Deformational Plagiocephaly",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "593",
+        "title": "Seizures In Childhood",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "593.1",
+            "title": "Febrile Seizures"
+          },
+          {
+            "number": "593.2",
+            "title": "Unprovoked Seizures"
+          },
+          {
+            "number": "593.3",
+            "title": "Partial Seizures and Related Epilepsy Syndromes"
+          },
+          {
+            "number": "593.4",
+            "title": "Generalized Seizures and Related Epilepsy Syndromes"
+          },
+          {
+            "number": "593.5",
+            "title": "Mechanisms of Seizures"
+          },
+          {
+            "number": "593.6",
+            "title": "Treatment of Seizures and Epilepsy"
+          },
+          {
+            "number": "593.7",
+            "title": "Neonatal Seizures"
+          },
+          {
+            "number": "593.8",
+            "title": "Status Epilepticus"
+          },
+          {
+            "number": "593.9",
+            "title": "Reflex Seizures (Stimulus Precipitated Seizures)"
+          },
+          {
+            "number": "593.10",
+            "title": "Nodding Syndrome"
+          }
+        ]
+      },
+      {
+        "number": "594",
+        "title": "Conditions That Mimic Seizures",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "595",
+        "title": "Headaches",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "595.1",
+            "title": "Migraine"
+          },
+          {
+            "number": "595.2",
+            "title": "Secondary Headaches"
+          },
+          {
+            "number": "595.3",
+            "title": "Tension-Type Headaches"
+          }
+        ]
+      },
+      {
+        "number": "596",
+        "title": "Neurocutaneous Syndromes",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "596.1",
+            "title": "Neurofibromatosis"
+          },
+          {
+            "number": "596.2",
+            "title": "Tuberous Sclerosis"
+          },
+          {
+            "number": "596.3",
+            "title": "Sturge-Weber Syndrome"
+          },
+          {
+            "number": "596.4",
+            "title": "Von Hippel-Lindau Disease"
+          },
+          {
+            "number": "596.5",
+            "title": "Linear Nevus Syndrome"
+          },
+          {
+            "number": "596.6",
+            "title": "PHACE Syndrome"
+          },
+          {
+            "number": "596.7",
+            "title": "Incontinentia Pigmenti"
+          }
+        ]
+      },
+      {
+        "number": "597",
+        "title": "Movement Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "597.1",
+            "title": "Ataxias"
+          },
+          {
+            "number": "597.2",
+            "title": "Chorea, Athetosis, Tremor"
+          },
+          {
+            "number": "597.3",
+            "title": "Dystonia"
+          }
+        ]
+      },
+      {
+        "number": "598",
+        "title": "Encephalopathies",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "598.1",
+            "title": "Cerebral Palsy"
+          },
+          {
+            "number": "598.2",
+            "title": "Mitochondrial Encephalomyopathies"
+          },
+          {
+            "number": "598.3",
+            "title": "Other Encephalopathies"
+          },
+          {
+            "number": "598.4",
+            "title": "Autoimmune Encephalitis"
+          }
+        ]
+      },
+      {
+        "number": "599",
+        "title": "Neurodegenerative Disorders Of Childhood",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "599.1",
+            "title": "Sphingolipidoses"
+          },
+          {
+            "number": "599.2",
+            "title": "Neuronal Ceroid Lipofuscinoses"
+          },
+          {
+            "number": "599.3",
+            "title": "Adrenoleukodystrophy"
+          },
+          {
+            "number": "599.4",
+            "title": "Sialidosis"
+          },
+          {
+            "number": "599.5",
+            "title": "Miscellaneous Disorders"
+          }
+        ]
+      },
+      {
+        "number": "600",
+        "title": "Demyelinating Disorders Of The Central Nervous System",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "600.1",
+            "title": "Multiple Sclerosis"
+          },
+          {
+            "number": "600.2",
+            "title": "Neuromyelitis Optica"
+          },
+          {
+            "number": "600.3",
+            "title": "Acute Disseminated Encephalomyelitis"
+          }
+        ]
+      },
+      {
+        "number": "601",
+        "title": "Pediatric Stroke",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "601.1",
+            "title": "Arterial Ischemic Stroke"
+          },
+          {
+            "number": "601.2",
+            "title": "Cerebral Sinovenous Thrombosis"
+          },
+          {
+            "number": "601.3",
+            "title": "Hemorrhagic Stroke"
+          },
+          {
+            "number": "601.4",
+            "title": "Differential Diagnosis of Stroke-Like Events"
+          }
+        ]
+      },
+      {
+        "number": "602",
+        "title": "Central Nervous System Vasculitis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "603",
+        "title": "Central Nervous System Infections",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "603.1",
+            "title": "Acute Bacterial Meningitis Beyond the Neonatal Period"
+          },
+          {
+            "number": "603.2",
+            "title": "Viral Meningoencephalitis"
+          },
+          {
+            "number": "603.3",
+            "title": "Eosinophilic Meningitis"
+          }
+        ]
+      },
+      {
+        "number": "604",
+        "title": "Brain Abscess",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "605",
+        "title": "Idiopathic Intracranial Hypertension/ Pseudotumor Cerebri",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "606",
+        "title": "Spinal Cord Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "606.1",
+            "title": "Tethered Cord"
+          },
+          {
+            "number": "606.2",
+            "title": "Diastematomyelia"
+          },
+          {
+            "number": "606.3",
+            "title": "Syringomyelia"
+          },
+          {
+            "number": "606.4",
+            "title": "Spinal Cord Tumors"
+          },
+          {
+            "number": "606.5",
+            "title": "Spinal Cord Injuries in Children"
+          },
+          {
+            "number": "606.6",
+            "title": "Transverse Myelitis"
+          },
+          {
+            "number": "606.7",
+            "title": "Spinal Arteriovenous Malformations"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "roman": "XXVIII",
+    "number": 28,
+    "title": "Neuromuscular Disorders",
+    "chapters": [
+      {
+        "number": "607",
+        "title": "Evaluation And Investigation",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "608",
+        "title": "Developmental Disorders Of Muscle",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "608.1",
+            "title": "Myotubular Myopathy (Centronuclear Myopathy)"
+          },
+          {
+            "number": "608.2",
+            "title": "Congenital Muscle Fiber-Type Disproportion"
+          },
+          {
+            "number": "608.3",
+            "title": "Nemaline Rod Myopathy"
+          },
+          {
+            "number": "608.4",
+            "title": "Central Core, Minicore, and Multicore Myopathies"
+          },
+          {
+            "number": "608.5",
+            "title": "Myofibrillar Myopathies"
+          },
+          {
+            "number": "608.6",
+            "title": "Brain Malformations and Muscle Development"
+          },
+          {
+            "number": "608.7",
+            "title": "Amyoplasia"
+          },
+          {
+            "number": "608.8",
+            "title": "Muscular Dysgenesis (Proteus Syndrome Myopathy)"
+          },
+          {
+            "number": "608.9",
+            "title": "Benign Congenital Hypotonia"
+          },
+          {
+            "number": "608.10",
+            "title": "Arthrogryposis"
+          }
+        ]
+      },
+      {
+        "number": "609",
+        "title": "Muscular Dystrophies",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "609.1",
+            "title": "Duchenne and Becker Muscular Dystrophies"
+          },
+          {
+            "number": "609.2",
+            "title": "Emery-Dreifuss Muscular Dystrophy"
+          },
+          {
+            "number": "609.3",
+            "title": "Myotonic Muscular Dystrophy"
+          },
+          {
+            "number": "609.4",
+            "title": "Limb-Girdle Muscular Dystrophies"
+          },
+          {
+            "number": "609.5",
+            "title": "Facioscapulohumeral Muscular Dystrophy"
+          },
+          {
+            "number": "609.6",
+            "title": "Congenital Muscular Dystrophies"
+          }
+        ]
+      },
+      {
+        "number": "610",
+        "title": "Endocrine And Toxic Myopathies",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "611",
+        "title": "Metabolic Myopathies",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "611.1",
+            "title": "Periodic Paralyses (Potassium-Related) and Other Muscle Channelopathies"
+          },
+          {
+            "number": "611.2",
+            "title": "Malignant Hyperthermia"
+          },
+          {
+            "number": "611.3",
+            "title": "Glycogenoses"
+          },
+          {
+            "number": "611.4",
+            "title": "Mitochondrial Myopathies"
+          },
+          {
+            "number": "611.5",
+            "title": "Lipid Myopathies"
+          },
+          {
+            "number": "611.6",
+            "title": "Vitamin E Deficiency Myopathy"
+          }
+        ]
+      },
+      {
+        "number": "612",
+        "title": "Disorders Of Neuromuscular Transmission And Of Motor Neurons",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "612.1",
+            "title": "Myasthenia Gravis"
+          },
+          {
+            "number": "612.2",
+            "title": "Spinal Muscular Atrophies"
+          },
+          {
+            "number": "612.3",
+            "title": "Other Motor Neuron Diseases"
+          }
+        ]
+      },
+      {
+        "number": "613",
+        "title": "Hereditary Motor-sensory Neuropathies",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "613.1",
+            "title": "Peroneal Muscular Atrophy (Charcot-Marie- Tooth Disease, Hereditary Motor-Sensory Neuropathy Type IIa)"
+          },
+          {
+            "number": "613.2",
+            "title": "Peroneal Muscular Atrophy (Axonal Type)"
+          },
+          {
+            "number": "613.3",
+            "title": "Congenital Hypomyelinating Neuropathy and Dejerine-Sottas Disease (Hereditary Motor-Sensory Neuropathy Type III)"
+          },
+          {
+            "number": "613.4",
+            "title": "Roussy-Lévy Syndrome"
+          },
+          {
+            "number": "613.5",
+            "title": "Refsum Disease (Hereditary Sensory Neuropathy Type IV) and Infantile Refsum Disease"
+          },
+          {
+            "number": "613.6",
+            "title": "Fabry Disease"
+          },
+          {
+            "number": "613.7",
+            "title": "Giant Axonal Neuropathy"
+          },
+          {
+            "number": "613.8",
+            "title": "Tomaculous (Hypermyelinating) Neuropathy; Hereditary Neuropathy with Liability to Pressure Palsies"
+          },
+          {
+            "number": "613.9",
+            "title": "Leukodystrophies"
+          }
+        ]
+      },
+      {
+        "number": "614",
+        "title": "Toxic Neuropathies",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "615",
+        "title": "Autonomic Neuropathies",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "615.1",
+            "title": "Familial Dysautonomia"
+          },
+          {
+            "number": "615.2",
+            "title": "Other Autonomic Neuropathies"
+          }
+        ]
+      },
+      {
+        "number": "616",
+        "title": "Guillain-barré Syndrome",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "617",
+        "title": "Bell Palsy",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXIX",
+    "number": 29,
+    "title": "Disorders of the Eye",
+    "chapters": [
+      {
+        "number": "618",
+        "title": "Growth And Development",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "619",
+        "title": "Examination Of The Eye",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "620",
+        "title": "Abnormalities Of Refraction And Accommodation",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "621",
+        "title": "Disorders Of Vision",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "622",
+        "title": "Abnormalities Of Pupil And Iris",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "623",
+        "title": "Disorders Of Eye Movement And Alignment",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "624",
+        "title": "Abnormalities Of The Lids",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "625",
+        "title": "Disorders Of The Lacrimal System",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "626",
+        "title": "Disorders Of The Conjunctiva",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "627",
+        "title": "Abnormalities Of The Cornea",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "628",
+        "title": "Abnormalities Of The Lens",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "629",
+        "title": "Disorders Of The Uveal Tract",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "630",
+        "title": "Disorders Of The Retina And Vitreous",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "631",
+        "title": "Abnormalities Of The Optic Nerve",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "632",
+        "title": "Childhood Glaucoma",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "633",
+        "title": "Orbital Abnormalities",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "634",
+        "title": "Orbital Infections",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "635",
+        "title": "Injuries To The Eye",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXX",
+    "number": 30,
+    "title": "The Ear",
+    "chapters": [
+      {
+        "number": "636",
+        "title": "General Considerations And Evaluation",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "637",
+        "title": "Hearing Loss",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "638",
+        "title": "Congenital Malformations",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "639",
+        "title": "External Otitis Otitis Externa)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXXI",
+    "number": 31,
+    "title": "The Skin",
+    "chapters": [
+      {
+        "number": "644",
+        "title": "Morphology Of The Skin",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "645",
+        "title": "Evaluation Of The Patient",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "645.1",
+            "title": "Cutaneous Manifestations of Systemic Disease"
+          },
+          {
+            "number": "645.2",
+            "title": "Multisystem Medication Reactions"
+          }
+        ]
+      },
+      {
+        "number": "646",
+        "title": "Principles Of Therapy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "647",
+        "title": "Diseases Of The Neonate",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "648",
+        "title": "Cutaneous Defects",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "649",
+        "title": "Ectodermal Dysplasias",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "650",
+        "title": "Vascular Disorders",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "651",
+        "title": "Cutaneous Nevi",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "652",
+        "title": "Hyperpigmented Lesions",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "653",
+        "title": "Hypopigmented Lesions",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "654",
+        "title": "Vesiculobullous Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "654.1",
+            "title": "Erythema Multiforme"
+          },
+          {
+            "number": "654.2",
+            "title": "Stevens-Johnson Syndrome"
+          },
+          {
+            "number": "654.3",
+            "title": "Toxic Epidermal Necrolysis"
+          },
+          {
+            "number": "654.4",
+            "title": "Mechanobullous Disorders"
+          },
+          {
+            "number": "654.5",
+            "title": "Pemphigus"
+          },
+          {
+            "number": "654.6",
+            "title": "Dermatitis Herpetiformis"
+          },
+          {
+            "number": "654.7",
+            "title": "Linear Immunoglobulin A Dermatosis (Chronic Bullous Dermatosis of Childhood)"
+          }
+        ]
+      },
+      {
+        "number": "655",
+        "title": "Eczematous Disorders",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "655.1",
+            "title": "Contact Dermatitis"
+          },
+          {
+            "number": "655.2",
+            "title": "Nummular Eczema"
+          },
+          {
+            "number": "655.3",
+            "title": "Pityriasis Alba"
+          },
+          {
+            "number": "655.4",
+            "title": "Lichen Simplex Chronicus"
+          },
+          {
+            "number": "655.5",
+            "title": "Acute Palmoplantar Eczema (Dyshidrotic Eczema, Dyshidrosis, Pompholyx)"
+          },
+          {
+            "number": "655.6",
+            "title": "Seborrheic Dermatitis"
+          }
+        ]
+      },
+      {
+        "number": "656",
+        "title": "Photosensitivity",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "657",
+        "title": "Diseases Of The Epidermis",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "657.1",
+            "title": "Psoriasis"
+          },
+          {
+            "number": "657.2",
+            "title": "Pityriasis Lichenoides"
+          },
+          {
+            "number": "657.3",
+            "title": "Keratosis Pilaris"
+          },
+          {
+            "number": "657.4",
+            "title": "Lichen Spinulosus"
+          },
+          {
+            "number": "657.5",
+            "title": "Pityriasis Rosea"
+          },
+          {
+            "number": "657.6",
+            "title": "Pityriasis Rubra Pilaris"
+          },
+          {
+            "number": "657.7",
+            "title": "Darier Disease (Keratosis Follicularis)"
+          },
+          {
+            "number": "657.8",
+            "title": "Lichen Nitidus"
+          },
+          {
+            "number": "657.9",
+            "title": "Lichen Striatus"
+          },
+          {
+            "number": "657.10",
+            "title": "Lichen Planus"
+          },
+          {
+            "number": "657.11",
+            "title": "Porokeratosis"
+          },
+          {
+            "number": "657.12",
+            "title": "Gianotti-Crosti Syndrome (Papular Acrodermatitis)"
+          },
+          {
+            "number": "657.13",
+            "title": "Acanthosis Nigricans"
+          }
+        ]
+      },
+      {
+        "number": "658",
+        "title": "Disorders Of Keratinization",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "659",
+        "title": "Diseases Of The Dermis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "660",
+        "title": "Diseases Of Subcutaneous Tissue",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "660.1",
+            "title": "Panniculitis and Erythema Nodosum"
+          },
+          {
+            "number": "660.2",
+            "title": "Lipodystrophy"
+          }
+        ]
+      },
+      {
+        "number": "661",
+        "title": "Disorders Of The Sweat Glands",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "662",
+        "title": "Disorders Of Hair",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "663",
+        "title": "Disorders Of The Nails",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "664",
+        "title": "Disorders Of The Mucous Membranes",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "665",
+        "title": "Cutaneous Bacterial Infections",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "665.1",
+            "title": "Impetigo"
+          },
+          {
+            "number": "665.2",
+            "title": "Subcutaneous Tissue Infections"
+          },
+          {
+            "number": "665.3",
+            "title": "Staphylococcal Scalded Skin Syndrome (Ritter Disease)"
+          },
+          {
+            "number": "665.4",
+            "title": "Ecthyma"
+          },
+          {
+            "number": "665.5",
+            "title": "Other Cutaneous Bacterial Infections"
+          }
+        ]
+      },
+      {
+        "number": "666",
+        "title": "Cutaneous Fungal Infections",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "667",
+        "title": "Cutaneous Viral Infections",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "668",
+        "title": "Arthropod Bites And Infestations",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "668.1",
+            "title": "Arthropod Bites"
+          },
+          {
+            "number": "668.2",
+            "title": "Scabies"
+          },
+          {
+            "number": "668.3",
+            "title": "Pediculosis"
+          },
+          {
+            "number": "668.4",
+            "title": "Seabather's Eruption"
+          }
+        ]
+      },
+      {
+        "number": "669",
+        "title": "Acne",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "670",
+        "title": "Tumors Of The Skin",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "671",
+        "title": "Nutritional Dermatoses",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXXII",
+    "number": 32,
+    "title": "Bone and Joint Disorders",
+    "chapters": [
+      {
+        "number": "672",
+        "title": "Growth And Development",
+        "section": "Section 1: Orthopedic Problems",
+        "subchapters": []
+      },
+      {
+        "number": "673",
+        "title": "Evaluation Of The Child",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "674",
+        "title": "The Foot And Toes",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "674.1",
+            "title": "Metatarsus Adductus"
+          },
+          {
+            "number": "674.2",
+            "title": "Calcaneovalgus Feet"
+          },
+          {
+            "number": "674.3",
+            "title": "Talipes Equinovarus (Clubfoot)"
+          },
+          {
+            "number": "674.4",
+            "title": "Congenital Vertical Talus"
+          },
+          {
+            "number": "674.5",
+            "title": "Hypermobile Pes Planus (Flexible Flatfeet)"
+          },
+          {
+            "number": "674.6",
+            "title": "Tarsal Coalition"
+          },
+          {
+            "number": "674.7",
+            "title": "Cavus Feet"
+          },
+          {
+            "number": "674.8",
+            "title": "Osteochondroses/Apophysitis"
+          },
+          {
+            "number": "674.9",
+            "title": "Puncture Wounds of the Foot"
+          },
+          {
+            "number": "674.10",
+            "title": "Toe Deformities"
+          },
+          {
+            "number": "674.11",
+            "title": "Painful Foot"
+          },
+          {
+            "number": "674.12",
+            "title": "Shoes"
+          }
+        ]
+      },
+      {
+        "number": "675",
+        "title": "Torsional And Angular Deformities",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "675.1",
+            "title": "Normal Limb Development"
+          },
+          {
+            "number": "675.2",
+            "title": "Evaluation"
+          },
+          {
+            "number": "675.3",
+            "title": "Torsional Deformities"
+          },
+          {
+            "number": "675.4",
+            "title": "Coronal Plane Deformities"
+          },
+          {
+            "number": "675.5",
+            "title": "Congenital Angular Deformities of the Tibia and Fibula"
+          }
+        ]
+      },
+      {
+        "number": "676",
+        "title": "Leg-length Discrepancy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "677",
+        "title": "The Knee",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "677.1",
+            "title": "Discoid Lateral Meniscus"
+          },
+          {
+            "number": "677.2",
+            "title": "Popliteal Cyst (Baker Cysts)"
+          },
+          {
+            "number": "677.3",
+            "title": "Osteochondritis Dissecans"
+          },
+          {
+            "number": "677.4",
+            "title": "Osgood-Schlatter Disease and Sinding-Larsen- Johansson Syndrome"
+          },
+          {
+            "number": "677.5",
+            "title": "Patellofemoral Pain Syndrome"
+          },
+          {
+            "number": "677.6",
+            "title": "Patellofemoral Instability"
+          },
+          {
+            "number": "677.7",
+            "title": "Anterior Cruciate Ligament Rupture"
+          }
+        ]
+      },
+      {
+        "number": "678",
+        "title": "The Hip",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "678.1",
+            "title": "Developmental Dysplasia of the Hip"
+          },
+          {
+            "number": "678.2",
+            "title": "Transient Monoarticular Synovitis (Toxic Synovitis)"
+          },
+          {
+            "number": "678.3",
+            "title": "Legg-Calvé-Perthes Disease"
+          },
+          {
+            "number": "678.4",
+            "title": "Slipped Capital Femoral Epiphysis"
+          }
+        ]
+      },
+      {
+        "number": "679",
+        "title": "The Spine",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "679.1",
+            "title": "Idiopathic Scoliosis"
+          },
+          {
+            "number": "679.2",
+            "title": "Congenital Scoliosis"
+          },
+          {
+            "number": "679.3",
+            "title": "Neuromuscular Scoliosis, Genetic Syndromes, and Compensatory Scoliosis"
+          },
+          {
+            "number": "679.4",
+            "title": "Kyphosis (Round-Back)"
+          },
+          {
+            "number": "679.5",
+            "title": "Back Pain in Children"
+          },
+          {
+            "number": "679.6",
+            "title": "Spondylolysis and Spondylolisthesis"
+          },
+          {
+            "number": "679.7",
+            "title": "Spine Infection"
+          },
+          {
+            "number": "679.8",
+            "title": "Intervertebral Disc Herniation/Slipped Vertebral Apophysis"
+          },
+          {
+            "number": "679.9",
+            "title": "Tumors"
+          }
+        ]
+      },
+      {
+        "number": "680",
+        "title": "The Neck",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "680.1",
+            "title": "Torticollis"
+          },
+          {
+            "number": "680.2",
+            "title": "Klippel-Feil Syndrome"
+          },
+          {
+            "number": "680.3",
+            "title": "Cervical Anomalies and Instabilities"
+          }
+        ]
+      },
+      {
+        "number": "681",
+        "title": "The Upper Limb",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "682",
+        "title": "Arthrogryposis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "683",
+        "title": "Common Fractures",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "683.1",
+            "title": "Unique Characteristics of Pediatric Fractures"
+          },
+          {
+            "number": "683.2",
+            "title": "Pediatric Fracture Patterns"
+          },
+          {
+            "number": "683.3",
+            "title": "Upper Extremity Fractures"
+          },
+          {
+            "number": "683.4",
+            "title": "Fractures of Lower Extremity"
+          },
+          {
+            "number": "683.5",
+            "title": "Operative Treatment"
+          },
+          {
+            "number": "683.6",
+            "title": "Complications of Fractures in Children"
+          }
+        ]
+      },
+      {
+        "number": "684",
+        "title": "Osteomyelitis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "685",
+        "title": "Septic Arthritis",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "686",
+        "title": "Epidemiology And Prevention Of Injuries",
+        "section": "Section 2: Sports Medicine",
+        "subchapters": []
+      },
+      {
+        "number": "687",
+        "title": "Management Of Musculoskeletal Injury",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "687.1",
+            "title": "Growth Plate Injuries"
+          },
+          {
+            "number": "687.2",
+            "title": "Shoulder Injuries"
+          },
+          {
+            "number": "687.3",
+            "title": "Elbow Injuries"
+          },
+          {
+            "number": "687.4",
+            "title": "Low Back Injuries"
+          },
+          {
+            "number": "687.5",
+            "title": "Hip and Pelvis Injuries"
+          },
+          {
+            "number": "687.6",
+            "title": "Knee Injuries"
+          },
+          {
+            "number": "687.7",
+            "title": "Lower Leg Pain: Shin Splints, Stress Fractures, and Chronic Compartment Syndrome"
+          },
+          {
+            "number": "687.8",
+            "title": "Ankle Injuries"
+          },
+          {
+            "number": "687.9",
+            "title": "Foot Injuries"
+          }
+        ]
+      },
+      {
+        "number": "688",
+        "title": "Sports-related Traumatic Brain Injury Concussion)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXXIII",
+    "number": 33,
+    "title": "Rehabilitation Medicine",
+    "chapters": [
+      {
+        "number": "708",
+        "title": "Principles Of Rehabilitation Medicine",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "709",
+        "title": "Evaluation Of The Child For Rehabilitative Services",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "710",
+        "title": "Severe Traumatic Brain Injury",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "711",
+        "title": "Spinal Cord Injury And Autonomic Crisis Management",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "712",
+        "title": "Spasticity",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "713",
+        "title": "Birth Brachial Plexus Palsy",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "714",
+        "title": "Traumatic And Sports-related Injuries Of The Lower Extremity",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "715",
+        "title": "Meningomyelocele Spina Bifida)",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXXIV",
+    "number": 34,
+    "title": "Environmental Health Hazards",
+    "chapters": [
+      {
+        "number": "718",
+        "title": "Biologic Effects Of Radiation On Children",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "719",
+        "title": "Chemical Pollutants",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "720",
+        "title": "Heavy Metal Intoxication",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "721",
+        "title": "Lead Poisoning",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "722",
+        "title": "Nonbacterial Food Poisoning",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "722.1",
+            "title": "Mushroom Poisoning"
+          },
+          {
+            "number": "722.2",
+            "title": "Solanine Poisoning"
+          },
+          {
+            "number": "722.3",
+            "title": "Seafood Poisoning"
+          },
+          {
+            "number": "722.4",
+            "title": "Melamine Poisoning"
+          }
+        ]
+      },
+      {
+        "number": "723",
+        "title": "Biologic And Chemical Terrorism",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "724",
+        "title": "Animal And Human Bites",
+        "section": null,
+        "subchapters": [
+          {
+            "number": "724.1",
+            "title": "Rat Bite Fever"
+          },
+          {
+            "number": "724.2",
+            "title": "Monkeypox"
+          }
+        ]
+      },
+      {
+        "number": "725",
+        "title": "Envenomations",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  },
+  {
+    "roman": "XXXV",
+    "number": 35,
+    "title": "Laboratory Medicine",
+    "chapters": [
+      {
+        "number": "726",
+        "title": "Laboratory Testing In Infants And Children",
+        "section": null,
+        "subchapters": []
+      },
+      {
+        "number": "727",
+        "title": "Reference Intervals For Laboratory Tests And Procedures",
+        "section": null,
+        "subchapters": []
+      }
+    ]
+  }
+]

@@ -47,6 +47,9 @@ import { CertificatePage } from './academics/cme/CertificatePage';
 // Search page
 import { SearchPage } from './academics/search/SearchPage';
 
+// Nelson TOC browser
+const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then(m => ({ default: m.NelsonBrowser })));
+
 // Admin pages
 const AdminOverviewPage = lazy(() => import('./academics/admin/pages/AdminOverviewPage').then(m => ({ default: m.AdminOverviewPage })));
 const TaxonomyPage = lazy(() => import('./academics/admin/pages/TaxonomyPage').then(m => ({ default: m.TaxonomyPage })));
@@ -159,6 +162,9 @@ export default function App() {
 
             {/* ── PediAid Academics search ── */}
             <Route path="/academics/search" element={<SearchPage />} />
+
+            {/* ── Nelson TOC browser ── */}
+            <Route path="/academics/nelson" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><NelsonBrowser /></Suspense>} />
 
             {/* ── PediAid Academics admin routes ── */}
             <Route path="/academics/admin" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AdminOverviewPage /></Suspense>} />
