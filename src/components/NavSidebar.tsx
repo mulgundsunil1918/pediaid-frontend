@@ -18,6 +18,8 @@ interface NavItem {
   label: string;
   href: string;
   icon: React.ReactNode;
+  /** If true, the link is only active on an exact URL match (passed to NavLink's `end`). */
+  end?: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -25,6 +27,8 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Academics',
     href: '/academics',
     icon: <GraduationCap size={18} aria-hidden="true" />,
+    // Browse root — must be exact, otherwise it highlights on every /academics/* URL
+    end: true,
   },
   {
     label: 'Dashboard',
@@ -37,6 +41,7 @@ function NavItem({ item }: { item: NavItem }) {
   return (
     <NavLink
       to={item.href}
+      end={item.end}
       className={({ isActive }) =>
         [
           'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium',

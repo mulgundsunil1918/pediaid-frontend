@@ -144,6 +144,11 @@ export function EditorPage() {
   const isNew = !chapterId;
   const navigate = useNavigate();
 
+  // When editing an existing chapter the user came from the dashboard's
+  // "My Chapters" list, so Back should return there. For a brand-new chapter
+  // they came from the topic browser, so Back goes to the Academics root.
+  const backHref = isNew ? '/academics' : '/academics/dashboard';
+
   // Auth guard
   const { isAuthenticated, canAuthor, user } = useAuthStore();
   if (!isAuthenticated() || !canAuthor()) {
@@ -286,7 +291,7 @@ export function EditorPage() {
           isDirty={false}
           isSaving={false}
           lastSavedAt={null}
-          backHref="/academics"
+          backHref={backHref}
         />
         <LoadingState />
       </div>
@@ -301,7 +306,7 @@ export function EditorPage() {
           isDirty={false}
           isSaving={false}
           lastSavedAt={null}
-          backHref="/academics"
+          backHref={backHref}
         />
         <ErrorState
           message={
@@ -322,7 +327,7 @@ export function EditorPage() {
         isDirty={isDirty}
         isSaving={isSaving}
         lastSavedAt={lastSavedAt}
-        backHref="/academics"
+        backHref={backHref}
         breadcrumb={breadcrumb}
       />
 
