@@ -645,162 +645,6 @@ function HomeTabs() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// LandingCards — two application cards shown to visitors who are NOT signed in
-// ---------------------------------------------------------------------------
-//
-// Each card names a role, lists clear eligibility, and routes to the register
-// form pre-filled with ?role=author or ?role=moderator. After submitting, the
-// backend creates a pending_* account and emails the admin for approval.
-
-function LandingCards() {
-  return (
-    <section className="mb-12" aria-labelledby="landing-cards-heading">
-      <h2
-        id="landing-cards-heading"
-        className="text-xs font-semibold text-ink-muted uppercase tracking-widest mb-5"
-      >
-        Join the community
-      </h2>
-
-      <div className="grid gap-5 grid-cols-1 md:grid-cols-2">
-        {/* ── Author card ─────────────────────────────────────────── */}
-        <div
-          className="acad-card p-6 flex flex-col gap-4 border-2"
-          style={{ borderColor: '#bfdbfe' }}
-        >
-          <div className="flex items-center gap-3">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-              style={{ backgroundColor: '#dbeafe' }}
-            >
-              <PencilLine size={22} className="text-primary" aria-hidden="true" />
-            </div>
-            <div>
-              <h3 className="font-sans font-bold text-xl text-primary leading-tight">
-                ✍️ Join as Author
-              </h3>
-              <p className="text-xs text-ink-muted mt-0.5">
-                Write and submit peer-reviewed chapters
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-lg bg-blue-50/60 px-4 py-3 border border-blue-100">
-            <p className="text-[11px] font-semibold text-primary uppercase tracking-wide mb-1">
-              Eligibility
-            </p>
-            <p className="text-sm text-ink leading-relaxed">
-              MBBS / MD or equivalent medical degree.
-            </p>
-          </div>
-
-          <ul className="text-sm text-ink-muted space-y-1.5 leading-relaxed">
-            <li>• Create draft chapters and submit for peer review</li>
-            <li>• See reviewer feedback and revise when asked</li>
-            <li>• Get credited as the named author on approved work</li>
-          </ul>
-
-          <Link
-            to="/academics/register?role=author"
-            className="
-              mt-auto inline-flex items-center justify-center gap-2
-              px-5 py-2.5 rounded-xl
-              text-sm font-semibold text-white
-              transition-colors
-            "
-            style={{ backgroundColor: '#1e3a5f' }}
-            onMouseEnter={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#162d4a')
-            }
-            onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#1e3a5f')
-            }
-          >
-            Apply as Author
-            <ChevronRight size={16} aria-hidden="true" />
-          </Link>
-
-          <p className="text-[11px] text-ink-muted italic">
-            An admin will review your application before your account gains author privileges.
-          </p>
-        </div>
-
-        {/* ── Moderator card ──────────────────────────────────────── */}
-        <div
-          className="acad-card p-6 flex flex-col gap-4 border-2"
-          style={{ borderColor: '#fde68a' }}
-        >
-          <div className="flex items-center gap-3">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-              style={{ backgroundColor: '#fef3c7' }}
-            >
-              <Scale size={22} className="text-amber-700" aria-hidden="true" />
-            </div>
-            <div>
-              <h3 className="font-sans font-bold text-xl text-amber-800 leading-tight">
-                ⚖️ Join as Moderator
-              </h3>
-              <p className="text-xs text-ink-muted mt-0.5">
-                Peer-review submitted chapters
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-lg bg-amber-50/80 px-4 py-3 border border-amber-100">
-            <p className="text-[11px] font-semibold text-amber-800 uppercase tracking-wide mb-1">
-              Eligibility
-            </p>
-            <p className="text-sm text-ink leading-relaxed">
-              MD / DNB with 3+ years clinical experience.
-            </p>
-          </div>
-
-          <ul className="text-sm text-ink-muted space-y-1.5 leading-relaxed">
-            <li>• Review chapters in the moderation queue</li>
-            <li>• Approve, reject, or request revisions with notes</li>
-            <li>• Shape the editorial quality of every published chapter</li>
-          </ul>
-
-          <Link
-            to="/academics/register?role=moderator"
-            className="
-              mt-auto inline-flex items-center justify-center gap-2
-              px-5 py-2.5 rounded-xl
-              text-sm font-semibold text-white
-              transition-colors
-            "
-            style={{ backgroundColor: '#b45309' }}
-            onMouseEnter={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#92400e')
-            }
-            onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = '#b45309')
-            }
-          >
-            Apply as Moderator
-            <ChevronRight size={16} aria-hidden="true" />
-          </Link>
-
-          <p className="text-[11px] text-ink-muted italic">
-            An admin will review your credentials before your account gains moderator privileges.
-          </p>
-        </div>
-      </div>
-
-      <p className="mt-5 text-xs text-ink-muted text-center">
-        Already have an account?{' '}
-        <Link
-          to="/academics/login"
-          className="font-semibold text-accent hover:underline"
-        >
-          Sign in
-        </Link>
-      </p>
-    </section>
-  );
-}
 
 // ---------------------------------------------------------------------------
 // Page
@@ -856,7 +700,13 @@ export function SubjectsPage() {
         style={{ backgroundColor: '#1e3a5f' }}
       >
         <div className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          {/* Top-right action buttons — only when NOT signed in */}
+          {/* Top-right "Join Now" button.
+               The separate Sign in link was removed because every user
+               reaching this page is already signed in via the Flutter
+               app's auth gate. The Join Now sheet is still exposed for
+               authenticated readers who want to apply as an author or
+               moderator (their existing account is kept; only the role
+               changes after admin approval). */}
           {!isAuthenticated() && (
             <div className="flex justify-end gap-2 mb-4">
               <button
@@ -871,14 +721,6 @@ export function SubjectsPage() {
               >
                 Join Now
               </button>
-              <Link
-                to="/academics/login"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl
-                           text-sm font-semibold border border-white/30 text-white
-                           hover:bg-white/10 transition-colors"
-              >
-                Sign in
-              </Link>
             </div>
           )}
 
@@ -960,9 +802,6 @@ export function SubjectsPage() {
             </button>
           </div>
         )}
-
-        {/* Landing cards — only when nobody is signed in */}
-        {!authenticated && <LandingCards />}
 
         {/* Join banner — authenticated readers only */}
         {isReader && (

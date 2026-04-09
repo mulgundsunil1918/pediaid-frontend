@@ -48,7 +48,6 @@ import { CertificatePage } from './academics/cme/CertificatePage';
 
 // Search page
 import { SearchPage } from './academics/search/SearchPage';
-import { AboutPage } from './academics/about/AboutPage';
 
 // Nelson TOC browser
 const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then(m => ({ default: m.NelsonBrowser })));
@@ -126,8 +125,6 @@ export default function App() {
             <Route path="/academics/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/academics/reset-password" element={<ResetPasswordPage />} />
 
-            {/* ── About Me page (public) ── */}
-            <Route path="/academics/about" element={<AboutPage />} />
 
             {/* ── PediAid Academics browse routes ── */}
             <Route path="/academics" element={<SubjectsPage />} />

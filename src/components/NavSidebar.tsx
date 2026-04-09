@@ -10,7 +10,6 @@ import {
   Menu,
   X,
   LayoutDashboard,
-  Info,
 } from 'lucide-react';
 import { useState } from 'react';
 import { GlobalSearchBar } from '../academics/search/GlobalSearchBar';
@@ -46,11 +45,8 @@ function useNavItems(): NavItem[] {
       // pending admin approval — they cannot open the dashboard anyway.
       showWhen: () => canAuthor(),
     },
-    {
-      label: 'About',
-      href: '/academics/about',
-      icon: <Info size={18} aria-hidden="true" />,
-    },
+    // The "About" entry was removed — the detailed About Me lives in the
+    // Flutter main app only. The academics surface is content-focused.
   ];
 }
 
