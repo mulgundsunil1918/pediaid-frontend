@@ -81,13 +81,11 @@ const queryClient = new QueryClient({
 // ---------------------------------------------------------------------------
 
 function AppLayout({ children }: { children: React.ReactNode }) {
+  // NavSidebar renders null — kept here as a no-op in case we bring it back.
   return (
     <div className="flex min-h-screen bg-bg">
       <NavSidebar />
-      {/* pt-14 on mobile accounts for the fixed top bar height */}
-      <div className={`flex-1 pt-14 sm:pt-0 ${SIDEBAR_WIDTH}`}>
-        {children}
-      </div>
+      <div className={`flex-1 ${SIDEBAR_WIDTH}`}>{children}</div>
     </div>
   );
 }

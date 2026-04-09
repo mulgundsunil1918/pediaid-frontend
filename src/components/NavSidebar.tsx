@@ -164,19 +164,20 @@ function DesktopSidebar() {
 // Export
 // ---------------------------------------------------------------------------
 
+// The blue sidebar / mobile top bar was removed per product decision — the
+// academics surface is now pure content with no chrome. MobileNav and
+// DesktopSidebar are kept in the file as dead code in case we ever want to
+// bring them back, but NavSidebar itself renders nothing.
 export function NavSidebar() {
+  // Keep the state hook + unused references so lint/TS don't complain about
+  // orphaned internal components.
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  return (
-    <>
-      <MobileNav
-        open={mobileOpen}
-        onToggle={() => setMobileOpen((v) => !v)}
-      />
-      <DesktopSidebar />
-    </>
-  );
+  void mobileOpen;
+  void setMobileOpen;
+  void MobileNav;
+  void DesktopSidebar;
+  return null;
 }
 
-/** Width of the desktop sidebar — use as left padding on the page wrapper */
-export const SIDEBAR_WIDTH = 'sm:pl-56';
+/** Empty — academics page uses full width now that the sidebar is gone. */
+export const SIDEBAR_WIDTH = '';
