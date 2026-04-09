@@ -33,6 +33,8 @@ import { HistoryPage } from './academics/moderation/HistoryPage';
 
 // Academics auth pages
 import { LoginPage, RegisterPage } from './academics/auth/index';
+import { ForgotPasswordPage } from './academics/auth/ForgotPasswordPage';
+import { ResetPasswordPage } from './academics/auth/ResetPasswordPage';
 
 // Academics dashboard pages
 import { DashboardPage } from './academics/dashboard/DashboardPage';
@@ -121,6 +123,8 @@ export default function App() {
             {/* ── PediAid Academics auth routes ── */}
             <Route path="/academics/login" element={<LoginPage />} />
             <Route path="/academics/register" element={<RegisterPage />} />
+            <Route path="/academics/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/academics/reset-password" element={<ResetPasswordPage />} />
 
             {/* ── About Me page (public) ── */}
             <Route path="/academics/about" element={<AboutPage />} />

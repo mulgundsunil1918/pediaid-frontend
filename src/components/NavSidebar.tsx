@@ -15,6 +15,7 @@ import {
 import { useState } from 'react';
 import { GlobalSearchBar } from '../academics/search/GlobalSearchBar';
 import { useAuthStore } from '../store/authStore';
+import { NotificationBell } from './NotificationBell';
 
 interface NavItem {
   label: string;
@@ -94,13 +95,16 @@ function MobileNav({ open, onToggle }: { open: boolean; onToggle: () => void }) 
             PediAid
           </span>
         </div>
-        <button
-          onClick={onToggle}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          className="text-white p-1"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-1">
+          <NotificationBell variant="dark" />
+          <button
+            onClick={onToggle}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            className="text-white p-1"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </header>
 
       {/* Dropdown drawer */}
@@ -132,10 +136,13 @@ function DesktopSidebar() {
       style={{ backgroundColor: '#1e3a5f' }}
       aria-label="Main navigation"
     >
-      {/* Logo */}
-      <div className="flex items-center gap-2.5 px-4 py-5 mb-2">
-        <BookOpen size={22} className="text-white" aria-hidden="true" />
-        <span className="font-bold text-white text-lg font-sans">PediAid</span>
+      {/* Logo + bell */}
+      <div className="flex items-center justify-between gap-2 px-4 py-5 mb-2">
+        <div className="flex items-center gap-2.5">
+          <BookOpen size={22} className="text-white" aria-hidden="true" />
+          <span className="font-bold text-white text-lg font-sans">PediAid</span>
+        </div>
+        <NotificationBell variant="dark" />
       </div>
 
       <nav className="flex flex-col gap-1 px-2 flex-1">
