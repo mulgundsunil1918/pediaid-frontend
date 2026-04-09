@@ -71,6 +71,62 @@ export interface HistoryFilters {
 }
 
 // ---------------------------------------------------------------------------
+// ModeratorReviewChapter — exact shape returned by GET /chapters/id/:id
+//
+// This is intentionally NOT the same type as ReaderChapter, because the
+// backend endpoint powering the moderator review returns a flat payload
+// (topicName/systemName/subjectCode as top-level strings, content as a
+// plain block array, author.name instead of author.fullName) produced by
+// ContentService.resolveChapter() on the backend. Using the reader type
+// here was the root cause of the blank-page bug — the component was
+// reading `chapter.content.blocks` (undefined) and `chapter.author.fullName`
+// (undefined) and crashing during render.
+// ---------------------------------------------------------------------------
+
+export interface ModeratorReviewChapter {
+  id: string;
+  title: string;
+  slug: string;
+  abstract: string | null;
+  status:
+    | 'draft'
+    | 'pending'
+    | 'approved'
+    | 'rejected'
+    | 'changes_requested'
+    | 'archived';
+  authorId: string;
+  authorName: string;
+  authorQualification: string | null;
+  authorCredentialsVerified: boolean;
+  readingTimeMinutes: number;
+  viewCount: number;
+  publishedAt: string | null;
+  submittedAt: string | null;
+  version: number;
+  /** Backend returns the blocks list directly as an array at this key. */
+  content: Array<Record<string, unknown>>;
+  references: Array<Record<string, unknown>>;
+  author: {
+    id: string;
+    /** Backend uses "name", not "fullName" */
+    name: string;
+    qualification: string | null;
+    institution: string | null;
+    credentialsVerified: boolean;
+  };
+  topicId: string;
+  topicName: string;
+  systemName: string;
+  subjectCode: string;
+  subjectName: string;
+  createdAt: string;
+  updatedAt: string;
+  moderatorNotes: string | null;
+  reviewedAt: string | null;
+}
+
+// ---------------------------------------------------------------------------
 // Hooks
 // ---------------------------------------------------------------------------
 
@@ -84,13 +140,13 @@ export function useModerationQueue() {
 }
 
 export function useChapterForReview(id: string | undefined) {
-  return useQuery({
+  return useQuery<ModeratorReviewChapter, AcademicsApiError>({
     queryKey: ['moderation', 'review', id],
-    queryFn: () => apiFetch<import('../../reader/hooks/useChapterReader').ReaderChapter>(
-      `/api/academics/chapters/id/${id}`,
-    ),
+    queryFn: () =>
+      apiFetch<ModeratorReviewChapter>(`/api/academics/chapters/id/${id}`),
     enabled: Boolean(id),
     staleTime: 0,
+    retry: false,
   });
 }
 

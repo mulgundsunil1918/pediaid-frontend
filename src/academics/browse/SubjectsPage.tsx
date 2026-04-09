@@ -2,103 +2,30 @@
 // browse/SubjectsPage.tsx — /academics
 // =============================================================================
 
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, useEffect, useMemo, type FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Search,
   BookOpen,
   ChevronRight,
+  ChevronDown,
   Clock,
   Users,
   PencilLine,
   Scale,
+  Flame,
+  TreePine,
+  User2,
 } from 'lucide-react';
-import { useSubjects } from './hooks/useBrowse';
-import { SkeletonGrid } from './SkeletonCard';
-import type { Subject } from '../types';
+import {
+  useRecentGuides,
+  useTaxonomyTree,
+  type RecentGuide,
+  type TaxonomyTreeSubject,
+} from './hooks/useBrowse';
 import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
 import { RoleRequestModal } from '../auth/RoleRequestModal';
-
-// ---------------------------------------------------------------------------
-// SubjectCard
-// ---------------------------------------------------------------------------
-
-function SubjectCard({ subject }: { subject: Subject }) {
-  return (
-    <Link
-      to={`/academics/subjects/${subject.id}`}
-      className="acad-card p-6 flex flex-col gap-3 group cursor-pointer
-                 focus-visible:outline-none focus-visible:ring-2
-                 focus-visible:ring-accent focus-visible:ring-offset-2"
-      aria-label={`Browse ${subject.name}`}
-    >
-      {/* Code badge */}
-      <span
-        className="self-start acad-badge text-white"
-        style={{ backgroundColor: '#3182ce' }}
-      >
-        {subject.code}
-      </span>
-
-      {/* Name */}
-      <h2 className="font-sans font-semibold text-lg text-primary leading-snug">
-        {subject.name}
-      </h2>
-
-      {/* Description — 2 lines max */}
-      {subject.description && (
-        <p className="text-sm text-ink-muted line-clamp-2 leading-relaxed">
-          {subject.description}
-        </p>
-      )}
-
-      {/* Footer */}
-      <div className="mt-auto flex items-center justify-between pt-1">
-        <span className="text-xs text-ink-muted font-medium">
-          {subject.systemCount ?? 0}{' '}
-          {subject.systemCount === 1 ? 'system' : 'systems'}
-        </span>
-        <ChevronRight
-          size={16}
-          className="text-ink-muted group-hover:text-accent
-                     group-hover:translate-x-0.5 transition-all"
-          aria-hidden="true"
-        />
-      </div>
-    </Link>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Empty state
-// ---------------------------------------------------------------------------
-
-function EmptyState() {
-  return (
-    <div className="col-span-full flex flex-col items-center justify-center
-                    py-20 text-center">
-      <BookOpen size={48} className="text-border mb-4" aria-hidden="true" />
-      <p className="text-ink font-medium text-lg mb-1">No subjects yet</p>
-      <p className="text-ink-muted text-sm max-w-sm">
-        Content is being set up. Check back soon.
-      </p>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Error state
-// ---------------------------------------------------------------------------
-
-function ErrorState({ message }: { message: string }) {
-  return (
-    <div className="col-span-full rounded-card border border-red-200
-                    bg-red-50 p-6 text-center">
-      <p className="text-danger font-medium">{message}</p>
-    </div>
-  );
-}
 
 // ---------------------------------------------------------------------------
 // Pending role-request shape (subset of what the API returns)
@@ -218,6 +145,503 @@ function JoinBanner({ hasPending, isPendingLoading, onOpenModal }: JoinBannerPro
         Join as Author / Moderator / Admin
       </button>
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Tab 1: Recent Guides — horizontal swipable strip of recently approved chapters
+// ---------------------------------------------------------------------------
+
+function RecentGuideCard({ guide }: { guide: RecentGuide }) {
+  return (
+    <Link
+      to={`/academics/c/${guide.slug}`}
+      className="
+        shrink-0 w-72 sm:w-80
+        acad-card p-5
+        flex flex-col gap-3
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
+      "
+      aria-label={`Open ${guide.title}`}
+    >
+      <span
+        className="self-start acad-badge text-white text-[10px]"
+        style={{ backgroundColor: '#3182ce' }}
+      >
+        {guide.subjectCode}
+      </span>
+
+      <h3 className="font-sans font-semibold text-base text-primary leading-snug line-clamp-2">
+        {guide.title}
+      </h3>
+
+      <p className="text-xs text-ink-muted line-clamp-1">
+        {guide.systemName} · {guide.topicName}
+      </p>
+
+      <div className="mt-auto pt-1 flex items-center justify-between text-xs text-ink-muted">
+        <span className="inline-flex items-center gap-1 min-w-0 truncate">
+          <User2 size={11} aria-hidden="true" />
+          <span className="truncate">{guide.authorName}</span>
+        </span>
+        <span className="inline-flex items-center gap-1 shrink-0">
+          <Clock size={11} aria-hidden="true" />
+          {guide.readingTimeMinutes || 1}m
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function RecentGuidesTab() {
+  const { data, isLoading, isError } = useRecentGuides(12);
+  const guides = data ?? [];
+
+  if (isLoading) {
+    return (
+      <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-0 sm:px-0">
+        {[1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className="shrink-0 w-72 sm:w-80 h-44 rounded-card bg-gray-100 animate-pulse"
+            aria-hidden="true"
+          />
+        ))}
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="rounded-card border border-red-200 bg-red-50 p-6 text-center text-sm text-danger">
+        Failed to load recent guides.
+      </div>
+    );
+  }
+
+  if (guides.length === 0) {
+    return (
+      <div className="rounded-card border border-border bg-card p-10 text-center">
+        <BookOpen size={36} className="mx-auto text-border mb-3" aria-hidden="true" />
+        <p className="text-ink font-semibold mb-1">No published chapters yet</p>
+        <p className="text-sm text-ink-muted">
+          Be the first — apply as an Author and submit a chapter.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="
+        flex gap-4 overflow-x-auto pb-4
+        snap-x snap-mandatory
+        -mx-4 px-4 sm:-mx-0 sm:px-0
+        scrollbar-thin scrollbar-thumb-border
+      "
+      role="region"
+      aria-label="Recently published guides"
+    >
+      {guides.map((g) => (
+        <div key={g.id} className="snap-start">
+          <RecentGuideCard guide={g} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Tab 2: Browse by System — search + expandable taxonomy
+// ---------------------------------------------------------------------------
+
+interface FilteredTaxonomy {
+  subjects: TaxonomyTreeSubject[];
+  autoExpandSubjects: Set<string>;
+  autoExpandSystems: Set<string>;
+  matchCount: number;
+}
+
+function filterTaxonomy(
+  tree: TaxonomyTreeSubject[],
+  rawQuery: string,
+): FilteredTaxonomy {
+  const query = rawQuery.trim().toLowerCase();
+  const autoExpandSubjects = new Set<string>();
+  const autoExpandSystems = new Set<string>();
+
+  if (!query) {
+    return {
+      subjects: tree,
+      autoExpandSubjects,
+      autoExpandSystems,
+      matchCount: tree.reduce(
+        (acc, s) =>
+          acc +
+          s.systems.reduce((a, sys) => a + sys.topics.length, 0),
+        0,
+      ),
+    };
+  }
+
+  const subjects: TaxonomyTreeSubject[] = [];
+  let matchCount = 0;
+
+  for (const subject of tree) {
+    const subjectMatches =
+      subject.name.toLowerCase().includes(query) ||
+      subject.code.toLowerCase().includes(query);
+
+    const keptSystems: typeof subject.systems = [];
+    for (const system of subject.systems) {
+      const systemMatches = system.name.toLowerCase().includes(query);
+      const keptTopics = system.topics.filter((t) =>
+        t.name.toLowerCase().includes(query),
+      );
+
+      if (systemMatches || keptTopics.length > 0 || subjectMatches) {
+        keptSystems.push({
+          ...system,
+          topics: systemMatches || subjectMatches ? system.topics : keptTopics,
+        });
+        autoExpandSubjects.add(subject.id);
+        autoExpandSystems.add(system.id);
+        matchCount += (systemMatches || subjectMatches
+          ? system.topics.length
+          : keptTopics.length);
+      }
+    }
+
+    if (subjectMatches && keptSystems.length === 0) {
+      subjects.push(subject);
+      autoExpandSubjects.add(subject.id);
+      matchCount += subject.systems.reduce(
+        (a, sys) => a + sys.topics.length,
+        0,
+      );
+    } else if (keptSystems.length > 0) {
+      subjects.push({ ...subject, systems: keptSystems });
+    }
+  }
+
+  return { subjects, autoExpandSubjects, autoExpandSystems, matchCount };
+}
+
+function BrowseBySystemTab() {
+  const { data: tree, isLoading, isError } = useTaxonomyTree();
+  const [query, setQuery] = useState('');
+  const [expandedSubjects, setExpandedSubjects] = useState<Set<string>>(new Set());
+  const [expandedSystems, setExpandedSystems] = useState<Set<string>>(new Set());
+  const navigate = useNavigate();
+
+  const filtered = useMemo(
+    () => filterTaxonomy(tree ?? [], query),
+    [tree, query],
+  );
+
+  // Effective expansion = manual toggles ∪ auto-expansion from search
+  const isSubjectExpanded = (id: string) =>
+    expandedSubjects.has(id) || filtered.autoExpandSubjects.has(id);
+  const isSystemExpanded = (id: string) =>
+    expandedSystems.has(id) || filtered.autoExpandSystems.has(id);
+
+  function toggleSubject(id: string) {
+    setExpandedSubjects((s) => {
+      const next = new Set(s);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }
+  function toggleSystem(id: string) {
+    setExpandedSystems((s) => {
+      const next = new Set(s);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }
+
+  return (
+    <div>
+      {/* Search input */}
+      <div className="relative mb-5">
+        <Search
+          size={17}
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none"
+          aria-hidden="true"
+        />
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search subjects, systems, or topics…"
+          className="
+            w-full pl-10 pr-4 py-3 rounded-xl
+            text-sm text-ink placeholder-ink-muted
+            bg-card border border-border
+            focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20
+            transition-colors
+          "
+          aria-label="Search taxonomy"
+        />
+      </div>
+
+      {isLoading && (
+        <div className="space-y-2">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-12 bg-gray-100 rounded-xl animate-pulse" />
+          ))}
+        </div>
+      )}
+
+      {isError && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-danger">
+          Failed to load taxonomy.
+        </div>
+      )}
+
+      {!isLoading && !isError && filtered.subjects.length === 0 && (
+        <div className="rounded-card border border-border bg-card p-10 text-center">
+          <Search size={32} className="mx-auto text-border mb-3" aria-hidden="true" />
+          <p className="text-ink font-semibold mb-1">No matches</p>
+          <p className="text-sm text-ink-muted">
+            Nothing in the taxonomy matches "{query}".
+          </p>
+        </div>
+      )}
+
+      {!isLoading && !isError && filtered.subjects.length > 0 && (
+        <ul className="list-none p-0 m-0 space-y-2">
+          {filtered.subjects.map((subject) => {
+            const subjectOpen = isSubjectExpanded(subject.id);
+            return (
+              <li
+                key={subject.id}
+                className="rounded-xl bg-card border border-border overflow-hidden"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleSubject(subject.id)}
+                  className="
+                    w-full flex items-center gap-3 px-4 py-3 text-left
+                    hover:bg-gray-50 transition-colors
+                  "
+                  aria-expanded={subjectOpen}
+                >
+                  <span
+                    className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-white text-xs font-bold"
+                    style={{ backgroundColor: '#1e3a5f' }}
+                    aria-hidden="true"
+                  >
+                    {subject.code}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-sm text-ink truncate">
+                      {subject.name}
+                    </p>
+                    <p className="text-xs text-ink-muted">
+                      {subject.systems.length} system
+                      {subject.systems.length === 1 ? '' : 's'}
+                    </p>
+                  </div>
+                  {subjectOpen ? (
+                    <ChevronDown size={16} className="text-ink-muted shrink-0" />
+                  ) : (
+                    <ChevronRight size={16} className="text-ink-muted shrink-0" />
+                  )}
+                </button>
+
+                {subjectOpen && subject.systems.length > 0 && (
+                  <ul className="list-none p-0 m-0 border-t border-border bg-gray-50/50">
+                    {subject.systems.map((system) => {
+                      const systemOpen = isSystemExpanded(system.id);
+                      return (
+                        <li
+                          key={system.id}
+                          className="border-b last:border-b-0 border-border"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => toggleSystem(system.id)}
+                            className="
+                              w-full flex items-center gap-3 pl-14 pr-4 py-2.5 text-left
+                              hover:bg-white transition-colors
+                            "
+                            aria-expanded={systemOpen}
+                          >
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-ink truncate">
+                                {system.name}
+                              </p>
+                              <p className="text-[11px] text-ink-muted">
+                                {system.topics.length} topic
+                                {system.topics.length === 1 ? '' : 's'}
+                              </p>
+                            </div>
+                            {systemOpen ? (
+                              <ChevronDown size={14} className="text-ink-muted shrink-0" />
+                            ) : (
+                              <ChevronRight size={14} className="text-ink-muted shrink-0" />
+                            )}
+                          </button>
+
+                          {systemOpen && system.topics.length > 0 && (
+                            <ul className="list-none p-0 m-0 bg-white">
+                              {system.topics.map((topic) => (
+                                <li key={topic.id}>
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      navigate(
+                                        `/academics/subjects/${subject.id}/systems/${system.id}/topics/${topic.id}`,
+                                      )
+                                    }
+                                    className="
+                                      w-full flex items-center justify-between gap-3
+                                      pl-20 pr-4 py-2
+                                      text-left hover:bg-blue-50 transition-colors
+                                    "
+                                  >
+                                    <span className="text-sm text-ink">
+                                      {topic.name}
+                                    </span>
+                                    <span className="flex items-center gap-2 text-xs text-ink-muted shrink-0">
+                                      {topic.chapterCount > 0 && (
+                                        <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-bold">
+                                          {topic.chapterCount}
+                                        </span>
+                                      )}
+                                      <ChevronRight size={13} aria-hidden="true" />
+                                    </span>
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// HomeTabs — two swipable tabs with slide transition
+// ---------------------------------------------------------------------------
+
+type HomeTab = 'recent' | 'browse';
+
+function HomeTabs() {
+  const [active, setActive] = useState<HomeTab>('recent');
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Minimum horizontal distance for a swipe to register (px)
+  const SWIPE_THRESHOLD = 60;
+
+  function onTouchStart(e: React.TouchEvent) {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0]?.clientX ?? null);
+  }
+  function onTouchMove(e: React.TouchEvent) {
+    setTouchEnd(e.targetTouches[0]?.clientX ?? null);
+  }
+  function onTouchEnd() {
+    if (touchStart === null || touchEnd === null) return;
+    const distance = touchStart - touchEnd;
+    if (distance > SWIPE_THRESHOLD && active === 'recent') setActive('browse');
+    if (distance < -SWIPE_THRESHOLD && active === 'browse') setActive('recent');
+  }
+
+  return (
+    <section aria-labelledby="home-tabs-heading">
+      {/* Tab pills */}
+      <div
+        role="tablist"
+        aria-label="Home sections"
+        className="
+          inline-flex items-center gap-1 p-1 rounded-full
+          bg-card border border-border shadow-sm mb-6
+        "
+      >
+        <button
+          role="tab"
+          type="button"
+          aria-selected={active === 'recent'}
+          onClick={() => setActive('recent')}
+          className={[
+            'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors',
+            active === 'recent'
+              ? 'text-white shadow-sm'
+              : 'text-ink-muted hover:text-ink',
+          ].join(' ')}
+          style={
+            active === 'recent' ? { backgroundColor: '#1e3a5f' } : undefined
+          }
+        >
+          <Flame size={14} aria-hidden="true" />
+          Recent Guides
+        </button>
+        <button
+          role="tab"
+          type="button"
+          aria-selected={active === 'browse'}
+          onClick={() => setActive('browse')}
+          className={[
+            'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors',
+            active === 'browse'
+              ? 'text-white shadow-sm'
+              : 'text-ink-muted hover:text-ink',
+          ].join(' ')}
+          style={
+            active === 'browse' ? { backgroundColor: '#1e3a5f' } : undefined
+          }
+        >
+          <TreePine size={14} aria-hidden="true" />
+          Browse by System
+        </button>
+      </div>
+
+      <h2 id="home-tabs-heading" className="sr-only">
+        Home
+      </h2>
+
+      {/* Sliding tab content */}
+      <div
+        className="relative overflow-hidden"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <div
+          className="flex w-[200%] transition-transform duration-300 ease-out"
+          style={{
+            transform: active === 'recent' ? 'translateX(0%)' : 'translateX(-50%)',
+          }}
+        >
+          <div
+            className="w-1/2 shrink-0 px-0.5"
+            role="tabpanel"
+            aria-hidden={active !== 'recent'}
+          >
+            {active === 'recent' && <RecentGuidesTab />}
+          </div>
+          <div
+            className="w-1/2 shrink-0 px-0.5"
+            role="tabpanel"
+            aria-hidden={active !== 'browse'}
+          >
+            {active === 'browse' && <BrowseBySystemTab />}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -383,9 +807,9 @@ function LandingCards() {
 // ---------------------------------------------------------------------------
 
 export function SubjectsPage() {
-  const { data: subjects, isLoading, isError, error } = useSubjects();
   const [query, setQuery] = useState('');
   const [roleModalOpen, setRoleModalOpen] = useState(false);
+  const [joinSheetOpen, setJoinSheetOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -432,16 +856,28 @@ export function SubjectsPage() {
         style={{ backgroundColor: '#1e3a5f' }}
       >
         <div className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          {/* Sign in / Register button — top-right, only when not authenticated */}
+          {/* Top-right action buttons — only when NOT signed in */}
           {!isAuthenticated() && (
-            <div className="flex justify-end mb-4">
+            <div className="flex justify-end gap-2 mb-4">
+              <button
+                type="button"
+                onClick={() => setJoinSheetOpen(true)}
+                className="
+                  inline-flex items-center gap-1.5 px-4 py-2 rounded-xl
+                  text-sm font-semibold bg-white text-primary
+                  hover:bg-blue-50 transition-colors shadow-sm
+                "
+                aria-label="Join as author or moderator"
+              >
+                Join Now
+              </button>
               <Link
                 to="/academics/login"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl
                            text-sm font-semibold border border-white/30 text-white
                            hover:bg-white/10 transition-colors"
               >
-                Sign in / Register
+                Sign in
               </Link>
             </div>
           )}
@@ -537,46 +973,172 @@ export function SubjectsPage() {
           />
         )}
 
-        <h2 className="text-xs font-semibold text-ink-muted uppercase tracking-widest mb-5">
-          Specialties
-        </h2>
-
-        <div
-          className="grid gap-4
-                     grid-cols-1
-                     sm:grid-cols-2
-                     lg:grid-cols-3
-                     xl:grid-cols-4"
-        >
-          {isLoading && <SkeletonGrid variant="subject" count={6} />}
-
-          {isError && (
-            <ErrorState
-              message={
-                error instanceof Error
-                  ? error.message
-                  : 'Failed to load subjects'
-              }
-            />
-          )}
-
-          {!isLoading && !isError && subjects?.length === 0 && (
-            <EmptyState />
-          )}
-
-          {subjects?.map((subject) => (
-            <SubjectCard key={subject.id} subject={subject} />
-          ))}
-        </div>
+        <HomeTabs />
       </main>
 
       {/* ------------------------------------------------------------------ */}
-      {/* Role request modal                                                   */}
+      {/* Role request modal (for authenticated readers)                       */}
       {/* ------------------------------------------------------------------ */}
       <RoleRequestModal
         open={roleModalOpen}
         onClose={() => setRoleModalOpen(false)}
       />
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Join Now bottom sheet (for unauthenticated visitors)                 */}
+      {/* ------------------------------------------------------------------ */}
+      {joinSheetOpen && <JoinNowSheet onClose={() => setJoinSheetOpen(false)} />}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// JoinNowSheet — bottom-sheet modal offered from the Join Now header button
+//
+// Shows the same two options as the LandingCards grid, but in a compact
+// stacked format. Each option links directly to /academics/register with
+// the requestedRole query param so the register page pre-selects the flow.
+// ---------------------------------------------------------------------------
+
+function JoinNowSheet({ onClose }: { onClose: () => void }) {
+  // Close on Escape
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="join-sheet-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        className="
+          bg-card w-full sm:max-w-md
+          rounded-t-3xl sm:rounded-2xl
+          shadow-card-hover
+          overflow-hidden
+          animate-fadeSlideIn
+        "
+      >
+        {/* Mobile grab handle */}
+        <div className="flex justify-center pt-3 pb-1 sm:hidden">
+          <span className="block w-10 h-1.5 rounded-full bg-gray-300" aria-hidden="true" />
+        </div>
+
+        {/* Header */}
+        <div className="px-5 pt-3 pb-4 sm:pt-6 border-b border-border flex items-start justify-between gap-3">
+          <div>
+            <h2
+              id="join-sheet-title"
+              className="font-sans font-bold text-lg text-primary"
+            >
+              Join PediAid Academics
+            </h2>
+            <p className="text-xs text-ink-muted mt-1">
+              Choose how you'd like to contribute.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="p-1 rounded-lg text-ink-muted hover:text-ink hover:bg-gray-100 transition-colors shrink-0"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Options */}
+        <div className="p-5 space-y-3">
+          <Link
+            to="/academics/register?role=author"
+            onClick={onClose}
+            className="
+              block rounded-xl border-2 p-4
+              hover:border-accent hover:bg-blue-50/40
+              transition-colors
+            "
+            style={{ borderColor: '#bfdbfe' }}
+          >
+            <div className="flex items-start gap-3">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{ backgroundColor: '#dbeafe' }}
+              >
+                <PencilLine size={18} className="text-primary" aria-hidden="true" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-sans font-bold text-base text-primary leading-tight">
+                  ✍️ Join as Author
+                </p>
+                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
+                  <span className="font-semibold text-ink">Eligibility:</span>{' '}
+                  MBBS / MD or equivalent medical degree.
+                </p>
+              </div>
+              <ChevronRight
+                size={16}
+                className="text-ink-muted shrink-0 mt-1"
+                aria-hidden="true"
+              />
+            </div>
+          </Link>
+
+          <Link
+            to="/academics/register?role=moderator"
+            onClick={onClose}
+            className="
+              block rounded-xl border-2 p-4
+              hover:border-amber-400 hover:bg-amber-50/40
+              transition-colors
+            "
+            style={{ borderColor: '#fde68a' }}
+          >
+            <div className="flex items-start gap-3">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{ backgroundColor: '#fef3c7' }}
+              >
+                <Scale size={18} className="text-amber-700" aria-hidden="true" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-sans font-bold text-base text-amber-800 leading-tight">
+                  ⚖️ Join as Moderator
+                </p>
+                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
+                  <span className="font-semibold text-ink">Eligibility:</span>{' '}
+                  MD / DNB with 3+ years clinical experience.
+                </p>
+              </div>
+              <ChevronRight
+                size={16}
+                className="text-ink-muted shrink-0 mt-1"
+                aria-hidden="true"
+              />
+            </div>
+          </Link>
+
+          <p className="text-[11px] text-ink-muted text-center pt-2">
+            Already have an account?{' '}
+            <Link
+              to="/academics/login"
+              onClick={onClose}
+              className="font-semibold text-accent hover:underline"
+            >
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -7,8 +7,8 @@ export { ReviewPage } from './ReviewPage';
 export { HistoryPage } from './HistoryPage';
 export { ModerationHistory } from './components/ModerationHistory';
 export { QueueStatsBar } from './components/QueueStatsBar';
-export { ReviewChecklist } from './components/ReviewChecklist';
-export { ReviewActionPanel } from './components/ReviewActionPanel';
+// ReviewChecklist and ReviewActionPanel have been removed — the review flow
+// now renders the three action buttons directly in ReviewPage.tsx.
 export type {
   QueueItem,
   ModerationStats,
