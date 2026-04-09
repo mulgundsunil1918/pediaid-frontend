@@ -503,6 +503,89 @@ export function useApprovePendingApplicant() {
   });
 }
 
+// ---------------------------------------------------------------------------
+// CME event moderation — user-posted events awaiting admin approval
+// ---------------------------------------------------------------------------
+
+export interface PendingCmeEvent {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  event_type: 'webinar' | 'workshop' | 'conference' | 'course';
+  status: string;
+  description: string | null;
+  long_description: string | null;
+  starts_at: string;
+  ends_at: string;
+  timezone: string;
+  venue: string | null;
+  address: string | null;
+  city: string | null;
+  country: string;
+  online_url: string | null;
+  organised_by: string | null;
+  speaker_name: string | null;
+  speaker_credentials: string | null;
+  speaker_bio: string | null;
+  credit_hours: string | number | null;
+  credit_type: string | null;
+  price: string | number;
+  currency: string;
+  cover_image_url: string | null;
+  brochure_url: string | null;
+  registration_url: string | null;
+  tags: string[] | null;
+  coordinators: Array<{ name?: string; email?: string; phone?: string }> | null;
+  created_at: string;
+  poster_email: string | null;
+  poster_name: string | null;
+  poster_role: string | null;
+}
+
+/** GET /admin/cme/pending — every pending user-posted event */
+export function useAdminPendingCmeEvents() {
+  return useQuery<PendingCmeEvent[], Error>({
+    queryKey: ['admin', 'cme-pending'],
+    queryFn: async () => {
+      const res = await apiFetch<{ data: PendingCmeEvent[] }>(
+        '/api/academics/admin/cme/pending',
+      );
+      return res.data;
+    },
+    staleTime: 30_000,
+  });
+}
+
+/** PUT /admin/cme/:id/approve — publish + send approval email */
+export function useApproveCmeEvent() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, string>({
+    mutationFn: (id) =>
+      apiFetch<void>(`/api/academics/admin/cme/${id}/approve`, {
+        method: 'PUT',
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'cme-pending'] });
+    },
+  });
+}
+
+/** PUT /admin/cme/:id/reject — body: { reason } — rejects + sends email */
+export function useRejectCmeEvent() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: string; reason: string }>({
+    mutationFn: ({ id, reason }) =>
+      apiFetch<void>(`/api/academics/admin/cme/${id}/reject`, {
+        method: 'PUT',
+        body: JSON.stringify({ reason }),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'cme-pending'] });
+    },
+  });
+}
+
 /** PUT /admin/users/:id/reject-role — demote pending_* back to reader */
 export function useRejectPendingApplicant() {
   const qc = useQueryClient();

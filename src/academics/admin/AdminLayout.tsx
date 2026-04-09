@@ -17,11 +17,13 @@ import {
   X,
   ShieldCheck,
   UserPlus,
+  Sparkles,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import {
   usePlatformStats,
   useAdminPendingApplicants,
+  useAdminPendingCmeEvents,
 } from './hooks/useAdmin';
 
 // ---------------------------------------------------------------------------
@@ -86,12 +88,14 @@ function NavItem({ to, icon, label, badge = 0, onClick }: NavItemProps) {
 function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const { data: stats } = usePlatformStats();
   const { data: pendingApplicants } = useAdminPendingApplicants();
+  const { data: pendingCmeEvents } = useAdminPendingCmeEvents();
 
   const pendingCredentials = stats?.usersByRole
     ? (stats.usersByRole['pending_credentials'] ?? 0)
     : 0;
   const pendingChapters = stats?.chaptersByStatus?.['pending'] ?? 0;
   const pendingApplicationsCount = pendingApplicants?.length ?? 0;
+  const pendingCmeCount = pendingCmeEvents?.length ?? 0;
 
   return (
     <div className="flex flex-col h-full">
@@ -151,6 +155,13 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           to="/academics/admin/cme"
           icon={<Award size={17} />}
           label="CME Events"
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/cme/pending"
+          icon={<Sparkles size={17} />}
+          label="Pending Events"
+          badge={pendingCmeCount}
           onClick={onNavClick}
         />
         <NavItem
