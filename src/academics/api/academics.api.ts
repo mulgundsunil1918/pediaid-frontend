@@ -3,6 +3,7 @@
 // =============================================================================
 
 import { useAuthStore } from '../../store/authStore';
+import { refreshAccessToken } from '../auth/sessionRefresh';
 import type {
   Subject,
   AcadSystem,
@@ -24,8 +25,9 @@ const BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
 async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
+  _retried = false,
 ): Promise<T> {
-  const { accessToken, clearAuth } = useAuthStore.getState();
+  const { accessToken } = useAuthStore.getState();
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -42,9 +44,20 @@ async function apiFetch<T>(
   });
 
   if (response.status === 401) {
-    // Token expired or invalid — wipe local auth state
-    clearAuth();
-    // Redirect to login without a hard reload
+    // A 401 on a normal API call usually just means the access token
+    // expired. Try to silently rotate using the refresh token and replay
+    // the original request once. Only if the refresh itself fails do we
+    // actually clear auth and send the user to the login page — this is
+    // what lets users stay logged in "permanently" across long idle
+    // sessions.
+    if (!_retried) {
+      const ok = await refreshAccessToken();
+      if (ok) {
+        return apiFetch<T>(path, options, true);
+      }
+    }
+    // Refresh failed or we already retried — surface the 401.
+    // refreshAccessToken() has already cleared auth on its own failure.
     window.dispatchEvent(new CustomEvent('acad:unauthorized'));
     const body = (await response.json().catch(() => ({}))) as ApiError;
     throw new AcademicsApiError(body.message ?? 'Unauthorized', 401);

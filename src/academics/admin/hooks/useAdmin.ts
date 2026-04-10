@@ -4,29 +4,51 @@
 
 import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { useAuthStore } from '../../../store/authStore';
+import { refreshAccessToken } from '../../auth/sessionRefresh';
 
 // ---------------------------------------------------------------------------
 // API base + fetch wrapper
+//
+// Keeps its own wrapper (rather than importing academics.api.ts) because
+// admin calls use plain Error, not AcademicsApiError. Wires into the
+// silent refresh loop so a stale access token doesn't kick admins to
+// the login page mid-action, and logs every call + failure to the
+// browser console so Render log correlation is straightforward.
 // ---------------------------------------------------------------------------
 
 const BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
 
-async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const { accessToken, clearAuth } = useAuthStore.getState();
+async function apiFetch<T>(
+  path: string,
+  options: RequestInit = {},
+  _retried = false,
+): Promise<T> {
+  const { accessToken } = useAuthStore.getState();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string>),
   };
   if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+
+  console.log('[admin.api] →', options.method ?? 'GET', path);
   const res = await fetch(`${BASE}${path}`, { ...options, headers });
+
+  if (res.status === 401 && !_retried) {
+    // Try silent refresh once before giving up — this keeps admins
+    // logged in across long idle periods.
+    const ok = await refreshAccessToken();
+    if (ok) return apiFetch<T>(path, options, true);
+  }
   if (res.status === 401) {
-    clearAuth();
     window.dispatchEvent(new CustomEvent('acad:unauthorized'));
   }
   if (!res.ok) {
     const body = (await res.json().catch(() => ({}))) as { message?: string };
-    throw new Error(body.message ?? `Request failed: ${res.status}`);
+    const msg = body.message ?? `Request failed: ${res.status}`;
+    console.error('[admin.api] ✗', options.method ?? 'GET', path, res.status, msg);
+    throw new Error(msg);
   }
+  console.log('[admin.api] ✓', options.method ?? 'GET', path, res.status);
   if (res.status === 204) return undefined as T;
   return res.json() as Promise<T>;
 }

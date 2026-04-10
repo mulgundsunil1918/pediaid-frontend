@@ -2,11 +2,16 @@
 // academics/auth/LoginPage.tsx — /academics/login
 // =============================================================================
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
 import type { AuthResponse } from '../types';
+
+// localStorage key for the "Remember me on this device" saved email.
+// When set, the login page pre-fills the email field on mount and we also
+// ask the backend for a 30-day refresh token instead of the default 7 days.
+const SAVED_EMAIL_KEY = 'acad_saved_email';
 
 // ---------------------------------------------------------------------------
 // LoginPage
@@ -17,8 +22,24 @@ export function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+
+  // On mount, restore a saved email if one exists. Having an email in
+  // localStorage means the last successful login on this device opted in
+  // to "remember me", so we also pre-check the checkbox.
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(SAVED_EMAIL_KEY);
+      if (saved) {
+        setEmail(saved);
+        setRememberMe(true);
+      }
+    } catch {
+      // localStorage blocked (private mode, etc.) — silently ignore
+    }
+  }, []);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -29,7 +50,11 @@ export function LoginPage() {
       const res = await fetch(`${API_BASE}/api/academics/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), password }),
+        body: JSON.stringify({
+          email: email.trim(),
+          password,
+          rememberMe,
+        }),
       });
 
       if (!res.ok) {
@@ -46,6 +71,18 @@ export function LoginPage() {
 
       const data: AuthResponse = await res.json();
       useAuthStore.getState().setAuth(data);
+
+      // Persist (or clear) the saved email depending on the checkbox.
+      try {
+        if (rememberMe) {
+          localStorage.setItem(SAVED_EMAIL_KEY, email.trim());
+        } else {
+          localStorage.removeItem(SAVED_EMAIL_KEY);
+        }
+      } catch {
+        // localStorage blocked — non-fatal
+      }
+
       navigate('/academics/dashboard', { replace: true });
     } catch {
       setError('Network error. Please try again.');
@@ -104,7 +141,12 @@ export function LoginPage() {
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} noValidate className="space-y-5">
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            autoComplete="on"
+            className="space-y-5"
+          >
             {/* Email */}
             <div>
               <label
@@ -158,6 +200,24 @@ export function LoginPage() {
                            transition-colors"
               />
             </div>
+
+            {/* Remember me */}
+            <label
+              htmlFor="login-remember"
+              className="flex items-center gap-2.5 select-none cursor-pointer"
+            >
+              <input
+                id="login-remember"
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 rounded border-border text-accent
+                           focus:ring-2 focus:ring-accent/30 cursor-pointer"
+              />
+              <span className="text-sm text-ink">
+                Remember me on this device
+              </span>
+            </label>
 
             {/* Submit */}
             <button

@@ -13,41 +13,38 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NavSidebar, SIDEBAR_WIDTH } from './components/NavSidebar';
 import { useAuthStore } from './store/authStore';
+import { initSessionRefresh } from './academics/auth/sessionRefresh';
 
-// Academics browse pages
-import { SubjectsPage } from './academics/browse/SubjectsPage';
-import { SystemsPage } from './academics/browse/SystemsPage';
-import { TopicsPage } from './academics/browse/TopicsPage';
-import { ChapterListPage } from './academics/browse/ChapterListPage';
+// All route-level pages are lazy-loaded so the initial bundle stays small
+// and the splash screen hands off as quickly as possible. Each group below
+// maps module-named exports to default exports for React.lazy.
 
-// Academics editor pages
-import { EditorPage } from './academics/editor/EditorPage';
+const SubjectsPage     = lazy(() => import('./academics/browse/SubjectsPage').then(m => ({ default: m.SubjectsPage })));
+const SystemsPage      = lazy(() => import('./academics/browse/SystemsPage').then(m => ({ default: m.SystemsPage })));
+const TopicsPage       = lazy(() => import('./academics/browse/TopicsPage').then(m => ({ default: m.TopicsPage })));
+const ChapterListPage  = lazy(() => import('./academics/browse/ChapterListPage').then(m => ({ default: m.ChapterListPage })));
 
-// Academics reader page
-import { ChapterReaderPage } from './academics/reader/ChapterReaderPage';
+const EditorPage       = lazy(() => import('./academics/editor/EditorPage').then(m => ({ default: m.EditorPage })));
+const ChapterReaderPage= lazy(() => import('./academics/reader/ChapterReaderPage').then(m => ({ default: m.ChapterReaderPage })));
 
-// Academics moderation pages
-import { ModerationQueuePage } from './academics/moderation/ModerationQueuePage';
-import { ReviewPage } from './academics/moderation/ReviewPage';
-import { HistoryPage } from './academics/moderation/HistoryPage';
+const ModerationQueuePage = lazy(() => import('./academics/moderation/ModerationQueuePage').then(m => ({ default: m.ModerationQueuePage })));
+const ReviewPage       = lazy(() => import('./academics/moderation/ReviewPage').then(m => ({ default: m.ReviewPage })));
+const HistoryPage      = lazy(() => import('./academics/moderation/HistoryPage').then(m => ({ default: m.HistoryPage })));
 
-// Academics auth pages
-import { LoginPage, RegisterPage } from './academics/auth/index';
-import { ForgotPasswordPage } from './academics/auth/ForgotPasswordPage';
-import { ResetPasswordPage } from './academics/auth/ResetPasswordPage';
+const LoginPage        = lazy(() => import('./academics/auth/index').then(m => ({ default: m.LoginPage })));
+const RegisterPage     = lazy(() => import('./academics/auth/index').then(m => ({ default: m.RegisterPage })));
+const ForgotPasswordPage = lazy(() => import('./academics/auth/ForgotPasswordPage').then(m => ({ default: m.ForgotPasswordPage })));
+const ResetPasswordPage  = lazy(() => import('./academics/auth/ResetPasswordPage').then(m => ({ default: m.ResetPasswordPage })));
 
-// Academics dashboard pages
-import { DashboardPage } from './academics/dashboard/DashboardPage';
-import { MyChaptersPage } from './academics/dashboard/MyChaptersPage';
-import { ProfilePage } from './academics/dashboard/ProfilePage';
+const DashboardPage    = lazy(() => import('./academics/dashboard/DashboardPage').then(m => ({ default: m.DashboardPage })));
+const MyChaptersPage   = lazy(() => import('./academics/dashboard/MyChaptersPage').then(m => ({ default: m.MyChaptersPage })));
+const ProfilePage      = lazy(() => import('./academics/dashboard/ProfilePage').then(m => ({ default: m.ProfilePage })));
 
-// CME events pages
-import { CMEListPage } from './academics/cme/CMEListPage';
-import { CMEDetailPage } from './academics/cme/CMEDetailPage';
-import { CertificatePage } from './academics/cme/CertificatePage';
+const CMEListPage      = lazy(() => import('./academics/cme/CMEListPage').then(m => ({ default: m.CMEListPage })));
+const CMEDetailPage    = lazy(() => import('./academics/cme/CMEDetailPage').then(m => ({ default: m.CMEDetailPage })));
+const CertificatePage  = lazy(() => import('./academics/cme/CertificatePage').then(m => ({ default: m.CertificatePage })));
 
-// Search page
-import { SearchPage } from './academics/search/SearchPage';
+const SearchPage       = lazy(() => import('./academics/search/SearchPage').then(m => ({ default: m.SearchPage })));
 
 // Nelson TOC browser
 const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then(m => ({ default: m.NelsonBrowser })));
@@ -105,6 +102,20 @@ function UnauthorizedListener() {
 }
 
 // ---------------------------------------------------------------------------
+// Silent refresh boot — kicks off the session refresh loop on app load so
+// a stale access token gets rotated before any API call, and schedules
+// periodic rotation every 50 minutes. The loop only runs while there is
+// actually a refresh token in storage.
+// ---------------------------------------------------------------------------
+
+function SessionRefreshBoot() {
+  useEffect(() => {
+    initSessionRefresh();
+  }, []);
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Root
 // ---------------------------------------------------------------------------
 
@@ -113,7 +124,13 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <UnauthorizedListener />
+        <SessionRefreshBoot />
         <AppLayout>
+          <Suspense
+            fallback={
+              <div className="p-8 text-ink-muted text-sm">Loading…</div>
+            }
+          >
           <Routes>
             {/* Default redirect */}
             <Route path="/" element={<Navigate to="/academics" replace />} />
@@ -220,6 +237,7 @@ export default function App() {
               }
             />
           </Routes>
+          </Suspense>
         </AppLayout>
       </BrowserRouter>
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}

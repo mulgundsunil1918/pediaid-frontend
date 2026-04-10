@@ -5,22 +5,43 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '../../../store/authStore';
 import { AcademicsApiError } from '../../api/academics.api';
+import { refreshAccessToken } from '../../auth/sessionRefresh';
 
 const BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
 
-async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const { accessToken, clearAuth } = useAuthStore.getState();
+// Moderation API wrapper: wires into the silent refresh loop so a stale
+// access token never knocks a moderator out mid-review, and logs every
+// call + failure to the console so the real backend error is visible
+// instead of a generic "Approval failed".
+async function apiFetch<T>(
+  path: string,
+  options: RequestInit = {},
+  _retried = false,
+): Promise<T> {
+  const { accessToken } = useAuthStore.getState();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string>),
   };
   if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+
+  console.log('[moderation.api] →', options.method ?? 'GET', path);
   const res = await fetch(`${BASE}${path}`, { ...options, headers });
-  if (res.status === 401) { clearAuth(); window.dispatchEvent(new CustomEvent('acad:unauthorized')); }
+
+  if (res.status === 401 && !_retried) {
+    const ok = await refreshAccessToken();
+    if (ok) return apiFetch<T>(path, options, true);
+  }
+  if (res.status === 401) {
+    window.dispatchEvent(new CustomEvent('acad:unauthorized'));
+  }
   if (!res.ok) {
     const body = (await res.json().catch(() => ({}))) as { message?: string };
-    throw new AcademicsApiError(body.message ?? `Request failed: ${res.status}`, res.status);
+    const msg = body.message ?? `Request failed: ${res.status}`;
+    console.error('[moderation.api] ✗', options.method ?? 'GET', path, res.status, msg);
+    throw new AcademicsApiError(msg, res.status);
   }
+  console.log('[moderation.api] ✓', options.method ?? 'GET', path, res.status);
   if (res.status === 204) return undefined as T;
   return res.json() as Promise<T>;
 }
