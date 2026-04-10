@@ -27,8 +27,12 @@
       // cold visitor would otherwise block on a ~30s spin-up. Firing this
       // ping during the splash hides that latency. Fire-and-forget — we
       // don't care about the response, only about triggering the boot.
+      //
+      // Uses /api/ping rather than /health because /api/ping is the
+      // lightweight keep-alive route that skips rate limiting and DB
+      // checks — it's the fastest possible wake-up signal.
       try {
-        fetch('https://pediaid-backend.onrender.com/api/academics/health', {
+        fetch('https://pediaid-backend.onrender.com/api/ping', {
           method: 'GET',
           mode: 'cors',
           cache: 'no-store',

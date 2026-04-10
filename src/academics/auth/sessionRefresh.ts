@@ -20,8 +20,15 @@ import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
 import type { AuthResponse } from '../types';
 
-/** How often to proactively rotate the access token while the tab is open. */
-const REFRESH_INTERVAL_MS = 50 * 60 * 1000; // 50 minutes
+/**
+ * How often to proactively rotate the access token while the tab is open.
+ *
+ * With a 7-day access token TTL on the backend, we rotate every 6 days so
+ * any still-mounted tab continuously refreshes its credentials before the
+ * current token expires. Users who keep a tab open for weeks at a time
+ * will never see a login page.
+ */
+const REFRESH_INTERVAL_MS = 6 * 24 * 60 * 60 * 1000; // 6 days
 
 let refreshTimer: ReturnType<typeof setInterval> | null = null;
 // De-duplicate concurrent refresh attempts — if several 401s land at once
