@@ -2,7 +2,7 @@
 // browse/SubjectsPage.tsx — /academics
 // =============================================================================
 
-import { useState, useEffect, useMemo, type FormEvent } from 'react';
+import { useState, useEffect, useMemo, useRef, type FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Search,
@@ -16,6 +16,9 @@ import {
   Flame,
   TreePine,
   User2,
+  CalendarDays,
+  MapPin,
+  Sparkles,
 } from 'lucide-react';
 import {
   useRecentGuides,
@@ -23,6 +26,7 @@ import {
   type RecentGuide,
   type TaxonomyTreeSubject,
 } from './hooks/useBrowse';
+import { useCMEEvents, type CMEEvent } from '../cme/hooks/useCME';
 import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
 import { RoleRequestModal } from '../auth/RoleRequestModal';
@@ -532,18 +536,191 @@ function BrowseBySystemTab() {
 }
 
 // ---------------------------------------------------------------------------
-// HomeTabs — two swipable tabs with slide transition
+// Tab 3: CME Events — next 4 upcoming events
 // ---------------------------------------------------------------------------
 
-type HomeTab = 'recent' | 'browse';
+function CMEEventCard({ event }: { event: CMEEvent }) {
+  const date = new Date(event.startsAt);
+  const dateStr = date.toLocaleDateString(undefined, {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+  return (
+    <Link
+      to={`/academics/cme/${event.slug}`}
+      className="
+        shrink-0 w-72 sm:w-80
+        acad-card p-5
+        flex flex-col gap-3
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
+      "
+      aria-label={`Open ${event.title}`}
+    >
+      <span
+        className="self-start acad-badge text-white text-[10px]"
+        style={{ backgroundColor: '#7c3aed' }}
+      >
+        {event.eventType.toUpperCase()}
+      </span>
+      <h3 className="font-sans font-semibold text-base text-primary leading-snug line-clamp-2">
+        {event.title}
+      </h3>
+      <div className="mt-auto pt-1 flex items-center gap-3 text-xs text-ink-muted flex-wrap">
+        <span className="inline-flex items-center gap-1">
+          <CalendarDays size={11} aria-hidden="true" />
+          {dateStr}
+        </span>
+        {event.venue && (
+          <span className="inline-flex items-center gap-1 min-w-0 truncate">
+            <MapPin size={11} aria-hidden="true" />
+            <span className="truncate">{event.venue}</span>
+          </span>
+        )}
+      </div>
+    </Link>
+  );
+}
+
+function CMEEventsTab() {
+  const { data, isLoading, isError } = useCMEEvents({ status: 'upcoming' });
+  const events = (data?.data ?? []).slice(0, 12);
+
+  if (isLoading) {
+    return (
+      <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-0 sm:px-0">
+        {[1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className="shrink-0 w-72 sm:w-80 h-44 rounded-card bg-gray-100 animate-pulse"
+            aria-hidden="true"
+          />
+        ))}
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="rounded-card border border-red-200 bg-red-50 p-6 text-center text-sm text-danger">
+        Failed to load upcoming events.
+      </div>
+    );
+  }
+
+  if (events.length === 0) {
+    return (
+      <div className="rounded-card border border-border bg-card p-10 text-center">
+        <CalendarDays size={36} className="mx-auto text-border mb-3" aria-hidden="true" />
+        <p className="text-ink font-semibold mb-1">No upcoming CME events</p>
+        <p className="text-sm text-ink-muted">Check back later or post an event if you're an organiser.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="
+        flex gap-4 overflow-x-auto pb-4
+        snap-x snap-mandatory
+        -mx-4 px-4 sm:-mx-0 sm:px-0
+        scrollbar-thin scrollbar-thumb-border
+      "
+      role="region"
+      aria-label="Upcoming CME events"
+    >
+      {events.map((e) => (
+        <div key={e.id} className="snap-start">
+          <CMEEventCard event={e} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// HomeTabs — big Instagram-style shifter
+//
+// Three big tactile tab cards arranged in a row. The active tab is visually
+// distinct: deep-navy gradient background, white text, slight scale-up +
+// shadow lift. Inactive tabs sit on a soft card with muted text. Under the
+// row there's a thin animated indicator bar that slides between tabs.
+// The content area below swipes between the three panels.
+// ---------------------------------------------------------------------------
+
+interface TabDef {
+  id: HomeTab;
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  /** Gradient used by the active-state background. */
+  gradient: string;
+}
+
+type HomeTab = 'recent' | 'browse' | 'cme';
+
+const TABS: TabDef[] = [
+  {
+    id: 'recent',
+    title: 'Recent',
+    subtitle: 'Latest guides',
+    icon: <Flame size={22} aria-hidden="true" />,
+    gradient: 'linear-gradient(135deg, #0ea5e9 0%, #1e3a5f 100%)',
+  },
+  {
+    id: 'browse',
+    title: 'Browse',
+    subtitle: 'By system',
+    icon: <TreePine size={22} aria-hidden="true" />,
+    gradient: 'linear-gradient(135deg, #10b981 0%, #047857 100%)',
+  },
+  {
+    id: 'cme',
+    title: 'CME',
+    subtitle: 'Upcoming events',
+    icon: <CalendarDays size={22} aria-hidden="true" />,
+    gradient: 'linear-gradient(135deg, #a855f7 0%, #6d28d9 100%)',
+  },
+];
 
 function HomeTabs() {
   const [active, setActive] = useState<HomeTab>('recent');
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  // Minimum horizontal distance for a swipe to register (px)
+  // Refs to each tab button so we can animate the underline indicator
+  // between them based on their actual layout.
+  const btnRefs = useRef<Record<HomeTab, HTMLButtonElement | null>>({
+    recent: null,
+    browse: null,
+    cme: null,
+  });
+  const [indicator, setIndicator] = useState<{ left: number; width: number }>({
+    left: 0,
+    width: 0,
+  });
+
+  // Re-measure when the active tab changes or the viewport resizes.
+  useEffect(() => {
+    function measure() {
+      const el = btnRefs.current[active];
+      const parent = el?.parentElement;
+      if (el && parent) {
+        const parentRect = parent.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
+        setIndicator({
+          left: rect.left - parentRect.left,
+          width: rect.width,
+        });
+      }
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [active]);
+
   const SWIPE_THRESHOLD = 60;
+  const tabIndex = TABS.findIndex((t) => t.id === active);
 
   function onTouchStart(e: React.TouchEvent) {
     setTouchEnd(null);
@@ -555,64 +732,129 @@ function HomeTabs() {
   function onTouchEnd() {
     if (touchStart === null || touchEnd === null) return;
     const distance = touchStart - touchEnd;
-    if (distance > SWIPE_THRESHOLD && active === 'recent') setActive('browse');
-    if (distance < -SWIPE_THRESHOLD && active === 'browse') setActive('recent');
+    if (distance > SWIPE_THRESHOLD && tabIndex < TABS.length - 1) {
+      setActive(TABS[tabIndex + 1]!.id);
+    } else if (distance < -SWIPE_THRESHOLD && tabIndex > 0) {
+      setActive(TABS[tabIndex - 1]!.id);
+    }
+  }
+
+  // Keyboard arrow-left / arrow-right navigation
+  function onTabKeyDown(e: React.KeyboardEvent, idx: number) {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      setActive(TABS[(idx + 1) % TABS.length]!.id);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      setActive(TABS[(idx - 1 + TABS.length) % TABS.length]!.id);
+    }
   }
 
   return (
     <section aria-labelledby="home-tabs-heading">
-      {/* Tab pills */}
-      <div
-        role="tablist"
-        aria-label="Home sections"
-        className="
-          inline-flex items-center gap-1 p-1 rounded-full
-          bg-card border border-border shadow-sm mb-6
-        "
-      >
-        <button
-          role="tab"
-          type="button"
-          aria-selected={active === 'recent'}
-          onClick={() => setActive('recent')}
-          className={[
-            'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors',
-            active === 'recent'
-              ? 'text-white shadow-sm'
-              : 'text-ink-muted hover:text-ink',
-          ].join(' ')}
-          style={
-            active === 'recent' ? { backgroundColor: '#1e3a5f' } : undefined
-          }
-        >
-          <Flame size={14} aria-hidden="true" />
-          Recent Guides
-        </button>
-        <button
-          role="tab"
-          type="button"
-          aria-selected={active === 'browse'}
-          onClick={() => setActive('browse')}
-          className={[
-            'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors',
-            active === 'browse'
-              ? 'text-white shadow-sm'
-              : 'text-ink-muted hover:text-ink',
-          ].join(' ')}
-          style={
-            active === 'browse' ? { backgroundColor: '#1e3a5f' } : undefined
-          }
-        >
-          <TreePine size={14} aria-hidden="true" />
-          Browse by System
-        </button>
-      </div>
-
       <h2 id="home-tabs-heading" className="sr-only">
         Home
       </h2>
 
-      {/* Sliding tab content */}
+      {/* ── Big Instagram-style shifter row ───────────────────────────── */}
+      <div
+        role="tablist"
+        aria-label="Academics sections"
+        className="relative flex gap-2.5 sm:gap-3 mb-2 overflow-x-auto scrollbar-thin -mx-4 px-4 sm:-mx-0 sm:px-0"
+      >
+        {TABS.map((tab, idx) => {
+          const isActive = tab.id === active;
+          return (
+            <button
+              key={tab.id}
+              ref={(el) => {
+                btnRefs.current[tab.id] = el;
+              }}
+              role="tab"
+              type="button"
+              aria-selected={isActive}
+              onClick={() => setActive(tab.id)}
+              onKeyDown={(e) => onTabKeyDown(e, idx)}
+              className={[
+                'group shrink-0',
+                'flex items-center gap-3 sm:gap-4',
+                'rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4',
+                'text-left transition-all duration-300 ease-out',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent',
+                isActive
+                  ? 'text-white scale-[1.03] shadow-lg'
+                  : 'text-ink bg-card border border-border hover:border-accent/40 hover:shadow-sm',
+              ].join(' ')}
+              style={isActive ? { background: tab.gradient } : undefined}
+            >
+              {/* Icon bubble */}
+              <span
+                className={[
+                  'flex items-center justify-center shrink-0',
+                  'w-11 h-11 sm:w-12 sm:h-12 rounded-2xl',
+                  'transition-all duration-300',
+                  isActive
+                    ? 'bg-white/20 backdrop-blur-sm'
+                    : 'bg-gray-50 group-hover:bg-blue-50',
+                ].join(' ')}
+              >
+                <span
+                  className={[
+                    'transition-colors duration-300',
+                    isActive ? 'text-white' : 'text-primary',
+                  ].join(' ')}
+                >
+                  {tab.icon}
+                </span>
+              </span>
+
+              {/* Title + subtitle */}
+              <div className="flex flex-col leading-tight min-w-0">
+                <span
+                  className={[
+                    'font-sans font-bold text-[15px] sm:text-base',
+                    isActive ? 'text-white' : 'text-primary',
+                  ].join(' ')}
+                >
+                  {tab.title}
+                </span>
+                <span
+                  className={[
+                    'text-[11px] sm:text-xs mt-0.5',
+                    isActive ? 'text-white/85' : 'text-ink-muted',
+                  ].join(' ')}
+                >
+                  {tab.subtitle}
+                </span>
+              </div>
+
+              {/* Active sparkle — tiny decorative detail */}
+              {isActive && (
+                <Sparkles
+                  size={14}
+                  className="ml-auto text-white/70 hidden sm:block"
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ── Sliding indicator bar under the tab row ─────────────────────── */}
+      <div className="relative h-1 mb-5 -mx-4 sm:-mx-0 px-4 sm:px-0">
+        <div
+          className="absolute top-0 h-1 rounded-full transition-all duration-300 ease-out"
+          style={{
+            left: indicator.left + 16 /* match container px-4 on mobile */,
+            width: indicator.width,
+            background: TABS.find((t) => t.id === active)?.gradient,
+            opacity: 0.7,
+          }}
+        />
+      </div>
+
+      {/* ── Sliding content area ────────────────────────────────────────── */}
       <div
         className="relative overflow-hidden"
         onTouchStart={onTouchStart}
@@ -620,27 +862,33 @@ function HomeTabs() {
         onTouchEnd={onTouchEnd}
       >
         <div
-          className="flex w-[200%] transition-transform duration-300 ease-out"
+          className="flex w-[300%] transition-transform duration-300 ease-out"
           style={{
-            transform: active === 'recent' ? 'translateX(0%)' : 'translateX(-50%)',
+            transform: `translateX(-${(tabIndex * 100) / TABS.length}%)`,
           }}
         >
-          <div
-            className="w-1/2 shrink-0 px-0.5"
-            role="tabpanel"
-            aria-hidden={active !== 'recent'}
-          >
-            {active === 'recent' && <RecentGuidesTab />}
-          </div>
-          <div
-            className="w-1/2 shrink-0 px-0.5"
-            role="tabpanel"
-            aria-hidden={active !== 'browse'}
-          >
-            {active === 'browse' && <BrowseBySystemTab />}
-          </div>
+          {TABS.map((tab) => (
+            <div
+              key={tab.id}
+              className="shrink-0 px-0.5"
+              style={{ width: `${100 / TABS.length}%` }}
+              role="tabpanel"
+              aria-hidden={tab.id !== active}
+            >
+              {tab.id === active && (
+                tab.id === 'recent' ? <RecentGuidesTab /> :
+                tab.id === 'browse' ? <BrowseBySystemTab /> :
+                <CMEEventsTab />
+              )}
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* ── Hint row ────────────────────────────────────────────────────── */}
+      <p className="mt-4 text-[11px] text-ink-muted text-center">
+        Swipe or tap a card to switch sections
+      </p>
     </section>
   );
 }
