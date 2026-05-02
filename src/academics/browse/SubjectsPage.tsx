@@ -26,6 +26,7 @@ import {
   type RecentGuide,
   type TaxonomyTreeSubject,
 } from './hooks/useBrowse';
+import { ModulesHub } from './ModulesHub';
 import { useCMEEvents, type CMEEvent } from '../cme/hooks/useCME';
 import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
@@ -197,7 +198,7 @@ function RecentGuideCard({ guide }: { guide: RecentGuide }) {
   );
 }
 
-function RecentGuidesTab() {
+export function RecentGuidesTab() {
   const { data, isLoading, isError } = useRecentGuides(12);
   const guides = data ?? [];
 
@@ -331,7 +332,7 @@ function filterTaxonomy(
   return { subjects, autoExpandSubjects, autoExpandSystems, matchCount };
 }
 
-function BrowseBySystemTab() {
+export function BrowseBySystemTab() {
   const { data: tree, isLoading, isError } = useTaxonomyTree();
   const [query, setQuery] = useState('');
   const [expandedSubjects, setExpandedSubjects] = useState<Set<string>>(new Set());
@@ -1060,7 +1061,7 @@ export function SubjectsPage() {
           />
         )}
 
-        <HomeTabs />
+        <ModulesHub />
       </main>
 
       {/* ------------------------------------------------------------------ */}
