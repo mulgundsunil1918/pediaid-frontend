@@ -7,9 +7,6 @@
 import { Link } from 'react-router-dom';
 import {
   Flame,
-  TreePine,
-  CalendarDays,
-  BookOpen,
   Library,
   ChevronRight,
   Lock,
@@ -46,39 +43,10 @@ const MODULES: ModuleDef[] = [
     href: '/academics/recent',
     status: 'live',
   },
-  {
-    id: 'browse',
-    title: 'Browse by System',
-    subtitle: 'Taxonomy',
-    description:
-      'Explore guides organised by clinical specialty, system, and topic.',
-    icon: <TreePine size={22} />,
-    gradient: 'linear-gradient(135deg, #10b981 0%, #047857 100%)',
-    href: '/academics/browse',
-    status: 'live',
-  },
-  {
-    id: 'cme',
-    title: 'CME Events',
-    subtitle: 'Live + on-demand',
-    description:
-      'Upcoming and recent continuing medical education events with certificates.',
-    icon: <CalendarDays size={22} />,
-    gradient: 'linear-gradient(135deg, #a855f7 0%, #6d28d9 100%)',
-    href: '/academics/cme',
-    status: 'live',
-  },
-  {
-    id: 'nelson',
-    title: 'Nelson Pediatrics',
-    subtitle: 'Reference',
-    description:
-      'Browse the table of contents of the Nelson Textbook of Pediatrics.',
-    icon: <BookOpen size={22} />,
-    gradient: 'linear-gradient(135deg, #1d4ed8 0%, #1e3a5f 100%)',
-    href: '/academics/nelson',
-    status: 'live',
-  },
+  // Browse by System / CME Events / Nelson Pediatrics tiles intentionally
+  // hidden — the dedicated routes (/academics/browse, /academics/cme,
+  // /academics/nelson) still work and the underlying page components are
+  // kept in the codebase. Re-add tiles here when you want them surfaced.
   {
     id: 'iap-action-plan-2026',
     title: 'IAP Action Plan 2026',
