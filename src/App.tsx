@@ -49,6 +49,11 @@ const SearchPage       = lazy(() => import('./academics/search/SearchPage').then
 // Nelson TOC browser
 const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then(m => ({ default: m.NelsonBrowser })));
 
+// Guidelines (IAP STG, NNF CPG, ...)
+const GuidelinesIndexPage = lazy(() => import('./academics/guidelines/GuidelinesIndexPage').then(m => ({ default: m.GuidelinesIndexPage })));
+const GuidelineBrowserPage = lazy(() => import('./academics/guidelines/GuidelineBrowserPage').then(m => ({ default: m.GuidelineBrowserPage })));
+const GuidelineChapterPage = lazy(() => import('./academics/guidelines/GuidelineChapterPage').then(m => ({ default: m.GuidelineChapterPage })));
+
 // Admin pages
 const AdminOverviewPage = lazy(() => import('./academics/admin/pages/AdminOverviewPage').then(m => ({ default: m.AdminOverviewPage })));
 const TaxonomyPage = lazy(() => import('./academics/admin/pages/TaxonomyPage').then(m => ({ default: m.TaxonomyPage })));
@@ -187,6 +192,11 @@ export default function App() {
 
             {/* ── Nelson TOC browser ── */}
             <Route path="/academics/nelson" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><NelsonBrowser /></Suspense>} />
+
+            {/* ── Guidelines (IAP STG, NNF CPG, ...) ── */}
+            <Route path="/academics/guidelines" element={<GuidelinesIndexPage />} />
+            <Route path="/academics/guidelines/:slug" element={<GuidelineBrowserPage />} />
+            <Route path="/academics/guidelines/:slug/c/:chapterNo" element={<GuidelineChapterPage />} />
 
             {/* ── PediAid Academics admin routes ── */}
             <Route path="/academics/admin" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AdminOverviewPage /></Suspense>} />

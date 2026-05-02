@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   LayoutDashboard,
+  Library,
 } from 'lucide-react';
 import { useState } from 'react';
 import { GlobalSearchBar } from '../academics/search/GlobalSearchBar';
@@ -36,6 +37,11 @@ function useNavItems(): NavItem[] {
       icon: <GraduationCap size={18} aria-hidden="true" />,
       // Browse root — must be exact, otherwise it highlights on every /academics/* URL
       end: true,
+    },
+    {
+      label: 'Guidelines',
+      href: '/academics/guidelines',
+      icon: <Library size={18} aria-hidden="true" />,
     },
     {
       label: 'Dashboard',
