@@ -3,7 +3,7 @@
   "version": "2021",
   "base_url": "https://nnfi.org/",
   "generated_at": "2026-05-02",
-  "total_chapters": 20,
+  "total_chapters": 26,
   "chapters": [
     {
       "no": "001",
@@ -224,6 +224,72 @@
       "external": true,
       "version_label": "Full guideline",
       "keywords": ["ROP", "retinopathy of prematurity", "preterm eye", "ROP screening"]
+    },
+    {
+      "no": "021",
+      "title": "NNF CPG Guidelines on MAGICapp (all guidelines)",
+      "section": "Interactive (MAGICapp)",
+      "slug": "magicapp-all",
+      "file": "magicapp-nnf",
+      "url": "https://app.magicapp.org/#/nnf/guidelines",
+      "external": true,
+      "version_label": "Interactive web app",
+      "keywords": ["MAGICapp", "interactive guidelines", "all NNF guidelines", "GRADE"]
+    },
+    {
+      "no": "022",
+      "title": "Hypoglycemia",
+      "section": "Interactive (MAGICapp)",
+      "slug": "magicapp-hypoglycemia",
+      "file": "magicapp-6893",
+      "url": "https://app.magicapp.org/#/guideline/6893",
+      "external": true,
+      "version_label": "Interactive · MAGICapp",
+      "keywords": ["hypoglycemia", "low blood sugar", "BSL", "neonatal hypoglycemia", "dextrose"]
+    },
+    {
+      "no": "023",
+      "title": "Seizures",
+      "section": "Interactive (MAGICapp)",
+      "slug": "magicapp-seizures",
+      "file": "magicapp-7819",
+      "url": "https://app.magicapp.org/#/guideline/7819",
+      "external": true,
+      "version_label": "Interactive · MAGICapp",
+      "keywords": ["neonatal seizures", "convulsions", "fits", "phenobarbitone"]
+    },
+    {
+      "no": "024",
+      "title": "Normal Newborn",
+      "section": "Interactive (MAGICapp)",
+      "slug": "magicapp-normal-newborn",
+      "file": "magicapp-7807",
+      "url": "https://app.magicapp.org/#/guideline/7807",
+      "external": true,
+      "version_label": "Interactive · MAGICapp",
+      "keywords": ["normal newborn", "well baby care", "term newborn", "essential newborn care"]
+    },
+    {
+      "no": "025",
+      "title": "Shock",
+      "section": "Interactive (MAGICapp)",
+      "slug": "magicapp-shock",
+      "file": "magicapp-7818",
+      "url": "https://app.magicapp.org/#/guideline/7818",
+      "external": true,
+      "version_label": "Interactive · MAGICapp",
+      "keywords": ["shock", "septic shock", "hypovolemic shock", "circulatory shock", "neonatal shock"]
+    },
+    {
+      "no": "026",
+      "title": "Referral and Transport",
+      "section": "Interactive (MAGICapp)",
+      "slug": "magicapp-referral-transport",
+      "file": "magicapp-6919",
+      "url": "https://app.magicapp.org/#/guideline/6919",
+      "external": true,
+      "version_label": "Interactive · MAGICapp",
+      "keywords": ["referral", "transport", "transfer", "STABLE", "neonatal transport"]
     }
   ]
 }
