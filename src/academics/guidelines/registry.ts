@@ -36,6 +36,21 @@ export interface GuidelineSet {
 
 export const GUIDELINE_SETS: GuidelineSet[] = [
   {
+    slug: 'iap-action-plan-2026',
+    name: 'IAP Action Plan',
+    fullName: 'IAP Action Plan 2026 — Practice Guidelines',
+    publisher: 'Indian Academy of Pediatrics',
+    year: '2026',
+    description:
+      "IAP's flagship 2026 action-plan practice guidelines covering Allergy, " +
+      "Adolescent care, Nutrition, Environmental emergencies, Toxin & poison, " +
+      "and a Quick-Reference Neonatology series. Each chapter opens the " +
+      "official IAP PDF on iapindia.org.",
+    color: '#ea580c',
+    indexUrl: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/data/iap-action-plan-2026-index.json`,
+    status: 'live',
+  },
+  {
     slug: 'iap-stg-2022',
     name: 'IAP STG',
     fullName: 'IAP Standard Treatment Guidelines 2022',

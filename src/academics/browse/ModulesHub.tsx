@@ -80,6 +80,19 @@ const MODULES: ModuleDef[] = [
     status: 'live',
   },
   {
+    id: 'iap-action-plan-2026',
+    title: 'IAP Action Plan 2026',
+    subtitle: 'Latest IAP guidelines',
+    description:
+      "IAP's flagship 2026 action-plan practice guidelines — 63 topics across Allergy, Adolescent care, Nutrition, Environmental emergencies, Toxins and Quick-Reference Neonatology.",
+    icon: <Stethoscope size={22} />,
+    gradient: 'linear-gradient(135deg, #ea580c 0%, #b45309 100%)',
+    href: '/academics/guidelines/iap-action-plan-2026',
+    badge: '2026',
+    badgeBg: '#ea580c',
+    status: 'live',
+  },
+  {
     id: 'iap-stg',
     title: 'IAP STG 2022',
     subtitle: 'Standard guidelines',
@@ -97,12 +110,13 @@ const MODULES: ModuleDef[] = [
     title: 'NNF CPG',
     subtitle: 'Neonatal guidelines',
     description:
-      "National Neonatology Forum's clinical practice guidelines for neonatal care.",
+      "National Neonatology Forum's clinical practice guidelines for neonatal care — 26 topics including the MAGICapp interactive set.",
     icon: <Library size={22} />,
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%)',
-    badge: 'COMING SOON',
-    badgeBg: '#9ca3af',
-    status: 'coming-soon',
+    href: '/academics/guidelines/nnf-cpg',
+    badge: '2021',
+    badgeBg: '#7c3aed',
+    status: 'live',
   },
 ];
 
