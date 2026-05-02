@@ -93,9 +93,12 @@ export function GuidelineChapterPage() {
                 {chapter.title}
               </h1>
               <p className="text-[11px] text-ink-muted font-medium mt-0.5">
-                {chapter.section || 'Uncategorised'} · {chapter.pages} pp ·
-                {' '}
-                {(chapter.size_kb / 1024).toFixed(1)} MB · {guideline.fullName}
+                {chapter.section || 'Uncategorised'}
+                {chapter.pages != null && <> · {chapter.pages} pp</>}
+                {chapter.size_kb != null && (
+                  <> · {(chapter.size_kb / 1024).toFixed(1)} MB</>
+                )}
+                {' · '}{guideline.fullName}
               </p>
             </div>
             <div className="shrink-0 flex items-center gap-2">

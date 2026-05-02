@@ -16,6 +16,7 @@ import {
   ChevronRight,
   Loader2,
   AlertCircle,
+  ExternalLink,
 } from 'lucide-react';
 import { getGuidelineSet } from './registry';
 import type { GuidelineChapter, GuidelineIndex } from './types';
@@ -215,43 +216,89 @@ export function GuidelineBrowserPage() {
                   {sec.section}
                 </h3>
                 <div className="rounded-xl bg-card border border-border overflow-hidden">
-                  {sec.chapters.map((c) => (
-                    <Link
-                      key={c.no}
-                      to={`/academics/guidelines/${guideline.slug}/c/${c.no}`}
-                      className="flex items-center gap-3 px-4 py-3
-                                 border-b border-border last:border-0
-                                 hover:bg-bg transition-colors group"
-                    >
-                      <span
-                        className="shrink-0 w-9 h-9 rounded-lg flex items-center
-                                   justify-center text-white text-[11px] font-bold"
-                        style={{ backgroundColor: guideline.color }}
-                      >
-                        {c.no}
-                      </span>
-                      <span className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-ink leading-snug">
-                          {c.title}
-                        </p>
-                        {c.keywords && c.keywords.length > 0 && q && (
-                          <p className="text-[11px] text-ink-muted mt-0.5
-                                        leading-snug">
-                            {c.keywords.slice(0, 4).join(' · ')}
+                  {sec.chapters.map((c) => {
+                    // Externally-hosted chapters (e.g. NNF CPG PDFs on
+                    // nnfi.org) open in a new tab — many third-party
+                    // sites block iframe embedding via X-Frame-Options.
+                    const rowClasses =
+                      'flex items-center gap-3 px-4 py-3 ' +
+                      'border-b border-border last:border-0 ' +
+                      'hover:bg-bg transition-colors group';
+
+                    const inner = (
+                      <>
+                        <span
+                          className="shrink-0 w-9 h-9 rounded-lg flex items-center
+                                     justify-center text-white text-[11px] font-bold"
+                          style={{ backgroundColor: guideline.color }}
+                        >
+                          {c.no}
+                        </span>
+                        <span className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-ink leading-snug">
+                            {c.title}
                           </p>
+                          {q && c.keywords && c.keywords.length > 0 && (
+                            <p className="text-[11px] text-ink-muted mt-0.5
+                                          leading-snug">
+                              {c.keywords.slice(0, 4).join(' · ')}
+                            </p>
+                          )}
+                          {!q && c.version_label && (
+                            <p className="text-[11px] text-ink-muted mt-0.5
+                                          leading-snug">
+                              {c.version_label}
+                            </p>
+                          )}
+                        </span>
+                        <span className="shrink-0 text-[11px] text-ink-muted
+                                         hidden sm:block">
+                          {c.external ? (
+                            <span className="inline-flex items-center gap-1">
+                              nnfi.org <ExternalLink size={10} />
+                            </span>
+                          ) : (
+                            c.pages != null && c.size_kb != null
+                              ? `${c.pages} pp · ${(c.size_kb / 1024).toFixed(1)} MB`
+                              : null
+                          )}
+                        </span>
+                        {c.external ? (
+                          <ExternalLink
+                            size={14}
+                            className="shrink-0 text-ink-muted
+                                       group-hover:text-primary transition-colors"
+                          />
+                        ) : (
+                          <ChevronRight
+                            size={16}
+                            className="shrink-0 text-ink-muted
+                                       group-hover:text-primary transition-colors"
+                          />
                         )}
-                      </span>
-                      <span className="shrink-0 text-[11px] text-ink-muted
-                                       hidden sm:block">
-                        {c.pages} pp · {(c.size_kb / 1024).toFixed(1)} MB
-                      </span>
-                      <ChevronRight
-                        size={16}
-                        className="shrink-0 text-ink-muted
-                                   group-hover:text-primary transition-colors"
-                      />
-                    </Link>
-                  ))}
+                      </>
+                    );
+
+                    return c.external ? (
+                      <a
+                        key={c.no}
+                        href={c.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={rowClasses}
+                      >
+                        {inner}
+                      </a>
+                    ) : (
+                      <Link
+                        key={c.no}
+                        to={`/academics/guidelines/${guideline.slug}/c/${c.no}`}
+                        className={rowClasses}
+                      >
+                        {inner}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             ))}

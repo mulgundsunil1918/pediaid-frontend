@@ -54,13 +54,14 @@ export const GUIDELINE_SETS: GuidelineSet[] = [
     name: 'NNF CPG',
     fullName: 'NNF Clinical Practice Guidelines',
     publisher: 'National Neonatology Forum (India)',
-    year: '',
+    year: '2021',
     description:
       "Evidence-based clinical practice guidelines for neonatal care from " +
-      "the National Neonatology Forum of India. Coming soon.",
+      "the National Neonatology Forum of India. Each chapter opens the " +
+      "official NNF PDF on nnfi.org.",
     color: '#7c3aed',
-    indexUrl: '',
-    status: 'coming-soon',
+    indexUrl: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/data/nnf-cpg-index.json`,
+    status: 'live',
   },
 ];
 
