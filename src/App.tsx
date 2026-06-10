@@ -51,6 +51,9 @@ const SearchPage       = lazy(() => import('./academics/search/SearchPage').then
 // Nelson TOC browser
 const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then(m => ({ default: m.NelsonBrowser })));
 
+// PediAid web hub — shown at pediaid.bridgr.co.in/
+const HomePage = lazy(() => import('./HomePage').then(m => ({ default: m.HomePage })));
+
 // Guidelines (IAP STG, NNF CPG, ...)
 const GuidelinesIndexPage = lazy(() => import('./academics/guidelines/GuidelinesIndexPage').then(m => ({ default: m.GuidelinesIndexPage })));
 const GuidelineBrowserPage = lazy(() => import('./academics/guidelines/GuidelineBrowserPage').then(m => ({ default: m.GuidelineBrowserPage })));
@@ -139,8 +142,8 @@ export default function App() {
             }
           >
           <Routes>
-            {/* Default redirect */}
-            <Route path="/" element={<Navigate to="/academics" replace />} />
+            {/* Hub home page — pediaid.bridgr.co.in/ */}
+            <Route path="/" element={<HomePage />} />
 
             {/* ── PediAid Academics auth routes ── */}
             <Route path="/academics/login" element={<LoginPage />} />
