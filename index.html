@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/pediaid-logo.png" />
+    <link rel="apple-touch-icon" href="/pediaid-logo.png" />
     <title>PediAid Academics</title>
 
     <!-- Warm the TLS connection to the backend so the very first API call
@@ -88,17 +90,18 @@
         transform-origin: center;
       }
       #acad-splash .acad-dot {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.15);
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
         animation: acad-fade-in 0.5s ease-out forwards;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
       }
-      #acad-splash .acad-dot svg { width: 24px; height: 24px; }
+      #acad-splash .acad-dot img { width: 100%; height: 100%; display: block; -o-object-fit: cover; object-fit: cover; }
       #acad-splash .acad-sub {
         color: rgba(255, 255, 255, 0.7);
         font-size: 12px;
@@ -123,28 +126,14 @@
       }
       #root.ready { opacity: 1; }
     </style>
-    <script type="module" crossorigin src="/pediaid-frontend/assets/index-RiSc8HJ-.js"></script>
-    <link rel="stylesheet" crossorigin href="/pediaid-frontend/assets/index-BSbu2pH9.css">
+    <script type="module" crossorigin src="/assets/index-Drr3g0Na.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-k0BSmtuj.css">
   </head>
   <body>
     <!-- Splash screen — removed by main.tsx once React mounts. -->
     <div id="acad-splash">
       <div class="acad-dot">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path
-            d="M12 2L3 7v10l9 5 9-5V7L12 2z"
-            stroke="white"
-            stroke-width="1.8"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M12 7v10M7 9.5l5 2.5 5-2.5"
-            stroke="white"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img src="/pediaid-logo.png" alt="PediAid" />
       </div>
       <div class="acad-title">PediAid</div>
       <div class="acad-sub">loading academics…</div>
