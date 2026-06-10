@@ -61,7 +61,7 @@ export const GUIDELINE_SETS: GuidelineSet[] = [
       "guidelines covering 149 paediatric and neonatal topics — definitions, " +
       "evaluation, management flowcharts and follow-up.",
     color: '#1e3a5f',
-    indexUrl: 'https://mulgundsunil1918.github.io/pediaid-stg/stg_index.json',
+    indexUrl: 'https://pediaid.bridgr.co.in/stg_index.json',
     status: 'live',
   },
   {
