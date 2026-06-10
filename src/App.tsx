@@ -140,8 +140,8 @@ export default function App() {
             }
           >
           <Routes>
-            {/* Default redirect */}
-            <Route path="/" element={<Navigate to="/academics" replace />} />
+            {/* Root — show academics home at pediaid.bridgr.co.in/ directly */}
+            <Route path="/" element={<SubjectsPage />} />
 
             {/* ── PediAid Academics auth routes ── */}
             <Route path="/academics/login" element={<LoginPage />} />
