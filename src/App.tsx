@@ -91,7 +91,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen bg-bg">
       <NavSidebar />
-      <div className={`flex-1 ${SIDEBAR_WIDTH}`}>{children}</div>
+      <div className={`flex-1 min-w-0 ${SIDEBAR_WIDTH}`}>{children}</div>
     </div>
   );
 }
