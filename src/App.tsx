@@ -25,6 +25,7 @@ const TopicsPage       = lazy(() => import('./academics/browse/TopicsPage').then
 const ChapterListPage  = lazy(() => import('./academics/browse/ChapterListPage').then(m => ({ default: m.ChapterListPage })));
 const RecentPage       = lazy(() => import('./academics/browse/RecentPage').then(m => ({ default: m.RecentPage })));
 const BrowsePage       = lazy(() => import('./academics/browse/BrowsePage').then(m => ({ default: m.BrowsePage })));
+const ExampleGuidePost = lazy(() => import('./academics/browse/ExampleGuidePost').then(m => ({ default: m.ExampleGuidePost })));
 
 const EditorPage       = lazy(() => import('./academics/editor/EditorPage').then(m => ({ default: m.EditorPage })));
 const ChapterReaderPage= lazy(() => import('./academics/reader/ChapterReaderPage').then(m => ({ default: m.ChapterReaderPage })));
@@ -153,6 +154,7 @@ export default function App() {
             {/* ── PediAid Academics browse routes ── */}
             <Route path="/academics" element={<SubjectsPage />} />
             <Route path="/academics/recent" element={<RecentPage />} />
+            <Route path="/academics/example/:slug" element={<ExampleGuidePost />} />
             <Route path="/academics/browse" element={<BrowsePage />} />
             <Route
               path="/academics/subjects/:subjectId"

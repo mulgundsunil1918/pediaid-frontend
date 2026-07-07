@@ -19,6 +19,8 @@ import {
   CalendarDays,
   MapPin,
   Sparkles,
+  Heart,
+  ArrowLeft,
 } from 'lucide-react';
 import {
   useRecentGuides,
@@ -27,6 +29,7 @@ import {
   type TaxonomyTreeSubject,
 } from './hooks/useBrowse';
 import { ModulesHub } from './ModulesHub';
+import { EXAMPLE_TRIALS, type ExampleCategory, type ExampleTrial } from './exampleTrials';
 import { useCMEEvents, type CMEEvent } from '../cme/hooks/useCME';
 import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
@@ -198,60 +201,134 @@ function RecentGuideCard({ guide }: { guide: RecentGuide }) {
   );
 }
 
+// Illustrative example cards — link to static mock posts that preview the
+// upcoming social-style guide format. Not backed by real chapter data.
+function ExampleTrialCard({ trial }: { trial: ExampleTrial }) {
+  const [gradFrom, gradMid, gradTo] = trial.gradient;
+  return (
+    <Link
+      to={`/academics/example/${trial.slug}`}
+      className="
+        shrink-0 w-72 sm:w-80
+        acad-card overflow-hidden
+        flex flex-col
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
+      "
+      aria-label={`Open example guide: ${trial.title} — ${trial.subtitle}`}
+    >
+      <div
+        className="relative h-24 px-4 py-3 flex items-end"
+        style={{ background: `linear-gradient(135deg, ${gradFrom} 0%, ${gradMid} 55%, ${gradTo} 100%)` }}
+      >
+        <span className="absolute top-2.5 right-2.5 acad-badge text-white" style={{ backgroundColor: '#d69e2e' }}>
+          In development
+        </span>
+        <p className="font-sans font-bold text-white text-sm leading-snug">
+          {trial.title} — {trial.subtitle}
+        </p>
+      </div>
+      <div className="flex items-center gap-2 px-4 py-3">
+        <div
+          className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[9px] font-bold shrink-0"
+          style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #7c3aed 100%)' }}
+          aria-hidden="true"
+        >
+          XYZ
+        </div>
+        <p className="text-xs text-ink-muted flex-1 min-w-0 truncate">{trial.authorHandle} · PICOT breakdown</p>
+        <span className="inline-flex items-center gap-1 text-xs text-ink-muted shrink-0">
+          <Heart size={12} aria-hidden="true" />
+          {trial.likeCount >= 1000 ? `${(trial.likeCount / 1000).toFixed(1)}k` : trial.likeCount}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+const EXAMPLE_CATEGORIES: ExampleCategory[] = ['Neonatology', 'Pediatrics'];
+
+function ExampleTrialsSection() {
+  const [category, setCategory] = useState<ExampleCategory>('Neonatology');
+  const trials = EXAMPLE_TRIALS.filter((t) => t.category === category);
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-3">
+        {EXAMPLE_CATEGORIES.map((cat) => {
+          const active = category === cat;
+          return (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setCategory(cat)}
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                active ? 'bg-primary text-white' : 'bg-gray-100 text-ink-muted hover:bg-gray-200'
+              }`}
+            >
+              {cat}
+            </button>
+          );
+        })}
+      </div>
+      <div className="flex gap-4 overflow-x-auto pb-1 -mx-4 px-4 sm:-mx-0 sm:px-0 snap-x snap-mandatory">
+        {trials.map((trial) => (
+          <div key={trial.slug} className="snap-start">
+            <ExampleTrialCard trial={trial} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function RecentGuidesTab() {
   const { data, isLoading, isError } = useRecentGuides(12);
   const guides = data ?? [];
 
-  if (isLoading) {
-    return (
-      <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-0 sm:px-0">
-        {[1, 2, 3, 4].map((i) => (
-          <div
-            key={i}
-            className="shrink-0 w-72 sm:w-80 h-44 rounded-card bg-gray-100 animate-pulse"
-            aria-hidden="true"
-          />
-        ))}
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="rounded-card border border-red-200 bg-red-50 p-6 text-center text-sm text-danger">
-        Failed to load recent guides.
-      </div>
-    );
-  }
-
-  if (guides.length === 0) {
-    return (
-      <div className="rounded-card border border-border bg-card p-10 text-center">
-        <BookOpen size={36} className="mx-auto text-border mb-3" aria-hidden="true" />
-        <p className="text-ink font-semibold mb-1">No published chapters yet</p>
-        <p className="text-sm text-ink-muted">
-          Be the first — apply as an Author and submit a chapter.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div
-      className="
-        flex gap-4 overflow-x-auto pb-4
-        snap-x snap-mandatory
-        -mx-4 px-4 sm:-mx-0 sm:px-0
-        scrollbar-thin scrollbar-thumb-border
-      "
-      role="region"
-      aria-label="Recently published guides"
-    >
-      {guides.map((g) => (
-        <div key={g.id} className="snap-start">
-          <RecentGuideCard guide={g} />
+    <div className="space-y-4">
+      <ExampleTrialsSection />
+
+      {isLoading && (
+        <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-0 sm:px-0">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="shrink-0 w-72 sm:w-80 h-44 rounded-card bg-gray-100 animate-pulse"
+              aria-hidden="true"
+            />
+          ))}
         </div>
-      ))}
+      )}
+
+      {!isLoading && (isError || guides.length === 0) && (
+        <div className="rounded-card border border-border bg-card p-10 text-center">
+          <BookOpen size={36} className="mx-auto text-border mb-3" aria-hidden="true" />
+          <p className="text-ink font-semibold mb-1">More guides coming soon</p>
+          <p className="text-sm text-ink-muted">
+            This section is under development — check back soon for peer-reviewed chapters.
+          </p>
+        </div>
+      )}
+
+      {!isLoading && !isError && guides.length > 0 && (
+        <div
+          className="
+            flex gap-4 overflow-x-auto pb-4
+            snap-x snap-mandatory
+            -mx-4 px-4 sm:-mx-0 sm:px-0
+            scrollbar-thin scrollbar-thumb-border
+          "
+          role="region"
+          aria-label="Recently published guides"
+        >
+          {guides.map((g) => (
+            <div key={g.id} className="snap-start">
+              <RecentGuideCard guide={g} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -899,6 +976,25 @@ function HomeTabs() {
 // Page
 // ---------------------------------------------------------------------------
 
+// The PediAid mobile app embeds this site in a flutter_inappwebview WebView,
+// which injects `window.flutter_inappwebview.callHandler(...)` to call back
+// into the native app. When the site is opened standalone (e.g. a browser
+// tab during development), that bridge isn't present, so we fall back to a
+// normal browser "back".
+interface FlutterInAppWebViewBridge {
+  callHandler: (handlerName: string, ...args: unknown[]) => Promise<unknown>;
+}
+
+function goBackToApp() {
+  const bridge = (window as unknown as { flutter_inappwebview?: FlutterInAppWebViewBridge })
+    .flutter_inappwebview;
+  if (bridge) {
+    bridge.callHandler('goToAppHome');
+  } else {
+    window.history.back();
+  }
+}
+
 export function SubjectsPage() {
   const [query, setQuery] = useState('');
   const [roleModalOpen, setRoleModalOpen] = useState(false);
@@ -949,15 +1045,29 @@ export function SubjectsPage() {
         style={{ backgroundColor: '#1e3a5f' }}
       >
         <div className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          {/* Top-right "Join Now" button.
-               The separate Sign in link was removed because every user
-               reaching this page is already signed in via the Flutter
+          {/* Back button (left) returns to the PediAid app's home screen when
+               embedded in the app's WebView; falls back to browser back
+               otherwise. "Join Now" (right) is only shown to unauthenticated
+               users — the separate Sign in link was removed because every
+               user reaching this page is already signed in via the Flutter
                app's auth gate. The Join Now sheet is still exposed for
                authenticated readers who want to apply as an author or
                moderator (their existing account is kept; only the role
                changes after admin approval). */}
-          {!isAuthenticated() && (
-            <div className="flex justify-end gap-2 mb-4">
+          <div className="flex items-center justify-between gap-2 mb-4">
+            <button
+              type="button"
+              onClick={goBackToApp}
+              className="
+                inline-flex items-center gap-1.5 text-sm font-semibold
+                text-blue-100 hover:text-white transition-colors
+              "
+              aria-label="Back to PediAid app"
+            >
+              <ArrowLeft size={16} aria-hidden="true" /> Back to PediAid
+            </button>
+
+            {!isAuthenticated() && (
               <button
                 type="button"
                 onClick={() => setJoinSheetOpen(true)}
@@ -970,8 +1080,8 @@ export function SubjectsPage() {
               >
                 Join Now
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
           <h1 className="font-sans font-bold text-3xl sm:text-4xl text-white mb-2">
             PediAid Academics
