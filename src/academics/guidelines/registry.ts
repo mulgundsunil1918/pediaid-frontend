@@ -32,6 +32,10 @@ export interface GuidelineSet {
    *  - 'coming-soon'  — visible but disabled tile, no link
    */
   status: 'live' | 'coming-soon';
+  /** Optional human-readable "last checked against source" date, e.g. "Jul 28, 2026". Shown as a pill on the tile. */
+  lastUpdated?: string;
+  /** Optional — gives the tile an accent border + tint, for sets that were just refreshed or need surfacing. */
+  highlight?: boolean;
 }
 
 export const GUIDELINE_SETS: GuidelineSet[] = [
@@ -42,13 +46,18 @@ export const GUIDELINE_SETS: GuidelineSet[] = [
     publisher: 'Indian Academy of Pediatrics',
     year: '2026',
     description:
-      "IAP's flagship 2026 action-plan practice guidelines covering Allergy, " +
-      "Adolescent care, Nutrition, Environmental emergencies, Toxin & poison, " +
-      "and a Quick-Reference Neonatology series. Each chapter opens the " +
-      "official IAP PDF on iapindia.org.",
+      "IAP's flagship 2026 action-plan practice guidelines — 198 chapters " +
+      "across Allergy, Adolescent care, Nutrition, Computer/Telemedicine, " +
+      "Genetics, Vaccinology, Environment, Community Paediatrics, " +
+      "Neurodevelopment, Medicolegal, Haemato-Oncology, Child Rights, " +
+      "Palliative Care, Growth & Behaviour, Emergency Guidelines and a " +
+      "Quick-Reference Neonatology series. Each chapter opens the official " +
+      "IAP PDF on iapindia.org.",
     color: '#ea580c',
     indexUrl: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/data/iap-action-plan-2026-index.json`,
     status: 'live',
+    lastUpdated: 'Jul 28, 2026',
+    highlight: true,
   },
   {
     slug: 'iap-stg-2022',
@@ -61,7 +70,7 @@ export const GUIDELINE_SETS: GuidelineSet[] = [
       "guidelines covering 149 paediatric and neonatal topics — definitions, " +
       "evaluation, management flowcharts and follow-up.",
     color: '#1e3a5f',
-    indexUrl: 'https://pediaid.bridgr.co.in/stg_index.json',
+    indexUrl: 'https://mulgundsunil1918.github.io/pediaid-stg/stg_index.json',
     status: 'live',
   },
   {

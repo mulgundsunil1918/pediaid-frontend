@@ -7,6 +7,8 @@ export interface GuidelineChapter {
   no: string;
   title: string;
   section: string;
+  /** Optional — top-level grouping above `section`, e.g. "IAP Practice Guidelines 2026" vs "IAP Emergency Guidelines 2026". Only IAP Action Plan uses this today; sets without it render as a flat section list. */
+  mega_section?: string;
   slug: string;
   file: string;
   url: string;

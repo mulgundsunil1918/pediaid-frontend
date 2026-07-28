@@ -19,6 +19,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { getGuidelineSet } from './registry';
+import type { GuidelineSet } from './registry';
 import type { GuidelineChapter, GuidelineIndex } from './types';
 
 // ---------------------------------------------------------------------------
@@ -35,6 +36,98 @@ function scoreChapter(c: GuidelineChapter, q: string): number {
   if (s.includes(q)) n += 2;
   if (t.startsWith(q)) n += 5;
   return n;
+}
+
+// Derives the display hostname for an externally-hosted chapter link from
+// its actual URL, so the badge reflects the real source (iapindia.org,
+// nnfi.org, etc.) instead of a single hardcoded host.
+function externalHost(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return 'external link';
+  }
+}
+
+// ---------------------------------------------------------------------------
+// One chapter row — shared by the search view, the flat browse view (STG,
+// NNF CPG) and the mega-section accordion view (IAP Action Plan).
+// ---------------------------------------------------------------------------
+
+function ChapterRow({
+  chapter: c,
+  guideline,
+  query,
+}: {
+  chapter: GuidelineChapter;
+  guideline: GuidelineSet;
+  query: string;
+}) {
+  // Externally-hosted chapters (e.g. NNF CPG PDFs on nnfi.org) open in a new
+  // tab — many third-party sites block iframe embedding via X-Frame-Options.
+  const rowClasses =
+    'flex items-center gap-3 px-4 py-3 ' +
+    'border-b border-border last:border-0 ' +
+    'hover:bg-bg transition-colors group';
+
+  const inner = (
+    <>
+      <span
+        className="shrink-0 w-9 h-9 rounded-lg flex items-center
+                   justify-center text-white text-[11px] font-bold"
+        style={{ backgroundColor: guideline.color }}
+      >
+        {c.no}
+      </span>
+      <span className="flex-1 min-w-0">
+        <p className="text-sm font-semibold text-ink leading-snug">
+          {c.title}
+        </p>
+        {query && c.keywords && c.keywords.length > 0 && (
+          <p className="text-[11px] text-ink-muted mt-0.5 leading-snug">
+            {c.keywords.slice(0, 4).join(' · ')}
+          </p>
+        )}
+        {!query && c.version_label && (
+          <p className="text-[11px] text-ink-muted mt-0.5 leading-snug">
+            {c.version_label}
+          </p>
+        )}
+      </span>
+      <span className="shrink-0 text-[11px] text-ink-muted hidden sm:block">
+        {c.external ? (
+          <span className="inline-flex items-center gap-1">
+            {externalHost(c.url)} <ExternalLink size={10} />
+          </span>
+        ) : (
+          c.pages != null && c.size_kb != null
+            ? `${c.pages} pp · ${(c.size_kb / 1024).toFixed(1)} MB`
+            : null
+        )}
+      </span>
+      {c.external ? (
+        <ExternalLink
+          size={14}
+          className="shrink-0 text-ink-muted group-hover:text-primary transition-colors"
+        />
+      ) : (
+        <ChevronRight
+          size={16}
+          className="shrink-0 text-ink-muted group-hover:text-primary transition-colors"
+        />
+      )}
+    </>
+  );
+
+  return c.external ? (
+    <a href={c.url} target="_blank" rel="noopener noreferrer" className={rowClasses}>
+      {inner}
+    </a>
+  ) : (
+    <Link to={`/academics/guidelines/${guideline.slug}/c/${c.no}`} className={rowClasses}>
+      {inner}
+    </Link>
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -102,6 +195,53 @@ export function GuidelineBrowserPage() {
     if (!q) sections.sort((a, b) => a.section.localeCompare(b.section));
     return sections;
   }, [data, q]);
+
+  // Canonical mega-section order, matching IAP's own site layout. Anything
+  // not in this list (shouldn't happen) sorts after the known ones.
+  const MEGA_ORDER = [
+    'IAP Practice Guidelines 2026',
+    'IAP Emergency Guidelines 2026',
+    'IAPNNF Quick Reference Guidelines in Neonatology',
+    'IAP Action Plan 2026 Modules',
+  ];
+
+  const hasMegaSections = !q && !!data?.chapters.some((c) => c.mega_section);
+
+  // Two-level grouping (mega-section -> category) for browsing IAP Action
+  // Plan, mirroring the accordion layout on iapindia.org. Only used when
+  // not searching and the loaded set actually carries mega_section data —
+  // STG and NNF CPG fall back to the flat `grouped` list above.
+  const megaGroups = useMemo(() => {
+    if (!data || !hasMegaSections) return null;
+    const megaMap = new Map<string, Map<string, GuidelineChapter[]>>();
+    for (const c of data.chapters) {
+      const mega = c.mega_section || 'Other';
+      const sec = c.section || 'Uncategorised';
+      if (!megaMap.has(mega)) megaMap.set(mega, new Map());
+      const secMap = megaMap.get(mega)!;
+      if (!secMap.has(sec)) secMap.set(sec, []);
+      secMap.get(sec)!.push(c);
+    }
+    for (const secMap of megaMap.values()) {
+      for (const arr of secMap.values()) arr.sort((a, b) => a.no.localeCompare(b.no));
+    }
+    const megas = Array.from(megaMap.entries()).map(([mega, secMap]) => ({
+      mega,
+      sections: Array.from(secMap.entries()).map(([section, chapters]) => ({
+        section,
+        chapters,
+      })),
+    }));
+    megas.sort((a, b) => {
+      const ai = MEGA_ORDER.indexOf(a.mega);
+      const bi = MEGA_ORDER.indexOf(b.mega);
+      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+    });
+    return megas;
+  }, [data, hasMegaSections]);
+
+  // Single-open-at-a-time accordion, same behaviour as the source site.
+  const [openSection, setOpenSection] = useState<string | null>(null);
 
   if (!guideline) {
     return (
@@ -209,99 +349,75 @@ export function GuidelineBrowserPage() {
               </div>
             )}
 
-            {grouped.map((sec) => (
-              <div key={sec.section} className="mb-5">
-                <h3 className="px-4 py-2 text-[11px] font-bold tracking-wider
-                               uppercase text-ink-muted">
-                  {sec.section}
-                </h3>
-                <div className="rounded-xl bg-card border border-border overflow-hidden">
-                  {sec.chapters.map((c) => {
-                    // Externally-hosted chapters (e.g. NNF CPG PDFs on
-                    // nnfi.org) open in a new tab — many third-party
-                    // sites block iframe embedding via X-Frame-Options.
-                    const rowClasses =
-                      'flex items-center gap-3 px-4 py-3 ' +
-                      'border-b border-border last:border-0 ' +
-                      'hover:bg-bg transition-colors group';
-
-                    const inner = (
-                      <>
-                        <span
-                          className="shrink-0 w-9 h-9 rounded-lg flex items-center
-                                     justify-center text-white text-[11px] font-bold"
-                          style={{ backgroundColor: guideline.color }}
+            {hasMegaSections && megaGroups ? (
+              megaGroups.map((mg) => (
+                <div key={mg.mega} className="mb-7">
+                  <h2 className="text-[13px] font-extrabold text-primary mb-3 px-1">
+                    {mg.mega}
+                  </h2>
+                  <div className="space-y-2">
+                    {mg.sections.map((sec) => {
+                      const key = `${mg.mega}::${sec.section}`;
+                      const isOpen = openSection === key;
+                      return (
+                        <div
+                          key={key}
+                          className="rounded-xl bg-card border border-border overflow-hidden"
                         >
-                          {c.no}
-                        </span>
-                        <span className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-ink leading-snug">
-                            {c.title}
-                          </p>
-                          {q && c.keywords && c.keywords.length > 0 && (
-                            <p className="text-[11px] text-ink-muted mt-0.5
-                                          leading-snug">
-                              {c.keywords.slice(0, 4).join(' · ')}
-                            </p>
-                          )}
-                          {!q && c.version_label && (
-                            <p className="text-[11px] text-ink-muted mt-0.5
-                                          leading-snug">
-                              {c.version_label}
-                            </p>
-                          )}
-                        </span>
-                        <span className="shrink-0 text-[11px] text-ink-muted
-                                         hidden sm:block">
-                          {c.external ? (
-                            <span className="inline-flex items-center gap-1">
-                              nnfi.org <ExternalLink size={10} />
+                          <button
+                            type="button"
+                            onClick={() => setOpenSection(isOpen ? null : key)}
+                            className="w-full flex items-center justify-between gap-3
+                                       px-4 py-3.5 text-left hover:bg-bg transition-colors"
+                          >
+                            <span className="text-sm font-semibold text-ink">
+                              {sec.section}
                             </span>
-                          ) : (
-                            c.pages != null && c.size_kb != null
-                              ? `${c.pages} pp · ${(c.size_kb / 1024).toFixed(1)} MB`
-                              : null
+                            <span className="flex items-center gap-2 shrink-0">
+                              <span className="text-[11px] text-ink-muted">
+                                {sec.chapters.length}
+                              </span>
+                              <ChevronRight
+                                size={16}
+                                className={`text-ink-muted transition-transform ${
+                                  isOpen ? 'rotate-90' : ''
+                                }`}
+                              />
+                            </span>
+                          </button>
+                          {isOpen && (
+                            <div className="border-t border-border">
+                              {sec.chapters.map((c) => (
+                                <ChapterRow
+                                  key={c.no}
+                                  chapter={c}
+                                  guideline={guideline}
+                                  query={q}
+                                />
+                              ))}
+                            </div>
                           )}
-                        </span>
-                        {c.external ? (
-                          <ExternalLink
-                            size={14}
-                            className="shrink-0 text-ink-muted
-                                       group-hover:text-primary transition-colors"
-                          />
-                        ) : (
-                          <ChevronRight
-                            size={16}
-                            className="shrink-0 text-ink-muted
-                                       group-hover:text-primary transition-colors"
-                          />
-                        )}
-                      </>
-                    );
-
-                    return c.external ? (
-                      <a
-                        key={c.no}
-                        href={c.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={rowClasses}
-                      >
-                        {inner}
-                      </a>
-                    ) : (
-                      <Link
-                        key={c.no}
-                        to={`/academics/guidelines/${guideline.slug}/c/${c.no}`}
-                        className={rowClasses}
-                      >
-                        {inner}
-                      </Link>
-                    );
-                  })}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              grouped.map((sec) => (
+                <div key={sec.section} className="mb-5">
+                  <h3 className="px-4 py-2 text-[11px] font-bold tracking-wider
+                                 uppercase text-ink-muted">
+                    {sec.section}
+                  </h3>
+                  <div className="rounded-xl bg-card border border-border overflow-hidden">
+                    {sec.chapters.map((c) => (
+                      <ChapterRow key={c.no} chapter={c} guideline={guideline} query={q} />
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
           </>
         )}
       </div>

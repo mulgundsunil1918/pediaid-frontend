@@ -38,12 +38,24 @@ export function GuidelinesIndexPage() {
             const inner = (
               <div
                 className={[
-                  'group relative rounded-2xl bg-card border border-border',
-                  'p-6 shadow-card transition-all duration-200',
+                  'group relative rounded-2xl bg-card p-6 shadow-card',
+                  'transition-all duration-200',
+                  g.highlight
+                    ? 'border-2 ring-1'
+                    : 'border border-border',
                   isLive
                     ? 'hover:shadow-card-hover hover:-translate-y-0.5 cursor-pointer'
                     : 'opacity-65 cursor-not-allowed',
                 ].join(' ')}
+                style={
+                  g.highlight
+                    ? {
+                        borderColor: `${g.color}55`,
+                        boxShadow: `0 0 0 1px ${g.color}22`,
+                        background: `linear-gradient(135deg, ${g.color}0d, transparent 60%)`,
+                      }
+                    : undefined
+                }
               >
                 <div className="flex items-start gap-4">
                   <div
