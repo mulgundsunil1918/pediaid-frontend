@@ -52,7 +52,7 @@ const MODULES: ModuleDef[] = [
     title: 'IAP Action Plan 2026',
     subtitle: 'Latest IAP guidelines',
     description:
-      "IAP's flagship 2026 action-plan practice guidelines — 63 topics across Allergy, Adolescent care, Nutrition, Environmental emergencies, Toxins and Quick-Reference Neonatology.",
+      "IAP's flagship 2026 action-plan practice guidelines — 198 chapters across 20 categories, from Allergy and Adolescent care to Genetics, Vaccinology and Quick-Reference Neonatology.",
     icon: <Stethoscope size={22} />,
     gradient: 'linear-gradient(135deg, #ea580c 0%, #b45309 100%)',
     href: '/academics/guidelines/iap-action-plan-2026',
