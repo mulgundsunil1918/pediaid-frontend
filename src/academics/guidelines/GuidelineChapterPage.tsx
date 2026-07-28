@@ -2,9 +2,8 @@
 // academics/guidelines/GuidelineChapterPage.tsx
 // /academics/guidelines/:slug/c/:chapterNo
 //
-// Renders a single guideline chapter PDF inline using the browser's native
-// PDF viewer (works in Chromium, Edge, Firefox, Safari out of the box —
-// no PDF.js dependency). Falls back to a "Open in new tab" button.
+// Renders a single guideline chapter PDF inline via PdfViewer (pdfjs-dist —
+// see PdfViewer.tsx for why this replaced a plain <iframe>).
 // =============================================================================
 
 import { useEffect, useState } from 'react';
@@ -15,9 +14,9 @@ import {
   Loader2,
   AlertCircle,
   Download,
-  BookOpen,
 } from 'lucide-react';
 import { getGuidelineSet } from './registry';
+import { PdfViewer } from './PdfViewer';
 import type { GuidelineChapter, GuidelineIndex } from './types';
 
 export function GuidelineChapterPage() {
@@ -27,23 +26,6 @@ export function GuidelineChapterPage() {
   const [chapter, setChapter] = useState<GuidelineChapter | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Some browsers (enterprise Chrome policies, certain extensions) silently
-  // refuse to navigate an iframe to a cross-origin PDF — no console error,
-  // no failed network request, just a permanently blank/blocked frame.
-  // There's no reliable onError signal for this, so if the iframe hasn't
-  // fired `load` within a few seconds we assume it's stuck and swap to an
-  // explicit open/download card instead of leaving a dead embed on screen.
-  const [iframeLoaded, setIframeLoaded] = useState(false);
-  const [iframeStalled, setIframeStalled] = useState(false);
-
-  useEffect(() => {
-    setIframeLoaded(false);
-    setIframeStalled(false);
-    if (!chapter) return;
-    const t = setTimeout(() => setIframeStalled(true), 4000);
-    return () => clearTimeout(t);
-  }, [chapter]);
 
   useEffect(() => {
     if (!guideline || !chapterNo) return;
@@ -165,52 +147,7 @@ export function GuidelineChapterPage() {
         {!loading && !error && chapter && (
           <div className="rounded-xl border border-border bg-card overflow-hidden
                           shadow-card">
-            {iframeStalled && !iframeLoaded ? (
-              <div className="p-10 text-center text-ink-muted text-sm h-[78vh]
-                              flex flex-col items-center justify-center">
-                <BookOpen size={28} className="mb-3 text-ink-muted/60" />
-                <p className="font-semibold text-ink mb-1">
-                  Inline preview didn't load
-                </p>
-                <p className="max-w-sm mb-4">
-                  Your browser (or a security extension/policy on this device)
-                  blocked the inline PDF viewer. The file itself is fine —
-                  open it directly instead.
-                </p>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={chapter.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2
-                               rounded-lg text-sm font-semibold border
-                               border-border bg-card text-ink hover:bg-bg
-                               transition-colors"
-                  >
-                    <ExternalLink size={14} /> Open in new tab
-                  </a>
-                  <a
-                    href={chapter.url}
-                    download
-                    className="inline-flex items-center gap-1.5 px-4 py-2
-                               rounded-lg text-sm font-semibold text-white"
-                    style={{ backgroundColor: guideline.color }}
-                  >
-                    <Download size={14} /> Download PDF
-                  </a>
-                </div>
-              </div>
-            ) : (
-              // Native browser PDF viewer. #toolbar=1 keeps the built-in
-              // page navigation; #zoom=page-fit fits the full page.
-              <iframe
-                key={chapter.url}
-                src={`${chapter.url}#toolbar=1&zoom=page-width`}
-                title={chapter.title}
-                onLoad={() => setIframeLoaded(true)}
-                className="w-full h-[78vh] border-0 bg-white"
-              />
-            )}
+            <PdfViewer key={chapter.url} url={chapter.url} accentColor={guideline.color} />
           </div>
         )}
       </div>

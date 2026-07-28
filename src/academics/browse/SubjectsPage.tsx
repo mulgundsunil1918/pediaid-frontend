@@ -11,8 +11,6 @@ import {
   ChevronDown,
   Clock,
   Users,
-  PencilLine,
-  Scale,
   Flame,
   TreePine,
   User2,
@@ -1135,6 +1133,10 @@ export function SubjectsPage() {
               Search
             </button>
           </form>
+          <p className="text-blue-200/70 text-xs mt-3 max-w-xl">
+            Tip: every chapter here is also searchable from the search bar on
+            PediAid's home screen, alongside calculators, drugs and guides.
+          </p>
         </div>
       </div>
 
@@ -1242,7 +1244,7 @@ function JoinNowSheet({ onClose }: { onClose: () => void }) {
               Join PediAid Academics
             </h2>
             <p className="text-xs text-ink-muted mt-1">
-              Choose how you'd like to contribute.
+              Author &amp; moderator applications
             </p>
           </div>
           <button
@@ -1255,86 +1257,27 @@ function JoinNowSheet({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        {/* Options */}
-        <div className="p-5 space-y-3">
-          <Link
-            to="/academics/register?role=author"
+        {/* Under development */}
+        <div className="p-5">
+          <div className="rounded-xl border-2 border-border p-5 text-center">
+            <p className="text-3xl mb-2" aria-hidden="true">🚧</p>
+            <p className="font-sans font-bold text-base text-primary mb-1">
+              This section is under development
+            </p>
+            <p className="text-sm text-ink-muted leading-relaxed">
+              Author and moderator applications will be released soon.
+            </p>
+          </div>
+          <button
+            type="button"
             onClick={onClose}
             className="
-              block rounded-xl border-2 p-4
-              hover:border-accent hover:bg-blue-50/40
-              transition-colors
+              mt-4 w-full rounded-xl py-2.5 text-sm font-semibold
+              bg-primary text-white hover:opacity-90 transition-opacity
             "
-            style={{ borderColor: '#bfdbfe' }}
           >
-            <div className="flex items-start gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                style={{ backgroundColor: '#dbeafe' }}
-              >
-                <PencilLine size={18} className="text-primary" aria-hidden="true" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-sans font-bold text-base text-primary leading-tight">
-                  ✍️ Join as Author
-                </p>
-                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
-                  <span className="font-semibold text-ink">Eligibility:</span>{' '}
-                  MBBS / MD or equivalent medical degree.
-                </p>
-              </div>
-              <ChevronRight
-                size={16}
-                className="text-ink-muted shrink-0 mt-1"
-                aria-hidden="true"
-              />
-            </div>
-          </Link>
-
-          <Link
-            to="/academics/register?role=moderator"
-            onClick={onClose}
-            className="
-              block rounded-xl border-2 p-4
-              hover:border-amber-400 hover:bg-amber-50/40
-              transition-colors
-            "
-            style={{ borderColor: '#fde68a' }}
-          >
-            <div className="flex items-start gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                style={{ backgroundColor: '#fef3c7' }}
-              >
-                <Scale size={18} className="text-amber-700" aria-hidden="true" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-sans font-bold text-base text-amber-800 leading-tight">
-                  ⚖️ Join as Moderator
-                </p>
-                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
-                  <span className="font-semibold text-ink">Eligibility:</span>{' '}
-                  MD / DNB with 3+ years clinical experience.
-                </p>
-              </div>
-              <ChevronRight
-                size={16}
-                className="text-ink-muted shrink-0 mt-1"
-                aria-hidden="true"
-              />
-            </div>
-          </Link>
-
-          <p className="text-[11px] text-ink-muted text-center pt-2">
-            Already have an account?{' '}
-            <Link
-              to="/academics/login"
-              onClick={onClose}
-              className="font-semibold text-accent hover:underline"
-            >
-              Sign in
-            </Link>
-          </p>
+            Got it
+          </button>
         </div>
       </div>
     </div>
