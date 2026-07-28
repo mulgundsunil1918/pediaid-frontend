@@ -56,7 +56,7 @@ export const GUIDELINE_SETS: GuidelineSet[] = [
     color: '#ea580c',
     indexUrl: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/data/iap-action-plan-2026-index.json`,
     status: 'live',
-    lastUpdated: 'Jul 28, 2026',
+    lastUpdated: 'Updated Jul 28, 2026',
     highlight: true,
   },
   {

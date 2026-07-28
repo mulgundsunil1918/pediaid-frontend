@@ -94,6 +94,17 @@ export function GuidelinesIndexPage() {
                     <p className="text-sm text-ink leading-relaxed">
                       {g.description}
                     </p>
+                    {g.lastUpdated && (
+                      <span
+                        className="inline-flex items-center gap-1.5 mt-2.5 w-fit
+                                   px-2.5 py-1 rounded-full text-[10.5px] font-bold
+                                   text-white"
+                        style={{ backgroundColor: g.color }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
+                        {g.lastUpdated}
+                      </span>
+                    )}
                   </div>
                   <div className="shrink-0 self-center">
                     {isLive ? (
