@@ -29,6 +29,10 @@ interface ModuleDef {
   /** Badge bg/text colour. */
   badgeBg?: string;
   status: 'live' | 'coming-soon';
+  /** Optional "last checked against source" date, e.g. "Jul 28, 2026". Rendered as its own highlighted pill. */
+  lastUpdated?: string;
+  /** Optional — gives the tile an accent border + tint. */
+  highlight?: boolean;
 }
 
 const MODULES: ModuleDef[] = [
@@ -59,6 +63,8 @@ const MODULES: ModuleDef[] = [
     badge: '2026',
     badgeBg: '#ea580c',
     status: 'live',
+    lastUpdated: 'Updated Jul 28, 2026',
+    highlight: true,
   },
   {
     id: 'iap-stg',
@@ -90,15 +96,26 @@ const MODULES: ModuleDef[] = [
 
 function ModuleTile({ m }: { m: ModuleDef }) {
   const isLive = m.status === 'live';
+  const accent = m.badgeBg ?? '#1e3a5f';
   const inner = (
     <div
       className={[
-        'group relative h-full rounded-2xl bg-card border border-border',
-        'p-5 sm:p-6 shadow-card transition-all duration-200',
+        'group relative h-full rounded-2xl bg-card p-5 sm:p-6 shadow-card',
+        'transition-all duration-200',
+        m.highlight ? 'border-2' : 'border border-border',
         isLive
           ? 'hover:shadow-card-hover hover:-translate-y-0.5 hover:border-accent/40 cursor-pointer'
           : 'opacity-65 cursor-not-allowed',
       ].join(' ')}
+      style={
+        m.highlight
+          ? {
+              borderColor: `${accent}55`,
+              boxShadow: `0 0 0 1px ${accent}22`,
+              background: `linear-gradient(135deg, ${accent}0d, transparent 60%)`,
+            }
+          : undefined
+      }
     >
       <div className="flex items-start gap-4 h-full">
         <div
@@ -130,6 +147,17 @@ function ModuleTile({ m }: { m: ModuleDef }) {
             {m.subtitle}
           </p>
           <p className="text-sm text-ink leading-relaxed">{m.description}</p>
+          {m.lastUpdated && (
+            <span
+              className="inline-flex items-center gap-1.5 mt-2.5 w-fit
+                         px-2.5 py-1 rounded-full text-[10.5px] font-bold
+                         text-white"
+              style={{ backgroundColor: accent }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
+              {m.lastUpdated}
+            </span>
+          )}
         </div>
 
         <div className="shrink-0 self-center">
