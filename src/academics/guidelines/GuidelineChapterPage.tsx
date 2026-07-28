@@ -28,6 +28,23 @@ export function GuidelineChapterPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Some browsers (enterprise Chrome policies, certain extensions) silently
+  // refuse to navigate an iframe to a cross-origin PDF — no console error,
+  // no failed network request, just a permanently blank/blocked frame.
+  // There's no reliable onError signal for this, so if the iframe hasn't
+  // fired `load` within a few seconds we assume it's stuck and swap to an
+  // explicit open/download card instead of leaving a dead embed on screen.
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [iframeStalled, setIframeStalled] = useState(false);
+
+  useEffect(() => {
+    setIframeLoaded(false);
+    setIframeStalled(false);
+    if (!chapter) return;
+    const t = setTimeout(() => setIframeStalled(true), 4000);
+    return () => clearTimeout(t);
+  }, [chapter]);
+
   useEffect(() => {
     if (!guideline || !chapterNo) return;
     setLoading(true);
@@ -148,30 +165,52 @@ export function GuidelineChapterPage() {
         {!loading && !error && chapter && (
           <div className="rounded-xl border border-border bg-card overflow-hidden
                           shadow-card">
-            {/* Native browser PDF viewer. #toolbar=1 keeps the built-in
-                page navigation; #zoom=page-fit fits the full page. */}
-            <iframe
-              key={chapter.url}
-              src={`${chapter.url}#toolbar=1&zoom=page-width`}
-              title={chapter.title}
-              className="w-full h-[78vh] border-0 bg-white"
-            >
-              {/* Fallback for browsers that block PDF iframes. */}
-              <div className="p-8 text-center text-ink-muted text-sm">
-                <BookOpen size={24} className="mx-auto mb-2 text-ink-muted/60" />
-                Your browser doesn't support inline PDFs.
-                <br />
-                <a
-                  href={chapter.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent font-semibold hover:underline mt-2
-                             inline-block"
-                >
-                  Open the PDF in a new tab →
-                </a>
+            {iframeStalled && !iframeLoaded ? (
+              <div className="p-10 text-center text-ink-muted text-sm h-[78vh]
+                              flex flex-col items-center justify-center">
+                <BookOpen size={28} className="mb-3 text-ink-muted/60" />
+                <p className="font-semibold text-ink mb-1">
+                  Inline preview didn't load
+                </p>
+                <p className="max-w-sm mb-4">
+                  Your browser (or a security extension/policy on this device)
+                  blocked the inline PDF viewer. The file itself is fine —
+                  open it directly instead.
+                </p>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={chapter.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2
+                               rounded-lg text-sm font-semibold border
+                               border-border bg-card text-ink hover:bg-bg
+                               transition-colors"
+                  >
+                    <ExternalLink size={14} /> Open in new tab
+                  </a>
+                  <a
+                    href={chapter.url}
+                    download
+                    className="inline-flex items-center gap-1.5 px-4 py-2
+                               rounded-lg text-sm font-semibold text-white"
+                    style={{ backgroundColor: guideline.color }}
+                  >
+                    <Download size={14} /> Download PDF
+                  </a>
+                </div>
               </div>
-            </iframe>
+            ) : (
+              // Native browser PDF viewer. #toolbar=1 keeps the built-in
+              // page navigation; #zoom=page-fit fits the full page.
+              <iframe
+                key={chapter.url}
+                src={`${chapter.url}#toolbar=1&zoom=page-width`}
+                title={chapter.title}
+                onLoad={() => setIframeLoaded(true)}
+                className="w-full h-[78vh] border-0 bg-white"
+              />
+            )}
           </div>
         )}
       </div>

@@ -4,11 +4,17 @@
     <meta charset="utf-8" />
     <script>
       // GitHub Pages SPA redirect — encodes the path into a query string
-      // so index.html can restore it via history.replaceState
+      // so index.html can restore it via history.replaceState.
+      //
+      // This site deploys at the domain root (vite base: '/'), not under a
+      // /reponame/ project-pages subpath, so the redirect target must be
+      // the true root '/' — there is no real '/academics/' page for GitHub
+      // Pages to serve. Redirecting there previously 404'd again, and each
+      // pass re-encoded the already-encoded query string, growing it until
+      // the browser hit "URI Too Long".
       var l = window.location;
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 2).join('/') +
         '/?p=' + encodeURIComponent(l.pathname.slice(1) + l.search) +
         (l.hash || '')
       );
