@@ -70,6 +70,7 @@ const PendingApplicationsPage = lazy(() => import('./academics/admin/pages/Pendi
 const PendingCmeEventsPage = lazy(() => import('./academics/admin/pages/PendingCmeEventsPage').then(m => ({ default: m.PendingCmeEventsPage })));
 const PendingNeverAgainPage = lazy(() => import('./academics/admin/pages/PendingNeverAgainPage').then(m => ({ default: m.PendingNeverAgainPage })));
 const SendNotificationPage = lazy(() => import('./academics/admin/pages/SendNotificationPage').then(m => ({ default: m.SendNotificationPage })));
+const SystemStatusPage = lazy(() => import('./academics/admin/pages/SystemStatusPage').then(m => ({ default: m.SystemStatusPage })));
 
 // ---------------------------------------------------------------------------
 // React Query client
@@ -209,6 +210,7 @@ export default function App() {
 
             {/* ── PediAid Academics admin routes ── */}
             <Route path="/academics/admin" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AdminOverviewPage /></Suspense>} />
+            <Route path="/academics/admin/status" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><SystemStatusPage /></Suspense>} />
             <Route path="/academics/admin/taxonomy" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><TaxonomyPage /></Suspense>} />
             <Route path="/academics/admin/users" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><UsersPage /></Suspense>} />
             <Route path="/academics/admin/pending-applications" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><PendingApplicationsPage /></Suspense>} />

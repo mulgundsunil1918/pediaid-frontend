@@ -20,6 +20,7 @@ import {
   Sparkles,
   ShieldAlert,
   Megaphone,
+  RadioTower,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import {
@@ -121,6 +122,12 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           to="/academics/admin"
           icon={<LayoutDashboard size={17} />}
           label="Overview"
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/status"
+          icon={<RadioTower size={17} />}
+          label="System Status"
           onClick={onNavClick}
         />
         <NavItem
