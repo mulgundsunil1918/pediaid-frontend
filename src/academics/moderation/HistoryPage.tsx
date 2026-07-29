@@ -13,7 +13,7 @@ export function HistoryPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
 
   if (!hasRole('moderator', 'admin')) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   return (

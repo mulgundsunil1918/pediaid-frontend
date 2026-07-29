@@ -329,7 +329,7 @@ function ApplicantCard({ applicant }: ApplicantCardProps) {
 export function PendingApplicationsPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
   if (!hasRole('admin')) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   const { data: applicants, isLoading, isError, error } =

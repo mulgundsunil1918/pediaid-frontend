@@ -672,7 +672,7 @@ function TopicsPanel({
 
 export function TaxonomyPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to="/academics" replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const { data, isLoading } = useTaxonomyTree();
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);

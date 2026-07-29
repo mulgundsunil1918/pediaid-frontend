@@ -237,7 +237,7 @@ function TopChaptersTable({ chapters }: { chapters: TopChapter[] }) {
 
 export function AdminOverviewPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to="/academics" replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const navigate = useNavigate();
   const { data: stats, isLoading } = usePlatformStats();

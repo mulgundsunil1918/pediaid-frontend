@@ -484,7 +484,7 @@ function PendingEventCard({ event }: { event: PendingCmeEvent }) {
 export function PendingCmeEventsPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
   if (!hasRole('admin')) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   const { data, isLoading, isError, error } = useAdminPendingCmeEvents();

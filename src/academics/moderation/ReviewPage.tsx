@@ -182,7 +182,7 @@ export function ReviewPage() {
 
   // Guard: only moderators and admins may access this page
   if (!hasRole('moderator', 'admin')) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   const { data: chapter, isLoading, isError, error } = useChapterForReview(id);

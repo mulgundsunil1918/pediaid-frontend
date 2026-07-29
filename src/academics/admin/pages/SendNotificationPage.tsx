@@ -29,7 +29,7 @@ export function SendNotificationPage() {
   const broadcast = useSendBroadcast();
 
   if (!hasRole('admin')) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   const valid = title.trim().length > 0 && body.trim().length > 0;

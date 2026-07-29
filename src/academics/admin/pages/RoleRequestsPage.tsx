@@ -364,7 +364,7 @@ function TabPanel({ statusParam }: TabPanelProps) {
 
 export function RoleRequestsPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to="/academics" replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const [activeTab, setActiveTab] = useState<TabKey>('pending');
 

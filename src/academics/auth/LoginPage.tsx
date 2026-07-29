@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
 import type { AuthResponse } from '../types';
@@ -19,6 +19,14 @@ const SAVED_EMAIL_KEY = 'acad_saved_email';
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // Where to send the user after a successful login. Only accept an
+  // internal /academics/... path (never an absolute URL) so a crafted
+  // ?next= query can't be used as an open redirect.
+  const rawNext = searchParams.get('next');
+  const nextPath =
+    rawNext && rawNext.startsWith('/academics/') ? rawNext : '/academics/dashboard';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -83,7 +91,7 @@ export function LoginPage() {
         // localStorage blocked — non-fatal
       }
 
-      navigate('/academics/dashboard', { replace: true });
+      navigate(nextPath, { replace: true });
     } catch {
       setError('Network error. Please try again.');
     } finally {

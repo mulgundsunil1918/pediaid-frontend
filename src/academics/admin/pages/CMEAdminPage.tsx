@@ -579,7 +579,7 @@ function EventAdminCard({ event }: EventAdminCardProps) {
 export function CMEAdminPage() {
   // Auth guard
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to="/academics" replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const [showCreateModal, setShowCreateModal] = useState(false);

@@ -237,7 +237,7 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
 export function PendingNeverAgainPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
   if (!hasRole('admin')) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   const { data, isLoading, isError, error } = useAdminPendingNeverAgainPosts();

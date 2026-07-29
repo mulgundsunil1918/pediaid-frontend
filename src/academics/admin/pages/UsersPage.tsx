@@ -423,7 +423,7 @@ function UserCard({ user, onConfirmDeactivate, onConfirmReactivate }: UserCardPr
 export function UsersPage() {
   // Auth guard
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to="/academics" replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const [activeTab, setActiveTab] = useState<RoleFilter>('all');
   const [search, setSearch] = useState('');

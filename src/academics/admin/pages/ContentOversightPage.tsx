@@ -272,7 +272,7 @@ function SkeletonRow() {
 export function ContentOversightPage() {
   // Auth guard
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to="/academics" replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const [searchParams] = useSearchParams();
   const initialStatus = (searchParams.get('status') ?? '') as StatusFilter;
