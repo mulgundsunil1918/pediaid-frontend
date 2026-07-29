@@ -3,12 +3,13 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import {
   Award,
   X,
   Check,
   AlertTriangle,
+  Megaphone,
 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
@@ -541,6 +542,19 @@ function EventAdminCard({ event }: EventAdminCardProps) {
               <Award size={14} />
               Issue Certificates
             </button>
+          )}
+          {isCancellable && (
+            <Link
+              to={`/academics/admin/notify?${new URLSearchParams({
+                title: event.title,
+                body: `New ${event.eventType}: "${event.title}" — check it out on PediAid Academics.`,
+                linkPath: `/academics/cme/${event.slug}`,
+              })}`}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-border rounded-lg hover:bg-gray-50 text-ink"
+            >
+              <Megaphone size={14} />
+              Notify everyone
+            </Link>
           )}
         </div>
       </div>

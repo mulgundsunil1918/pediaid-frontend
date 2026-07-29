@@ -196,6 +196,7 @@ export interface PlatformStats {
 
 export interface AdminCMEEvent {
   id: string;
+  slug: string;
   title: string;
   eventType: 'webinar' | 'workshop' | 'conference' | 'course';
   status: 'scheduled' | 'live' | 'completed' | 'cancelled';
@@ -605,6 +606,84 @@ export function useRejectCmeEvent() {
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ['admin', 'cme-pending'] });
     },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Never Again moderation
+// ---------------------------------------------------------------------------
+
+export interface PendingNeverAgainPost {
+  id: number;
+  what_happened: string;
+  what_went_wrong: string;
+  the_lesson: string;
+  category: string;
+  role: string | null;
+  status: string;
+  rejection_reason: string | null;
+  created_at: string;
+}
+
+/** GET /admin/never-again/pending — every pending anonymous post */
+export function useAdminPendingNeverAgainPosts() {
+  return useQuery<PendingNeverAgainPost[], Error>({
+    queryKey: ['admin', 'never-again-pending'],
+    queryFn: async () => {
+      const res = await apiFetch<{ data: PendingNeverAgainPost[] }>(
+        '/api/academics/admin/never-again/pending',
+      );
+      return res.data;
+    },
+    staleTime: 30_000,
+  });
+}
+
+/** PUT /admin/never-again/:id/approve — publishes the post */
+export function useApproveNeverAgainPost() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, number>({
+    mutationFn: (id) =>
+      apiFetch<void>(`/api/academics/admin/never-again/${id}/approve`, {
+        method: 'PUT',
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'never-again-pending'] });
+    },
+  });
+}
+
+/** PUT /admin/never-again/:id/reject — body: { reason } */
+export function useRejectNeverAgainPost() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: number; reason: string }>({
+    mutationFn: ({ id, reason }) =>
+      apiFetch<void>(`/api/academics/admin/never-again/${id}/reject`, {
+        method: 'PUT',
+        body: JSON.stringify({ reason }),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'never-again-pending'] });
+    },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Broadcast notification (push to every device)
+// ---------------------------------------------------------------------------
+
+/** POST /api/push/broadcast — the logged-in admin's JWT is enough, no key needed */
+export function useSendBroadcast() {
+  return useMutation<
+    { ok: boolean; messageId: string },
+    Error,
+    { title: string; body: string; linkPath?: string }
+  >({
+    mutationFn: (payload) =>
+      apiFetch('/api/push/broadcast', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
   });
 }
 

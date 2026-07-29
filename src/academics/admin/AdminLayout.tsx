@@ -18,12 +18,15 @@ import {
   ShieldCheck,
   UserPlus,
   Sparkles,
+  ShieldAlert,
+  Megaphone,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import {
   usePlatformStats,
   useAdminPendingApplicants,
   useAdminPendingCmeEvents,
+  useAdminPendingNeverAgainPosts,
 } from './hooks/useAdmin';
 
 // ---------------------------------------------------------------------------
@@ -89,6 +92,7 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const { data: stats } = usePlatformStats();
   const { data: pendingApplicants } = useAdminPendingApplicants();
   const { data: pendingCmeEvents } = useAdminPendingCmeEvents();
+  const { data: pendingNeverAgainPosts } = useAdminPendingNeverAgainPosts();
 
   const pendingCredentials = stats?.usersByRole
     ? (stats.usersByRole['pending_credentials'] ?? 0)
@@ -96,6 +100,7 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const pendingChapters = stats?.chaptersByStatus?.['pending'] ?? 0;
   const pendingApplicationsCount = pendingApplicants?.length ?? 0;
   const pendingCmeCount = pendingCmeEvents?.length ?? 0;
+  const pendingNeverAgainCount = pendingNeverAgainPosts?.length ?? 0;
 
   return (
     <div className="flex flex-col h-full">
@@ -165,10 +170,23 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           onClick={onNavClick}
         />
         <NavItem
+          to="/academics/admin/never-again/pending"
+          icon={<ShieldAlert size={17} />}
+          label="Never Again"
+          badge={pendingNeverAgainCount}
+          onClick={onNavClick}
+        />
+        <NavItem
           to="/academics/admin/role-requests"
           icon={<ShieldCheck size={17} />}
           label="Role Requests"
           badge={stats?.pendingRoleRequests ?? 0}
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/notify"
+          icon={<Megaphone size={17} />}
+          label="Send Notification"
           onClick={onNavClick}
         />
       </nav>
