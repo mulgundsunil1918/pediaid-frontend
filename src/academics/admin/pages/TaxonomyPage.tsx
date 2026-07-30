@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Plus, Edit2, X, ChevronUp, ChevronDown, Check, AlertTriangle } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
+import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
 import {
   useTaxonomyTree,
   useCreateSubject,
@@ -672,7 +673,7 @@ function TopicsPanel({
 
 export function TaxonomyPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
+  if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const { data, isLoading } = useTaxonomyTree();
   const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);

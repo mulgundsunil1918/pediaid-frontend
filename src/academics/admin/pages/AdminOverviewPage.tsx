@@ -17,6 +17,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
+import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
 import { usePlatformStats } from '../hooks/useAdmin';
 import type { RecentActivityEntry, TopChapter } from '../hooks/useAdmin';
 
@@ -237,7 +238,7 @@ function TopChaptersTable({ chapters }: { chapters: TopChapter[] }) {
 
 export function AdminOverviewPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
+  if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const navigate = useNavigate();
   const { data: stats, isLoading } = usePlatformStats();
