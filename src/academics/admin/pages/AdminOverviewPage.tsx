@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
 import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
+import { AdminLayout } from '../AdminLayout';
 import { usePlatformStats } from '../hooks/useAdmin';
 import type { RecentActivityEntry, TopChapter } from '../hooks/useAdmin';
 
@@ -245,31 +246,36 @@ export function AdminOverviewPage() {
 
   if (isError) {
     return (
-      <div>
-        <h2 className="text-xl font-bold text-primary mb-6">Overview</h2>
-        <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-danger">
-          Couldn't load dashboard stats — {error instanceof Error ? error.message : 'unknown error.'}
+      <AdminLayout>
+        <div>
+          <h2 className="text-xl font-bold text-primary mb-6">Overview</h2>
+          <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-danger">
+            Couldn't load dashboard stats — {error instanceof Error ? error.message : 'unknown error.'}
+          </div>
+          <p className="text-xs text-ink-muted mt-3">
+            The rest of the sidebar isn't affected by this specific call — Never Again,
+            CME Events, Users, System Status etc. fetch their own data independently.
+          </p>
         </div>
-        <p className="text-xs text-ink-muted mt-3">
-          The rest of the sidebar isn't affected by this specific call — Never Again,
-          CME Events, Users, System Status etc. fetch their own data independently.
-        </p>
-      </div>
+      </AdminLayout>
     );
   }
 
   if (isLoading || !stats) {
     return (
-      <div>
-        <h2 className="text-xl font-bold text-primary mb-6">Overview</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          {Array.from({ length: 6 }).map((_, i) => <StatSkeleton key={i} />)}
+      <AdminLayout>
+        <div>
+          <h2 className="text-xl font-bold text-primary mb-6">Overview</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            {Array.from({ length: 6 }).map((_, i) => <StatSkeleton key={i} />)}
+          </div>
         </div>
-      </div>
+      </AdminLayout>
     );
   }
 
   return (
+    <AdminLayout>
     <div className="space-y-6 animate-fadeSlideIn">
       <h2 className="text-xl font-bold text-primary">Overview</h2>
 
@@ -358,5 +364,6 @@ export function AdminOverviewPage() {
         </div>
       </div>
     </div>
+    </AdminLayout>
   );
 }
