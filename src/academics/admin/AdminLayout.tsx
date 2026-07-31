@@ -226,54 +226,66 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const user = useAuthStore((s) => s.user);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // When this page is embedded in an iframe (the pediaid-status tab bar
+  // does this), that page's own tabs ARE the navigation — this sidebar
+  // would just be a second, duplicate nav underneath it. Only show it on
+  // a direct, top-level visit to academics.pediaid.bridgr.co.in itself.
+  const isEmbedded = typeof window !== 'undefined' && window.self !== window.top;
+
   return (
     <div className="min-h-screen bg-bg flex">
-      {/* ── Desktop sidebar ─────────────────────────────────────────── */}
-      <aside
-        className="hidden md:flex flex-col fixed inset-y-0 left-0 w-60 z-30"
-        style={{ backgroundColor: '#1e3a5f' }}
-      >
-        <SidebarContent />
-      </aside>
-
-      {/* ── Mobile overlay sidebar ──────────────────────────────────── */}
-      {mobileOpen && (
-        <div className="md:hidden fixed inset-0 z-40 flex">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setMobileOpen(false)}
-          />
-          {/* Drawer */}
+      {!isEmbedded && (
+        <>
+          {/* ── Desktop sidebar ─────────────────────────────────────── */}
           <aside
-            className="relative w-64 flex flex-col h-full animate-slideInRight"
+            className="hidden md:flex flex-col fixed inset-y-0 left-0 w-60 z-30"
             style={{ backgroundColor: '#1e3a5f' }}
           >
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="absolute top-4 right-4 text-white/70 hover:text-white"
-              aria-label="Close menu"
-            >
-              <X size={20} />
-            </button>
-            <SidebarContent onNavClick={() => setMobileOpen(false)} />
+            <SidebarContent />
           </aside>
-        </div>
+
+          {/* ── Mobile overlay sidebar ──────────────────────────────── */}
+          {mobileOpen && (
+            <div className="md:hidden fixed inset-0 z-40 flex">
+              {/* Backdrop */}
+              <div
+                className="absolute inset-0 bg-black/50"
+                onClick={() => setMobileOpen(false)}
+              />
+              {/* Drawer */}
+              <aside
+                className="relative w-64 flex flex-col h-full animate-slideInRight"
+                style={{ backgroundColor: '#1e3a5f' }}
+              >
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  className="absolute top-4 right-4 text-white/70 hover:text-white"
+                  aria-label="Close menu"
+                >
+                  <X size={20} />
+                </button>
+                <SidebarContent onNavClick={() => setMobileOpen(false)} />
+              </aside>
+            </div>
+          )}
+        </>
       )}
 
       {/* ── Main content ────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col md:ml-60 min-w-0">
+      <div className={`flex-1 flex flex-col min-w-0 ${isEmbedded ? '' : 'md:ml-60'}`}>
         {/* Top header */}
         <header className="sticky top-0 z-20 bg-white border-b border-border shadow-sm px-4 md:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {/* Hamburger (mobile only) */}
-            <button
-              className="md:hidden p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-gray-100"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu size={20} />
-            </button>
+            {/* Hamburger (mobile only, only when there's a sidebar to open) */}
+            {!isEmbedded && (
+              <button
+                className="md:hidden p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-gray-100"
+                onClick={() => setMobileOpen(true)}
+                aria-label="Open menu"
+              >
+                <Menu size={20} />
+              </button>
+            )}
             <h1 className="text-sm font-semibold text-primary hidden sm:block">
               Admin Panel — PediAid Academics
             </h1>
