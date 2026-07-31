@@ -2,10 +2,12 @@
 // academics/admin/pages/PendingNeverAgainPage.tsx
 //
 // Admin-only moderation queue for anonymous "Never Again" posts. Posts have
-// no account attached (device_id only), so there's no poster identity to
-// show and no email/in-app notification path on approve/reject — the
-// submitting device checks its own status via GET /never-again/mine
-// instead. Otherwise this mirrors PendingCmeEventsPage.tsx.
+// no account attached (device_id only) and stay anonymous to every other
+// user forever — but a submitter can optionally leave a contact email that
+// only the admin ever sees, so there's a real way to reach them if a post
+// needs a revision rather than an outright reject. The submitting device
+// also always checks its own status via GET /never-again/mine regardless
+// of whether an email was left. Otherwise this mirrors PendingCmeEventsPage.tsx.
 // =============================================================================
 
 import { useState } from 'react';
@@ -17,6 +19,8 @@ import {
   Inbox,
   Loader2,
   ShieldAlert,
+  Mail,
+  MessageSquareWarning,
 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
 import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
@@ -25,6 +29,7 @@ import {
   useAdminPendingNeverAgainPosts,
   useApproveNeverAgainPost,
   useRejectNeverAgainPost,
+  useRequestNeverAgainChanges,
   type PendingNeverAgainPost,
 } from '../hooks/useAdmin';
 
@@ -44,10 +49,12 @@ function RejectModal({
   onCancel,
   onConfirm,
   isPending,
+  hasEmail,
 }: {
   onCancel: () => void;
   onConfirm: (reason: string) => void;
   isPending: boolean;
+  hasEmail: boolean;
 }) {
   const [reason, setReason] = useState('');
   const valid = reason.trim().length >= 5;
@@ -70,9 +77,10 @@ function RejectModal({
         </div>
         <div className="px-6 py-5 space-y-4">
           <p className="text-sm text-ink leading-relaxed">
-            This post stays hidden from the public feed. The reason is stored
-            for your own records only — since posts are anonymous there's no
-            one to email it to.
+            This post stays hidden from the public feed.{' '}
+            {hasEmail
+              ? "We'll email the submitter this reason."
+              : "The reason is stored for your own records only — this submitter didn't leave a contact email."}
           </p>
           <div>
             <label className="block text-sm font-semibold text-ink mb-1.5">
@@ -115,16 +123,103 @@ function RejectModal({
 }
 
 // ---------------------------------------------------------------------------
+// Request changes modal
+// ---------------------------------------------------------------------------
+
+function ChangesModal({
+  onCancel,
+  onConfirm,
+  isPending,
+  hasEmail,
+}: {
+  onCancel: () => void;
+  onConfirm: (reason: string) => void;
+  isPending: boolean;
+  hasEmail: boolean;
+}) {
+  const [reason, setReason] = useState('');
+  const valid = reason.trim().length >= 5;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="changes-na-modal-title"
+    >
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+        <div style={{ backgroundColor: '#d69e2e' }} className="px-6 py-4">
+          <h2
+            id="changes-na-modal-title"
+            className="font-bold text-white text-lg flex items-center gap-2"
+          >
+            <MessageSquareWarning size={20} /> Request changes
+          </h2>
+        </div>
+        <div className="px-6 py-5 space-y-4">
+          <p className="text-sm text-ink leading-relaxed">
+            The post goes back to a "needs changes" state instead of being
+            rejected outright.{' '}
+            {hasEmail
+              ? "We'll email the submitter exactly what to fix — they can share a revised version any time."
+              : "This submitter didn't leave a contact email, so the only way they'll see this is by checking \"My Submissions\" in the app."}
+          </p>
+          <div>
+            <label className="block text-sm font-semibold text-ink mb-1.5">
+              What needs to change? (required)
+            </label>
+            <textarea
+              value={reason}
+              onChange={(e) => setReason(e.target.value.slice(0, 1000))}
+              rows={4}
+              placeholder="e.g. Remove the ward name in paragraph 2, otherwise this is good to publish."
+              className="w-full border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-yellow-500 transition-colors resize-y"
+              autoFocus
+            />
+            <p className="text-xs text-ink-muted mt-1">
+              {reason.length}/1000 — minimum 5 characters
+            </p>
+          </div>
+        </div>
+        <div className="px-6 pb-6 flex gap-3 justify-end">
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={isPending}
+            className="px-4 py-2 text-sm font-medium text-ink border border-border rounded-xl hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => onConfirm(reason.trim())}
+            disabled={!valid || isPending}
+            className="px-5 py-2 text-sm font-bold text-white rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
+            style={{ backgroundColor: '#d69e2e' }}
+          >
+            {isPending ? 'Sending…' : 'Send back for changes'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Post card
 // ---------------------------------------------------------------------------
 
 function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
   const approveMutation = useApproveNeverAgainPost();
   const rejectMutation = useRejectNeverAgainPost();
+  const changesMutation = useRequestNeverAgainChanges();
   const [rejectOpen, setRejectOpen] = useState(false);
+  const [changesOpen, setChangesOpen] = useState(false);
   const [error, setError] = useState('');
 
-  const isSubmitting = approveMutation.isPending || rejectMutation.isPending;
+  const hasEmail = Boolean(post.submitter_email);
+  const isSubmitting =
+    approveMutation.isPending || rejectMutation.isPending || changesMutation.isPending;
 
   async function handleApprove() {
     setError('');
@@ -145,6 +240,16 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
     }
   }
 
+  async function handleRequestChanges(reason: string) {
+    setError('');
+    try {
+      await changesMutation.mutateAsync({ id: post.id, reason });
+      setChangesOpen(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Request changes failed.');
+    }
+  }
+
   return (
     <article className="bg-white rounded-2xl shadow-card border border-border overflow-hidden p-6">
       <div className="flex items-center flex-wrap gap-2 mb-3">
@@ -159,6 +264,14 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
         <span className="inline-flex items-center gap-1 text-[11px] text-ink-muted">
           <Clock size={10} /> Submitted {daysAgo(post.created_at)}
         </span>
+        {hasEmail && (
+          <span
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-accent"
+            title={`${post.submitter_email} — private, only visible to admins, never shown publicly`}
+          >
+            <Mail size={10} /> {post.submitter_email}
+          </span>
+        )}
       </div>
 
       <div className="space-y-3 mb-4">
@@ -211,6 +324,16 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
         </button>
         <button
           type="button"
+          onClick={() => setChangesOpen(true)}
+          disabled={isSubmitting}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-colors disabled:opacity-50"
+          style={{ color: '#b45309', borderColor: '#fbd38d', backgroundColor: '#fffaf0' }}
+        >
+          <MessageSquareWarning size={14} />
+          Request changes
+        </button>
+        <button
+          type="button"
           onClick={() => setRejectOpen(true)}
           disabled={isSubmitting}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-danger border border-red-200 hover:bg-red-50 transition-colors disabled:opacity-50"
@@ -225,6 +348,16 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
           onCancel={() => setRejectOpen(false)}
           onConfirm={handleReject}
           isPending={rejectMutation.isPending}
+          hasEmail={hasEmail}
+        />
+      )}
+
+      {changesOpen && (
+        <ChangesModal
+          onCancel={() => setChangesOpen(false)}
+          onConfirm={handleRequestChanges}
+          isPending={changesMutation.isPending}
+          hasEmail={hasEmail}
         />
       )}
     </article>

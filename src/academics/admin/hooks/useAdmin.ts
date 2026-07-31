@@ -622,6 +622,7 @@ export interface PendingNeverAgainPost {
   role: string | null;
   status: string;
   rejection_reason: string | null;
+  submitter_email: string | null;
   created_at: string;
 }
 
@@ -659,6 +660,21 @@ export function useRejectNeverAgainPost() {
   return useMutation<void, Error, { id: number; reason: string }>({
     mutationFn: ({ id, reason }) =>
       apiFetch<void>(`/api/academics/admin/never-again/${id}/reject`, {
+        method: 'PUT',
+        body: JSON.stringify({ reason }),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'never-again-pending'] });
+    },
+  });
+}
+
+/** PUT /admin/never-again/:id/request-changes — body: { reason } */
+export function useRequestNeverAgainChanges() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: number; reason: string }>({
+    mutationFn: ({ id, reason }) =>
+      apiFetch<void>(`/api/academics/admin/never-again/${id}/request-changes`, {
         method: 'PUT',
         body: JSON.stringify({ reason }),
       }),
