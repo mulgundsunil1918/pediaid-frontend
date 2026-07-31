@@ -241,7 +241,22 @@ export function AdminOverviewPage() {
   if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const navigate = useNavigate();
-  const { data: stats, isLoading } = usePlatformStats();
+  const { data: stats, isLoading, isError, error } = usePlatformStats();
+
+  if (isError) {
+    return (
+      <div>
+        <h2 className="text-xl font-bold text-primary mb-6">Overview</h2>
+        <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-danger">
+          Couldn't load dashboard stats — {error instanceof Error ? error.message : 'unknown error.'}
+        </div>
+        <p className="text-xs text-ink-muted mt-3">
+          The rest of the sidebar isn't affected by this specific call — Never Again,
+          CME Events, Users, System Status etc. fetch their own data independently.
+        </p>
+      </div>
+    );
+  }
 
   if (isLoading || !stats) {
     return (
