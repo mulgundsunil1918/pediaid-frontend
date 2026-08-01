@@ -137,7 +137,7 @@ export function LoginPage() {
             </div>
             <h1 className="text-2xl font-bold text-primary">Welcome back</h1>
             <p className="text-sm text-ink-muted mt-1">
-              Sign in to PediAid Academics
+              Sign in to your PediAid account
             </p>
           </div>
 

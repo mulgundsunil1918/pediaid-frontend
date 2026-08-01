@@ -151,12 +151,10 @@ export function EditorPage() {
   // they came from the topic browser, so Back goes to the Academics root.
   const backHref = isNew ? '/academics' : '/academics/dashboard';
 
-  // Auth guard. Sign-in is temporarily removed from the live app (see
-  // App.tsx), so there's nowhere useful to send them but back to the
-  // public Academics home.
+  // Auth guard
   const { isAuthenticated, canAuthor, user } = useAuthStore();
   if (!isAuthenticated() || !canAuthor()) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   const store = useEditorStore();

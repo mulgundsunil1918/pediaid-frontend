@@ -34,11 +34,13 @@ const ModerationQueuePage = lazy(() => import('./academics/moderation/Moderation
 const ReviewPage       = lazy(() => import('./academics/moderation/ReviewPage').then(m => ({ default: m.ReviewPage })));
 const HistoryPage      = lazy(() => import('./academics/moderation/HistoryPage').then(m => ({ default: m.HistoryPage })));
 
-// Reader/author sign-in ("Sign in to PediAid Academics") is intentionally
-// pulled out of the live app for now — it's being replaced by one unified
-// PediAid account that covers the whole app, not an Academics-only login.
-// The page components still exist under academics/auth/ for when that's
-// rebuilt; only the routes below were removed.
+// Sign-in — the SAME backend account (acad_users / JWT) the Flutter app
+// already uses, so one account works on both. Restored after being pulled
+// out temporarily; see App.tsx git history for context.
+const LoginPage        = lazy(() => import('./academics/auth/index').then(m => ({ default: m.LoginPage })));
+const RegisterPage     = lazy(() => import('./academics/auth/index').then(m => ({ default: m.RegisterPage })));
+const ForgotPasswordPage = lazy(() => import('./academics/auth/ForgotPasswordPage').then(m => ({ default: m.ForgotPasswordPage })));
+const ResetPasswordPage  = lazy(() => import('./academics/auth/ResetPasswordPage').then(m => ({ default: m.ResetPasswordPage })));
 
 const DashboardPage    = lazy(() => import('./academics/dashboard/DashboardPage').then(m => ({ default: m.DashboardPage })));
 const MyChaptersPage   = lazy(() => import('./academics/dashboard/MyChaptersPage').then(m => ({ default: m.MyChaptersPage })));
@@ -46,6 +48,7 @@ const ProfilePage      = lazy(() => import('./academics/dashboard/ProfilePage').
 
 const CMEListPage      = lazy(() => import('./academics/cme/CMEListPage').then(m => ({ default: m.CMEListPage })));
 const CMEDetailPage    = lazy(() => import('./academics/cme/CMEDetailPage').then(m => ({ default: m.CMEDetailPage })));
+const SubmitCMEEventPage = lazy(() => import('./academics/cme/SubmitCMEEventPage').then(m => ({ default: m.SubmitCMEEventPage })));
 const CertificatePage  = lazy(() => import('./academics/cme/CertificatePage').then(m => ({ default: m.CertificatePage })));
 
 const SearchPage       = lazy(() => import('./academics/search/SearchPage').then(m => ({ default: m.SearchPage })));
@@ -149,8 +152,11 @@ export default function App() {
             {/* Root — show academics home at pediaid.bridgr.co.in/ directly */}
             <Route path="/" element={<SubjectsPage />} />
 
-            {/* ── PediAid Academics auth routes ──
-                 Removed for now — see comment near the top of this file. */}
+            {/* ── PediAid sign-in routes ── */}
+            <Route path="/academics/login" element={<LoginPage />} />
+            <Route path="/academics/register" element={<RegisterPage />} />
+            <Route path="/academics/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/academics/reset-password" element={<ResetPasswordPage />} />
 
 
             {/* ── PediAid Academics browse routes ── */}
@@ -193,6 +199,7 @@ export default function App() {
 
             {/* ── PediAid Academics CME routes ── */}
             <Route path="/academics/cme" element={<CMEListPage />} />
+            <Route path="/academics/cme/submit/:eventType" element={<SubmitCMEEventPage />} />
             <Route path="/academics/cme/certificates" element={<CertificatePage />} />
             <Route path="/academics/cme/:slug" element={<CMEDetailPage />} />
 

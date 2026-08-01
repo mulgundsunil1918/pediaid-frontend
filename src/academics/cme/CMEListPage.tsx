@@ -3,7 +3,8 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { BookOpen, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useCMEEvents } from './hooks/useCME';
 import type { CMEFilters, CMEEvent } from './hooks/useCME';
 import { EventCard } from './components/EventCard';
@@ -119,11 +120,26 @@ export function CMEListPage() {
       <div className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         {/* Page header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-primary">CME Events</h1>
-          <p className="mt-1 text-ink-muted">
-            Earn continuing medical education credits
-          </p>
+        <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="text-3xl font-bold text-primary">CME Events</h1>
+            <p className="mt-1 text-ink-muted">
+              Earn continuing medical education credits
+            </p>
+          </div>
+          {typeFilter !== 'all' ? (
+            <Link
+              to={`/academics/cme/submit/${typeFilter}`}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold text-white shrink-0"
+              style={{ backgroundColor: '#1e3a5f' }}
+            >
+              <Plus size={16} /> Submit a {typeFilter}
+            </Link>
+          ) : (
+            <p className="text-xs text-ink-muted self-center">
+              Pick a category below to submit an event
+            </p>
+          )}
         </div>
 
         {/* Status tab bar */}

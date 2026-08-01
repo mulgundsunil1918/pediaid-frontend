@@ -81,7 +81,10 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   const { accessToken, clearAuth } = useAuthStore.getState();
 
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    // Only claim a JSON body when one is actually being sent — Fastify's
+    // default body parser rejects a JSON-content-typed request with an
+    // empty body (e.g. POST .../register, which takes no body at all).
+    ...(options.body ? { 'Content-Type': 'application/json' } : {}),
     ...(options.headers as Record<string, string>),
   };
 
@@ -201,6 +204,101 @@ export function useCancelRegistration() {
       }),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['cme'] });
+    },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Submission — any signed-in user, status forced to 'pending' server-side
+// ---------------------------------------------------------------------------
+
+export interface CmeCoordinatorInput {
+  name: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface SubmitCMEEventInput {
+  title: string;
+  subtitle?: string;
+  eventType: 'webinar' | 'workshop' | 'conference' | 'course';
+  description: string;
+  longDescription?: string;
+  startsAt: string; // ISO
+  endsAt: string; // ISO
+  timezone?: string;
+  venue?: string;
+  address?: string;
+  city?: string;
+  country?: string;
+  onlineUrl?: string;
+  organisedBy?: string;
+  speakerName?: string;
+  speakerCredentials?: string;
+  speakerBio?: string;
+  creditHours?: number;
+  creditType?: string;
+  maxAttendees?: number;
+  price?: number;
+  currency?: string;
+  coverImageUrl?: string;
+  brochureUrl?: string;
+  registrationUrl?: string;
+  tags?: string[];
+  coordinators?: CmeCoordinatorInput[];
+}
+
+export interface SubmitCMEEventResult {
+  id: string;
+  slug: string;
+  status: string;
+  message: string;
+}
+
+/**
+ * GET /api/academics/cme/my-events
+ * Every event the signed-in user has posted, across all statuses.
+ */
+export function useMyCMEEvents() {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated());
+
+  return useQuery<{ data: RawCmeEvent[] }, AcademicsApiError>({
+    queryKey: ['cme', 'my-events'],
+    queryFn: () => apiFetch<{ data: RawCmeEvent[] }>('/api/academics/cme/my-events'),
+    enabled: isAuthenticated,
+    staleTime: 30_000,
+  });
+}
+
+/** Raw shape returned by the backend's toCmeEventJson() — not the browsing-page CMEEvent type above. */
+export interface RawCmeEvent {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  eventType: 'webinar' | 'workshop' | 'conference' | 'course';
+  status: 'pending' | 'published' | 'changes_requested' | 'rejected' | 'cancelled' | 'archived';
+  rejectionReason: string | null;
+  startsAt: string;
+  endsAt: string;
+  createdAt: string;
+}
+
+/**
+ * POST /api/academics/cme/events
+ * Submits a new event. Backend forces status='pending' regardless of body.
+ */
+export function useSubmitCMEEvent() {
+  const queryClient = useQueryClient();
+
+  return useMutation<SubmitCMEEventResult, AcademicsApiError, SubmitCMEEventInput>({
+    mutationFn: (input) =>
+      apiFetch<SubmitCMEEventResult>('/api/academics/cme/events', {
+        method: 'POST',
+        body: JSON.stringify(input),
+      }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['cme', 'my-events'] });
     },
   });
 }

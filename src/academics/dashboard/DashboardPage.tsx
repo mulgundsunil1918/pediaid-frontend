@@ -54,11 +54,9 @@ export function DashboardPage() {
   const [showTopicSelector, setShowTopicSelector] = useState(false);
   const [pendingFilterActive, setPendingFilterActive] = useState(false);
 
-  // Auth guard — redirect unauthenticated users. Sign-in is temporarily
-  // removed from the live app (see App.tsx), so there's nowhere useful to
-  // send them but back to the public Academics home.
+  // Auth guard — redirect unauthenticated users
   if (!isAuthenticated()) {
-    return <Navigate to="/academics" replace />;
+    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
   // Role guard — the dashboard is for approved authors / moderators / admins.
