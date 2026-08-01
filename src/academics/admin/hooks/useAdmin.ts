@@ -25,7 +25,10 @@ async function apiFetch<T>(
 ): Promise<T> {
   const { accessToken } = useAuthStore.getState();
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    // Only claim a JSON body when one is actually being sent — Fastify's
+    // default body parser rejects a JSON-content-typed request with an
+    // empty body (e.g. PUT .../approve, which takes no body at all).
+    ...(options.body ? { 'Content-Type': 'application/json' } : {}),
     ...(options.headers as Record<string, string>),
   };
   if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
