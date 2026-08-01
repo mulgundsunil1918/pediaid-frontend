@@ -17,10 +17,12 @@ import {
   X,
   ShieldCheck,
   UserPlus,
-  Sparkles,
   ShieldAlert,
   Megaphone,
   RadioTower,
+  Video,
+  Wrench,
+  GraduationCap,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import {
@@ -100,8 +102,15 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
     : 0;
   const pendingChapters = stats?.chaptersByStatus?.['pending'] ?? 0;
   const pendingApplicationsCount = pendingApplicants?.length ?? 0;
-  const pendingCmeCount = pendingCmeEvents?.length ?? 0;
   const pendingNeverAgainCount = pendingNeverAgainPosts?.length ?? 0;
+  const pendingConferenceCount =
+    pendingCmeEvents?.filter((e) => e.event_type === 'conference').length ?? 0;
+  const pendingWebinarCount =
+    pendingCmeEvents?.filter((e) => e.event_type === 'webinar').length ?? 0;
+  const pendingWorkshopCount =
+    pendingCmeEvents?.filter((e) => e.event_type === 'workshop').length ?? 0;
+  const pendingCourseCount =
+    pendingCmeEvents?.filter((e) => e.event_type === 'course').length ?? 0;
 
   return (
     <div className="flex flex-col h-full">
@@ -164,16 +173,31 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           onClick={onNavClick}
         />
         <NavItem
-          to="/academics/admin/cme"
+          to="/academics/admin/cme/conference/pending"
           icon={<Award size={17} />}
-          label="CME Events"
+          label="Conferences"
+          badge={pendingConferenceCount}
           onClick={onNavClick}
         />
         <NavItem
-          to="/academics/admin/cme/pending"
-          icon={<Sparkles size={17} />}
-          label="Pending Events"
-          badge={pendingCmeCount}
+          to="/academics/admin/cme/webinar/pending"
+          icon={<Video size={17} />}
+          label="Webinars"
+          badge={pendingWebinarCount}
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/cme/workshop/pending"
+          icon={<Wrench size={17} />}
+          label="Workshops"
+          badge={pendingWorkshopCount}
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/cme/course/pending"
+          icon={<GraduationCap size={17} />}
+          label="Courses"
+          badge={pendingCourseCount}
           onClick={onNavClick}
         />
         <NavItem

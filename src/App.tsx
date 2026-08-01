@@ -66,6 +66,7 @@ const UsersPage = lazy(() => import('./academics/admin/pages/UsersPage').then(m 
 const CredentialsPage = lazy(() => import('./academics/admin/pages/CredentialsPage').then(m => ({ default: m.CredentialsPage })));
 const ContentOversightPage = lazy(() => import('./academics/admin/pages/ContentOversightPage').then(m => ({ default: m.ContentOversightPage })));
 const CMEAdminPage = lazy(() => import('./academics/admin/pages/CMEAdminPage').then(m => ({ default: m.CMEAdminPage })));
+const CmeTypeAdminPage = lazy(() => import('./academics/admin/pages/CmeTypeAdminPage').then(m => ({ default: m.CmeTypeAdminPage })));
 const RoleRequestsPage = lazy(() => import('./academics/admin/pages/RoleRequestsPage').then(m => ({ default: m.RoleRequestsPage })));
 const PendingApplicationsPage = lazy(() => import('./academics/admin/pages/PendingApplicationsPage').then(m => ({ default: m.PendingApplicationsPage })));
 const PendingCmeEventsPage = lazy(() => import('./academics/admin/pages/PendingCmeEventsPage').then(m => ({ default: m.PendingCmeEventsPage })));
@@ -213,6 +214,8 @@ export default function App() {
             <Route path="/academics/admin/users" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><UsersPage /></Suspense>} />
             <Route path="/academics/admin/pending-applications" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><PendingApplicationsPage /></Suspense>} />
             <Route path="/academics/admin/cme/pending" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><PendingCmeEventsPage /></Suspense>} />
+            <Route path="/academics/admin/cme/:eventType/pending" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CmeTypeAdminPage /></Suspense>} />
+            <Route path="/academics/admin/cme/:eventType" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CMEAdminPage /></Suspense>} />
             <Route path="/academics/admin/never-again/pending" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><PendingNeverAgainPage /></Suspense>} />
             <Route path="/academics/admin/notify" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><SendNotificationPage /></Suspense>} />
             <Route path="/academics/admin/credentials" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CredentialsPage /></Suspense>} />

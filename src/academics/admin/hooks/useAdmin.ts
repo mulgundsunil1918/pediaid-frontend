@@ -612,6 +612,21 @@ export function useRejectCmeEvent() {
   });
 }
 
+/** PUT /admin/cme/:id/request-changes — body: { reason } — sends back for revision + emails */
+export function useRequestCmeEventChanges() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: string; reason: string }>({
+    mutationFn: ({ id, reason }) =>
+      apiFetch<void>(`/api/academics/admin/cme/${id}/request-changes`, {
+        method: 'PUT',
+        body: JSON.stringify({ reason }),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'cme-pending'] });
+    },
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Never Again moderation
 // ---------------------------------------------------------------------------

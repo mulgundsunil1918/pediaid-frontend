@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useParams } from 'react-router-dom';
 import {
   Award,
   X,
@@ -577,15 +577,27 @@ function EventAdminCard({ event }: EventAdminCardProps) {
 // CMEAdminPage
 // ---------------------------------------------------------------------------
 
+const CME_TYPE_LABELS: Record<string, string> = {
+  conference: 'Conferences',
+  webinar: 'Webinars',
+  workshop: 'Workshops',
+  course: 'Courses',
+};
+
 export function CMEAdminPage() {
   // Auth guard
   const hasRole = useAuthStore((s) => s.hasRole);
   if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
+  const { eventType } = useParams<{ eventType?: string }>();
+  const typeFilter = eventType && CME_TYPE_LABELS[eventType] ? eventType : null;
+  const typeLabel = (typeFilter ? CME_TYPE_LABELS[typeFilter] : null) ?? 'CME Events';
+
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const { data: events = [], isLoading } = useAdminCMEEvents();
+  const { data: allEvents = [], isLoading } = useAdminCMEEvents();
+  const events = typeFilter ? allEvents.filter((e) => e.eventType === typeFilter) : allEvents;
 
   const upcomingEvents = events.filter(
     (e) => e.status === 'scheduled' || e.status === 'live'
@@ -603,8 +615,12 @@ export function CMEAdminPage() {
         <div className="flex items-center gap-3">
           <Award size={22} className="text-primary" />
           <div>
-            <h2 className="text-lg font-bold text-primary">CME Events</h2>
-            <p className="text-xs text-ink-muted">Manage continuing medical education events</p>
+            <h2 className="text-lg font-bold text-primary">{typeLabel}</h2>
+            <p className="text-xs text-ink-muted">
+              {typeFilter
+                ? `Published, cancelled, and past ${typeLabel.toLowerCase()} — for the moderation queue, use "Pending ${typeLabel}" in the sidebar.`
+                : 'Manage continuing medical education events'}
+            </p>
           </div>
         </div>
         <button
