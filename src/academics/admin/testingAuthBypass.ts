@@ -1,13 +1,9 @@
 // =============================================================================
 // academics/admin/testingAuthBypass.ts
 //
-// TEMPORARY, testing-phase-only switch. While true, every admin/moderator
-// route guard skips its login check and renders directly — no sign-in
-// required to reach the admin dashboard.
-//
-// To turn real admin login back on: set this back to `false` (matching
-// change needed in backend/src/academics/auth/auth.middleware.ts, search
-// for ADMIN_AUTH_DISABLED) and redeploy both.
+// Real admin login is back on (was a temporary testing-phase switch — see
+// git history for auth.middleware.ts if this ever needs reverting). Sign in
+// at /academics/login with the admin account to reach the admin dashboard.
 // =============================================================================
 
-export const ADMIN_AUTH_DISABLED = true;
+export const ADMIN_AUTH_DISABLED = false;
