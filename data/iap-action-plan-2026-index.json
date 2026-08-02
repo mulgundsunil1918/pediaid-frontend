@@ -2,77 +2,3169 @@
   "source": "IAP Action Plan 2026 — IAP Practice Guidelines 2026 (Indian Academy of Pediatrics)",
   "version": "2026",
   "base_url": "https://iapindia.org/",
-  "generated_at": "2026-05-02",
-  "total_chapters": 63,
+  "generated_at": "2026-07-28",
+  "total_chapters": 198,
   "chapters": [
-    { "no": "001", "title": "Allergic Rhinitis", "section": "Allergy", "slug": "allergic-rhinitis", "file": "01-Allergic-Rhinitis.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/01-Allergic-Rhinitis.pdf", "external": true, "keywords": ["AR", "hay fever", "nasal allergy"] },
-    { "no": "002", "title": "Urticaria and Angioedema", "section": "Allergy", "slug": "urticaria-angioedema", "file": "02-Urticaria-and-Angioedema.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/02-Urticaria-and-Angioedema.pdf", "external": true, "keywords": ["urticaria", "hives", "angioedema", "wheal"] },
-    { "no": "003", "title": "Atopic Dermatitis", "section": "Allergy", "slug": "atopic-dermatitis", "file": "03-Atopic-Dermatitis.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/03-Atopic-Dermatitis.pdf", "external": true, "keywords": ["eczema", "AD", "atopic eczema"] },
-    { "no": "004", "title": "Food Allergy in Children", "section": "Allergy", "slug": "food-allergy", "file": "04-Food-Allergy-in-Children.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/04-Food-Allergy-in-Children.pdf", "external": true, "keywords": ["food allergy", "IgE", "egg allergy", "peanut allergy"] },
-    { "no": "005", "title": "Cow's Milk Protein Allergy", "section": "Allergy", "slug": "cmpa", "file": "05-Cows-Milk-Protein-Allergy.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/05-Cows-Milk-Protein-Allergy.pdf", "external": true, "keywords": ["CMPA", "cow milk allergy", "milk protein"] },
-    { "no": "006", "title": "Anaphylaxis Management in OPD", "section": "Allergy", "slug": "anaphylaxis-opd", "file": "06-Anaphylaxis-Management-in-OPD.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/06-Anaphylaxis-Management-in-OPD.pdf", "external": true, "keywords": ["anaphylaxis", "epinephrine", "adrenaline", "allergic shock"] },
-    { "no": "007", "title": "Contact Dermatitis", "section": "Allergy", "slug": "contact-dermatitis", "file": "07-Contact-Dermatitis.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/07-Contact-Dermatitis.pdf", "external": true, "keywords": ["contact dermatitis", "allergic contact"] },
-    { "no": "008", "title": "Drug Allergy", "section": "Allergy", "slug": "drug-allergy", "file": "08-Drug-Allergy.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/08-Drug-Allergy.pdf", "external": true, "keywords": ["drug allergy", "drug hypersensitivity", "ADR"] },
-    { "no": "009", "title": "Insect Venom Hypersensitivity", "section": "Allergy", "slug": "insect-venom", "file": "09-Insect-Venom-Hypersensitivity.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/09-Insect-Venom-Hypersensitivity.pdf", "external": true, "keywords": ["insect sting", "bee sting", "wasp sting", "venom allergy"] },
-    { "no": "010", "title": "Rational Use of Allergy Testing", "section": "Allergy", "slug": "allergy-testing", "file": "010-Rational-Use-of-Allergy-Testing.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/010-Rational-Use-of-Allergy-Testing.pdf", "external": true, "keywords": ["skin prick test", "specific IgE", "allergy testing"] },
-    { "no": "011", "title": "Allergen Immunotherapy", "section": "Allergy", "slug": "immunotherapy", "file": "011-Allergen-Immunotherapy.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/011-Allergen-Immunotherapy.pdf", "external": true, "keywords": ["AIT", "SCIT", "SLIT", "desensitisation"] },
-    { "no": "012", "title": "Primary and Secondary Immunodeficiencies", "section": "Allergy", "slug": "immunodeficiency", "file": "012-Primary-and-Secondary-Immunodeficiencies.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/012-Primary-and-Secondary-Immunodeficiencies.pdf", "external": true, "keywords": ["PID", "immunodeficiency", "SCID", "CVID"] },
-    { "no": "013", "title": "Allergy and Asthma Action Plan for Indian Schools", "section": "Allergy", "slug": "school-asthma-plan", "file": "013-Allergy-and-Asthma-Action-Plan-for-Indian-Schools.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/013-Allergy-and-Asthma-Action-Plan-for-Indian-Schools.pdf", "external": true, "keywords": ["asthma action plan", "school asthma", "allergy in schools"] },
-
-    { "no": "014", "title": "Emotional and Psychosocial Aspect of Growth and Development", "section": "Adolescent", "slug": "adol-emotional-psychosocial", "file": "Adolescent/001.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/001-Emotional-and-Psychosocial-Aspect-of-Growth-and-Development.pdf", "external": true, "keywords": ["psychosocial development", "emotional development", "growth"] },
-    { "no": "015", "title": "Psychosocial Impact of Early/Late Puberty and Concerns", "section": "Adolescent", "slug": "adol-puberty-concerns", "file": "Adolescent/002.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/002-Psychosocial-Impact-of-Early-or-Late-Puberty-and-Concerns.pdf", "external": true, "keywords": ["precocious puberty", "delayed puberty", "Tanner staging"] },
-    { "no": "016", "title": "Screen Time Versus Green Time: Technology, Social Media, and Mental Health", "section": "Adolescent", "slug": "adol-screen-time", "file": "Adolescent/003.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/003-Screen-Time-Versus-Green-Time-Technology-Social-Media-and-Mental-Health.pdf", "external": true, "keywords": ["screen time", "social media", "digital health"] },
-    { "no": "017", "title": "School Matters: Identifying Academic Challenges and Underperformance", "section": "Adolescent", "slug": "adol-school-academic", "file": "Adolescent/004.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/004-School-Matters-Identifying-Academic-Challenges-and-Underperformance.pdf", "external": true, "keywords": ["academic underperformance", "learning difficulty", "school problem"] },
-    { "no": "018", "title": "Sexual and Reproductive Health Needs of Adolescents", "section": "Adolescent", "slug": "adol-sexual-reproductive", "file": "Adolescent/005.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/005-Sexual-and-Reproductive-Health-Needs-of-Adolescents.pdf", "external": true, "keywords": ["adolescent sexuality", "reproductive health", "SRH"] },
-    { "no": "019", "title": "Parenting in Teen Years: From Helicopter to Co-pilot", "section": "Adolescent", "slug": "adol-parenting", "file": "Adolescent/006.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/006-Parenting-in-Teen-Years-From-Helicopter-to-Co-pilot.pdf", "external": true, "keywords": ["parenting teens", "neurodiverse", "specially-abled adolescents"] },
-    { "no": "020", "title": "Teaching Life Skills to Adolescents in Office Practice", "section": "Adolescent", "slug": "adol-life-skills", "file": "Adolescent/007.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/007-Teaching-Life-Skills-to-Adolescents-in-Office-Practice-Practical-Guide-for-Pediatricians.pdf", "external": true, "keywords": ["life skills", "adolescent counseling", "office practice"] },
-    { "no": "021", "title": "Mind Matters: Screening for Mental, Emotional and Behavioral Issues", "section": "Adolescent", "slug": "adol-mental-screening", "file": "Adolescent/008.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/008-Mind-Matters-Screening-for-Mental-Emotional-and-Behavioral-Issues.pdf", "external": true, "keywords": ["mental health screening", "behavioral screening", "adolescent mental health"] },
-    { "no": "022", "title": "Counseling that Connects: Making Every OPD Visit Count", "section": "Adolescent", "slug": "adol-counseling-opd", "file": "Adolescent/009.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/009-Counseling-that-Connects-Making-Every-Outpatient-Department-Visit-Count.pdf", "external": true, "keywords": ["adolescent counseling", "HEEADSSS", "OPD visit"] },
-    { "no": "023", "title": "High-risk Behaviors: Identifying Red Flags", "section": "Adolescent", "slug": "adol-high-risk", "file": "Adolescent/010.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/010-High-risk-Behaviors-Identifying-Red-Flags-in-Routine-Consultations.pdf", "external": true, "keywords": ["high risk behavior", "red flags adolescent", "substance use"] },
-    { "no": "024", "title": "From Crushes to Crashes: Handling Adolescent Relationships", "section": "Adolescent", "slug": "adol-relationships", "file": "Adolescent/011.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/011-From-Crushes-to-Crashes-Handling-Adolescent-Relationships.pdf", "external": true, "keywords": ["adolescent relationships", "teenage romance", "heartbreak"] },
-    { "no": "025", "title": "Beyond Childhood: Transitioning Teens with Chronic Illness to Adult Care", "section": "Adolescent", "slug": "adol-transition-care", "file": "Adolescent/012.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/012-Beyond-Childhood-Transitioning-Teens-with-Chronic-Illness-to-Adult-Care.pdf", "external": true, "keywords": ["transition care", "chronic illness teen", "adult care transition"] },
-    { "no": "026", "title": "Preadolescent Care: Preparing for Tomorrow Today", "section": "Adolescent", "slug": "adol-preadolescent", "file": "Adolescent/013.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/013-Preadolescent-Care-Preparing-for-Tomorrow-Today.pdf", "external": true, "keywords": ["preadolescent", "tween", "early adolescence"] },
-    { "no": "027", "title": "Hello Gen Z: Practicing Pediatrics in the Present Era", "section": "Adolescent", "slug": "adol-gen-z", "file": "Adolescent/014.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/014-Hello-Gen-Z-Practicing-Pediatrics-in-the-Present-Era.pdf", "external": true, "keywords": ["Gen Z", "modern pediatrics", "digital natives"] },
-    { "no": "028", "title": "Premarital Counseling by Pediatricians", "section": "Adolescent", "slug": "adol-premarital", "file": "Adolescent/015.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/015-Premarital-Counseling-by-Pediatricians.pdf", "external": true, "keywords": ["premarital counseling", "adolescent marriage", "young adult"] },
-    { "no": "029", "title": "Medicolegal Issues in Adolescent Practice", "section": "Adolescent", "slug": "adol-medicolegal", "file": "Adolescent/016.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/016-Medicolegal-Issues-in-Adolescent-Practice.pdf", "external": true, "keywords": ["medicolegal", "adolescent consent", "POCSO"] },
-    { "no": "030", "title": "Skin and Hair Problems and Care in Teens", "section": "Adolescent", "slug": "adol-skin-hair", "file": "Adolescent/017.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/017-Skin-and-Hair-Problems-and-Care-in-Teens.pdf", "external": true, "keywords": ["acne", "teen skin", "alopecia", "dandruff"] },
-    { "no": "031", "title": "Sports Medicine", "section": "Adolescent", "slug": "adol-sports", "file": "Adolescent/018.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/018-Sports-Medicine.pdf", "external": true, "keywords": ["sports medicine", "athletic injury", "sports injury"] },
-    { "no": "032", "title": "Dealing with Child Sexual Abuse", "section": "Adolescent", "slug": "adol-csa", "file": "Adolescent/019.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/019-Dealing-with-Child-Sexual-Abuse.pdf", "external": true, "keywords": ["CSA", "child sexual abuse", "POCSO"] },
-
-    { "no": "033", "title": "Basic Concepts in Nutrition & Nutritional Requirements", "section": "Nutrition", "slug": "nut-basic", "file": "Nutrition/001.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/001-Basic-Concepts-in-Nutrition-and-Nutritional-Requirements-V2.pdf", "external": true, "keywords": ["nutrition basics", "RDA", "nutritional requirements"] },
-    { "no": "034", "title": "Assessment of Nutrition in Children", "section": "Nutrition", "slug": "nut-assessment", "file": "Nutrition/002.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/002-Assessment-of-Nutrition-in-Children.pdf", "external": true, "keywords": ["nutritional assessment", "anthropometry", "BMI"] },
-    { "no": "035", "title": "Pediatric Enteral & Parenteral Nutrition — Mode of Nutrient Delivery", "section": "Nutrition", "slug": "nut-enteral-parenteral", "file": "Nutrition/003.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/003-Pediatric-Enteral-and-Parenteral-Nutrition-Mode-of-Nutrient-Delivery.pdf", "external": true, "keywords": ["enteral nutrition", "parenteral nutrition", "TPN", "PN"] },
-    { "no": "036", "title": "Paediatric Micronutrients of Public Health Importance Beyond the Big Five", "section": "Nutrition", "slug": "nut-micronutrients", "file": "Nutrition/004.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/004-Paediatric-Micronutrients-of-Public%20Health-Importance-Beyond-the-Big-Five.pdf", "external": true, "keywords": ["micronutrients", "vitamins", "minerals", "trace elements"] },
-    { "no": "037", "title": "Functional Foods, Prebiotics & Probiotics", "section": "Nutrition", "slug": "nut-prebiotics-probiotics", "file": "Nutrition/005.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/005-Functional-Foods-Prebiotics-and-Probiotics.pdf", "external": true, "keywords": ["probiotics", "prebiotics", "functional foods", "gut health"] },
-    { "no": "038", "title": "Infant Nutrition (Breastfeeding, Complementary Feeding, Growth Monitoring)", "section": "Nutrition", "slug": "nut-infant", "file": "Nutrition/006.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/006-Infant-Nutrition-Exclusive-Breastfeeding-Complementary-Feeding-Growth-Monitoring.pdf", "external": true, "keywords": ["breastfeeding", "complementary feeding", "infant nutrition", "growth monitoring"] },
-    { "no": "039", "title": "Nutritional Care in Small Vulnerable Newborns", "section": "Nutrition", "slug": "nut-svn", "file": "Nutrition/007.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/007-Nutritional-Care-in-Small-Vulnerable-Newborns.pdf", "external": true, "keywords": ["SVN", "small vulnerable newborn", "preterm nutrition"] },
-    { "no": "040", "title": "Malnutrition — MAM and SAM", "section": "Nutrition", "slug": "nut-mam-sam", "file": "Nutrition/008.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/008-Malnutrition-MAM-Moderate-Acute-Malnutrition-and-SAM-Severe-Acute-Malnutrition.pdf", "external": true, "keywords": ["SAM", "MAM", "severe acute malnutrition", "RUTF", "kwashiorkor", "marasmus"] },
-    { "no": "041", "title": "Role of Nurturing Care in Early Childhood Development", "section": "Nutrition", "slug": "nut-nurturing-care", "file": "Nutrition/009.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/009-Role-of-Nurturing-Care-in-Early-Childhood-Development-Integrating-Nutrition-Responsive-Caregiving-and-Early-Stimulation.pdf", "external": true, "keywords": ["ECD", "early childhood development", "nurturing care", "responsive caregiving"] },
-    { "no": "042", "title": "Toddler to Teen Nutrition", "section": "Nutrition", "slug": "nut-toddler-teen", "file": "Nutrition/010.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/010-Toddler-to-Teen-Nutrition.pdf", "external": true, "keywords": ["toddler nutrition", "teen nutrition", "school age nutrition"] },
-    { "no": "043", "title": "Prevention & Management of Childhood Obesity", "section": "Nutrition", "slug": "nut-obesity", "file": "Nutrition/011.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/011-Prevention-and-Management-of-Childhood-Obesity-V2.pdf", "external": true, "keywords": ["childhood obesity", "overweight", "BMI", "obesity prevention"] },
-    { "no": "044", "title": "Nutrition and Nutritional Disorders in Indian Adolescents", "section": "Nutrition", "slug": "nut-adolescent", "file": "Nutrition/012.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/012-Nutrition-and-Nutritional-Disorders-in-Indian-Adolescents.pdf", "external": true, "keywords": ["adolescent nutrition", "nutritional disorder teen", "anaemia adolescent"] },
-    { "no": "045", "title": "Food Allergy vs Food Intolerance in Children", "section": "Nutrition", "slug": "nut-allergy-vs-intolerance", "file": "Nutrition/013.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/013-Food-Allergy-vs-Food-Intolerance-in-Children.pdf", "external": true, "keywords": ["food intolerance", "lactose intolerance", "food allergy"] },
-
-    { "no": "046", "title": "Approach to Drowning in Children", "section": "Environmental Emergencies", "slug": "env-drowning", "file": "Environmental-Emergencies/001.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Environmental-Emergencies/001-Approach-to-Drowning-in-Children.pdf", "external": true, "keywords": ["drowning", "near drowning", "submersion injury"] },
-    { "no": "047", "title": "Approach to Scald and Burns in Children", "section": "Environmental Emergencies", "slug": "env-burns", "file": "Environmental-Emergencies/002.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Environmental-Emergencies/002-Approach-to-Scald-and-Burns-in-Children.pdf", "external": true, "keywords": ["burns", "scalds", "thermal injury", "Parkland"] },
-
-    { "no": "048", "title": "Snake Bite Management in Children", "section": "Toxin and Poison", "slug": "tox-snakebite", "file": "Toxin-and-Poison/001.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Toxin-and-Poison/001-Snake-Bite-Management-in-Children.pdf", "external": true, "keywords": ["snakebite", "snake bite", "anti-snake venom", "ASV"] },
-
-    { "no": "049", "title": "Clinical Practice Statement on Delivery Room Readiness and Team Checklists", "section": "Quick Reference Neonatology", "slug": "qrg-delivery-room", "file": "QRG-001.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/IAPNNF-Quick-Reference-Guidelines-in-Neonatology.pdf", "external": true, "keywords": ["delivery room", "neonatal resuscitation team", "team checklist"] },
-    { "no": "050", "title": "Neonatal Resuscitation Update (ILCOR CoSTR 2025)", "section": "Quick Reference Neonatology", "slug": "qrg-resuscitation", "file": "QRG-002.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Resuscitation-Update-ILCOR-CoSTR-2025.pdf", "external": true, "keywords": ["NRP", "neonatal resuscitation", "ILCOR", "CoSTR 2025"] },
-    { "no": "051", "title": "Care of Normal Newborn", "section": "Quick Reference Neonatology", "slug": "qrg-normal-newborn", "file": "QRG-003.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/003-Care-of-Normal-Newborn.pdf", "external": true, "keywords": ["normal newborn", "essential newborn care", "well baby care"] },
-    { "no": "052", "title": "Antenatal Interventions to Improve Neonatal Outcomes", "section": "Quick Reference Neonatology", "slug": "qrg-antenatal", "file": "QRG-004.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/004-Antenatal-Interventions-to-Improve-Neonatal-Outcomes.pdf", "external": true, "keywords": ["antenatal interventions", "antenatal steroids", "magnesium sulphate"] },
-    { "no": "053", "title": "Thermoregulation in Neonates", "section": "Quick Reference Neonatology", "slug": "qrg-thermoregulation", "file": "QRG-005.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/005-Thermoregulation-in-Neonates.pdf", "external": true, "keywords": ["hypothermia", "thermoregulation", "warm chain", "neonatal temperature"] },
-    { "no": "054", "title": "Golden Hour Management of Premature Neonates", "section": "Quick Reference Neonatology", "slug": "qrg-golden-hour", "file": "QRG-006.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/006-Golden-Hour-Management-of-Premature-Neonates.pdf", "external": true, "keywords": ["golden hour", "preterm care", "first hour"] },
-    { "no": "055", "title": "Umbilical Cord Management", "section": "Quick Reference Neonatology", "slug": "qrg-cord", "file": "QRG-007.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-007-Umbilical-Cord-Management.pdf", "external": true, "keywords": ["delayed cord clamping", "DCC", "umbilical cord", "cord milking"] },
-    { "no": "056", "title": "Apnea of Prematurity", "section": "Quick Reference Neonatology", "slug": "qrg-apnea", "file": "QRG-008.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-008-Apnea-of-Prematurity.pdf", "external": true, "keywords": ["AOP", "apnea of prematurity", "caffeine", "preterm apnea"] },
-    { "no": "057", "title": "Surfactant Therapy in Neonates", "section": "Quick Reference Neonatology", "slug": "qrg-surfactant", "file": "QRG-009.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-009-Surfactant-Therapy-in-Neonates.pdf", "external": true, "keywords": ["surfactant", "RDS", "INSURE", "LISA"] },
-    { "no": "058", "title": "Neonatal Transport", "section": "Quick Reference Neonatology", "slug": "qrg-transport", "file": "QRG-010.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-010-Neonatal-Transport.pdf", "external": true, "keywords": ["neonatal transport", "transfer", "STABLE"] },
-    { "no": "059", "title": "Oxygen Use in Neonates", "section": "Quick Reference Neonatology", "slug": "qrg-oxygen", "file": "QRG-011.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-011-Oxygen-use-in-Neonates.pdf", "external": true, "keywords": ["O2", "oxygen", "SpO2 target", "FiO2"] },
-    { "no": "060", "title": "Kangaroo Mother Care", "section": "Quick Reference Neonatology", "slug": "qrg-kmc", "file": "QRG-012.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-012-Clinical-Practice-Statement-on-Kangaroo-Mother-Care.pdf", "external": true, "keywords": ["KMC", "kangaroo mother care", "skin to skin"] },
-    { "no": "061", "title": "Continuous Positive Airway Pressure in Neonates", "section": "Quick Reference Neonatology", "slug": "qrg-cpap", "file": "QRG-013.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-013-Continuous-Positive-Airway-Pressure-in-Neonates.pdf", "external": true, "keywords": ["CPAP", "non-invasive ventilation", "NIV", "bubble CPAP"] },
-    { "no": "062", "title": "Heated Humidified High-flow Nasal Cannula in Neonates", "section": "Quick Reference Neonatology", "slug": "qrg-hhhfnc", "file": "QRG-014.pdf", "url": "https://iapindia.org/pdf/action-plan-2026/QRG-014-Heated-Humidified-High-flow-Nasal-Cannula-in-Neonates.pdf", "external": true, "keywords": ["HFNC", "high flow nasal cannula", "HHHFNC"] },
-
-    { "no": "063", "title": "IAP Action Plan 2026 — Modules (overview document)", "section": "Reference", "slug": "iap-modules-overview", "file": "Action-Plan-2026-Module.pdf", "url": "https://iapindia.org/pdf/Action-Plan-2026-Module.pdf", "external": true, "keywords": ["IAP Action Plan 2026", "modules overview", "IAP modules"] }
+    {
+      "no": "001",
+      "title": "Allergic Rhinitis",
+      "section": "Allergy",
+      "slug": "allergic-rhinitis",
+      "file": "01-Allergic-Rhinitis.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/01-Allergic-Rhinitis.pdf",
+      "external": true,
+      "keywords": [
+        "AR",
+        "hay fever",
+        "nasal allergy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "002",
+      "title": "Urticaria and Angioedema",
+      "section": "Allergy",
+      "slug": "urticaria-angioedema",
+      "file": "02-Urticaria-and-Angioedema.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/02-Urticaria-and-Angioedema.pdf",
+      "external": true,
+      "keywords": [
+        "urticaria",
+        "hives",
+        "angioedema",
+        "wheal"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "003",
+      "title": "Atopic Dermatitis",
+      "section": "Allergy",
+      "slug": "atopic-dermatitis",
+      "file": "03-Atopic-Dermatitis.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/03-Atopic-Dermatitis.pdf",
+      "external": true,
+      "keywords": [
+        "eczema",
+        "AD",
+        "atopic eczema"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "004",
+      "title": "Food Allergy in Children",
+      "section": "Allergy",
+      "slug": "food-allergy",
+      "file": "04-Food-Allergy-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/04-Food-Allergy-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "food allergy",
+        "IgE",
+        "egg allergy",
+        "peanut allergy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "005",
+      "title": "Cow's Milk Protein Allergy",
+      "section": "Allergy",
+      "slug": "cmpa",
+      "file": "05-Cows-Milk-Protein-Allergy.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/05-Cows-Milk-Protein-Allergy.pdf",
+      "external": true,
+      "keywords": [
+        "CMPA",
+        "cow milk allergy",
+        "milk protein"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "006",
+      "title": "Anaphylaxis Management in OPD",
+      "section": "Allergy",
+      "slug": "anaphylaxis-opd",
+      "file": "06-Anaphylaxis-Management-in-OPD.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/06-Anaphylaxis-Management-in-OPD.pdf",
+      "external": true,
+      "keywords": [
+        "anaphylaxis",
+        "epinephrine",
+        "adrenaline",
+        "allergic shock"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "007",
+      "title": "Contact Dermatitis",
+      "section": "Allergy",
+      "slug": "contact-dermatitis",
+      "file": "07-Contact-Dermatitis.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/07-Contact-Dermatitis.pdf",
+      "external": true,
+      "keywords": [
+        "contact dermatitis",
+        "allergic contact"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "008",
+      "title": "Drug Allergy",
+      "section": "Allergy",
+      "slug": "drug-allergy",
+      "file": "08-Drug-Allergy.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/08-Drug-Allergy.pdf",
+      "external": true,
+      "keywords": [
+        "drug allergy",
+        "drug hypersensitivity",
+        "ADR"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "009",
+      "title": "Insect Venom Hypersensitivity",
+      "section": "Allergy",
+      "slug": "insect-venom",
+      "file": "09-Insect-Venom-Hypersensitivity.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/09-Insect-Venom-Hypersensitivity.pdf",
+      "external": true,
+      "keywords": [
+        "insect sting",
+        "bee sting",
+        "wasp sting",
+        "venom allergy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "010",
+      "title": "Rational Use of Allergy Testing",
+      "section": "Allergy",
+      "slug": "allergy-testing",
+      "file": "010-Rational-Use-of-Allergy-Testing.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/010-Rational-Use-of-Allergy-Testing.pdf",
+      "external": true,
+      "keywords": [
+        "skin prick test",
+        "specific IgE",
+        "allergy testing"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "011",
+      "title": "Allergen Immunotherapy",
+      "section": "Allergy",
+      "slug": "immunotherapy",
+      "file": "011-Allergen-Immunotherapy.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/011-Allergen-Immunotherapy.pdf",
+      "external": true,
+      "keywords": [
+        "AIT",
+        "SCIT",
+        "SLIT",
+        "desensitisation"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "012",
+      "title": "Primary and Secondary Immunodeficiencies",
+      "section": "Allergy",
+      "slug": "immunodeficiency",
+      "file": "012-Primary-and-Secondary-Immunodeficiencies.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/012-Primary-and-Secondary-Immunodeficiencies.pdf",
+      "external": true,
+      "keywords": [
+        "PID",
+        "immunodeficiency",
+        "SCID",
+        "CVID"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "013",
+      "title": "Allergy and Asthma Action Plan for Indian Schools",
+      "section": "Allergy",
+      "slug": "school-asthma-plan",
+      "file": "013-Allergy-and-Asthma-Action-Plan-for-Indian-Schools.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/013-Allergy-and-Asthma-Action-Plan-for-Indian-Schools.pdf",
+      "external": true,
+      "keywords": [
+        "asthma action plan",
+        "school asthma",
+        "allergy in schools"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "014",
+      "title": "Emotional and Psychosocial Aspect of Growth and Development",
+      "section": "Adolescent",
+      "slug": "adol-emotional-psychosocial",
+      "file": "Adolescent/001.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/001-Emotional-and-Psychosocial-Aspect-of-Growth-and-Development.pdf",
+      "external": true,
+      "keywords": [
+        "psychosocial development",
+        "emotional development",
+        "growth"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "015",
+      "title": "Psychosocial Impact of Early/Late Puberty and Concerns",
+      "section": "Adolescent",
+      "slug": "adol-puberty-concerns",
+      "file": "Adolescent/002.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/002-Psychosocial-Impact-of-Early-or-Late-Puberty-and-Concerns.pdf",
+      "external": true,
+      "keywords": [
+        "precocious puberty",
+        "delayed puberty",
+        "Tanner staging"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "016",
+      "title": "Screen Time Versus Green Time: Technology, Social Media, and Mental Health",
+      "section": "Adolescent",
+      "slug": "adol-screen-time",
+      "file": "Adolescent/003.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/003-Screen-Time-Versus-Green-Time-Technology-Social-Media-and-Mental-Health.pdf",
+      "external": true,
+      "keywords": [
+        "screen time",
+        "social media",
+        "digital health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "017",
+      "title": "School Matters: Identifying Academic Challenges and Underperformance",
+      "section": "Adolescent",
+      "slug": "adol-school-academic",
+      "file": "Adolescent/004.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/004-School-Matters-Identifying-Academic-Challenges-and-Underperformance.pdf",
+      "external": true,
+      "keywords": [
+        "academic underperformance",
+        "learning difficulty",
+        "school problem"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "018",
+      "title": "Sexual and Reproductive Health Needs of Adolescents",
+      "section": "Adolescent",
+      "slug": "adol-sexual-reproductive",
+      "file": "Adolescent/005.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/005-Sexual-and-Reproductive-Health-Needs-of-Adolescents.pdf",
+      "external": true,
+      "keywords": [
+        "adolescent sexuality",
+        "reproductive health",
+        "SRH"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "019",
+      "title": "Parenting in Teen Years: From Helicopter to Co-pilot",
+      "section": "Adolescent",
+      "slug": "adol-parenting",
+      "file": "Adolescent/006.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/006-Parenting-in-Teen-Years-From-Helicopter-to-Co-pilot.pdf",
+      "external": true,
+      "keywords": [
+        "parenting teens",
+        "neurodiverse",
+        "specially-abled adolescents"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "020",
+      "title": "Teaching Life Skills to Adolescents in Office Practice",
+      "section": "Adolescent",
+      "slug": "adol-life-skills",
+      "file": "Adolescent/007.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/007-Teaching-Life-Skills-to-Adolescents-in-Office-Practice-Practical-Guide-for-Pediatricians.pdf",
+      "external": true,
+      "keywords": [
+        "life skills",
+        "adolescent counseling",
+        "office practice"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "021",
+      "title": "Mind Matters: Screening for Mental, Emotional and Behavioral Issues",
+      "section": "Adolescent",
+      "slug": "adol-mental-screening",
+      "file": "Adolescent/008.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/008-Mind-Matters-Screening-for-Mental-Emotional-and-Behavioral-Issues.pdf",
+      "external": true,
+      "keywords": [
+        "mental health screening",
+        "behavioral screening",
+        "adolescent mental health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "022",
+      "title": "Counseling that Connects: Making Every OPD Visit Count",
+      "section": "Adolescent",
+      "slug": "adol-counseling-opd",
+      "file": "Adolescent/009.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/009-Counseling-that-Connects-Making-Every-Outpatient-Department-Visit-Count.pdf",
+      "external": true,
+      "keywords": [
+        "adolescent counseling",
+        "HEEADSSS",
+        "OPD visit"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "023",
+      "title": "High-risk Behaviors: Identifying Red Flags",
+      "section": "Adolescent",
+      "slug": "adol-high-risk",
+      "file": "Adolescent/010.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/010-High-risk-Behaviors-Identifying-Red-Flags-in-Routine-Consultations.pdf",
+      "external": true,
+      "keywords": [
+        "high risk behavior",
+        "red flags adolescent",
+        "substance use"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "024",
+      "title": "From Crushes to Crashes: Handling Adolescent Relationships",
+      "section": "Adolescent",
+      "slug": "adol-relationships",
+      "file": "Adolescent/011.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/011-From-Crushes-to-Crashes-Handling-Adolescent-Relationships.pdf",
+      "external": true,
+      "keywords": [
+        "adolescent relationships",
+        "teenage romance",
+        "heartbreak"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "025",
+      "title": "Beyond Childhood: Transitioning Teens with Chronic Illness to Adult Care",
+      "section": "Adolescent",
+      "slug": "adol-transition-care",
+      "file": "Adolescent/012.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/012-Beyond-Childhood-Transitioning-Teens-with-Chronic-Illness-to-Adult-Care.pdf",
+      "external": true,
+      "keywords": [
+        "transition care",
+        "chronic illness teen",
+        "adult care transition"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "026",
+      "title": "Preadolescent Care: Preparing for Tomorrow Today",
+      "section": "Adolescent",
+      "slug": "adol-preadolescent",
+      "file": "Adolescent/013.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/013-Preadolescent-Care-Preparing-for-Tomorrow-Today.pdf",
+      "external": true,
+      "keywords": [
+        "preadolescent",
+        "tween",
+        "early adolescence"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "027",
+      "title": "Hello Gen Z: Practicing Pediatrics in the Present Era",
+      "section": "Adolescent",
+      "slug": "adol-gen-z",
+      "file": "Adolescent/014.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/014-Hello-Gen-Z-Practicing-Pediatrics-in-the-Present-Era.pdf",
+      "external": true,
+      "keywords": [
+        "Gen Z",
+        "modern pediatrics",
+        "digital natives"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "028",
+      "title": "Premarital Counseling by Pediatricians",
+      "section": "Adolescent",
+      "slug": "adol-premarital",
+      "file": "Adolescent/015.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/015-Premarital-Counseling-by-Pediatricians.pdf",
+      "external": true,
+      "keywords": [
+        "premarital counseling",
+        "adolescent marriage",
+        "young adult"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "029",
+      "title": "Medicolegal Issues in Adolescent Practice",
+      "section": "Adolescent",
+      "slug": "adol-medicolegal",
+      "file": "Adolescent/016.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/016-Medicolegal-Issues-in-Adolescent-Practice.pdf",
+      "external": true,
+      "keywords": [
+        "medicolegal",
+        "adolescent consent",
+        "POCSO"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "030",
+      "title": "Skin and Hair Problems and Care in Teens",
+      "section": "Adolescent",
+      "slug": "adol-skin-hair",
+      "file": "Adolescent/017.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/017-Skin-and-Hair-Problems-and-Care-in-Teens.pdf",
+      "external": true,
+      "keywords": [
+        "acne",
+        "teen skin",
+        "alopecia",
+        "dandruff"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "031",
+      "title": "Sports Medicine",
+      "section": "Adolescent",
+      "slug": "adol-sports",
+      "file": "Adolescent/018.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/018-Sports-Medicine.pdf",
+      "external": true,
+      "keywords": [
+        "sports medicine",
+        "athletic injury",
+        "sports injury"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "032",
+      "title": "Dealing with Child Sexual Abuse",
+      "section": "Adolescent",
+      "slug": "adol-csa",
+      "file": "Adolescent/019.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Adolescent/019-Dealing-with-Child-Sexual-Abuse.pdf",
+      "external": true,
+      "keywords": [
+        "CSA",
+        "child sexual abuse",
+        "POCSO"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "033",
+      "title": "Basic Concepts in Nutrition & Nutritional Requirements",
+      "section": "Nutrition",
+      "slug": "nut-basic",
+      "file": "Nutrition/001.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/001-Basic-Concepts-in-Nutrition-and-Nutritional-Requirements-V2.pdf",
+      "external": true,
+      "keywords": [
+        "nutrition basics",
+        "RDA",
+        "nutritional requirements"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "034",
+      "title": "Assessment of Nutrition in Children",
+      "section": "Nutrition",
+      "slug": "nut-assessment",
+      "file": "Nutrition/002.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/002-Assessment-of-Nutrition-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "nutritional assessment",
+        "anthropometry",
+        "BMI"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "035",
+      "title": "Pediatric Enteral & Parenteral Nutrition — Mode of Nutrient Delivery",
+      "section": "Nutrition",
+      "slug": "nut-enteral-parenteral",
+      "file": "Nutrition/003.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/003-Pediatric-Enteral-and-Parenteral-Nutrition-Mode-of-Nutrient-Delivery.pdf",
+      "external": true,
+      "keywords": [
+        "enteral nutrition",
+        "parenteral nutrition",
+        "TPN",
+        "PN"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "036",
+      "title": "Paediatric Micronutrients of Public Health Importance Beyond the Big Five",
+      "section": "Nutrition",
+      "slug": "nut-micronutrients",
+      "file": "Nutrition/004.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/004-Paediatric-Micronutrients-of-Public%20Health-Importance-Beyond-the-Big-Five.pdf",
+      "external": true,
+      "keywords": [
+        "micronutrients",
+        "vitamins",
+        "minerals",
+        "trace elements"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "037",
+      "title": "Functional Foods, Prebiotics & Probiotics",
+      "section": "Nutrition",
+      "slug": "nut-prebiotics-probiotics",
+      "file": "Nutrition/005.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/005-Functional-Foods-Prebiotics-and-Probiotics.pdf",
+      "external": true,
+      "keywords": [
+        "probiotics",
+        "prebiotics",
+        "functional foods",
+        "gut health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "038",
+      "title": "Infant Nutrition (Breastfeeding, Complementary Feeding, Growth Monitoring)",
+      "section": "Nutrition",
+      "slug": "nut-infant",
+      "file": "Nutrition/006.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/006-Infant-Nutrition-Exclusive-Breastfeeding-Complementary-Feeding-Growth-Monitoring.pdf",
+      "external": true,
+      "keywords": [
+        "breastfeeding",
+        "complementary feeding",
+        "infant nutrition",
+        "growth monitoring"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "039",
+      "title": "Nutritional Care in Small Vulnerable Newborns",
+      "section": "Nutrition",
+      "slug": "nut-svn",
+      "file": "Nutrition/007.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/007-Nutritional-Care-in-Small-Vulnerable-Newborns.pdf",
+      "external": true,
+      "keywords": [
+        "SVN",
+        "small vulnerable newborn",
+        "preterm nutrition"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "040",
+      "title": "Malnutrition — MAM and SAM",
+      "section": "Nutrition",
+      "slug": "nut-mam-sam",
+      "file": "Nutrition/008.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/008-Malnutrition-MAM-Moderate-Acute-Malnutrition-and-SAM-Severe-Acute-Malnutrition.pdf",
+      "external": true,
+      "keywords": [
+        "SAM",
+        "MAM",
+        "severe acute malnutrition",
+        "RUTF",
+        "kwashiorkor",
+        "marasmus"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "041",
+      "title": "Role of Nurturing Care in Early Childhood Development",
+      "section": "Nutrition",
+      "slug": "nut-nurturing-care",
+      "file": "Nutrition/009.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/009-Role-of-Nurturing-Care-in-Early-Childhood-Development-Integrating-Nutrition-Responsive-Caregiving-and-Early-Stimulation.pdf",
+      "external": true,
+      "keywords": [
+        "ECD",
+        "early childhood development",
+        "nurturing care",
+        "responsive caregiving"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "042",
+      "title": "Toddler to Teen Nutrition",
+      "section": "Nutrition",
+      "slug": "nut-toddler-teen",
+      "file": "Nutrition/010.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/010-Toddler-to-Teen-Nutrition.pdf",
+      "external": true,
+      "keywords": [
+        "toddler nutrition",
+        "teen nutrition",
+        "school age nutrition"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "043",
+      "title": "Prevention & Management of Childhood Obesity",
+      "section": "Nutrition",
+      "slug": "nut-obesity",
+      "file": "Nutrition/011.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/011-Prevention-and-Management-of-Childhood-Obesity-V2.pdf",
+      "external": true,
+      "keywords": [
+        "childhood obesity",
+        "overweight",
+        "BMI",
+        "obesity prevention"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "044",
+      "title": "Nutrition and Nutritional Disorders in Indian Adolescents",
+      "section": "Nutrition",
+      "slug": "nut-adolescent",
+      "file": "Nutrition/012.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/012-Nutrition-and-Nutritional-Disorders-in-Indian-Adolescents.pdf",
+      "external": true,
+      "keywords": [
+        "adolescent nutrition",
+        "nutritional disorder teen",
+        "anaemia adolescent"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "045",
+      "title": "Food Allergy vs Food Intolerance in Children",
+      "section": "Nutrition",
+      "slug": "nut-allergy-vs-intolerance",
+      "file": "Nutrition/013.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/013-Food-Allergy-vs-Food-Intolerance-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "food intolerance",
+        "lactose intolerance",
+        "food allergy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "046",
+      "title": "Approach to Drowning in Children",
+      "section": "Environmental Emergencies",
+      "slug": "env-drowning",
+      "file": "Environmental-Emergencies/001.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environmental-Emergencies/001-Approach-to-Drowning-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "drowning",
+        "near drowning",
+        "submersion injury"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "047",
+      "title": "Approach to Scald and Burns in Children",
+      "section": "Environmental Emergencies",
+      "slug": "env-burns",
+      "file": "Environmental-Emergencies/002.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environmental-Emergencies/002-Approach-to-Scald-and-Burns-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "burns",
+        "scalds",
+        "thermal injury",
+        "Parkland"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "048",
+      "title": "Snake Bite Management in Children",
+      "section": "Toxin and Poison",
+      "slug": "tox-snakebite",
+      "file": "Toxin-and-Poison/001.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Toxin-and-Poison/001-Snake-Bite-Management-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "snakebite",
+        "snake bite",
+        "anti-snake venom",
+        "ASV"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "049",
+      "title": "Clinical Practice Statement on Delivery Room Readiness and Team Checklists",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-delivery-room",
+      "file": "QRG-001.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/IAPNNF-Quick-Reference-Guidelines-in-Neonatology.pdf",
+      "external": true,
+      "keywords": [
+        "delivery room",
+        "neonatal resuscitation team",
+        "team checklist"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "050",
+      "title": "Neonatal Resuscitation Update (ILCOR CoSTR 2025)",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-resuscitation",
+      "file": "QRG-002.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Resuscitation-Update-ILCOR-CoSTR-2025.pdf",
+      "external": true,
+      "keywords": [
+        "NRP",
+        "neonatal resuscitation",
+        "ILCOR",
+        "CoSTR 2025"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "051",
+      "title": "Care of Normal Newborn",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-normal-newborn",
+      "file": "QRG-003.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/003-Care-of-Normal-Newborn.pdf",
+      "external": true,
+      "keywords": [
+        "normal newborn",
+        "essential newborn care",
+        "well baby care"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "052",
+      "title": "Antenatal Interventions to Improve Neonatal Outcomes",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-antenatal",
+      "file": "QRG-004.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/004-Antenatal-Interventions-to-Improve-Neonatal-Outcomes.pdf",
+      "external": true,
+      "keywords": [
+        "antenatal interventions",
+        "antenatal steroids",
+        "magnesium sulphate"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "053",
+      "title": "Thermoregulation in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-thermoregulation",
+      "file": "QRG-005.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/005-Thermoregulation-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "hypothermia",
+        "thermoregulation",
+        "warm chain",
+        "neonatal temperature"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "054",
+      "title": "Golden Hour Management of Premature Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-golden-hour",
+      "file": "QRG-006.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/006-Golden-Hour-Management-of-Premature-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "golden hour",
+        "preterm care",
+        "first hour"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "055",
+      "title": "Umbilical Cord Management",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-cord",
+      "file": "QRG-007.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-007-Umbilical-Cord-Management.pdf",
+      "external": true,
+      "keywords": [
+        "delayed cord clamping",
+        "DCC",
+        "umbilical cord",
+        "cord milking"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "056",
+      "title": "Apnea of Prematurity",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-apnea",
+      "file": "QRG-008.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-008-Apnea-of-Prematurity.pdf",
+      "external": true,
+      "keywords": [
+        "AOP",
+        "apnea of prematurity",
+        "caffeine",
+        "preterm apnea"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "057",
+      "title": "Surfactant Therapy in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-surfactant",
+      "file": "QRG-009.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-009-Surfactant-Therapy-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "surfactant",
+        "RDS",
+        "INSURE",
+        "LISA"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "058",
+      "title": "Neonatal Transport",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-transport",
+      "file": "QRG-010.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-010-Neonatal-Transport.pdf",
+      "external": true,
+      "keywords": [
+        "neonatal transport",
+        "transfer",
+        "STABLE"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "059",
+      "title": "Oxygen Use in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-oxygen",
+      "file": "QRG-011.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-011-Oxygen-use-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "O2",
+        "oxygen",
+        "SpO2 target",
+        "FiO2"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "060",
+      "title": "Kangaroo Mother Care",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-kmc",
+      "file": "QRG-012.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-012-Clinical-Practice-Statement-on-Kangaroo-Mother-Care.pdf",
+      "external": true,
+      "keywords": [
+        "KMC",
+        "kangaroo mother care",
+        "skin to skin"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "061",
+      "title": "Continuous Positive Airway Pressure in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-cpap",
+      "file": "QRG-013.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-013-Continuous-Positive-Airway-Pressure-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "CPAP",
+        "non-invasive ventilation",
+        "NIV",
+        "bubble CPAP"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "062",
+      "title": "Heated Humidified High-flow Nasal Cannula in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "qrg-hhhfnc",
+      "file": "QRG-014.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-014-Heated-Humidified-High-flow-Nasal-Cannula-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "HFNC",
+        "high flow nasal cannula",
+        "HHHFNC"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "063",
+      "title": "IAP Action Plan 2026 — Modules (overview document)",
+      "section": "Reference",
+      "slug": "iap-modules-overview",
+      "file": "Action-Plan-2026-Module.pdf",
+      "url": "https://iapindia.org/pdf/Action-Plan-2026-Module.pdf",
+      "external": true,
+      "keywords": [
+        "IAP Action Plan 2026",
+        "modules overview",
+        "IAP modules"
+      ],
+      "mega_section": "IAP Action Plan 2026 Modules"
+    },
+    {
+      "no": "064",
+      "title": "Feeding in Critically ILL",
+      "section": "Nutrition",
+      "slug": "feeding-in-critically-ill",
+      "file": "Nutrition/014-Feeding-in-Critically-ILL.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/014-Feeding-in-Critically-ILL.pdf",
+      "external": true,
+      "keywords": [
+        "feeding",
+        "critically"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "065",
+      "title": "Nutrition In Diabetes Mellitus (Type 1 And Type 2)",
+      "section": "Nutrition",
+      "slug": "nutrition-in-diabetes-mellitus-type-1-and-type-2",
+      "file": "Nutrition/015-Nutrition-In-Diabetes-Mellitus-Type-1-and-Type-2.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/015-Nutrition-In-Diabetes-Mellitus-Type-1-and-Type-2.pdf",
+      "external": true,
+      "keywords": [
+        "Type 1 And Type 2",
+        "nutrition",
+        "diabetes",
+        "mellitus",
+        "type"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "066",
+      "title": "Nutrition in Chronic Liver Diseases",
+      "section": "Nutrition",
+      "slug": "nutrition-in-chronic-liver-diseases",
+      "file": "Nutrition/016-Nutrition-in-Chronic-Liver-Diseases.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/016-Nutrition-in-Chronic-Liver-Diseases.pdf",
+      "external": true,
+      "keywords": [
+        "nutrition",
+        "chronic",
+        "liver",
+        "diseases"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "067",
+      "title": "Nutrition in Chronic Kidney Diseases",
+      "section": "Nutrition",
+      "slug": "nutrition-in-chronic-kidney-diseases",
+      "file": "Nutrition/017-Nutrition-in-Chronic-Renal-Diseases.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/017-Nutrition-in-Chronic-Renal-Diseases.pdf",
+      "external": true,
+      "keywords": [
+        "nutrition",
+        "chronic",
+        "kidney",
+        "diseases"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "068",
+      "title": "Nutrition in Children with Neurological Disabilities (Cerebral Palsy (CP), Autism)",
+      "section": "Nutrition",
+      "slug": "nutrition-in-children-with-neurological-disabilities-cerebral-palsy-cp-autism",
+      "file": "Nutrition/018-Nutrition-in-Children-with-Neurological-Disabilities-Cerebral-Palsy-Autism.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/018-Nutrition-in-Children-with-Neurological-Disabilities-Cerebral-Palsy-Autism.pdf",
+      "external": true,
+      "keywords": [
+        "Cerebral Palsy (CP",
+        "nutrition",
+        "neurological",
+        "disabilities",
+        "cerebral",
+        "palsy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "069",
+      "title": "Digital and Precision Nutrition in Pediatrics",
+      "section": "Nutrition",
+      "slug": "digital-and-precision-nutrition-in-pediatrics",
+      "file": "Nutrition/020-Digital-and-Precision-Nutrition-in-Pediatrics.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Nutrition/020-Digital-and-Precision-Nutrition-in-Pediatrics.pdf",
+      "external": true,
+      "keywords": [
+        "digital",
+        "precision",
+        "nutrition",
+        "pediatrics"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "070",
+      "title": "Telemedicine in Pediatrics OPD: When Virtual Visits Work and When They Don’t",
+      "section": "Computer",
+      "slug": "telemedicine-in-pediatrics-opd-when-virtual-visits-work-and-when-they-don-t",
+      "file": "Computer/001-Telemedicine-in-Pediatrics-OPD-When-Virtual-Visits-Work-and-When-They-Dont.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Computer/001-Telemedicine-in-Pediatrics-OPD-When-Virtual-Visits-Work-and-When-They-Dont.pdf",
+      "external": true,
+      "keywords": [
+        "telemedicine",
+        "pediatrics",
+        "when",
+        "virtual",
+        "visits",
+        "work"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "071",
+      "title": "Digital Health Literacy – Guiding Parents Through Online Medical Information",
+      "section": "Computer",
+      "slug": "digital-health-literacy-guiding-parents-through-online-medical-information",
+      "file": "Computer/002-Digital-Health-Literacy-Guiding-Parents-Through-Online-Medical-Information.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Computer/002-Digital-Health-Literacy-Guiding-Parents-Through-Online-Medical-Information.pdf",
+      "external": true,
+      "keywords": [
+        "digital",
+        "health",
+        "literacy",
+        "guiding",
+        "parents",
+        "through"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "072",
+      "title": "AI-Assisted Diagnosis and Clinical Decision Support Systems in Pediatrics",
+      "section": "Computer",
+      "slug": "ai-assisted-diagnosis-and-clinical-decision-support-systems-in-pediatrics",
+      "file": "Computer/003-AI-Assisted-Diagnosis-and-Clinical-Decision-Support-Systems-in-Pediatrics.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Computer/003-AI-Assisted-Diagnosis-and-Clinical-Decision-Support-Systems-in-Pediatrics.pdf",
+      "external": true,
+      "keywords": [
+        "ai-assisted",
+        "diagnosis",
+        "clinical",
+        "decision",
+        "support",
+        "systems"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "073",
+      "title": "Red Flag Signs to Suspect Genetic Disorder: A Clinical Guide for Paediatricians",
+      "section": "Genetics",
+      "slug": "red-flag-signs-to-suspect-genetic-disorder-a-clinical-guide-for-paediatricians",
+      "file": "Genetics/001-Red-Flag-Signs-to-Suspect-Genetic-Disorder-A-Clinical-Guide-for-Paediatricians.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/001-Red-Flag-Signs-to-Suspect-Genetic-Disorder-A-Clinical-Guide-for-Paediatricians.pdf",
+      "external": true,
+      "keywords": [
+        "flag",
+        "signs",
+        "suspect",
+        "genetic",
+        "disorder",
+        "clinical"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "074",
+      "title": "Evaluation of a Dysmorphic Child",
+      "section": "Genetics",
+      "slug": "evaluation-of-a-dysmorphic-child",
+      "file": "Genetics/002-Evaluation-of-a-Dysmorphic-Child.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/002-Evaluation-of-a-Dysmorphic-Child.pdf",
+      "external": true,
+      "keywords": [
+        "evaluation",
+        "dysmorphic"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "075",
+      "title": "Databases, Software Tools, and Arti\u001fcial Intelligence in Genetics",
+      "section": "Genetics",
+      "slug": "databases-software-tools-and-arti-cial-intelligence-in-genetics",
+      "file": "Genetics/003-Databases-Software-Tools-and-Artificial-Intelligence-in-Genetics-V2.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/003-Databases-Software-Tools-and-Artificial-Intelligence-in-Genetics-V2.pdf",
+      "external": true,
+      "keywords": [
+        "databases",
+        "software",
+        "tools",
+        "arti",
+        "cial",
+        "intelligence"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "076",
+      "title": "Selection of Appropriate Conventional Genetic Tests: A Practical Guide for Pediatricians",
+      "section": "Genetics",
+      "slug": "selection-of-appropriate-conventional-genetic-tests-a-practical-guide-for-pediatricians",
+      "file": "Genetics/004-Selection-of-Appropriate-Conventional-Genetic-Tests-A-Practical-Guide-for-Pediatricians.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/004-Selection-of-Appropriate-Conventional-Genetic-Tests-A-Practical-Guide-for-Pediatricians.pdf",
+      "external": true,
+      "keywords": [
+        "selection",
+        "appropriate",
+        "conventional",
+        "genetic",
+        "tests",
+        "practical"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "077",
+      "title": "Advanced Genomic Testing in Pediatrics",
+      "section": "Genetics",
+      "slug": "advanced-genomic-testing-in-pediatrics",
+      "file": "Genetics/005-Advanced-Genomic-Testing-in-Pediatrics-V2.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/005-Advanced-Genomic-Testing-in-Pediatrics-V2.pdf",
+      "external": true,
+      "keywords": [
+        "advanced",
+        "genomic",
+        "testing",
+        "pediatrics"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "078",
+      "title": "Preconception and Prenatal Genetic Testing",
+      "section": "Genetics",
+      "slug": "preconception-and-prenatal-genetic-testing",
+      "file": "Genetics/006-Preconception-and-Prenatal-Genetic-Testin-V2.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/006-Preconception-and-Prenatal-Genetic-Testin-V2.pdf",
+      "external": true,
+      "keywords": [
+        "preconception",
+        "prenatal",
+        "genetic",
+        "testing"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "079",
+      "title": "Genetic Counselling and Pedigree Drawing",
+      "section": "Genetics",
+      "slug": "genetic-counselling-and-pedigree-drawing",
+      "file": "Genetics/007-Genetic-Counselling-and-Pedigree-Drawing.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/007-Genetic-Counselling-and-Pedigree-Drawing.pdf",
+      "external": true,
+      "keywords": [
+        "genetic",
+        "counselling",
+        "pedigree",
+        "drawing"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "080",
+      "title": "Genomics in Pediatric Oncology",
+      "section": "Genetics",
+      "slug": "genomics-in-pediatric-oncology",
+      "file": "Genetics/008-Genomics-in-Pediatric-Oncology.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/008-Genomics-in-Pediatric-Oncology.pdf",
+      "external": true,
+      "keywords": [
+        "genomics",
+        "oncology"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "081",
+      "title": "Down Syndrome (Trisomy 21)",
+      "section": "Genetics",
+      "slug": "down-syndrome-trisomy-21",
+      "file": "Genetics/009-Down-Syndrome-Trisomy-21.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/009-Down-Syndrome-Trisomy-21.pdf",
+      "external": true,
+      "keywords": [
+        "Trisomy 21",
+        "down",
+        "syndrome",
+        "trisomy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "082",
+      "title": "Turner Syndrome",
+      "section": "Genetics",
+      "slug": "turner-syndrome",
+      "file": "Genetics/010-Turner-Syndrome.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/010-Turner-Syndrome.pdf",
+      "external": true,
+      "keywords": [
+        "turner",
+        "syndrome"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "083",
+      "title": "DiGeorge Syndrome – Diagnosis and Management in Children",
+      "section": "Genetics",
+      "slug": "digeorge-syndrome-diagnosis-and-management-in-children",
+      "file": "Genetics/011-DiGeorge-Syndrome-Diagnosis-and-Management-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/011-DiGeorge-Syndrome-Diagnosis-and-Management-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "digeorge",
+        "syndrome",
+        "diagnosis",
+        "management"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "084",
+      "title": "Achondroplasia",
+      "section": "Genetics",
+      "slug": "achondroplasia",
+      "file": "Genetics/012-Achondroplasia.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/012-Achondroplasia.pdf",
+      "external": true,
+      "keywords": [
+        "achondroplasia"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "085",
+      "title": "Neuro\u001fbromatosis Type 1 (NF1)",
+      "section": "Genetics",
+      "slug": "neuro-bromatosis-type-1-nf1",
+      "file": "Genetics/013-Neurofibromatosis-Type-1-NF1.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/013-Neurofibromatosis-Type-1-NF1.pdf",
+      "external": true,
+      "keywords": [
+        "NF1",
+        "neuro",
+        "bromatosis",
+        "type"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "086",
+      "title": "Marfan Syndrome",
+      "section": "Genetics",
+      "slug": "marfan-syndrome",
+      "file": "Genetics/014-Marfan-Syndrome.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/014-Marfan-Syndrome.pdf",
+      "external": true,
+      "keywords": [
+        "marfan",
+        "syndrome"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "087",
+      "title": "Spinal Muscular Atrophy (SMA)",
+      "section": "Genetics",
+      "slug": "spinal-muscular-atrophy-sma",
+      "file": "Genetics/015-Spinal-Muscular-Atrophy-SMA.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/015-Spinal-Muscular-Atrophy-SMA.pdf",
+      "external": true,
+      "keywords": [
+        "SMA",
+        "spinal",
+        "muscular",
+        "atrophy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "088",
+      "title": "Duchenne Muscular Dystrophy (DMD)",
+      "section": "Genetics",
+      "slug": "duchenne-muscular-dystrophy-dmd",
+      "file": "Genetics/016-Duchenne-Muscular-Dystrophy-DMD.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/016-Duchenne-Muscular-Dystrophy-DMD.pdf",
+      "external": true,
+      "keywords": [
+        "DMD",
+        "duchenne",
+        "muscular",
+        "dystrophy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "089",
+      "title": "Fragile X Syndrome",
+      "section": "Genetics",
+      "slug": "fragile-x-syndrome",
+      "file": "Genetics/017-Fragile-X-Syndrome.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/017-Fragile-X-Syndrome.pdf",
+      "external": true,
+      "keywords": [
+        "fragile",
+        "syndrome"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "090",
+      "title": "Mucopolysaccharidoses",
+      "section": "Genetics",
+      "slug": "mucopolysaccharidoses",
+      "file": "Genetics/018-Mucopolysaccharidoses.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/018-Mucopolysaccharidoses.pdf",
+      "external": true,
+      "keywords": [
+        "mucopolysaccharidoses"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "091",
+      "title": "Gaucher Disease",
+      "section": "Genetics",
+      "slug": "gaucher-disease",
+      "file": "Genetics/019-Gaucher-Disease.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/019-Gaucher-Disease.pdf",
+      "external": true,
+      "keywords": [
+        "gaucher",
+        "disease"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "092",
+      "title": "Prader–Willi Syndrome (PWS)",
+      "section": "Genetics",
+      "slug": "prader-willi-syndrome-pws",
+      "file": "Genetics/020-Prader-Willi-Syndrome-PWS.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Genetics/020-Prader-Willi-Syndrome-PWS.pdf",
+      "external": true,
+      "keywords": [
+        "PWS",
+        "prader",
+        "willi",
+        "syndrome"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "093",
+      "title": "Immunization Schedules – NIP & IAP",
+      "section": "Vaccinology",
+      "slug": "immunization-schedules-nip-iap",
+      "file": "Vaccinology/001-Immunization-Schedules-NIP-and-IAP.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/001-Immunization-Schedules-NIP-and-IAP.pdf",
+      "external": true,
+      "keywords": [
+        "immunization",
+        "schedules"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "094",
+      "title": "Vaccine Storage and Cold Chain Maintenance",
+      "section": "Vaccinology",
+      "slug": "vaccine-storage-and-cold-chain-maintenance",
+      "file": "Vaccinology/002-Vaccine-Storage-and-Cold-Chain-Maintenance.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/002-Vaccine-Storage-and-Cold-Chain-Maintenance.pdf",
+      "external": true,
+      "keywords": [
+        "vaccine",
+        "storage",
+        "cold",
+        "chain",
+        "maintenance"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "095",
+      "title": "Consent in Vaccination Practice",
+      "section": "Vaccinology",
+      "slug": "consent-in-vaccination-practice",
+      "file": "Vaccinology/003-Consent-in-Vaccination-Practice.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/003-Consent-in-Vaccination-Practice.pdf",
+      "external": true,
+      "keywords": [
+        "consent",
+        "vaccination",
+        "practice"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "096",
+      "title": "AEFI Reporting and Management",
+      "section": "Vaccinology",
+      "slug": "aefi-reporting-and-management",
+      "file": "Vaccinology/004-AEFI-Reporting-and-Management-V2.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/004-AEFI-Reporting-and-Management-V2.pdf",
+      "external": true,
+      "keywords": [
+        "aefi",
+        "reporting",
+        "management"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "097",
+      "title": "Vaccination Errors",
+      "section": "Vaccinology",
+      "slug": "vaccination-errors",
+      "file": "Vaccinology/005-Vaccination-Errors.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/005-Vaccination-Errors.pdf",
+      "external": true,
+      "keywords": [
+        "vaccination",
+        "errors"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "098",
+      "title": "Vaccine Documentation",
+      "section": "Vaccinology",
+      "slug": "vaccine-documentation",
+      "file": "Vaccinology/006-Vaccine-Documentation.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/006-Vaccine-Documentation.pdf",
+      "external": true,
+      "keywords": [
+        "vaccine",
+        "documentation"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "099",
+      "title": "Vaccination Guidelines in Travelers",
+      "section": "Vaccinology",
+      "slug": "vaccination-guidelines-in-travelers",
+      "file": "Vaccinology/007-Vaccination-Guidelines-in-Travelers.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/007-Vaccination-Guidelines-in-Travelers.pdf",
+      "external": true,
+      "keywords": [
+        "vaccination",
+        "guidelines",
+        "travelers"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "100",
+      "title": "Vaccine Hesitancy and Myths – A Practical Pediatric Perspective",
+      "section": "Vaccinology",
+      "slug": "vaccine-hesitancy-and-myths-a-practical-pediatric-perspective",
+      "file": "Vaccinology/008-Vaccine-Hesitancy-and-Myths-A-Practical-Pediatric-Perspective.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/008-Vaccine-Hesitancy-and-Myths-A-Practical-Pediatric-Perspective.pdf",
+      "external": true,
+      "keywords": [
+        "vaccine",
+        "hesitancy",
+        "myths",
+        "practical",
+        "perspective"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "101",
+      "title": "Adolescent Vaccines",
+      "section": "Vaccinology",
+      "slug": "adolescent-vaccines",
+      "file": "Vaccinology/009-Adolescent-Vaccines.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/009-Adolescent-Vaccines.pdf",
+      "external": true,
+      "keywords": [
+        "adolescent",
+        "vaccines"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "102",
+      "title": "Vaccines in Immunocompromised Host",
+      "section": "Vaccinology",
+      "slug": "vaccines-in-immunocompromised-host",
+      "file": "Vaccinology/010-Vaccines-in-Immunocompromised-Host.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/010-Vaccines-in-Immunocompromised-Host.pdf",
+      "external": true,
+      "keywords": [
+        "vaccines",
+        "immunocompromised",
+        "host"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "103",
+      "title": "Vaccines in Special Groups: Preterm and Low Birth Weight Infants",
+      "section": "Vaccinology",
+      "slug": "vaccines-in-special-groups-preterm-and-low-birth-weight-infants",
+      "file": "Vaccinology/011-Vaccines-in-Special-Groups-Preterm-and-Low-Birth-Weight-Infants.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/011-Vaccines-in-Special-Groups-Preterm-and-Low-Birth-Weight-Infants.pdf",
+      "external": true,
+      "keywords": [
+        "vaccines",
+        "special",
+        "groups",
+        "preterm",
+        "birth",
+        "weight"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "104",
+      "title": "Newer Vaccines in Horizon",
+      "section": "Vaccinology",
+      "slug": "newer-vaccines-in-horizon",
+      "file": "Vaccinology/012-Newer-Vaccines-in-Horizon.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Vaccinology/012-Newer-Vaccines-in-Horizon.pdf",
+      "external": true,
+      "keywords": [
+        "newer",
+        "vaccines",
+        "horizon"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "105",
+      "title": "Impact of School and Community Environment on Child Health",
+      "section": "Environment",
+      "slug": "impact-of-school-and-community-environment-on-child-health",
+      "file": "Environment/001-Impact-of-School-and-Community-Environment-on-Child-Health.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environment/001-Impact-of-School-and-Community-Environment-on-Child-Health.pdf",
+      "external": true,
+      "keywords": [
+        "impact",
+        "school",
+        "community",
+        "environment",
+        "health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "106",
+      "title": "Lead Poisoning in Children – In the Indian Context",
+      "section": "Environment",
+      "slug": "lead-poisoning-in-children-in-the-indian-context",
+      "file": "Environment/002-Lead-Poisoning-in-Children-In-the-Indian-Context.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environment/002-Lead-Poisoning-in-Children-In-the-Indian-Context.pdf",
+      "external": true,
+      "keywords": [
+        "lead",
+        "poisoning",
+        "indian",
+        "context"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "107",
+      "title": "Impact of Climate Change on Child Health",
+      "section": "Environment",
+      "slug": "impact-of-climate-change-on-child-health",
+      "file": "Environment/003-Impact-of-Climate-Change-on-Child-Health.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environment/003-Impact-of-Climate-Change-on-Child-Health.pdf",
+      "external": true,
+      "keywords": [
+        "impact",
+        "climate",
+        "change",
+        "health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "108",
+      "title": "Microplastics, Food Safety, and Food Wastage",
+      "section": "Environment",
+      "slug": "microplastics-food-safety-and-food-wastage",
+      "file": "Environment/004-Microplastics-Food-Safety-and-Food-Wastage.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environment/004-Microplastics-Food-Safety-and-Food-Wastage.pdf",
+      "external": true,
+      "keywords": [
+        "microplastics",
+        "food",
+        "safety",
+        "wastage"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "109",
+      "title": "Endocrine Disrupting Chemicals and Childhood Obesity",
+      "section": "Environment",
+      "slug": "endocrine-disrupting-chemicals-and-childhood-obesity",
+      "file": "Environment/005-Endocrine-Disrupting-Chemicals-and-Childhood-Obesity.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environment/005-Endocrine-Disrupting-Chemicals-and-Childhood-Obesity.pdf",
+      "external": true,
+      "keywords": [
+        "endocrine",
+        "disrupting",
+        "chemicals",
+        "childhood",
+        "obesity"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "110",
+      "title": "Air Pollution and Respiratory Health",
+      "section": "Environment",
+      "slug": "air-pollution-and-respiratory-health",
+      "file": "Environment/006-Air-Pollution-and-Respiratory-Health.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environment/006-Air-Pollution-and-Respiratory-Health.pdf",
+      "external": true,
+      "keywords": [
+        "pollution",
+        "respiratory",
+        "health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "111",
+      "title": "Water, Sanitation and Hygiene - WASH",
+      "section": "Environment",
+      "slug": "water-sanitation-and-hygiene-wash",
+      "file": "Environment/007-Water-Sanitation-and-Hygiene-Wash.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Environment/007-Water-Sanitation-and-Hygiene-Wash.pdf",
+      "external": true,
+      "keywords": [
+        "water",
+        "sanitation",
+        "hygiene",
+        "wash"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "112",
+      "title": "Community-Based Approach to Improve Child Health",
+      "section": "Community Pediatrics",
+      "slug": "community-based-approach-to-improve-child-health",
+      "file": "Community-Pediatrics/001-Community-Based-Approach-to-Improve-Child-Health.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Community-Pediatrics/001-Community-Based-Approach-to-Improve-Child-Health.pdf",
+      "external": true,
+      "keywords": [
+        "community-based",
+        "approach",
+        "improve",
+        "health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "113",
+      "title": "Urban vs Rural–Child Divide – Addressing Irregularities Through Outreach and Innovations",
+      "section": "Community Pediatrics",
+      "slug": "urban-vs-rural-child-divide-addressing-irregularities-through-outreach-and-innovations",
+      "file": "Community-Pediatrics/002-Urban-vs-Rural-Child-Divide-Addressing-Irregularities-Through-Outreach-and-Innovations.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Community-Pediatrics/002-Urban-vs-Rural-Child-Divide-Addressing-Irregularities-Through-Outreach-and-Innovations.pdf",
+      "external": true,
+      "keywords": [
+        "urban",
+        "rural",
+        "divide",
+        "addressing",
+        "irregularities",
+        "through"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "114",
+      "title": "Training Paediatricians in Social Paediatrics and Community Advocacy",
+      "section": "Community Pediatrics",
+      "slug": "training-paediatricians-in-social-paediatrics-and-community-advocacy",
+      "file": "Community-Pediatrics/003-Training-Paediatricians-in-Social-Paediatrics-and-Community-Advocacy.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Community-Pediatrics/003-Training-Paediatricians-in-Social-Paediatrics-and-Community-Advocacy.pdf",
+      "external": true,
+      "keywords": [
+        "training",
+        "paediatricians",
+        "social",
+        "paediatrics",
+        "community",
+        "advocacy"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "115",
+      "title": "High Risk Infants - Developmental Supportive Care",
+      "section": "Neurodevelopment",
+      "slug": "high-risk-infants-developmental-supportive-care",
+      "file": "Neurodevelopment/001-High-Risk-Infants-Developmental-Supportive-Care.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/001-High-Risk-Infants-Developmental-Supportive-Care.pdf",
+      "external": true,
+      "keywords": [
+        "high",
+        "risk",
+        "infants",
+        "developmental",
+        "supportive",
+        "care"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "116",
+      "title": "Digital Childhood: Screen Time, Social Media and Child",
+      "section": "Neurodevelopment",
+      "slug": "digital-childhood-screen-time-social-media-and-child",
+      "file": "Neurodevelopment/002-Digital-Childhood-Screen-Time-Social-Media-and-Child-Health.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/002-Digital-Childhood-Screen-Time-Social-Media-and-Child-Health.pdf",
+      "external": true,
+      "keywords": [
+        "digital",
+        "childhood",
+        "screen",
+        "time",
+        "social",
+        "media"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "117",
+      "title": "Early Parental Guidance",
+      "section": "Neurodevelopment",
+      "slug": "early-parental-guidance",
+      "file": "Neurodevelopment/003-Early-Parental-Guidance.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/003-Early-Parental-Guidance.pdf",
+      "external": true,
+      "keywords": [
+        "early",
+        "parental",
+        "guidance"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "118",
+      "title": "The Gut–Brain Axis: Implications for Neurodevelopment",
+      "section": "Neurodevelopment",
+      "slug": "the-gut-brain-axis-implications-for-neurodevelopment",
+      "file": "Neurodevelopment/004-The-Gut-Brain-Axis-Implications-for-Neurodevelopment.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/004-The-Gut-Brain-Axis-Implications-for-Neurodevelopment.pdf",
+      "external": true,
+      "keywords": [
+        "brain",
+        "axis",
+        "implications",
+        "neurodevelopment"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "119",
+      "title": "SMART Screening in OPD: Tools for Developmental and Behavioural Health",
+      "section": "Neurodevelopment",
+      "slug": "smart-screening-in-opd-tools-for-developmental-and-behavioural-health",
+      "file": "Neurodevelopment/005-SMART-Screening-in-OPD-Tools-for-Developmental-and-Behavioura-Health.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/005-SMART-Screening-in-OPD-Tools-for-Developmental-and-Behavioura-Health.pdf",
+      "external": true,
+      "keywords": [
+        "smart",
+        "screening",
+        "tools",
+        "developmental",
+        "behavioural",
+        "health"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "120",
+      "title": "Autism Recognition: Clinical Clues and Early Diagnosis",
+      "section": "Neurodevelopment",
+      "slug": "autism-recognition-clinical-clues-and-early-diagnosis",
+      "file": "Neurodevelopment/006-Autism-Recognition-Clinical-Clues-and-Early-Diagnosis.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/006-Autism-Recognition-Clinical-Clues-and-Early-Diagnosis.pdf",
+      "external": true,
+      "keywords": [
+        "autism",
+        "recognition",
+        "clinical",
+        "clues",
+        "early",
+        "diagnosis"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "121",
+      "title": "Autism Management: Practical Strategies and Referral Pathways",
+      "section": "Neurodevelopment",
+      "slug": "autism-management-practical-strategies-and-referral-pathways",
+      "file": "Neurodevelopment/007-Autism-Management-Practical-Strategies-and-Referral-Pathways.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/007-Autism-Management-Practical-Strategies-and-Referral-Pathways.pdf",
+      "external": true,
+      "keywords": [
+        "autism",
+        "management",
+        "practical",
+        "strategies",
+        "referral",
+        "pathways"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "122",
+      "title": "Beyond Diapers: Elimination Disorders and Toilet Training in Practice",
+      "section": "Neurodevelopment",
+      "slug": "beyond-diapers-elimination-disorders-and-toilet-training-in-practice",
+      "file": "Neurodevelopment/008-Beyond-Diapers-Elimination-Disorders-and-Toilet-Training-in-Practice-V2.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/008-Beyond-Diapers-Elimination-Disorders-and-Toilet-Training-in-Practice-V2.pdf",
+      "external": true,
+      "keywords": [
+        "beyond",
+        "diapers",
+        "elimination",
+        "disorders",
+        "toilet",
+        "training"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "123",
+      "title": "Counselling Parents: Relationships, Stress, and Child Development",
+      "section": "Neurodevelopment",
+      "slug": "counselling-parents-relationships-stress-and-child-development",
+      "file": "Neurodevelopment/009-Counselling-Parents-Relationships-Stress-and-Child-Development.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/009-Counselling-Parents-Relationships-Stress-and-Child-Development.pdf",
+      "external": true,
+      "keywords": [
+        "counselling",
+        "parents",
+        "relationships",
+        "stress",
+        "development"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "124",
+      "title": "Developmental and Behavioural Impact of Chronic Illness on Development",
+      "section": "Neurodevelopment",
+      "slug": "developmental-and-behavioural-impact-of-chronic-illness-on-development",
+      "file": "Neurodevelopment/010-Developmental-and-Behavioural-Impact-of-Chronic-Illness-on-Development.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/010-Developmental-and-Behavioural-Impact-of-Chronic-Illness-on-Development.pdf",
+      "external": true,
+      "keywords": [
+        "developmental",
+        "behavioural",
+        "impact",
+        "chronic",
+        "illness",
+        "development"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "125",
+      "title": "Attention Matters: Strategies in ADHD Management",
+      "section": "Neurodevelopment",
+      "slug": "attention-matters-strategies-in-adhd-management",
+      "file": "Neurodevelopment/011-Attention-Matters-Strategies-in-ADHD-Management.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/011-Attention-Matters-Strategies-in-ADHD-Management.pdf",
+      "external": true,
+      "keywords": [
+        "attention",
+        "matters",
+        "strategies",
+        "adhd",
+        "management"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "126",
+      "title": "Government Policies and Schemes for Children with Neurodevelopmental Disorders: What Paediatricians Must Know",
+      "section": "Neurodevelopment",
+      "slug": "government-policies-and-schemes-for-children-with-neurodevelopmental-disorders-what-paediatricians-must-know",
+      "file": "Neurodevelopment/012-Government-Policies-and-Schemes-for-Children-with-Neurodevelopmental-Disorders-What-Paediatricians-Must-Know.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/012-Government-Policies-and-Schemes-for-Children-with-Neurodevelopmental-Disorders-What-Paediatricians-Must-Know.pdf",
+      "external": true,
+      "keywords": [
+        "government",
+        "policies",
+        "schemes",
+        "neurodevelopmental",
+        "disorders",
+        "what"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "127",
+      "title": "Newer Technologies in the Care of Neurodevelopmental Disorders",
+      "section": "Neurodevelopment",
+      "slug": "newer-technologies-in-the-care-of-neurodevelopmental-disorders",
+      "file": "Neurodevelopment/013-Newer-Technologies-in-the-Care-of-Neurodevelopmental-Disorders.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/013-Newer-Technologies-in-the-Care-of-Neurodevelopmental-Disorders.pdf",
+      "external": true,
+      "keywords": [
+        "newer",
+        "technologies",
+        "care",
+        "neurodevelopmental",
+        "disorders"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "128",
+      "title": "Management of Cerebral Palsy Using the ICF Framework",
+      "section": "Neurodevelopment",
+      "slug": "management-of-cerebral-palsy-using-the-icf-framework",
+      "file": "Neurodevelopment/014-Management-of-Cerebral-Palsy-Using-the-ICF-Framework.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/014-Management-of-Cerebral-Palsy-Using-the-ICF-Framework.pdf",
+      "external": true,
+      "keywords": [
+        "management",
+        "cerebral",
+        "palsy",
+        "using",
+        "framework"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "129",
+      "title": "Habilitation Concepts for Indian Paediatric Practice",
+      "section": "Neurodevelopment",
+      "slug": "habilitation-concepts-for-indian-paediatric-practice",
+      "file": "Neurodevelopment/015-Habilitation-Concepts-for-Indian-Paediatric-Practice.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neurodevelopment/015-Habilitation-Concepts-for-Indian-Paediatric-Practice.pdf",
+      "external": true,
+      "keywords": [
+        "habilitation",
+        "concepts",
+        "indian",
+        "practice"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "130",
+      "title": "Medical Negligence: Basic Concepts and Legal Consequences",
+      "section": "Medicolegal",
+      "slug": "medical-negligence-basic-concepts-and-legal-consequences",
+      "file": "Medicolegal/001-Medical-Negligence-Basic-Concepts-and-Legal-Consequences.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/001-Medical-Negligence-Basic-Concepts-and-Legal-Consequences.pdf",
+      "external": true,
+      "keywords": [
+        "medical",
+        "negligence",
+        "basic",
+        "concepts",
+        "legal",
+        "consequences"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "131",
+      "title": "Doctor-Patient Relationship: Ethical and Legal Dimensions",
+      "section": "Medicolegal",
+      "slug": "doctor-patient-relationship-ethical-and-legal-dimensions",
+      "file": "Medicolegal/002-Doctor-Patient-Relationship-Ethical-and-Legal-Dimensions.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/002-Doctor-Patient-Relationship-Ethical-and-Legal-Dimensions.pdf",
+      "external": true,
+      "keywords": [
+        "doctor-patient",
+        "relationship",
+        "ethical",
+        "legal",
+        "dimensions"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "132",
+      "title": "Documentation and RecordKeeping: The Shield for Legal Safety in Medical Practice",
+      "section": "Medicolegal",
+      "slug": "documentation-and-recordkeeping-the-shield-for-legal-safety-in-medical-practice",
+      "file": "Medicolegal/003-Documentation-and-Record-Keeping-The-Shield-for-Legal-Safety-in-Medical-Practice.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/003-Documentation-and-Record-Keeping-The-Shield-for-Legal-Safety-in-Medical-Practice.pdf",
+      "external": true,
+      "keywords": [
+        "documentation",
+        "recordkeeping",
+        "shield",
+        "legal",
+        "safety",
+        "medical"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "133",
+      "title": "Informed Consent in Paediatrics (India): Legal and Ethical Standards",
+      "section": "Medicolegal",
+      "slug": "informed-consent-in-paediatrics-india-legal-and-ethical-standards",
+      "file": "Medicolegal/004-Informed-Consent-in-Paediatrics-India-Legal-and-Ethical-Standards.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/004-Informed-Consent-in-Paediatrics-India-Legal-and-Ethical-Standards.pdf",
+      "external": true,
+      "keywords": [
+        "India",
+        "informed",
+        "consent",
+        "paediatrics",
+        "legal",
+        "ethical"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "134",
+      "title": "Civil Liability in Paediatric Care: Understanding the Consumer Protection Act, 2019",
+      "section": "Medicolegal",
+      "slug": "civil-liability-in-paediatric-care-understanding-the-consumer-protection-act-2019",
+      "file": "Medicolegal/005-Civil-Liability-in-Paediatric-Care-Understanding-the-Consumer-Protection-Act-2019.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/005-Civil-Liability-in-Paediatric-Care-Understanding-the-Consumer-Protection-Act-2019.pdf",
+      "external": true,
+      "keywords": [
+        "civil",
+        "liability",
+        "care",
+        "understanding",
+        "consumer",
+        "protection"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "135",
+      "title": "Criminal Liability in Paediatrics: Safeguards and Defences",
+      "section": "Medicolegal",
+      "slug": "criminal-liability-in-paediatrics-safeguards-and-defences",
+      "file": "Medicolegal/006-Criminal-Liability-in-Paediatrics-Safeguards-and-Defences.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/006-Criminal-Liability-in-Paediatrics-Safeguards-and-Defences.pdf",
+      "external": true,
+      "keywords": [
+        "criminal",
+        "liability",
+        "paediatrics",
+        "safeguards",
+        "defences"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "136",
+      "title": "Ethical and Legal Compliance: National Medical Commission Guidelines, Telemedicine and Digital Health",
+      "section": "Medicolegal",
+      "slug": "ethical-and-legal-compliance-national-medical-commission-guidelines-telemedicine-and-digital-health",
+      "file": "Medicolegal/007-Ethical-and-Legal-Compliance-National-Medical-Commission-Guidelines-Telemedicine-and-Digital-Health.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/007-Ethical-and-Legal-Compliance-National-Medical-Commission-Guidelines-Telemedicine-and-Digital-Health.pdf",
+      "external": true,
+      "keywords": [
+        "ethical",
+        "legal",
+        "compliance",
+        "national",
+        "medical",
+        "commission"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "137",
+      "title": "Child Abuse Management: Essential Clinical and Legal Guide for Paediatricians under POCSO Act and the Juvenile Justice Act 2015",
+      "section": "Medicolegal",
+      "slug": "child-abuse-management-essential-clinical-and-legal-guide-for-paediatricians-under-pocso-act-and-the-juvenile-justice-act-2015",
+      "file": "Medicolegal/008-Child-Abuse-Management-Essential-Clinical-and-Legal-Guide-for-Paediatricians-under-POCSO-Act-and-the-Juvenile-Justice-Act-2015.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/008-Child-Abuse-Management-Essential-Clinical-and-Legal-Guide-for-Paediatricians-under-POCSO-Act-and-the-Juvenile-Justice-Act-2015.pdf",
+      "external": true,
+      "keywords": [
+        "abuse",
+        "management",
+        "essential",
+        "clinical",
+        "legal",
+        "guide"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "138",
+      "title": "Medicolegal Challenges in Emergency: Patient Transfer, Transit Death, Brought Dead, and Sudden Collapse",
+      "section": "Medicolegal",
+      "slug": "medicolegal-challenges-in-emergency-patient-transfer-transit-death-brought-dead-and-sudden-collapse",
+      "file": "Medicolegal/009-Medicolegal-Challenges-in-Emergency.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/009-Medicolegal-Challenges-in-Emergency.pdf",
+      "external": true,
+      "keywords": [
+        "medicolegal",
+        "challenges",
+        "emergency",
+        "patient",
+        "transfer",
+        "transit"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "139",
+      "title": "Ethical and Legal Dilemmas In Paediatric Critical and Neonatal Care",
+      "section": "Medicolegal",
+      "slug": "ethical-and-legal-dilemmas-in-paediatric-critical-and-neonatal-care",
+      "file": "Medicolegal/010-Medicolegal-Challenges-in-Emergency.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/010-Medicolegal-Challenges-in-Emergency.pdf",
+      "external": true,
+      "keywords": [
+        "ethical",
+        "legal",
+        "dilemmas",
+        "critical",
+        "neonatal",
+        "care"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "140",
+      "title": "Medicolegal Safety in Vaccination Practices",
+      "section": "Medicolegal",
+      "slug": "medicolegal-safety-in-vaccination-practices",
+      "file": "Medicolegal/011-Medicolegal-Safety-in-Vaccination-Practices.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/011-Medicolegal-Safety-in-Vaccination-Practices.pdf",
+      "external": true,
+      "keywords": [
+        "medicolegal",
+        "safety",
+        "vaccination",
+        "practices"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "141",
+      "title": "Violence Against Doctors: Legal Remedies and Preventive Strategies",
+      "section": "Medicolegal",
+      "slug": "violence-against-doctors-legal-remedies-and-preventive-strategies",
+      "file": "Medicolegal/012-Violence-Against-Doctors.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Medicolegal/012-Violence-Against-Doctors.pdf",
+      "external": true,
+      "keywords": [
+        "violence",
+        "against",
+        "doctors",
+        "legal",
+        "remedies",
+        "preventive"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "142",
+      "title": "Clinical Pearls for CBC Interpretation",
+      "section": "Haemato-Oncology",
+      "slug": "clinical-pearls-for-cbc-interpretation",
+      "file": "Haemato-Oncology/001-Clinical-Pearls-for-CBC-Interpretation.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/001-Clinical-Pearls-for-CBC-Interpretation.pdf",
+      "external": true,
+      "keywords": [
+        "clinical",
+        "pearls",
+        "interpretation"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "143",
+      "title": "Nutritional Anaemia: A Silent Epidemic",
+      "section": "Haemato-Oncology",
+      "slug": "nutritional-anaemia-a-silent-epidemic",
+      "file": "Haemato-Oncology/002-Nutritional-Anaemia-A-Silent-Epidemic.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/002-Nutritional-Anaemia-A-Silent-Epidemic.pdf",
+      "external": true,
+      "keywords": [
+        "nutritional",
+        "anaemia",
+        "silent",
+        "epidemic"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "144",
+      "title": "Immune Thrombocytopenia: Practical Tips for Management",
+      "section": "Haemato-Oncology",
+      "slug": "immune-thrombocytopenia-practical-tips-for-management",
+      "file": "Haemato-Oncology/003-Immune-Thrombocytopenia.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/003-Immune-Thrombocytopenia.pdf",
+      "external": true,
+      "keywords": [
+        "immune",
+        "thrombocytopenia",
+        "practical",
+        "tips",
+        "management"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "145",
+      "title": "Unpacking Pancytopenia",
+      "section": "Haemato-Oncology",
+      "slug": "unpacking-pancytopenia",
+      "file": "Haemato-Oncology/004-Unpacking-Pancytopenia.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/004-Unpacking-Pancytopenia.pdf",
+      "external": true,
+      "keywords": [
+        "unpacking",
+        "pancytopenia"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "146",
+      "title": "Recurrent infections: When to worry? What to do?",
+      "section": "Haemato-Oncology",
+      "slug": "recurrent-infections-when-to-worry-what-to-do",
+      "file": "Haemato-Oncology/005-Recurrent-infections.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/005-Recurrent-infections.pdf",
+      "external": true,
+      "keywords": [
+        "recurrent",
+        "infections",
+        "when",
+        "worry",
+        "what"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "147",
+      "title": "Eosinophilia Demystified – Evaluation and Management in Office Paediatrics",
+      "section": "Haemato-Oncology",
+      "slug": "eosinophilia-demystified-evaluation-and-management-in-office-paediatrics",
+      "file": "Haemato-Oncology/006-Eosinophilia-Demystified.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/006-Eosinophilia-Demystified.pdf",
+      "external": true,
+      "keywords": [
+        "eosinophilia",
+        "demystified",
+        "evaluation",
+        "management",
+        "office",
+        "paediatrics"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "148",
+      "title": "From Bruise to Bleed: Managing Haemorrhagic Disorders in Children",
+      "section": "Haemato-Oncology",
+      "slug": "from-bruise-to-bleed-managing-haemorrhagic-disorders-in-children",
+      "file": "Haemato-Oncology/007-From-Bruise-to-Bleed.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/007-From-Bruise-to-Bleed.pdf",
+      "external": true,
+      "keywords": [
+        "bruise",
+        "bleed",
+        "managing",
+        "haemorrhagic",
+        "disorders"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "149",
+      "title": "Haemoglobinopathies: Diagnosis to Clinical Care",
+      "section": "Haemato-Oncology",
+      "slug": "haemoglobinopathies-diagnosis-to-clinical-care",
+      "file": "Haemato-Oncology/008-Haemoglobinopathies-Diagnosis-to-Clinical-Care.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/008-Haemoglobinopathies-Diagnosis-to-Clinical-Care.pdf",
+      "external": true,
+      "keywords": [
+        "haemoglobinopathies",
+        "diagnosis",
+        "clinical",
+        "care"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "150",
+      "title": "Haemolytic Anaemia – Solving the Puzzle",
+      "section": "Haemato-Oncology",
+      "slug": "haemolytic-anaemia-solving-the-puzzle",
+      "file": "Haemato-Oncology/009-Haemolytic-Anaemia-Solving-the-Puzzle.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/009-Haemolytic-Anaemia-Solving-the-Puzzle.pdf",
+      "external": true,
+      "keywords": [
+        "haemolytic",
+        "anaemia",
+        "solving",
+        "puzzle"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "151",
+      "title": "Blood Components in Paediatrics: When? What? How much?",
+      "section": "Haemato-Oncology",
+      "slug": "blood-components-in-paediatrics-when-what-how-much",
+      "file": "Haemato-Oncology/010-Blood-Components-in-Paediatrics.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/010-Blood-Components-in-Paediatrics.pdf",
+      "external": true,
+      "keywords": [
+        "blood",
+        "components",
+        "paediatrics",
+        "when",
+        "what",
+        "much"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "152",
+      "title": "Essentials of Neonatal Haematology",
+      "section": "Haemato-Oncology",
+      "slug": "essentials-of-neonatal-haematology",
+      "file": "Haemato-Oncology/011-Essentials-of-Neonatal-Haematology.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/011-Essentials-of-Neonatal-Haematology.pdf",
+      "external": true,
+      "keywords": [
+        "essentials",
+        "neonatal",
+        "haematology"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "153",
+      "title": "Approach to Lymphadenopathy: Thinking Beyond Tuberculosis",
+      "section": "Haemato-Oncology",
+      "slug": "approach-to-lymphadenopathy-thinking-beyond-tuberculosis",
+      "file": "Haemato-Oncology/012-Approach-to-Lymphadenopathy.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/012-Approach-to-Lymphadenopathy.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "lymphadenopathy",
+        "thinking",
+        "beyond",
+        "tuberculosis"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "154",
+      "title": "Structured Approach to Abdominal Mass in Children",
+      "section": "Haemato-Oncology",
+      "slug": "structured-approach-to-abdominal-mass-in-children",
+      "file": "Haemato-Oncology/013-Structured-Approach-to-Abdominal-Mass-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/013-Structured-Approach-to-Abdominal-Mass-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "structured",
+        "approach",
+        "abdominal",
+        "mass"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "155",
+      "title": "Proptosis: Clinical Clues and Diagnostic Algorithm",
+      "section": "Haemato-Oncology",
+      "slug": "proptosis-clinical-clues-and-diagnostic-algorithm",
+      "file": "Haemato-Oncology/014-Proptosis-Clinical-Clues-and-Diagnostic-Algorithm.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/014-Proptosis-Clinical-Clues-and-Diagnostic-Algorithm.pdf",
+      "external": true,
+      "keywords": [
+        "proptosis",
+        "clinical",
+        "clues",
+        "diagnostic",
+        "algorithm"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "156",
+      "title": "Child with Suspected Leukemia: What to Do?",
+      "section": "Haemato-Oncology",
+      "slug": "child-with-suspected-leukemia-what-to-do",
+      "file": "Haemato-Oncology/015-Child-with-Suspected-Leukemia-What-to-Do.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Haemato-Oncology/015-Child-with-Suspected-Leukemia-What-to-Do.pdf",
+      "external": true,
+      "keywords": [
+        "suspected",
+        "leukemia",
+        "what"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "157",
+      "title": "Rights of Children: What a Paediatrician Should Know",
+      "section": "Child Rights",
+      "slug": "rights-of-children-what-a-paediatrician-should-know",
+      "file": "Child-Rights/001-Rights-of-Children-What-a-Paediatrician-Should-Know.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Child-Rights/001-Rights-of-Children-What-a-Paediatrician-Should-Know.pdf",
+      "external": true,
+      "keywords": [
+        "rights",
+        "what",
+        "paediatrician",
+        "should",
+        "know"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "158",
+      "title": "Violence Against Children and Opportunities for Paediatricians to Intervene",
+      "section": "Child Rights",
+      "slug": "violence-against-children-and-opportunities-for-paediatricians-to-intervene",
+      "file": "Child-Rights/002-Violence-Against-Children-and-Opportunities-for-Paediatricians-to-Intervene.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Child-Rights/002-Violence-Against-Children-and-Opportunities-for-Paediatricians-to-Intervene.pdf",
+      "external": true,
+      "keywords": [
+        "violence",
+        "against",
+        "opportunities",
+        "paediatricians",
+        "intervene"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "159",
+      "title": "Child Labour and Street Children: Challenges, Consequences and Solutions",
+      "section": "Child Rights",
+      "slug": "child-labour-and-street-children-challenges-consequences-and-solutions",
+      "file": "Child-Rights/003-Child-Labour-and-Street-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Child-Rights/003-Child-Labour-and-Street-Children.pdf",
+      "external": true,
+      "keywords": [
+        "labour",
+        "street",
+        "challenges",
+        "consequences",
+        "solutions"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "160",
+      "title": "Protection, Rehabilitation and Reintegration of an abused Child",
+      "section": "Child Rights",
+      "slug": "protection-rehabilitation-and-reintegration-of-an-abused-child",
+      "file": "Child-Rights/004-Protection-Rehabilitation-and-Reintegration-of-an-abused-Child.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Child-Rights/004-Protection-Rehabilitation-and-Reintegration-of-an-abused-Child.pdf",
+      "external": true,
+      "keywords": [
+        "protection",
+        "rehabilitation",
+        "reintegration",
+        "abused"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "161",
+      "title": "Child Adoption: What Paediatricians Must Know",
+      "section": "Child Rights",
+      "slug": "child-adoption-what-paediatricians-must-know",
+      "file": "Child-Rights/005-Child-Adoption.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Child-Rights/005-Child-Adoption.pdf",
+      "external": true,
+      "keywords": [
+        "adoption",
+        "what",
+        "paediatricians",
+        "must",
+        "know"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "162",
+      "title": "Child Protection Systems and Policies: A Rights-Based Overview of India’s Safety Net for Children",
+      "section": "Child Rights",
+      "slug": "child-protection-systems-and-policies-a-rights-based-overview-of-india-s-safety-net-for-children",
+      "file": "Child-Rights/006-Child-Protection-Systems-and-Policies.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Child-Rights/006-Child-Protection-Systems-and-Policies.pdf",
+      "external": true,
+      "keywords": [
+        "protection",
+        "systems",
+        "policies",
+        "rights-based",
+        "overview",
+        "india"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "163",
+      "title": "Paediatric Palliative Care: A Paradigm Shift in Caring for Children with Serious Illness",
+      "section": "Paediatric Palliative Care",
+      "slug": "paediatric-palliative-care-a-paradigm-shift-in-caring-for-children-with-serious-illness",
+      "file": "Paediatric-Pallative-Care/001-Paediatric-Palliative-Care.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Paediatric-Pallative-Care/001-Paediatric-Palliative-Care.pdf",
+      "external": true,
+      "keywords": [
+        "palliative",
+        "care",
+        "paradigm",
+        "shift",
+        "caring",
+        "serious"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "164",
+      "title": "Pain Assessment and Holistic Pain Management in Children",
+      "section": "Paediatric Palliative Care",
+      "slug": "pain-assessment-and-holistic-pain-management-in-children",
+      "file": "Paediatric-Pallative-Care/002-Pain-Assessment-and-Holistic-Pain-Management-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Paediatric-Pallative-Care/002-Pain-Assessment-and-Holistic-Pain-Management-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "pain",
+        "assessment",
+        "holistic",
+        "management"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "165",
+      "title": "Ethical Issues in Paediatric Palliative Care",
+      "section": "Paediatric Palliative Care",
+      "slug": "ethical-issues-in-paediatric-palliative-care",
+      "file": "Paediatric-Pallative-Care/003-Ethical-Issues-in-Paediatric-Palliative-Care.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Paediatric-Pallative-Care/003-Ethical-Issues-in-Paediatric-Palliative-Care.pdf",
+      "external": true,
+      "keywords": [
+        "ethical",
+        "issues",
+        "palliative",
+        "care"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "166",
+      "title": "Understanding Growth Charts",
+      "section": "Growth, Development and Behaviour",
+      "slug": "understanding-growth-charts",
+      "file": "Growth-Development-and-Behaviour/001-Understanding-Growth-Charts.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/001-Understanding-Growth-Charts.pdf",
+      "external": true,
+      "keywords": [
+        "understanding",
+        "growth",
+        "charts"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "167",
+      "title": "Growth Faltering, Catch-Up Growth and Early Obesity",
+      "section": "Growth, Development and Behaviour",
+      "slug": "growth-faltering-catch-up-growth-and-early-obesity",
+      "file": "Growth-Development-and-Behaviour/002-Growth-Faltering-Catch-Up-Growth-and-Early-Obesity.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/002-Growth-Faltering-Catch-Up-Growth-and-Early-Obesity.pdf",
+      "external": true,
+      "keywords": [
+        "growth",
+        "faltering",
+        "catch-up",
+        "early",
+        "obesity"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "168",
+      "title": "Short Stature: Non-Endocrine Causes",
+      "section": "Growth, Development and Behaviour",
+      "slug": "short-stature-non-endocrine-causes",
+      "file": "Growth-Development-and-Behaviour/003-Short-Stature.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/003-Short-Stature.pdf",
+      "external": true,
+      "keywords": [
+        "short",
+        "stature",
+        "non-endocrine",
+        "causes"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "169",
+      "title": "Physical Developmental Milestones",
+      "section": "Growth, Development and Behaviour",
+      "slug": "physical-developmental-milestones",
+      "file": "Growth-Development-and-Behaviour/004-Physical-Developmental-Milestones.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/004-Physical-Developmental-Milestones.pdf",
+      "external": true,
+      "keywords": [
+        "physical",
+        "developmental",
+        "milestones"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "170",
+      "title": "Clinical Protocols for Follow-Up of High-Risk Newborns: Growth Monitoring, Nutritional Supplementation, and Catch-Up Strategies",
+      "section": "Growth, Development and Behaviour",
+      "slug": "clinical-protocols-for-follow-up-of-high-risk-newborns-growth-monitoring-nutritional-supplementation-and-catch-up-strategies",
+      "file": "Growth-Development-and-Behaviour/005-Clinical-Protocols-for-Follow-Up.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/005-Clinical-Protocols-for-Follow-Up.pdf",
+      "external": true,
+      "keywords": [
+        "clinical",
+        "protocols",
+        "follow-up",
+        "high-risk",
+        "newborns",
+        "growth"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "171",
+      "title": "Parenting and Growth: Feeding Relationships and Physical Development",
+      "section": "Growth, Development and Behaviour",
+      "slug": "parenting-and-growth-feeding-relationships-and-physical-development",
+      "file": "Growth-Development-and-Behaviour/006-Parenting-and-Growth.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/006-Parenting-and-Growth.pdf",
+      "external": true,
+      "keywords": [
+        "parenting",
+        "growth",
+        "feeding",
+        "relationships",
+        "physical",
+        "development"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "172",
+      "title": "Understanding Pubertal Development",
+      "section": "Growth, Development and Behaviour",
+      "slug": "understanding-pubertal-development",
+      "file": "Growth-Development-and-Behaviour/007-Understanding-Pubertal-Development.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/007-Understanding-Pubertal-Development.pdf",
+      "external": true,
+      "keywords": [
+        "understanding",
+        "pubertal",
+        "development"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "173",
+      "title": "Learning Difficulties in Children",
+      "section": "Growth, Development and Behaviour",
+      "slug": "learning-difficulties-in-children",
+      "file": "Growth-Development-and-Behaviour/008-Learning-Difficulties-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/008-Learning-Difficulties-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "learning",
+        "difficulties"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "174",
+      "title": "Paediatric Feeding Disorders",
+      "section": "Growth, Development and Behaviour",
+      "slug": "paediatric-feeding-disorders",
+      "file": "Growth-Development-and-Behaviour/009-Paediatric-Feeding-Disorders.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/009-Paediatric-Feeding-Disorders.pdf",
+      "external": true,
+      "keywords": [
+        "feeding",
+        "disorders"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "175",
+      "title": "Identifying and Addressing Mental Health Issues in Children (Below 12 Years)",
+      "section": "Growth, Development and Behaviour",
+      "slug": "identifying-and-addressing-mental-health-issues-in-children-below-12-years",
+      "file": "Growth-Development-and-Behaviour/010-Identifying-and-Addressing-Mental-Health-Issues-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/010-Identifying-and-Addressing-Mental-Health-Issues-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "Below 12 Years",
+        "identifying",
+        "addressing",
+        "mental",
+        "health",
+        "issues"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "176",
+      "title": "Common Behaviour Challenges in Paediatric OPD",
+      "section": "Growth, Development and Behaviour",
+      "slug": "common-behaviour-challenges-in-paediatric-opd",
+      "file": "Growth-Development-and-Behaviour/011-Common-Behaviour-Challenges-in-Paediatric-OPD.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/011-Common-Behaviour-Challenges-in-Paediatric-OPD.pdf",
+      "external": true,
+      "keywords": [
+        "common",
+        "behaviour",
+        "challenges"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "177",
+      "title": "Sleep Disorders in Children",
+      "section": "Growth, Development and Behaviour",
+      "slug": "sleep-disorders-in-children",
+      "file": "Growth-Development-and-Behaviour/012-Sleep-Disorders-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Growth-Development-and-Behaviour/012-Sleep-Disorders-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "sleep",
+        "disorders"
+      ],
+      "mega_section": "IAP Practice Guidelines 2026"
+    },
+    {
+      "no": "178",
+      "title": "Scorpion Envenomation",
+      "section": "Toxin and Poison",
+      "slug": "scorpion-envenomation",
+      "file": "Toxin-and-Poison/02-Scorpion-Envenomation.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Toxin-and-Poison/02-Scorpion-Envenomation.pdf",
+      "external": true,
+      "keywords": [
+        "scorpion",
+        "envenomation"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "179",
+      "title": "Paracetamol (Acetaminophen) Poisoning in Children",
+      "section": "Toxin and Poison",
+      "slug": "paracetamol-acetaminophen-poisoning-in-children",
+      "file": "Toxin-and-Poison/003-Paracetamol-Acetaminophen-Poisoning-in-Children.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Toxin-and-Poison/003-Paracetamol-Acetaminophen-Poisoning-in-Children.pdf",
+      "external": true,
+      "keywords": [
+        "Acetaminophen",
+        "paracetamol",
+        "poisoning"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "180",
+      "title": "Pesticide Poisoning",
+      "section": "Toxin and Poison",
+      "slug": "pesticide-poisoning",
+      "file": "Toxin-and-Poison/004-Pesticide-Poisoning.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Toxin-and-Poison/004-Pesticide-Poisoning.pdf",
+      "external": true,
+      "keywords": [
+        "pesticide",
+        "poisoning"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "181",
+      "title": "Airway Management in Paediatric Trauma",
+      "section": "Pediatric Trauma",
+      "slug": "airway-management-in-paediatric-trauma",
+      "file": "Pediatric-Trauma/001-Airway-Management-in-Paediatric-Trauma.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Pediatric-Trauma/001-Airway-Management-in-Paediatric-Trauma.pdf",
+      "external": true,
+      "keywords": [
+        "airway",
+        "management",
+        "trauma"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "182",
+      "title": "Approach to Neonatal Shock",
+      "section": "Neonatal Emergencies",
+      "slug": "approach-to-neonatal-shock",
+      "file": "Neonatal-Emergencies/001-Approach-to-Neonatal-Shock.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Emergencies/001-Approach-to-Neonatal-Shock.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "neonatal",
+        "shock"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "183",
+      "title": "Approach to a Bleeding Neonate in ER",
+      "section": "Neonatal Emergencies",
+      "slug": "approach-to-a-bleeding-neonate-in-er",
+      "file": "Neonatal-Emergencies/002-Approach-to-a-bleeding-neonate-in-ER.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Emergencies/002-Approach-to-a-bleeding-neonate-in-ER.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "bleeding",
+        "neonate"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "184",
+      "title": "Approach to Cyanotic Neonate",
+      "section": "Neonatal Emergencies",
+      "slug": "approach-to-cyanotic-neonate",
+      "file": "Neonatal-Emergencies/003-Approach-to-Cyanotic-Neonate.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Emergencies/003-Approach-to-Cyanotic-Neonate.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "cyanotic",
+        "neonate"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "185",
+      "title": "Approach to a Neonate with Seizures",
+      "section": "Neonatal Emergencies",
+      "slug": "approach-to-a-neonate-with-seizures",
+      "file": "Neonatal-Emergencies/004-Approach-to-a-Neonate-with-Seizures.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Emergencies/004-Approach-to-a-Neonate-with-Seizures.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "neonate",
+        "seizures"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "186",
+      "title": "Approach to Neonate with Respiratory Distress",
+      "section": "Neonatal Emergencies",
+      "slug": "approach-to-neonate-with-respiratory-distress",
+      "file": "Neonatal-Emergencies/005-Approach-to-Neonate-with-Respiratory-Distress.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Emergencies/005-Approach-to-Neonate-with-Respiratory-Distress.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "neonate",
+        "respiratory",
+        "distress"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "187",
+      "title": "Approach to Neonatal Sepsis",
+      "section": "Neonatal Emergencies",
+      "slug": "approach-to-neonatal-sepsis",
+      "file": "Neonatal-Emergencies/006-Approach-to-Neonatal-Sepsis.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/Neonatal-Emergencies/006-Approach-to-Neonatal-Sepsis.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "neonatal",
+        "sepsis"
+      ],
+      "mega_section": "IAP Emergency Guidelines 2026"
+    },
+    {
+      "no": "188",
+      "title": "Clinical Practice Statement on Nasal Intermittent Positive Pressure Ventilation in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "clinical-practice-statement-on-nasal-intermittent-positive-pressure-ventilation-in-neonates",
+      "file": "QRG-015-Clinical-Practice-Statement-on-Nasal-Intermittent-Positive-Pressure-Ventilation-in-Neonates.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-015-Clinical-Practice-Statement-on-Nasal-Intermittent-Positive-Pressure-Ventilation-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "clinical",
+        "practice",
+        "statement",
+        "nasal",
+        "intermittent",
+        "positive"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "189",
+      "title": "Basic Modes of Mechanical Ventilation in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "basic-modes-of-mechanical-ventilation-in-neonates",
+      "file": "QRG-016-Basic-Modes-of-Mechanical-Ventilation-in-Neonates.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-016-Basic-Modes-of-Mechanical-Ventilation-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "basic",
+        "modes",
+        "mechanical",
+        "ventilation",
+        "neonates"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "190",
+      "title": "Disease-specific Ventilation in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "disease-specific-ventilation-in-neonates",
+      "file": "QRG-017-Disease-specific-Ventilation-in-Neonates.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-017-Disease-specific-Ventilation-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "disease-specific",
+        "ventilation",
+        "neonates"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "191",
+      "title": "Neonatal Mechanical Ventilation: Initiation and Ongoing Management",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "neonatal-mechanical-ventilation-initiation-and-ongoing-management",
+      "file": "QRG-018-Neonatal-Mechanical-Ventilation-Initiation-and-Ongoing-Management.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-018-Neonatal-Mechanical-Ventilation-Initiation-and-Ongoing-Management.pdf",
+      "external": true,
+      "keywords": [
+        "neonatal",
+        "mechanical",
+        "ventilation",
+        "initiation",
+        "ongoing",
+        "management"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "192",
+      "title": "Weaning and Extubation from Mechanical Ventilation in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "weaning-and-extubation-from-mechanical-ventilation-in-neonates",
+      "file": "QRG-019-Weaning-and-Extubation-from-Mechanical-Ventilation-in-Neonates.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-019-Weaning-and-Extubation-from-Mechanical-Ventilation-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "weaning",
+        "extubation",
+        "mechanical",
+        "ventilation",
+        "neonates"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "193",
+      "title": "Neonatal Chest X-ray Interpretation",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "neonatal-chest-x-ray-interpretation",
+      "file": "QRG-020-Neonatal-Chest-X-ray-Interpretation.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-020-Neonatal-Chest-X-ray-Interpretation.pdf",
+      "external": true,
+      "keywords": [
+        "neonatal",
+        "chest",
+        "x-ray",
+        "interpretation"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "194",
+      "title": "Approach to Respiratory Distress in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "approach-to-respiratory-distress-in-neonates",
+      "file": "QRG-021-Approach-to-Respiratory-Distress-in-Neonates.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-021-Approach-to-Respiratory-Distress-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "approach",
+        "respiratory",
+        "distress",
+        "neonates"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "195",
+      "title": "High-Frequency Oscillatory Ventilation in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "high-frequency-oscillatory-ventilation-in-neonates",
+      "file": "QRG-022-High-Frequency-Oscillatory-Ventilation-in-Neonates.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-022-High-Frequency-Oscillatory-Ventilation-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "high-frequency",
+        "oscillatory",
+        "ventilation",
+        "neonates"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "196",
+      "title": "Bronchopulmonary Dysplasia in Neonates",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "bronchopulmonary-dysplasia-in-neonates",
+      "file": "QRG-023-Bronchopulmonary-Dysplasia-in-Neonates.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-023-Bronchopulmonary-Dysplasia-in-Neonates.pdf",
+      "external": true,
+      "keywords": [
+        "bronchopulmonary",
+        "dysplasia",
+        "neonates"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "197",
+      "title": "Screening and Diagnosis of Critical Congenital Heart Disease",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "screening-and-diagnosis-of-critical-congenital-heart-disease",
+      "file": "QRG-024-Screening-and-Diagnosis-of-Critical-Congenital-Heart-Disease.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-024-Screening-and-Diagnosis-of-Critical-Congenital-Heart-Disease.pdf",
+      "external": true,
+      "keywords": [
+        "screening",
+        "diagnosis",
+        "critical",
+        "congenital",
+        "heart",
+        "disease"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    },
+    {
+      "no": "198",
+      "title": "Neonatal Arrhythmia",
+      "section": "Quick Reference Guidelines in Neonatology",
+      "slug": "neonatal-arrhythmia",
+      "file": "QRG-025-Neonatal-Arrhythmia.pdf",
+      "url": "https://iapindia.org/pdf/action-plan-2026/QRG-025-Neonatal-Arrhythmia.pdf",
+      "external": true,
+      "keywords": [
+        "neonatal",
+        "arrhythmia"
+      ],
+      "mega_section": "IAPNNF Quick Reference Guidelines in Neonatology"
+    }
   ]
 }
