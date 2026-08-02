@@ -21,9 +21,11 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { CheckCircle2, Clock, PencilLine, Scale } from 'lucide-react';
-import { useAuthStore } from '../../store/authStore';
-import { API_BASE } from '../../lib/apiBase';
-import type { AuthResponse } from '../types';
+import {
+  registerEmailAccount,
+  bridgeRegister,
+  friendlyAuthError,
+} from '../../lib/firebaseAuth';
 
 // ---------------------------------------------------------------------------
 // Role helpers
@@ -39,12 +41,6 @@ function parseRequestedRole(raw: string | null): RequestedRole | null {
 // ---------------------------------------------------------------------------
 // RegisterPage
 // ---------------------------------------------------------------------------
-
-interface RegisterResponseBody {
-  message?: string;
-  userId?: string;
-  requiresApproval?: boolean;
-}
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -84,69 +80,31 @@ export function RegisterPage() {
     setError('');
     setIsSubmitting(true);
 
-    const body: Record<string, unknown> = {
-      email: email.trim(),
-      password,
-    };
-    if (fullName.trim()) body.fullName = fullName.trim();
-    if (qualification.trim()) body.qualification = qualification.trim();
-    if (specialty.trim()) body.specialty = specialty.trim();
-    if (institution.trim()) body.institution = institution.trim();
-    if (bio.trim()) body.bio = bio.trim();
-    if (reason.trim()) body.reason = reason.trim();
-    if (requestedRole) body.requestedRole = requestedRole;
+    const extra: Record<string, string> = {};
+    if (fullName.trim()) extra.fullName = fullName.trim();
+    if (qualification.trim()) extra.qualification = qualification.trim();
+    if (specialty.trim()) extra.specialty = specialty.trim();
+    if (institution.trim()) extra.institution = institution.trim();
+    if (bio.trim()) extra.bio = bio.trim();
+    if (reason.trim()) extra.reason = reason.trim();
+    if (requestedRole) extra.requestedRole = requestedRole;
 
     try {
-      const res = await fetch(`${API_BASE}/api/academics/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
+      // Identity lives in Firebase first — same email+password then works
+      // on the Flutter app too. The bridge links it to a matching
+      // acad_users row (with these extra profile/application fields)
+      // exactly like the pre-Firebase register endpoint already did.
+      const user = await registerEmailAccount(email, password);
+      const { requiresApproval } = await bridgeRegister(user, extra);
 
-      if (!res.ok) {
-        let msg = 'Registration failed. Please try again.';
-        try {
-          const parsed = (await res.json()) as { message?: string };
-          if (parsed?.message) msg = parsed.message;
-        } catch {
-          // ignore parse error
-        }
-        setError(msg);
-        return;
-      }
-
-      // The register endpoint returns { message, userId, requiresApproval }.
-      // If the account requires admin approval we do NOT log the user in,
-      // and we flip to the pending-success screen. Otherwise we go straight
-      // to the dashboard (best-effort auto-login via the login endpoint is
-      // out of scope — they can sign in on the next screen).
-      const data = (await res.json()) as RegisterResponseBody;
-
-      if (data.requiresApproval) {
+      if (requiresApproval) {
         setPendingSuccess(true);
         return;
       }
 
-      // Old-style reader signup path — try to auto-login for a smooth UX.
-      try {
-        const loginRes = await fetch(`${API_BASE}/api/academics/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email.trim(), password }),
-        });
-        if (loginRes.ok) {
-          const auth = (await loginRes.json()) as AuthResponse;
-          useAuthStore.getState().setAuth(auth);
-          navigate('/academics/dashboard', { replace: true });
-          return;
-        }
-      } catch {
-        // fall through
-      }
-      // Auto-login failed — just send them to the sign-in page
-      navigate('/academics/login', { replace: true });
-    } catch {
-      setError('Network error. Please try again.');
+      navigate('/academics/dashboard', { replace: true });
+    } catch (err) {
+      setError(friendlyAuthError(err));
     } finally {
       setIsSubmitting(false);
     }

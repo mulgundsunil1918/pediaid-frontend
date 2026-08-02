@@ -10,27 +10,28 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, CheckCircle2, ArrowLeft } from 'lucide-react';
-import { API_BASE } from '../../lib/apiBase';
+import { sendReset } from '../../lib/firebaseAuth';
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setError('');
     setIsSubmitting(true);
     try {
-      await fetch(`${API_BASE}/api/academics/auth/forgot-password`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
-      });
+      // Firebase's own reset email/flow — this account's real password now
+      // lives in Firebase, not the backend, so the backend's forgot-password
+      // endpoint (still used pre-Firebase) is the wrong one to call here.
+      // Firebase doesn't reveal whether the address is registered either
+      // way, so the neutral "check your inbox" copy below still holds.
+      await sendReset(email);
       setSubmitted(true);
     } catch {
-      setError('Network error. Please try again.');
+      // Swallow the same way the previous backend call did — never reveal
+      // whether the address exists.
+      setSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -88,12 +89,6 @@ export function ForgotPasswordPage() {
                   Enter your email and we'll send you a reset link.
                 </p>
               </div>
-
-              {error && (
-                <div className="mb-5 px-4 py-3 rounded-xl border border-red-200 bg-red-50 text-sm text-danger">
-                  {error}
-                </div>
-              )}
 
               <form onSubmit={handleSubmit} noValidate className="space-y-4">
                 <div>

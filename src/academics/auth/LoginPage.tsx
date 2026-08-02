@@ -4,9 +4,12 @@
 
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuthStore } from '../../store/authStore';
-import { API_BASE } from '../../lib/apiBase';
-import type { AuthResponse } from '../types';
+import {
+  signInEmail,
+  signInGoogle,
+  bridgeSignIn,
+  friendlyAuthError,
+} from '../../lib/firebaseAuth';
 
 // localStorage key for the "Remember me on this device" saved email.
 // When set, the login page pre-fills the email field on mount and we also
@@ -49,51 +52,44 @@ export function LoginPage() {
     }
   }, []);
 
+  function afterSignIn() {
+    // Persist (or clear) the saved email depending on the checkbox.
+    try {
+      if (rememberMe) {
+        localStorage.setItem(SAVED_EMAIL_KEY, email.trim());
+      } else {
+        localStorage.removeItem(SAVED_EMAIL_KEY);
+      }
+    } catch {
+      // localStorage blocked — non-fatal
+    }
+    navigate(nextPath, { replace: true });
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
-
     try {
-      const res = await fetch(`${API_BASE}/api/academics/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email.trim(),
-          password,
-          rememberMe,
-        }),
-      });
+      const user = await signInEmail(email, password);
+      await bridgeSignIn(user);
+      afterSignIn();
+    } catch (err) {
+      setError(friendlyAuthError(err));
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
-      if (!res.ok) {
-        let msg = 'Login failed. Please check your credentials.';
-        try {
-          const body = await res.json();
-          if (body?.message) msg = body.message;
-        } catch {
-          // ignore parse error
-        }
-        setError(msg);
-        return;
-      }
-
-      const data: AuthResponse = await res.json();
-      useAuthStore.getState().setAuth(data);
-
-      // Persist (or clear) the saved email depending on the checkbox.
-      try {
-        if (rememberMe) {
-          localStorage.setItem(SAVED_EMAIL_KEY, email.trim());
-        } else {
-          localStorage.removeItem(SAVED_EMAIL_KEY);
-        }
-      } catch {
-        // localStorage blocked — non-fatal
-      }
-
-      navigate(nextPath, { replace: true });
-    } catch {
-      setError('Network error. Please try again.');
+  async function handleGoogle() {
+    setError('');
+    setIsSubmitting(true);
+    try {
+      const user = await signInGoogle();
+      await bridgeSignIn(user);
+      afterSignIn();
+    } catch (err) {
+      setError(friendlyAuthError(err));
     } finally {
       setIsSubmitting(false);
     }
@@ -238,6 +234,31 @@ export function LoginPage() {
               {isSubmitting ? 'Signing in…' : 'Sign in'}
             </button>
           </form>
+
+          {/* OR divider */}
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-[11px] font-semibold tracking-wide text-ink-muted">OR</span>
+            <div className="flex-1 h-px bg-border" />
+          </div>
+
+          {/* Google */}
+          <button
+            type="button"
+            onClick={handleGoogle}
+            disabled={isSubmitting}
+            className="w-full py-2.5 rounded-xl text-sm font-semibold text-ink
+                       border border-border transition-opacity disabled:opacity-60
+                       flex items-center justify-center gap-2"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.71v2.26h2.9c1.7-1.56 2.7-3.87 2.7-6.61z" />
+              <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z" />
+              <path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z" />
+              <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z" />
+            </svg>
+            Continue with Google
+          </button>
 
           {/* Footer links */}
           <div className="mt-6 text-center text-sm text-ink-muted space-y-2">
