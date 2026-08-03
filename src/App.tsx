@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { NavSidebar, SIDEBAR_WIDTH } from './components/NavSidebar';
+import { SiteHeader } from './components/nav/SiteHeader';
 import { useAuthStore } from './store/authStore';
 import { initSessionRefresh } from './academics/auth/sessionRefresh';
 
@@ -52,6 +52,13 @@ const SubmitCMEEventPage = lazy(() => import('./academics/cme/SubmitCMEEventPage
 const CertificatePage  = lazy(() => import('./academics/cme/CertificatePage').then(m => ({ default: m.CertificatePage })));
 
 const SearchPage       = lazy(() => import('./academics/search/SearchPage').then(m => ({ default: m.SearchPage })));
+
+// Never Again — web presence (previously Flutter-only)
+const NeverAgainFeedPage = lazy(() => import('./academics/never-again/NeverAgainFeedPage').then(m => ({ default: m.NeverAgainFeedPage })));
+const SubmitNeverAgainPage = lazy(() => import('./academics/never-again/SubmitNeverAgainPage').then(m => ({ default: m.SubmitNeverAgainPage })));
+
+// Cross-module "My Submissions"
+const MySubmissionsPage = lazy(() => import('./academics/submissions/MySubmissionsPage').then(m => ({ default: m.MySubmissionsPage })));
 
 // Nelson TOC browser
 const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then(m => ({ default: m.NelsonBrowser })));
@@ -95,11 +102,10 @@ const queryClient = new QueryClient({
 // ---------------------------------------------------------------------------
 
 function AppLayout({ children }: { children: React.ReactNode }) {
-  // NavSidebar renders null — kept here as a no-op in case we bring it back.
   return (
-    <div className="flex min-h-screen bg-bg">
-      <NavSidebar />
-      <div className={`flex-1 min-w-0 ${SIDEBAR_WIDTH}`}>{children}</div>
+    <div className="min-h-screen bg-bg">
+      <SiteHeader />
+      <div className="min-w-0">{children}</div>
     </div>
   );
 }
@@ -205,6 +211,13 @@ export default function App() {
 
             {/* ── PediAid Academics search ── */}
             <Route path="/academics/search" element={<SearchPage />} />
+
+            {/* ── Never Again (web) ── */}
+            <Route path="/academics/never-again" element={<NeverAgainFeedPage />} />
+            <Route path="/academics/never-again/submit" element={<SubmitNeverAgainPage />} />
+
+            {/* ── My Submissions (cross-module) ── */}
+            <Route path="/academics/submissions" element={<MySubmissionsPage />} />
 
             {/* ── Nelson TOC browser ── */}
             <Route path="/academics/nelson" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><NelsonBrowser /></Suspense>} />

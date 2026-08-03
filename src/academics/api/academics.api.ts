@@ -22,7 +22,7 @@ const BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
 // Core fetch wrapper
 // ---------------------------------------------------------------------------
 
-async function apiFetch<T>(
+export async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
   _retried = false,

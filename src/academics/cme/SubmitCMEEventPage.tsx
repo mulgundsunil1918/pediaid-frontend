@@ -10,7 +10,7 @@
 
 import { useState } from 'react';
 import { Navigate, useParams, Link } from 'react-router-dom';
-import { CheckCircle2, Plus, Trash2, Loader2 } from 'lucide-react';
+import { CheckCircle2, Plus, Trash2, Loader2, Info } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import {
   useSubmitCMEEvent,
@@ -336,8 +336,16 @@ export function SubmitCMEEventPage() {
           <input type="number" step="0.5" className={inputCls} value={creditHours}
             onChange={(e) => setCreditHours(e.target.value)} placeholder="e.g. 2" />
 
+          <div className="mt-6 flex items-start gap-2 text-xs text-ink-muted bg-blue-50 border border-blue-100 rounded-xl px-3.5 py-3">
+            <Info size={14} className="shrink-0 mt-0.5" aria-hidden="true" />
+            <span>
+              Submitted content is reviewed before publication. You can track all
+              submissions from Profile → My Submissions.
+            </span>
+          </div>
+
           {formError && (
-            <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-danger">
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-danger">
               {formError}
             </div>
           )}
