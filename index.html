@@ -3,6 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Always revalidate this document.
+
+         Each deploy emits a new hashed bundle and deletes the previous one.
+         A browser holding a cached index.html therefore requests a script
+         that no longer exists, gets a 404, and renders a blank page. The
+         hashed assets are safe to cache forever precisely because their
+         names change; the HTML that points at them must not be. -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="icon" type="image/png" href="/pediaid-logo.png" />
     <link rel="apple-touch-icon" href="/pediaid-logo.png" />
     <title>PediAid Academics</title>

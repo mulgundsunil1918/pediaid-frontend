@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import { initChunkRecovery } from './lib/chunkRecovery';
+
+// Must run before the first lazy route resolves, so a stale cached
+// index.html asking for a deleted bundle self-recovers instead of
+// rendering a blank page.
+initChunkRecovery();
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element #root not found');
