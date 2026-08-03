@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ShieldCheck, Inbox, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
-import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
 import { AdminLayout } from '../AdminLayout';
 import {
   useRoleRequests,
@@ -365,7 +364,7 @@ function TabPanel({ statusParam }: TabPanelProps) {
 
 export function RoleRequestsPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const [activeTab, setActiveTab] = useState<TabKey>('pending');
 

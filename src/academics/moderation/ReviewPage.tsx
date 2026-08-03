@@ -41,7 +41,6 @@ import {
 } from './hooks/useModeration';
 import { ChapterRenderer } from '../reader/components/ChapterRenderer';
 import { useAuthStore } from '../../store/authStore';
-import { ADMIN_AUTH_DISABLED } from '../admin/testingAuthBypass';
 import type { ApiBlock, ChapterReference } from '../editor/types/editor.types';
 
 // ---------------------------------------------------------------------------
@@ -182,7 +181,7 @@ export function ReviewPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
 
   // Guard: only moderators and admins may access this page
-  if (!ADMIN_AUTH_DISABLED && !hasRole('moderator', 'admin')) {
+  if (!hasRole('moderator', 'admin')) {
     return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 

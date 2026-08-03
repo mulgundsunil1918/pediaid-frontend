@@ -14,7 +14,6 @@ import { useState } from 'react';
 import { Navigate, useSearchParams } from 'react-router-dom';
 import { Megaphone, Send, Loader2, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
-import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
 import { AdminLayout } from '../AdminLayout';
 import { useSendBroadcast } from '../hooks/useAdmin';
 
@@ -29,7 +28,7 @@ export function SendNotificationPage() {
 
   const broadcast = useSendBroadcast();
 
-  if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) {
+  if (!hasRole('admin')) {
     return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 

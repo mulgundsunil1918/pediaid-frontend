@@ -7,13 +7,12 @@ import { ArrowLeft } from 'lucide-react';
 import { ModerationHistory } from './components/ModerationHistory';
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
-import { ADMIN_AUTH_DISABLED } from '../admin/testingAuthBypass';
 
 export function HistoryPage() {
   const navigate = useNavigate();
   const hasRole = useAuthStore((s) => s.hasRole);
 
-  if (!ADMIN_AUTH_DISABLED && !hasRole('moderator', 'admin')) {
+  if (!hasRole('moderator', 'admin')) {
     return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 

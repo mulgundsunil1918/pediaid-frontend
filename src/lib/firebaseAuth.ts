@@ -87,14 +87,6 @@ export function friendlyAuthError(error: unknown): string {
 
 // ── Legacy backend bridge ───────────────────────────────────────────────
 
-async function bridgePassword(uid: string): Promise<string> {
-  const data = new TextEncoder().encode(`pediaid-firebase-bridge:${uid}`);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
-}
-
 interface RegisterExtra {
   fullName?: string;
   qualification?: string;
@@ -111,13 +103,29 @@ interface RegisterResponseBody {
   requiresApproval?: boolean;
 }
 
-async function backendLogin(email: string, password: string): Promise<AuthResponse | null> {
-  const res = await fetch(`${API_BASE}/api/academics/auth/login`, {
+/**
+ * Exchanges the Firebase ID token this client already holds for the backend's
+ * own token pair. The server verifies the token's signature against Google's
+ * public certificates, so possession of a genuine Firebase session is the
+ * proof of identity.
+ *
+ * This replaced a scheme where the client derived a password from its own
+ * Firebase uid and logged in with it. That derivation shipped in this bundle,
+ * so anyone who learned a uid could compute that user's password and sign in
+ * as them. A uid is an identifier, not a secret — it must not be usable as
+ * a credential.
+ */
+async function backendFirebaseLogin(user: User): Promise<AuthResponse> {
+  const idToken = await user.getIdToken();
+  const res = await fetch(`${API_BASE}/api/academics/auth/firebase`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ idToken }),
   });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const body = (await res.json().catch(() => ({}))) as { message?: string };
+    throw new Error(body.message ?? 'Could not sign in to PediAid Academics.');
+  }
   return (await res.json()) as AuthResponse;
 }
 
@@ -139,31 +147,31 @@ async function backendRegister(
 }
 
 /**
+ * A throwaway password for the /register call only. The account is always
+ * signed into via the Firebase token exchange afterwards, so this value is
+ * never needed again — it exists purely because /register requires the
+ * field. Random, so unlike the old uid-derived scheme nobody can recompute it.
+ */
+function throwawayPassword(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+/**
  * Used from LoginPage after any successful Firebase sign-in (email/password
- * or Google): logs into the matching backend account, auto-provisioning a
- * plain reader account the very first time this Firebase user is seen here.
+ * or Google): exchanges the Firebase ID token for a backend session,
+ * auto-provisioning a plain reader account the first time this user is seen.
  * Populates useAuthStore on success — every existing admin/CME/etc. call
  * site keeps working completely unchanged after this.
  */
 export async function bridgeSignIn(user: User): Promise<AuthResponse> {
-  const password = await bridgePassword(user.uid);
-  const email = user.email!;
-
-  const existing = await backendLogin(email, password);
-  if (existing) {
-    useAuthStore.getState().setAuth(existing);
-    return existing;
-  }
-
-  await backendRegister(email, password, {
-    fullName: user.displayName || email.split('@')[0],
-  });
-  const fresh = await backendLogin(email, password);
-  if (!fresh) {
-    throw new Error('Account created, but sign-in failed. Please try signing in again.');
-  }
-  useAuthStore.getState().setAuth(fresh);
-  return fresh;
+  // The endpoint upserts the account itself, so there's no separate
+  // register-then-retry dance any more.
+  const auth = await backendFirebaseLogin(user);
+  useAuthStore.getState().setAuth(auth);
+  return auth;
 }
 
 /**
@@ -177,15 +185,16 @@ export async function bridgeRegister(
   user: User,
   extra: RegisterExtra,
 ): Promise<{ requiresApproval: boolean; auth: AuthResponse | null }> {
-  const password = await bridgePassword(user.uid);
   const email = user.email!;
 
-  const regBody = await backendRegister(email, password, extra);
+  // /register still needs a password field, but it's never used to sign in —
+  // the token exchange below is what establishes the session.
+  const regBody = await backendRegister(email, throwawayPassword(), extra);
   if (regBody.requiresApproval) {
     return { requiresApproval: true, auth: null };
   }
 
-  const fresh = await backendLogin(email, password);
-  if (fresh) useAuthStore.getState().setAuth(fresh);
+  const fresh = await backendFirebaseLogin(user);
+  useAuthStore.getState().setAuth(fresh);
   return { requiresApproval: false, auth: fresh };
 }

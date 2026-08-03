@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useCallback, type ReactNode, type MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { X, Loader2, CheckCircle2, AlertCircle, BookOpen, ShieldCheck, Settings2 } from 'lucide-react';
+import { X, Loader2, CheckCircle2, AlertCircle, BookOpen, ShieldCheck } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { API_BASE } from '../../lib/apiBase';
 import type { AcadUserRole } from '../types';
@@ -14,7 +14,7 @@ import type { AcadUserRole } from '../types';
 // Types
 // ---------------------------------------------------------------------------
 
-type RequestableRole = 'author' | 'moderator' | 'admin';
+type RequestableRole = 'author' | 'moderator';
 
 interface RoleCard {
   role: RequestableRole;
@@ -52,16 +52,9 @@ const ROLE_CARDS: RoleCard[] = [
     badgeText: 'text-purple-700',
     borderSelected: 'border-purple-500 ring-2 ring-purple-200',
   },
-  {
-    role: 'admin',
-    label: 'Admin',
-    description: 'Full platform management',
-    icon: <Settings2 size={22} aria-hidden="true" />,
-    accentColor: 'border-red-400',
-    badgeBg: 'bg-red-50',
-    badgeText: 'text-red-700',
-    borderSelected: 'border-red-500 ring-2 ring-red-200',
-  },
+  // 'Admin' is deliberately absent. Admin rights are assigned only by an
+  // existing admin acting directly on a user in user management — there is
+  // no self-service request path, so no one-click approval can grant them.
 ];
 
 // Role rank — higher number = higher privilege. Pending applicants are

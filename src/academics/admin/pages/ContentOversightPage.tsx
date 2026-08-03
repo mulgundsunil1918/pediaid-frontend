@@ -14,7 +14,6 @@ import {
   X,
 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
-import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
 import { AdminLayout } from '../AdminLayout';
 import {
   useAdminChapters,
@@ -273,7 +272,7 @@ function SkeletonRow() {
 export function ContentOversightPage() {
   // Auth guard
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
+  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
 
   const [searchParams] = useSearchParams();
   const initialStatus = (searchParams.get('status') ?? '') as StatusFilter;

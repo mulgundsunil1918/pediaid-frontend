@@ -35,7 +35,6 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
-import { ADMIN_AUTH_DISABLED } from '../testingAuthBypass';
 import { AdminLayout } from '../AdminLayout';
 import {
   useAdminPendingCmeEvents,
@@ -447,7 +446,7 @@ function PendingEventCard({ event }: { event: PendingCmeEvent }) {
 
 export function CmeTypeAdminPage() {
   const hasRole = useAuthStore((s) => s.hasRole);
-  if (!ADMIN_AUTH_DISABLED && !hasRole('admin')) {
+  if (!hasRole('admin')) {
     return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
   }
 
