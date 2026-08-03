@@ -374,7 +374,7 @@ export function SystemStatusPage() {
                   : !backendReachable
                     ? 'Unknown — backend unreachable'
                     : health?.email === 'ok'
-                      ? 'pediaid.app@gmail.com · sending real emails'
+                      ? 'help@bridgr.co.in · sending real emails'
                       : 'EMAIL_MODE=console on Render — emails print to logs only, not sent'
               }
               tone={
