@@ -249,10 +249,10 @@ export function GuidelineBrowserPage() {
         <div className="text-center">
           <p className="text-2xl font-bold text-primary mb-2">Guideline not found</p>
           <Link
-            to="/academics/guidelines"
+            to="/academics"
             className="text-accent text-sm font-semibold hover:underline"
           >
-            ← Back to Guidelines
+            ← Back to Academics
           </Link>
         </div>
       </div>
@@ -266,11 +266,11 @@ export function GuidelineBrowserPage() {
       <div className="max-w-browse mx-auto px-6 py-8">
         {/* Back link */}
         <Link
-          to="/academics/guidelines"
+          to="/academics"
           className="inline-flex items-center gap-1.5 text-sm text-ink-muted
                      hover:text-primary mb-6"
         >
-          <ArrowLeft size={14} /> All guidelines
+          <ArrowLeft size={14} /> Academics
         </Link>
 
         {/* Header */}

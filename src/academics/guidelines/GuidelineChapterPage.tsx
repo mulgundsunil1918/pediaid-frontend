@@ -54,10 +54,10 @@ export function GuidelineChapterPage() {
         <div className="text-center">
           <p className="text-2xl font-bold text-primary mb-2">Guideline not found</p>
           <Link
-            to="/academics/guidelines"
+            to="/academics"
             className="text-accent text-sm font-semibold hover:underline"
           >
-            ← Back to Guidelines
+            ← Back to Academics
           </Link>
         </div>
       </div>

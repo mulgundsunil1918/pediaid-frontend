@@ -18,7 +18,6 @@ import {
   MapPin,
   Sparkles,
   Heart,
-  ArrowLeft,
 } from 'lucide-react';
 import {
   useRecentGuides,
@@ -974,29 +973,9 @@ function HomeTabs() {
 // Page
 // ---------------------------------------------------------------------------
 
-// The PediAid mobile app embeds this site in a flutter_inappwebview WebView,
-// which injects `window.flutter_inappwebview.callHandler(...)` to call back
-// into the native app. When the site is opened standalone (e.g. a browser
-// tab during development), that bridge isn't present, so we fall back to a
-// normal browser "back".
-interface FlutterInAppWebViewBridge {
-  callHandler: (handlerName: string, ...args: unknown[]) => Promise<unknown>;
-}
-
-function goBackToApp() {
-  const bridge = (window as unknown as { flutter_inappwebview?: FlutterInAppWebViewBridge })
-    .flutter_inappwebview;
-  if (bridge) {
-    bridge.callHandler('goToAppHome');
-  } else {
-    window.history.back();
-  }
-}
-
 export function SubjectsPage() {
   const [query, setQuery] = useState('');
   const [roleModalOpen, setRoleModalOpen] = useState(false);
-  const [joinSheetOpen, setJoinSheetOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -1043,44 +1022,6 @@ export function SubjectsPage() {
         style={{ backgroundColor: '#1e3a5f' }}
       >
         <div className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          {/* Back button (left) returns to the PediAid app's home screen when
-               embedded in the app's WebView; falls back to browser back
-               otherwise. "Join Now" (right) is only shown to unauthenticated
-               users — the separate Sign in link was removed because every
-               user reaching this page is already signed in via the Flutter
-               app's auth gate. The Join Now sheet is still exposed for
-               authenticated readers who want to apply as an author or
-               moderator (their existing account is kept; only the role
-               changes after admin approval). */}
-          <div className="flex items-center justify-between gap-2 mb-4">
-            <button
-              type="button"
-              onClick={goBackToApp}
-              className="
-                inline-flex items-center gap-1.5 text-sm font-semibold
-                text-blue-100 hover:text-white transition-colors
-              "
-              aria-label="Back to PediAid app"
-            >
-              <ArrowLeft size={16} aria-hidden="true" /> Back to PediAid
-            </button>
-
-            {!isAuthenticated() && (
-              <button
-                type="button"
-                onClick={() => setJoinSheetOpen(true)}
-                className="
-                  inline-flex items-center gap-1.5 px-4 py-2 rounded-xl
-                  text-sm font-semibold bg-white text-primary
-                  hover:bg-blue-50 transition-colors shadow-sm
-                "
-                aria-label="Join as author or moderator"
-              >
-                Join Now
-              </button>
-            )}
-          </div>
-
           <h1 className="font-sans font-bold text-3xl sm:text-4xl text-white mb-2">
             PediAid Academics
           </h1>
@@ -1184,102 +1125,6 @@ export function SubjectsPage() {
         onClose={() => setRoleModalOpen(false)}
       />
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Join Now bottom sheet (for unauthenticated visitors)                 */}
-      {/* ------------------------------------------------------------------ */}
-      {joinSheetOpen && <JoinNowSheet onClose={() => setJoinSheetOpen(false)} />}
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// JoinNowSheet — bottom-sheet modal offered from the Join Now header button
-//
-// Shows the same two options as the LandingCards grid, but in a compact
-// stacked format. Each option links directly to /academics/register with
-// the requestedRole query param so the register page pre-selects the flow.
-// ---------------------------------------------------------------------------
-
-function JoinNowSheet({ onClose }: { onClose: () => void }) {
-  // Close on Escape
-  useEffect(() => {
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose();
-    }
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [onClose]);
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="join-sheet-title"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div
-        className="
-          bg-card w-full sm:max-w-md
-          rounded-t-3xl sm:rounded-2xl
-          shadow-card-hover
-          overflow-hidden
-          animate-fadeSlideIn
-        "
-      >
-        {/* Mobile grab handle */}
-        <div className="flex justify-center pt-3 pb-1 sm:hidden">
-          <span className="block w-10 h-1.5 rounded-full bg-gray-300" aria-hidden="true" />
-        </div>
-
-        {/* Header */}
-        <div className="px-5 pt-3 pb-4 sm:pt-6 border-b border-border flex items-start justify-between gap-3">
-          <div>
-            <h2
-              id="join-sheet-title"
-              className="font-sans font-bold text-lg text-primary"
-            >
-              Join PediAid Academics
-            </h2>
-            <p className="text-xs text-ink-muted mt-1">
-              Author &amp; moderator applications
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-1 rounded-lg text-ink-muted hover:text-ink hover:bg-gray-100 transition-colors shrink-0"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-
-        {/* Under development */}
-        <div className="p-5">
-          <div className="rounded-xl border-2 border-border p-5 text-center">
-            <p className="text-3xl mb-2" aria-hidden="true">🚧</p>
-            <p className="font-sans font-bold text-base text-primary mb-1">
-              This section is under development
-            </p>
-            <p className="text-sm text-ink-muted leading-relaxed">
-              Author and moderator applications will be released soon.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="
-              mt-4 w-full rounded-xl py-2.5 text-sm font-semibold
-              bg-primary text-white hover:opacity-90 transition-opacity
-            "
-          >
-            Got it
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
