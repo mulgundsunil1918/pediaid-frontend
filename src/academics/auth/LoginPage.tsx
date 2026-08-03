@@ -3,7 +3,8 @@
 // =============================================================================
 
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuthStore } from '../../store/authStore';
 import {
   signInEmail,
   signInGoogle,
@@ -30,6 +31,8 @@ export function LoginPage() {
   const rawNext = searchParams.get('next');
   const nextPath =
     rawNext && rawNext.startsWith('/academics/') ? rawNext : '/academics/dashboard';
+
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated());
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -93,6 +96,14 @@ export function LoginPage() {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  // Already signed in — showing "Welcome back / Sign in" to someone with an
+  // active session is nonsense, and signing in again as the same person
+  // changes nothing. This happens whenever a guard sends someone here for a
+  // permission problem rather than a missing session.
+  if (isAuthenticated) {
+    return <Navigate to={nextPath} replace />;
   }
 
   return (
