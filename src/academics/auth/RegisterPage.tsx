@@ -206,14 +206,33 @@ export function RegisterPage() {
               )}
             </div>
             <h1 className="text-2xl font-bold text-primary">
-              {roleLabel ? `Apply as ${roleLabel}` : 'Create account'}
+              {roleLabel ? `Apply as ${roleLabel}` : 'Set up your PediAid account'}
             </h1>
             <p className="text-sm text-ink-muted mt-1">
               {roleLabel
                 ? 'Your application will be reviewed by an admin.'
-                : 'Join PediAid Academics'}
+                : 'One account across the PediAid app and Academics'}
             </p>
           </div>
+
+          {/*
+            "Create account" read as though Academics needed a second,
+            separate login. It doesn't — this is the same Firebase identity
+            the main app uses, and signing in already provisions the account
+            on first use. Anyone who has used the app should just sign in.
+          */}
+          {!roleLabel && (
+            <div className="mb-6 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
+              <p className="text-sm text-ink leading-relaxed">
+                <strong>Already use the PediAid app?</strong> You don't need to sign
+                up again — the same account works here.{' '}
+                <Link to="/academics/login" className="font-semibold text-accent hover:underline">
+                  Sign in instead
+                </Link>
+                .
+              </p>
+            </div>
+          )}
 
           {/* Eligibility banner for applicants */}
           {roleLabel && (
