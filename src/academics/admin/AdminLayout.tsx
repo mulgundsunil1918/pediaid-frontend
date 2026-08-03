@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { AdminGuard } from './AdminGuard';
+import { NoIndex } from '../../components/NoIndex';
 import {
   usePlatformStats,
   useAdminPendingApplicants,
@@ -264,6 +265,8 @@ interface AdminLayoutProps {
 export function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <AdminGuard>
+      {/* Keeps the admin panel out of search results even if a URL leaks. */}
+      <NoIndex />
       <AdminLayoutInner>{children}</AdminLayoutInner>
     </AdminGuard>
   );
