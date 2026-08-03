@@ -84,10 +84,14 @@ export function SiteHeader() {
     <header style={{ backgroundColor: '#1e3a5f' }} className="sticky top-0 z-30 shadow-md">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3">
         {/* Brand */}
-        <Link to="/academics" className="flex items-center gap-2 shrink-0">
+        <a
+          href="https://pediaid.bridgr.co.in"
+          className="flex items-center gap-2 shrink-0"
+          title="Go to the PediAid app"
+        >
           <BookOpen size={20} className="text-white" aria-hidden="true" />
           <span className="font-bold text-white text-base font-sans">PediAid</span>
-        </Link>
+        </a>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1 flex-1 min-w-0">
@@ -105,7 +109,7 @@ export function SiteHeader() {
           ) : (
             <Link
               to="/academics/login"
-              className="ml-1 px-3.5 py-1.5 rounded-xl text-sm font-semibold text-white border border-white/25 hover:bg-white/10 transition-colors"
+              className="ml-1 shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-xl text-sm font-semibold text-white border border-white/25 hover:bg-white/10 transition-colors"
             >
               Sign in
             </Link>

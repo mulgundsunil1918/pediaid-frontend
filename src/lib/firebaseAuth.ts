@@ -13,6 +13,10 @@
 
 import {
   getAuth,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  inMemoryPersistence,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
@@ -29,19 +33,45 @@ import type { AuthResponse } from '../academics/types';
 
 export const auth = getAuth(firebaseApp);
 
+/**
+ * Firebase stores its session in IndexedDB by default. When IndexedDB is
+ * unavailable — private windows, aggressive privacy settings, a corrupted
+ * store, or another tab holding the connection — the SDK throws raw
+ * internal errors like "Database is closing", which surfaced to users on
+ * the sign-in form.
+ *
+ * Degrade instead: localStorage, then sessionStorage, then memory. The last
+ * one always works; the session simply doesn't outlive the tab. Runs once at
+ * module load, and every sign-in awaits it so persistence is settled before
+ * any credential call.
+ */
+const persistenceReady: Promise<void> = (async () => {
+  for (const mode of [browserLocalPersistence, browserSessionPersistence, inMemoryPersistence]) {
+    try {
+      await setPersistence(auth, mode);
+      return;
+    } catch {
+      // Try the next, less capable, store.
+    }
+  }
+})();
+
 // ── Firebase primitives ─────────────────────────────────────────────────
 
 export async function signInEmail(email: string, password: string): Promise<User> {
+  await persistenceReady;
   const cred = await signInWithEmailAndPassword(auth, email.trim(), password);
   return cred.user;
 }
 
 export async function registerEmailAccount(email: string, password: string): Promise<User> {
+  await persistenceReady;
   const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);
   return cred.user;
 }
 
 export async function signInGoogle(): Promise<User> {
+  await persistenceReady;
   const cred = await signInWithPopup(auth, new GoogleAuthProvider());
   return cred.user;
 }
@@ -78,10 +108,27 @@ export function friendlyAuthError(error: unknown): string {
       return 'Sign-in was cancelled.';
     case 'auth/unauthorized-domain':
       return 'This site is not yet authorized for sign-in — contact the admin.';
+    case 'auth/internal-error':
+      return 'Sign-in is temporarily unavailable. Please try again in a moment.';
     default:
       break;
   }
-  if (error instanceof Error) return error.message;
+
+  // Storage-layer failures from the SDK's IndexedDB session store. These
+  // arrive as raw internal text ("Database is closing", "Database deleted by
+  // request of the user", ...) and were being shown verbatim on the sign-in
+  // form, which is meaningless to a user and looks like data loss.
+  const raw = error instanceof Error ? error.message : '';
+  if (/database|indexeddb|storage|quota/i.test(raw)) {
+    return (
+      'Your browser is blocking the storage sign-in needs. ' +
+      'Try a normal (non-private) window, or allow cookies and site data for this site.'
+    );
+  }
+
+  // Never surface raw SDK internals — they leak implementation detail and
+  // read as scary nonsense.
+  if (raw && /^[A-Za-z ,.'\-]+$/.test(raw) && raw.length < 120) return raw;
   return 'Something went wrong. Please try again.';
 }
 
