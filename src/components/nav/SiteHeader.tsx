@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { BookOpen, GraduationCap, Library, CalendarDays, AlertTriangle, Menu, X } from 'lucide-react';
+import { BookOpen, GraduationCap, Menu, X } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { GlobalSearchBar } from '../../academics/search/GlobalSearchBar';
 import { NotificationBell } from '../NotificationBell';
@@ -25,27 +25,15 @@ interface NavItem {
 function useNavItems(): NavItem[] {
   const canAuthor = useAuthStore((s) => s.canAuthor);
 
+  // Guidelines, CME and Never Again are deliberately NOT here — the
+  // Academics home page already lists every module as a card, so repeating
+  // them in the header was duplicate navigation for the same destinations.
   return [
     {
       label: 'Academics',
       href: '/academics',
       icon: <GraduationCap size={16} aria-hidden="true" />,
       end: true,
-    },
-    {
-      label: 'Guidelines',
-      href: '/academics/guidelines',
-      icon: <Library size={16} aria-hidden="true" />,
-    },
-    {
-      label: 'CME',
-      href: '/academics/cme',
-      icon: <CalendarDays size={16} aria-hidden="true" />,
-    },
-    {
-      label: 'Never Again',
-      href: '/academics/never-again',
-      icon: <AlertTriangle size={16} aria-hidden="true" />,
     },
     {
       label: 'Dashboard',
