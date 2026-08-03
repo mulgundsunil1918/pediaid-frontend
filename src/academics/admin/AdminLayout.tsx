@@ -26,6 +26,7 @@ import {
   GraduationCap,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { AdminGuard } from './AdminGuard';
 import {
   usePlatformStats,
   useAdminPendingApplicants,
@@ -254,7 +255,21 @@ interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
+/**
+ * Wraps every admin page. The guard is here rather than repeated per page so
+ * a new admin route cannot accidentally ship without a server-verified check
+ * — the previous per-page `hasRole('admin')` calls read localStorage, which
+ * the user controls.
+ */
 export function AdminLayout({ children }: AdminLayoutProps) {
+  return (
+    <AdminGuard>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </AdminGuard>
+  );
+}
+
+function AdminLayoutInner({ children }: AdminLayoutProps) {
   const user = useAuthStore((s) => s.user);
   const [mobileOpen, setMobileOpen] = useState(false);
 
