@@ -256,6 +256,7 @@ export const adminKeys = {
     ['admin', 'chapters', filters] as const,
   cme: () => ['admin', 'cme'] as const,
   cmeRegistrations: (eventId: string) => ['admin', 'cme', eventId, 'registrations'] as const,
+  submissions: (filters: AdminSubmissionFilters) => ['admin', 'submissions', filters] as const,
 };
 
 // ---------------------------------------------------------------------------
@@ -913,6 +914,52 @@ export const roleRequestKeys = {
 // ---------------------------------------------------------------------------
 // Role Requests — queries & mutations
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Cross-module submissions — every moderated module in one filterable view
+// ---------------------------------------------------------------------------
+
+export interface AdminSubmissionFilters {
+  module_type?: string;
+  status?: string;
+  author?: string;
+  date_from?: string;
+  date_to?: string;
+  search?: string;
+}
+
+export interface AdminSubmission {
+  submissionId: string;
+  moduleType: 'never_again' | 'conference' | 'webinar' | 'workshop' | 'course';
+  title: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string | null;
+  reviewedAt: string | null;
+  reviewedBy: string | null;
+  adminFeedback: string | null;
+  slug: string | null;
+}
+
+export function useAdminSubmissions(filters: AdminSubmissionFilters) {
+  const params = new URLSearchParams();
+  for (const [k, v] of Object.entries(filters)) {
+    if (v) params.set(k, v);
+  }
+  const qs = params.toString();
+
+  return useQuery<AdminSubmission[], Error>({
+    queryKey: adminKeys.submissions(filters),
+    queryFn: async () => {
+      const body = await apiFetch<{ submissions: AdminSubmission[] }>(
+        `/api/academics/admin/submissions${qs ? `?${qs}` : ''}`,
+      );
+      return body.submissions;
+    },
+    staleTime: 30 * 1_000,
+    placeholderData: keepPreviousData,
+  });
+}
 
 export function useRoleRequests(status = 'pending') {
   return useQuery<RoleRequest[], Error>({

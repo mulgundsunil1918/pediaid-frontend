@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   ShieldCheck,
+  ClipboardList,
   UserPlus,
   ShieldAlert,
   Megaphone,
@@ -212,6 +213,13 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           icon={<ShieldCheck size={17} />}
           label="Role Requests"
           badge={stats?.pendingRoleRequests ?? 0}
+          onClick={onNavClick}
+        />
+        {/* Cross-module view — every module, every status, not just pending. */}
+        <NavItem
+          to="/academics/admin/submissions"
+          icon={<ClipboardList size={17} />}
+          label="All Submissions"
           onClick={onNavClick}
         />
         <NavItem

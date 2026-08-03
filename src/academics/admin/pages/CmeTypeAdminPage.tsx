@@ -10,16 +10,13 @@
 // changes_requested), or Reject. A link at the top jumps to the general
 // "manage all {type} events" view (CMEAdminPage, filtered by type).
 //
-// Mirrors PendingCmeEventsPage.tsx's card rendering closely; the difference
-// is the type filter and the third moderation action.
+// Moderation controls come from the shared ModerationActions component, which
+// this page and PendingNeverAgainPage both use.
 // =============================================================================
 
-import { useState } from 'react';
 import { Navigate, useParams, Link } from 'react-router-dom';
 import {
   Calendar,
-  Check,
-  X,
   Clock,
   MapPin,
   Globe,
@@ -31,7 +28,6 @@ import {
   Mic,
   Loader2,
   Sparkles,
-  MessageSquareWarning,
   ArrowRight,
 } from 'lucide-react';
 import { useAuthStore } from '../../../store/authStore';
@@ -43,6 +39,7 @@ import {
   useRequestCmeEventChanges,
   type PendingCmeEvent,
 } from '../hooks/useAdmin';
+import { ModerationActions, type ModerationCopy } from '../components/ModerationActions';
 
 // ---------------------------------------------------------------------------
 // Type metadata
@@ -83,137 +80,6 @@ function daysAgo(iso: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Reject modal
-// ---------------------------------------------------------------------------
-
-function RejectModal({
-  event,
-  onCancel,
-  onConfirm,
-  isPending,
-}: {
-  event: PendingCmeEvent;
-  onCancel: () => void;
-  onConfirm: (reason: string) => void;
-  isPending: boolean;
-}) {
-  const [reason, setReason] = useState('');
-  const valid = reason.trim().length >= 5;
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="reject-cme-modal-title"
-    >
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-        <div className="bg-danger px-6 py-4">
-          <h2 id="reject-cme-modal-title" className="font-bold text-white text-lg flex items-center gap-2">
-            <X size={20} /> Reject event
-          </h2>
-        </div>
-        <div className="px-6 py-5 space-y-4">
-          <p className="text-sm text-ink leading-relaxed">
-            Rejecting <strong>{event.title}</strong>. The poster will be emailed with the
-            reason below and will be able to edit and resubmit the event from their
-            "My posts" tab.
-          </p>
-          <div>
-            <label className="block text-sm font-semibold text-ink mb-1.5">Reason (required)</label>
-            <textarea
-              value={reason}
-              onChange={(e) => setReason(e.target.value.slice(0, 1000))}
-              rows={4}
-              placeholder="e.g. This isn't a CME-accredited event and doesn't fit this section."
-              className="w-full border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-danger transition-colors resize-y"
-              autoFocus
-            />
-            <p className="text-xs text-ink-muted mt-1">{reason.length}/1000 — minimum 5 characters</p>
-          </div>
-        </div>
-        <div className="px-6 pb-6 flex gap-3 justify-end">
-          <button type="button" onClick={onCancel} disabled={isPending}
-            className="px-4 py-2 text-sm font-medium text-ink border border-border rounded-xl hover:bg-gray-50">
-            Cancel
-          </button>
-          <button type="button" onClick={() => onConfirm(reason.trim())} disabled={!valid || isPending}
-            className="px-5 py-2 text-sm font-bold text-white rounded-xl bg-danger disabled:opacity-40 disabled:cursor-not-allowed transition-opacity">
-            {isPending ? 'Rejecting…' : 'Confirm reject'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Request changes modal
-// ---------------------------------------------------------------------------
-
-function ChangesModal({
-  event,
-  onCancel,
-  onConfirm,
-  isPending,
-}: {
-  event: PendingCmeEvent;
-  onCancel: () => void;
-  onConfirm: (reason: string) => void;
-  isPending: boolean;
-}) {
-  const [reason, setReason] = useState('');
-  const valid = reason.trim().length >= 5;
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="changes-cme-modal-title"
-    >
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-        <div style={{ backgroundColor: '#d69e2e' }} className="px-6 py-4">
-          <h2 id="changes-cme-modal-title" className="font-bold text-white text-lg flex items-center gap-2">
-            <MessageSquareWarning size={20} /> Request changes
-          </h2>
-        </div>
-        <div className="px-6 py-5 space-y-4">
-          <p className="text-sm text-ink leading-relaxed">
-            <strong>{event.title}</strong> goes back to the poster with your note below —
-            they'll get an email and can edit + resubmit without losing their place in
-            the queue.
-          </p>
-          <div>
-            <label className="block text-sm font-semibold text-ink mb-1.5">What needs to change? (required)</label>
-            <textarea
-              value={reason}
-              onChange={(e) => setReason(e.target.value.slice(0, 1000))}
-              rows={4}
-              placeholder="e.g. Please add a registration link and confirm the CME credit hours."
-              className="w-full border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-yellow-500 transition-colors resize-y"
-              autoFocus
-            />
-            <p className="text-xs text-ink-muted mt-1">{reason.length}/1000 — minimum 5 characters</p>
-          </div>
-        </div>
-        <div className="px-6 pb-6 flex gap-3 justify-end">
-          <button type="button" onClick={onCancel} disabled={isPending}
-            className="px-4 py-2 text-sm font-medium text-ink border border-border rounded-xl hover:bg-gray-50">
-            Cancel
-          </button>
-          <button type="button" onClick={() => onConfirm(reason.trim())} disabled={!valid || isPending}
-            className="px-5 py-2 text-sm font-bold text-white rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
-            style={{ backgroundColor: '#d69e2e' }}>
-            {isPending ? 'Sending…' : 'Send back for changes'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
 // Event card
 // ---------------------------------------------------------------------------
 
@@ -221,41 +87,28 @@ function PendingEventCard({ event }: { event: PendingCmeEvent }) {
   const approveMutation = useApproveCmeEvent();
   const rejectMutation = useRejectCmeEvent();
   const changesMutation = useRequestCmeEventChanges();
-  const [rejectOpen, setRejectOpen] = useState(false);
-  const [changesOpen, setChangesOpen] = useState(false);
-  const [error, setError] = useState('');
 
-  const isSubmitting =
-    approveMutation.isPending || rejectMutation.isPending || changesMutation.isPending;
-
-  async function handleApprove() {
-    setError('');
-    try {
-      await approveMutation.mutateAsync(event.id);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Approve failed.');
-    }
-  }
-
-  async function handleReject(reason: string) {
-    setError('');
-    try {
-      await rejectMutation.mutateAsync({ id: event.id, reason });
-      setRejectOpen(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Reject failed.');
-    }
-  }
-
-  async function handleRequestChanges(reason: string) {
-    setError('');
-    try {
-      await changesMutation.mutateAsync({ id: event.id, reason });
-      setChangesOpen(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Request changes failed.');
-    }
-  }
+  const moderationCopy: ModerationCopy = {
+    rejectTitle: 'Reject event',
+    rejectDescription: (
+      <>
+        Rejecting <strong>{event.title}</strong>. The poster will be emailed with the
+        reason below and can edit and resubmit the event from My Submissions.
+      </>
+    ),
+    rejectPlaceholder:
+      "e.g. This isn't a CME-accredited event and doesn't fit this section.",
+    changesTitle: 'Request changes',
+    changesDescription: (
+      <>
+        <strong>{event.title}</strong> goes back to the poster with your note below —
+        they'll get an email and can edit + resubmit without losing their place in the
+        queue.
+      </>
+    ),
+    changesPlaceholder:
+      'e.g. Please add a registration link and confirm the CME credit hours.',
+  };
 
   return (
     <article className="bg-white rounded-2xl shadow-card border border-border overflow-hidden">
@@ -405,37 +258,20 @@ function PendingEventCard({ event }: { event: PendingCmeEvent }) {
           </div>
         )}
 
-        {error && (
-          <div className="mb-3 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm text-danger">{error}</div>
-        )}
-
-        <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
-          <button type="button" onClick={handleApprove} disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white transition-colors disabled:opacity-50"
-            style={{ backgroundColor: '#38a169' }}>
-            {approveMutation.isPending ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
-            Approve
-          </button>
-          <button type="button" onClick={() => setChangesOpen(true)} disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-colors disabled:opacity-50"
-            style={{ color: '#b45309', borderColor: '#fbd38d', backgroundColor: '#fffaf0' }}>
-            <MessageSquareWarning size={14} />
-            Request changes
-          </button>
-          <button type="button" onClick={() => setRejectOpen(true)} disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-danger border border-red-200 hover:bg-red-50 transition-colors disabled:opacity-50">
-            <X size={14} />
-            Reject
-          </button>
-        </div>
+        <ModerationActions
+          copy={moderationCopy}
+          onApprove={() => approveMutation.mutateAsync(event.id).then(() => undefined)}
+          onReject={(reason) =>
+            rejectMutation.mutateAsync({ id: event.id, reason }).then(() => undefined)
+          }
+          onRequestChanges={(reason) =>
+            changesMutation.mutateAsync({ id: event.id, reason }).then(() => undefined)
+          }
+          isApproving={approveMutation.isPending}
+          isRejecting={rejectMutation.isPending}
+          isRequestingChanges={changesMutation.isPending}
+        />
       </div>
-
-      {rejectOpen && (
-        <RejectModal event={event} onCancel={() => setRejectOpen(false)} onConfirm={handleReject} isPending={rejectMutation.isPending} />
-      )}
-      {changesOpen && (
-        <ChangesModal event={event} onCancel={() => setChangesOpen(false)} onConfirm={handleRequestChanges} isPending={changesMutation.isPending} />
-      )}
     </article>
   );
 }
