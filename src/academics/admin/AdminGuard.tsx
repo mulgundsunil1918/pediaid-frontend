@@ -10,9 +10,11 @@
 // =============================================================================
 
 import type { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { Loader2, ShieldAlert } from 'lucide-react';
 import { useAdminSession } from './hooks/useAdminSession';
+import { AcademicsApiError } from '../api/academics.api';
+import { useAuthStore } from '../../store/authStore';
 
 interface AdminGuardProps {
   children: ReactNode;
@@ -21,7 +23,8 @@ interface AdminGuardProps {
 }
 
 export function AdminGuard({ children, permission }: AdminGuardProps) {
-  const { data: session, isLoading, isError } = useAdminSession();
+  const { data: session, isLoading, isError, error } = useAdminSession();
+  const signedInUser = useAuthStore((s) => s.user);
 
   if (isLoading) {
     return (
@@ -32,8 +35,36 @@ export function AdminGuard({ children, permission }: AdminGuardProps) {
     );
   }
 
-  // 401/403, deactivated account, or no longer an admin — all mean "leave".
   if (isError || !session) {
+    const status = error instanceof AcademicsApiError ? error.statusCode : undefined;
+
+    // Signed in, but this account isn't an admin (or was deactivated).
+    // Sending them to a login form would be nonsense — they ARE logged in,
+    // and logging in again as the same person changes nothing. Say what's
+    // actually wrong and name the account, since the usual cause is being
+    // signed in as a personal account rather than the admin one.
+    if (status === 403 || (status !== 401 && signedInUser)) {
+      return (
+        <div className="max-w-lg mx-auto px-4 py-20 text-center">
+          <ShieldAlert size={36} className="mx-auto text-ink-muted mb-3" aria-hidden="true" />
+          <h1 className="text-lg font-bold text-ink mb-1">This account isn't an admin</h1>
+          <p className="text-sm text-ink-muted mb-5">
+            You're signed in as{' '}
+            <strong className="text-ink">{signedInUser?.email}</strong>, which doesn't have
+            admin access. Sign out and sign back in with your admin account.
+          </p>
+          <Link
+            to="/academics"
+            className="inline-block px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+            style={{ backgroundColor: '#1e3a5f' }}
+          >
+            Back to Academics
+          </Link>
+        </div>
+      );
+    }
+
+    // Genuinely not authenticated — the login page is the right destination.
     return (
       <Navigate
         to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`}
