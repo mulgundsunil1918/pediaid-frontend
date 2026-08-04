@@ -1,0 +1,1 @@
+function r(a){return a==="admin"||a==="super_admin"?"/academics/admin":a==="author"||a==="moderator"?"/academics/dashboard":"/academics"}function e(a,i){var t,n;return a==="admin"||a==="super_admin"||a==="moderator"?!1:i?!((t=i.qualification)!=null&&t.trim())&&!((n=i.specialty)!=null&&n.trim()):!0}export{r as d,e as n};
