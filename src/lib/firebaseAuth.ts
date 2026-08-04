@@ -82,6 +82,8 @@ export async function sendReset(email: string): Promise<void> {
 
 export async function signOutFirebase(): Promise<void> {
   await firebaseSignOut(auth);
+  // The cache is cleared by authStore.clearAuth(), which every sign-out
+  // call site invokes straight after this.
 }
 
 // ── Errors ───────────────────────────────────────────────────────────────
@@ -217,6 +219,7 @@ export async function bridgeSignIn(user: User): Promise<AuthResponse> {
   // The endpoint upserts the account itself, so there's no separate
   // register-then-retry dance any more.
   const auth = await backendFirebaseLogin(user);
+  // setAuth clears the query cache itself — see authStore.
   useAuthStore.getState().setAuth(auth);
   return auth;
 }

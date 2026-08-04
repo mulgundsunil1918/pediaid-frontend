@@ -10,7 +10,8 @@ import {
   Navigate,
   useLocation,
 } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './lib/queryClient';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SiteHeader } from './components/nav/SiteHeader';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -95,14 +96,8 @@ const SystemStatusPage = lazy(() => import('./academics/admin/pages/SystemStatus
 // React Query client
 // ---------------------------------------------------------------------------
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+// Lives in lib/queryClient so sign-in and sign-out can clear it too.
+// See that file for why the cache must not survive an identity change.
 
 // ---------------------------------------------------------------------------
 // Layout wrapper — adds sidebar offset on desktop

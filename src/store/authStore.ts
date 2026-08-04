@@ -21,6 +21,7 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
+import { resetQueryCache } from '../lib/queryClient';
 import type { AuthUser, AuthResponse, AcadUserRole, UserProfile } from '../academics/types';
 
 const KEY_ACCESS  = 'acad_access_token';
@@ -142,6 +143,13 @@ export const useAuthStore = create<AuthState>()(
       user: null,
 
       setAuth: (response: AuthResponse) => {
+        // Identity is changing, so nothing cached under the old one may
+        // survive. React Query keys here carry no user id (the profile is
+        // just ['dashboard','profile']), so without this the next account
+        // reads the previous account's rows straight out of memory — which
+        // is exactly how one user's name and qualification showed up in
+        // another user's session. See lib/queryClient.ts.
+        resetQueryCache();
         set({
           accessToken: response.accessToken,
           refreshToken: response.refreshToken,
@@ -160,6 +168,9 @@ export const useAuthStore = create<AuthState>()(
       },
 
       clearAuth: () => {
+        // Covers explicit sign-out AND the 401 listener, so an expired
+        // session leaves nothing personal behind at a shared browser.
+        resetQueryCache();
         set({ accessToken: null, refreshToken: null, user: null });
       },
 
