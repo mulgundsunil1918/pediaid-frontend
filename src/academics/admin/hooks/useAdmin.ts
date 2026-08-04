@@ -576,9 +576,12 @@ export function useDeactivateTopic() {
 
 export function useChangeUserRole() {
   const qc = useQueryClient();
-  return useMutation<AdminUser, Error, { id: string; role: string }>({
+  // The route replies { success: true }, not the updated user. Declaring
+  // AdminUser here was harmless only because onSuccess ignores the value —
+  // the first caller to read a field off it would have got undefined.
+  return useMutation<void, Error, { id: string; role: string }>({
     mutationFn: ({ id, role }) =>
-      apiFetch<AdminUser>(`/api/academics/admin/users/${id}/role`, {
+      apiFetch<void>(`/api/academics/admin/users/${id}/role`, {
         method: 'PUT',
         body: JSON.stringify({ role }),
       }),
