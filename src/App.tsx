@@ -87,6 +87,7 @@ const RoleRequestsPage = lazy(() => import('./academics/admin/pages/RoleRequests
 const PendingApplicationsPage = lazy(() => import('./academics/admin/pages/PendingApplicationsPage').then(m => ({ default: m.PendingApplicationsPage })));
 const AllSubmissionsPage = lazy(() => import('./academics/admin/pages/AllSubmissionsPage').then(m => ({ default: m.AllSubmissionsPage })));
 const PendingNeverAgainPage = lazy(() => import('./academics/admin/pages/PendingNeverAgainPage').then(m => ({ default: m.PendingNeverAgainPage })));
+const AllNeverAgainPage = lazy(() => import('./academics/admin/pages/AllNeverAgainPage').then(m => ({ default: m.AllNeverAgainPage })));
 const SendNotificationPage = lazy(() => import('./academics/admin/pages/SendNotificationPage').then(m => ({ default: m.SendNotificationPage })));
 const SystemStatusPage = lazy(() => import('./academics/admin/pages/SystemStatusPage').then(m => ({ default: m.SystemStatusPage })));
 
@@ -285,6 +286,7 @@ export default function App() {
             <Route path="/academics/admin/cme/:eventType" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CMEAdminPage /></Suspense>} />
             <Route path="/academics/admin/submissions" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AllSubmissionsPage /></Suspense>} />
             <Route path="/academics/admin/never-again/pending" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><PendingNeverAgainPage /></Suspense>} />
+            <Route path="/academics/admin/never-again" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AllNeverAgainPage /></Suspense>} />
             <Route path="/academics/admin/notify" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><SendNotificationPage /></Suspense>} />
             <Route path="/academics/admin/credentials" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CredentialsPage /></Suspense>} />
             <Route path="/academics/admin/content" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><ContentOversightPage /></Suspense>} />

@@ -745,6 +745,29 @@ export interface PendingNeverAgainPost {
   created_at: string;
 }
 
+export interface NeverAgainPost extends PendingNeverAgainPost {
+  reference_code: string | null;
+  resonated_count: number;
+  is_flagged: boolean;
+}
+
+/**
+ * GET /admin/never-again — every post, whatever its status.
+ *
+ * The panel previously only listed the pending queue, so an approved post
+ * disappeared from the dashboard entirely and a fake that slipped through
+ * could not be reached, even though the delete route existed.
+ */
+export function useAllNeverAgainPosts(status: string) {
+  return useQuery<NeverAgainPost[], Error>({
+    queryKey: ['admin', 'never-again-all', status],
+    queryFn: () =>
+      apiFetch<NeverAgainPost[]>(
+        `/api/academics/admin/never-again${status !== 'all' ? `?status=${status}` : ''}`,
+      ),
+  });
+}
+
 /** GET /admin/never-again/pending — every pending anonymous post */
 export function useAdminPendingNeverAgainPosts() {
   return useQuery<PendingNeverAgainPost[], Error>({

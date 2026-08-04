@@ -212,6 +212,15 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           badge={pendingNeverAgainCount}
           onClick={onNavClick}
         />
+        {/* The queue above is for moderating; this is for finding a post
+            afterwards. Without it an approved post was unreachable from the
+            panel, so a fake that got through could not be removed. */}
+        <NavItem
+          to="/academics/admin/never-again"
+          icon={<ShieldAlert size={17} />}
+          label="All Never Again"
+          onClick={onNavClick}
+        />
         <NavItem
           to="/academics/admin/role-requests"
           icon={<ShieldCheck size={17} />}
