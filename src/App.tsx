@@ -12,6 +12,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SiteHeader } from './components/nav/SiteHeader';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { useAuthStore } from './store/authStore';
 import { initSessionRefresh } from './academics/auth/sessionRefresh';
 
@@ -149,6 +150,7 @@ export default function App() {
         <UnauthorizedListener />
         <SessionRefreshBoot />
         <AppLayout>
+          <ErrorBoundary>
           <Suspense
             fallback={
               <div className="p-8 text-ink-muted text-sm">Loading…</div>
@@ -282,6 +284,7 @@ export default function App() {
             />
           </Routes>
           </Suspense>
+          </ErrorBoundary>
         </AppLayout>
       </BrowserRouter>
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
