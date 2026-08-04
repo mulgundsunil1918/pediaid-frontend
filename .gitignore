@@ -1,5 +1,16 @@
 node_modules/
 dist/
-.env.local
+# Every env file EXCEPT the two that are deliberately shared.
+#
+# .gitignore listed only .env.local, so .env.production was tracked. It happens
+# to hold nothing but VITE_API_URL — a public URL — but the gap is the problem:
+# the next env file anyone adds would have been committed by default.
+#
+# .env.production stays tracked on purpose: it contains no secret, and a fresh
+# clone needs it to produce a working production build.
+.env
+.env.*
+!.env.example
+!.env.production
 frontend.log
 *.log
