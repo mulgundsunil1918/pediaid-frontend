@@ -6,6 +6,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '../../../store/authStore';
 import { AcademicsApiError } from '../../api/academics.api';
+import type { AcadUserRole } from '../../types';
 
 // ---------------------------------------------------------------------------
 // Base URL
@@ -47,10 +48,13 @@ export interface DashboardProfile {
   email: string;
   fullName: string;
   qualification: string | null;
+  specialty: string | null;
   institution: string | null;
   bio: string | null;
   orcid: string | null;
-  role: 'reader' | 'author' | 'moderator' | 'admin';
+  // Must list every role the backend can return. Omitting super_admin and the
+  // two pending_* states made this type quietly wrong for those users.
+  role: AcadUserRole;
   credentialsVerified: boolean;
   createdAt: string;
 }
@@ -58,6 +62,8 @@ export interface DashboardProfile {
 export interface UpdateProfileInput {
   fullName?: string;
   qualification?: string;
+  /** Readable everywhere but previously not writable — see PUT /me. */
+  specialty?: string;
   institution?: string;
   bio?: string;
   orcid?: string;
@@ -174,8 +180,19 @@ export function useUpdateProfile() {
         method: 'PUT',
         body: JSON.stringify(input),
       }),
-    onSuccess: () => {
+    onSuccess: (updated) => {
       void queryClient.invalidateQueries({ queryKey: dashboardKeys.profile() });
+      // Keep the auth store in step — it is populated only at sign-in, so
+      // anything reading the profile from there (header name, the
+      // complete-your-profile banner) would otherwise show stale data for
+      // the rest of the session.
+      useAuthStore.getState().setProfile({
+        fullName: updated.fullName,
+        qualification: updated.qualification,
+        specialty: updated.specialty,
+        institution: updated.institution,
+        credentialsVerified: updated.credentialsVerified,
+      });
     },
   });
 }

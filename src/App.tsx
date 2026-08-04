@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SiteHeader } from './components/nav/SiteHeader';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { ProfileNudge } from './academics/onboarding/ProfileNudge';
 import { useAuthStore } from './store/authStore';
 import { initSessionRefresh } from './academics/auth/sessionRefresh';
 
@@ -58,6 +59,10 @@ const SearchPage       = lazy(() => import('./academics/search/SearchPage').then
 // Never Again — web presence (previously Flutter-only)
 const NeverAgainFeedPage = lazy(() => import('./academics/never-again/NeverAgainFeedPage').then(m => ({ default: m.NeverAgainFeedPage })));
 const SubmitNeverAgainPage = lazy(() => import('./academics/never-again/SubmitNeverAgainPage').then(m => ({ default: m.SubmitNeverAgainPage })));
+
+// Onboarding — tutorial + post-signin details step
+const WelcomePage = lazy(() => import('./academics/onboarding/WelcomePage').then(m => ({ default: m.WelcomePage })));
+const CompleteProfilePage = lazy(() => import('./academics/onboarding/CompleteProfilePage').then(m => ({ default: m.CompleteProfilePage })));
 
 // Cross-module "My Submissions"
 const MySubmissionsPage = lazy(() => import('./academics/submissions/MySubmissionsPage').then(m => ({ default: m.MySubmissionsPage })));
@@ -114,9 +119,16 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   // "PediAid".
   const isAdminSurface = pathname.startsWith('/academics/admin');
 
+  // The onboarding screens are their own full-page flow; a banner telling
+  // someone to complete their profile while they are literally on the
+  // complete-profile screen is noise.
+  const isOnboarding =
+    pathname === '/academics/welcome' || pathname === '/academics/complete-profile';
+
   return (
     <div className="min-h-screen bg-bg">
       {!isAdminSurface && <SiteHeader />}
+      {!isAdminSurface && !isOnboarding && <ProfileNudge />}
       <div className="min-w-0">{children}</div>
     </div>
   );
@@ -189,6 +201,8 @@ export default function App() {
             <Route path="/" element={<SubjectsPage />} />
 
             {/* ── PediAid sign-in routes ── */}
+            <Route path="/academics/welcome" element={<WelcomePage />} />
+            <Route path="/academics/complete-profile" element={<CompleteProfilePage />} />
             <Route path="/academics/login" element={<LoginPage />} />
             <Route path="/academics/register" element={<RegisterPage />} />
             <Route path="/academics/forgot-password" element={<ForgotPasswordPage />} />

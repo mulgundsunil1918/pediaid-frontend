@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { User, ClipboardList, LogOut, ChevronDown } from 'lucide-react';
+import { User, ClipboardList, LogOut, ChevronDown, PlayCircle } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { signOutFirebase } from '../../lib/firebaseAuth';
 
@@ -80,6 +80,15 @@ export function ProfileMenu() {
           >
             <ClipboardList size={15} aria-hidden="true" />
             My Submissions
+          </Link>
+
+          <Link
+            to="/academics/welcome?replay=1"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-ink hover:bg-gray-50"
+          >
+            <PlayCircle size={15} aria-hidden="true" />
+            Show tutorial again
           </Link>
 
           <div className="border-t border-border mt-1 pt-1">

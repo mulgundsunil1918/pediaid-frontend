@@ -5,6 +5,7 @@
 import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { useAuthStore } from '../../../store/authStore';
 import { refreshAccessToken } from '../../auth/sessionRefresh';
+import type { AcadUserRole } from '../../types';
 
 // ---------------------------------------------------------------------------
 // API base + fetch wrapper
@@ -99,13 +100,10 @@ export interface TaxonomyTree {
 export interface AdminUser {
   id: string;
   email: string;
-  role:
-    | 'reader'
-    | 'author'
-    | 'moderator'
-    | 'admin'
-    | 'pending_author'
-    | 'pending_moderator';
+  // Every role acad_users.role can hold. This previously omitted
+  // 'super_admin', so the type claimed a value the API really does return
+  // could never appear.
+  role: AcadUserRole;
   isActive: boolean;
   isVerified: boolean;
   fullName: string;

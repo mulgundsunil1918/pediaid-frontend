@@ -43,6 +43,8 @@ function roleBadgeClass(role: AdminUser['role']): string {
       return 'bg-yellow-100 text-yellow-700';
     case 'admin':
       return 'bg-red-100 text-red-700';
+    case 'super_admin':
+      return 'bg-purple-100 text-purple-700';
     case 'pending_author':
       return 'bg-blue-50 text-blue-600 border border-blue-200';
     case 'pending_moderator':

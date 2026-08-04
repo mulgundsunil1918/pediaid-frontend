@@ -11,6 +11,7 @@ import {
   bridgeSignIn,
   friendlyAuthError,
 } from '../../lib/firebaseAuth';
+import { hasSeenTutorial } from '../onboarding/onboardingStorage';
 
 // localStorage key for the "Remember me on this device" saved email.
 // When set, the login page pre-fills the email field on mount and we also
@@ -86,7 +87,24 @@ export function LoginPage() {
     }
     // Re-read the role: it's only known after the sign-in populated the
     // store, so the value captured at render time may still be undefined.
-    const role = useAuthStore.getState().user?.role;
+    const signedIn = useAuthStore.getState().user;
+    const role = signedIn?.role;
+
+    // First sign-in with Google gives us a name and nothing else, so send
+    // those users to the details step once. Only when they haven't asked to
+    // go somewhere specific — an explicit ?next= (a shared chapter link, an
+    // admin page) is a stronger signal of intent than our onboarding.
+    const needsDetails =
+      !explicitNext &&
+      signedIn != null &&
+      !signedIn.profile?.qualification?.trim() &&
+      !signedIn.profile?.specialty?.trim();
+
+    if (needsDetails) {
+      navigate('/academics/complete-profile', { replace: true });
+      return;
+    }
+
     navigate(explicitNext ?? defaultDestinationFor(role), { replace: true });
   }
 
@@ -138,6 +156,12 @@ export function LoginPage() {
     // sessionStorage unavailable — treat as "already bounced" so we can
     // never loop, at the cost of one extra manual click.
     alreadyBounced = true;
+  }
+
+  // The tutorial comes before sign-in for anyone who hasn't seen it. Guarded
+  // on isAuthenticated so it can never interrupt a returning user mid-session.
+  if (!isAuthenticated && !hasSeenTutorial()) {
+    return <Navigate to="/academics/welcome" replace />;
   }
 
   if (isAuthenticated && !alreadyBounced) {

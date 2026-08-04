@@ -21,7 +21,7 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
-import type { AuthUser, AuthResponse, AcadUserRole } from '../academics/types';
+import type { AuthUser, AuthResponse, AcadUserRole, UserProfile } from '../academics/types';
 
 const KEY_ACCESS  = 'acad_access_token';
 const KEY_REFRESH = 'acad_refresh_token';
@@ -113,6 +113,16 @@ interface AuthState {
   setAuth: (response: AuthResponse) => void;
   /** Updates only the access + refresh tokens during silent rotation. */
   setTokens: (tokens: { accessToken: string; refreshToken: string }) => void;
+  /**
+   * Refreshes the cached profile after the user edits it.
+   *
+   * The store is only populated at sign-in, so without this an edit made
+   * during a session stayed invisible to everything reading from here — the
+   * profile-completion banner kept nagging someone who had just filled the
+   * form in, and the header still showed their old name until they signed
+   * out and back in.
+   */
+  setProfile: (profile: UserProfile | null) => void;
   clearAuth: () => void;
 
   // Derived helpers
@@ -141,6 +151,12 @@ export const useAuthStore = create<AuthState>()(
 
       setTokens: ({ accessToken, refreshToken }) => {
         set({ accessToken, refreshToken });
+      },
+
+      setProfile: (profile) => {
+        const { user } = get();
+        if (!user) return;
+        set({ user: { ...user, profile } });
       },
 
       clearAuth: () => {
