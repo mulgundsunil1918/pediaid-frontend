@@ -756,6 +756,40 @@ export function useAdminPendingNeverAgainPosts() {
 }
 
 /** PUT /admin/never-again/:id/approve — publishes the post */
+/**
+ * DELETE /admin/never-again/:id — permanent.
+ *
+ * Distinct from reject: a rejected post still exists and still has to be dealt
+ * with later. This is for spam and obvious fakes, where there is nothing to
+ * keep. The server records what was deleted in the audit log first, since the
+ * post is anonymous and nothing else would remember it.
+ */
+export function useDeleteNeverAgainPost() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, number>({
+    mutationFn: (id) =>
+      apiFetch<void>(`/api/academics/admin/never-again/${id}`, {
+        method: 'DELETE',
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'never-again-pending'] });
+      void qc.invalidateQueries({ queryKey: adminKeys.all });
+    },
+  });
+}
+
+/** DELETE /admin/cme/:id — permanent. Same purpose as the above. */
+export function useDeleteCmeEvent() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, string>({
+    mutationFn: (id) =>
+      apiFetch<void>(`/api/academics/admin/cme/${id}`, { method: 'DELETE' }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: adminKeys.all });
+    },
+  });
+}
+
 export function useApproveNeverAgainPost() {
   const qc = useQueryClient();
   return useMutation<void, Error, number>({

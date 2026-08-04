@@ -23,6 +23,7 @@ import {
   useAdminPendingNeverAgainPosts,
   useApproveNeverAgainPost,
   useRejectNeverAgainPost,
+  useDeleteNeverAgainPost,
   useRequestNeverAgainChanges,
   type PendingNeverAgainPost,
 } from '../hooks/useAdmin';
@@ -44,6 +45,7 @@ function daysAgo(iso: string): string {
 function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
   const approveMutation = useApproveNeverAgainPost();
   const rejectMutation = useRejectNeverAgainPost();
+  const deleteMutation = useDeleteNeverAgainPost();
   const changesMutation = useRequestNeverAgainChanges();
 
   // Never Again posts are anonymous, so whether the submitter left a contact
@@ -139,6 +141,8 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
         isApproving={approveMutation.isPending}
         isRejecting={rejectMutation.isPending}
         isRequestingChanges={changesMutation.isPending}
+        onDelete={() => deleteMutation.mutateAsync(post.id).then(() => undefined)}
+        isDeleting={deleteMutation.isPending}
       />
     </article>
   );

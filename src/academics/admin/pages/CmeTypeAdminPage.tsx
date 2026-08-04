@@ -35,6 +35,7 @@ import {
   useAdminPendingCmeEvents,
   useApproveCmeEvent,
   useRejectCmeEvent,
+  useDeleteCmeEvent,
   useRequestCmeEventChanges,
   type PendingCmeEvent,
 } from '../hooks/useAdmin';
@@ -85,6 +86,7 @@ function daysAgo(iso: string): string {
 function PendingEventCard({ event }: { event: PendingCmeEvent }) {
   const approveMutation = useApproveCmeEvent();
   const rejectMutation = useRejectCmeEvent();
+  const deleteMutation = useDeleteCmeEvent();
   const changesMutation = useRequestCmeEventChanges();
 
   const moderationCopy: ModerationCopy = {
@@ -269,6 +271,8 @@ function PendingEventCard({ event }: { event: PendingCmeEvent }) {
           isApproving={approveMutation.isPending}
           isRejecting={rejectMutation.isPending}
           isRequestingChanges={changesMutation.isPending}
+          onDelete={() => deleteMutation.mutateAsync(event.id).then(() => undefined)}
+          isDeleting={deleteMutation.isPending}
         />
       </div>
     </article>

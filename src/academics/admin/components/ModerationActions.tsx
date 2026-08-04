@@ -12,7 +12,7 @@
 // =============================================================================
 
 import { useState, type ReactNode } from 'react';
-import { Check, X, MessageSquareWarning, Loader2 } from 'lucide-react';
+import { Check, X, MessageSquareWarning, Loader2, Trash2 } from 'lucide-react';
 
 const REASON_MAX = 1000;
 const REASON_MIN = 5;
@@ -157,6 +157,16 @@ interface ModerationActionsProps {
   isApproving: boolean;
   isRejecting: boolean;
   isRequestingChanges: boolean;
+  /**
+   * Permanent deletion, for spam and obvious fakes.
+   *
+   * Optional so a surface that shouldn't offer it simply omits it. Distinct
+   * from reject: a rejected item still exists and still has to be dealt with
+   * later, which is the wrong outcome for something that should never have
+   * been submitted.
+   */
+  onDelete?: () => Promise<void>;
+  isDeleting?: boolean;
 }
 
 export function ModerationActions({
@@ -167,12 +177,15 @@ export function ModerationActions({
   isApproving,
   isRejecting,
   isRequestingChanges,
+  onDelete,
+  isDeleting = false,
 }: ModerationActionsProps) {
   const [rejectOpen, setRejectOpen] = useState(false);
   const [changesOpen, setChangesOpen] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [error, setError] = useState('');
 
-  const isSubmitting = isApproving || isRejecting || isRequestingChanges;
+  const isSubmitting = isApproving || isRejecting || isRequestingChanges || isDeleting;
 
   async function run(action: () => Promise<void>, fallback: string, close?: () => void) {
     setError('');
@@ -224,6 +237,54 @@ export function ModerationActions({
           <X size={14} />
           Reject
         </button>
+
+        {onDelete && (
+          <div className="ml-auto">
+            {confirmDelete ? (
+              // Inline two-step rather than a modal. Deletion is permanent and
+              // the row simply vanishes, so it must not be one click away —
+              // but a full dialog for clearing spam is friction on the action
+              // an admin performs most often.
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-ink-muted">Delete permanently?</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    run(onDelete, 'Delete failed.', () => setConfirmDelete(false))
+                  }
+                  disabled={isSubmitting}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold text-white bg-danger hover:opacity-90 disabled:opacity-50"
+                >
+                  {isDeleting ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : (
+                    <Trash2 size={14} />
+                  )}
+                  Yes, delete
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setConfirmDelete(false)}
+                  disabled={isSubmitting}
+                  className="px-3 py-2 rounded-xl text-sm font-medium text-ink-muted hover:text-ink"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setConfirmDelete(true)}
+                disabled={isSubmitting}
+                title="Permanently delete — for spam and fakes"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-ink-muted hover:text-danger hover:bg-red-50 transition-colors disabled:opacity-50"
+              >
+                <Trash2 size={14} />
+                Delete
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {rejectOpen && (
