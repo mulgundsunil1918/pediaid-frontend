@@ -21,7 +21,7 @@
 const RELOAD_FLAG = 'pediaid_chunk_reload_attempted';
 
 /** Errors that mean "the JS file I asked for isn't there any more". */
-function isStaleChunkError(message: string): boolean {
+export function isStaleChunkError(message: string): boolean {
   return (
     /Failed to fetch dynamically imported module/i.test(message) ||
     /error loading dynamically imported module/i.test(message) ||
@@ -31,7 +31,7 @@ function isStaleChunkError(message: string): boolean {
   );
 }
 
-function recover(message: string): void {
+export function recoverFromStaleChunk(message: string): void {
   if (!isStaleChunkError(message)) return;
 
   try {
@@ -54,12 +54,12 @@ function recover(message: string): void {
 export function initChunkRecovery(): void {
   // A failed dynamic import surfaces as an unhandled rejection.
   window.addEventListener('unhandledrejection', (e) => {
-    recover(String((e.reason as Error | undefined)?.message ?? e.reason ?? ''));
+    recoverFromStaleChunk(String((e.reason as Error | undefined)?.message ?? e.reason ?? ''));
   });
 
   // Script/preload tags that 404 surface as error events instead.
   window.addEventListener('error', (e) => {
-    recover(String(e.message ?? ''));
+    recoverFromStaleChunk(String(e.message ?? ''));
   });
 
   // A successful render means whatever we have is coherent — clear the flag

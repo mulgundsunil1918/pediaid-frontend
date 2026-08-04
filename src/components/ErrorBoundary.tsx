@@ -13,6 +13,7 @@
 // =============================================================================
 
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { isStaleChunkError, recoverFromStaleChunk } from '../lib/chunkRecovery';
 
 interface Props {
   children: ReactNode;
@@ -32,6 +33,12 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, info: ErrorInfo) {
     // Keep the full trace in the console for anyone who does look.
     console.error('[ErrorBoundary] Render failed:', error, info.componentStack);
+
+    // A lazy route whose chunk 404s (deleted by a newer deploy) rejects, and
+    // React routes that rejection here — which means it is NOT an unhandled
+    // rejection, so the global listener in chunkRecovery never sees it. The
+    // recovery has to run from inside the boundary or it never runs at all.
+    recoverFromStaleChunk(error.message ?? '');
   }
 
   private handleHardReload = async () => {
@@ -51,6 +58,16 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     const { error } = this.state;
     if (!error) return this.props.children;
+
+    // A reload is already in flight for this case; showing a scary error card
+    // for the half-second before it happens is worse than showing nothing.
+    if (isStaleChunkError(error.message ?? '')) {
+      return (
+        <div className="min-h-screen flex items-center justify-center text-ink-muted text-sm">
+          Updating to the latest version…
+        </div>
+      );
+    }
 
     return (
       <div className="min-h-screen bg-bg flex items-center justify-center px-4">
