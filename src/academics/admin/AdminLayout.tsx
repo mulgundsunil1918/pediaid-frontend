@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import {
   Settings,
   LayoutDashboard,
@@ -24,9 +24,11 @@ import {
   Video,
   Wrench,
   GraduationCap,
+  LogOut,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { AdminGuard } from './AdminGuard';
+import { signOutFirebase } from '../../lib/firebaseAuth';
 import { NoIndex } from '../../components/NoIndex';
 import {
   usePlatformStats,
@@ -273,6 +275,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 }
 
 function AdminLayoutInner({ children }: AdminLayoutProps) {
+  const navigate = useNavigate();
+  const clearAuth = useAuthStore((s) => s.clearAuth);
+
+  async function handleSignOut() {
+    try {
+      await signOutFirebase();
+    } catch {
+      // Firebase sign-out failing must not block ending the local session.
+    }
+    clearAuth();
+    navigate('/academics', { replace: true });
+  }
+
   const user = useAuthStore((s) => s.user);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -344,18 +359,33 @@ function AdminLayoutInner({ children }: AdminLayoutProps) {
             </h1>
           </div>
           {user && (
-            <div className="flex items-center gap-2">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
-                style={{ backgroundColor: '#1e3a5f' }}
-              >
-                {user.profile?.fullName
-                  ? user.profile.fullName.slice(0, 2).toUpperCase()
-                  : user.email.slice(0, 2).toUpperCase()}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                  style={{ backgroundColor: '#1e3a5f' }}
+                >
+                  {user.profile?.fullName
+                    ? user.profile.fullName.slice(0, 2).toUpperCase()
+                    : user.email.slice(0, 2).toUpperCase()}
+                </div>
+                <span className="text-sm text-ink font-medium hidden sm:block">
+                  {user.profile?.fullName ?? user.email}
+                </span>
               </div>
-              <span className="text-sm text-ink font-medium hidden sm:block">
-                {user.profile?.fullName ?? user.email}
-              </span>
+              {/*
+                The admin panel hides the global header (its sidebar would
+                overlap it), which also removed the only sign-out control —
+                leaving no way out of an admin session.
+              */}
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-danger border border-red-200 hover:bg-red-50 transition-colors"
+              >
+                <LogOut size={14} aria-hidden="true" />
+                <span className="hidden sm:inline">Sign out</span>
+              </button>
             </div>
           )}
         </header>
