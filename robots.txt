@@ -1,20 +1,18 @@
 # PediAid Academics
 #
-# Content is meant to be indexed — chapters, guidelines, CME listings and
-# the Never Again feed are the public product.
+# The entire site is intentionally kept out of search results. It is shared by
+# direct link only — with contributors, reviewers and invited clinicians —
+# rather than being discoverable by anyone who searches for it.
 #
-# The admin panel is not. It is protected by server-verified authentication
-# regardless of what a crawler does, but it should never appear in search
-# results or be discoverable by anyone who wasn't given the URL.
+# Note that robots.txt is a request, not a control: a crawler that ignores it,
+# or anyone who is given a URL, can still reach these pages. Actual protection
+# comes from authentication on the routes that need it, and that is unchanged
+# by this file. The <meta name="robots" content="noindex"> tag in index.html
+# is what actually keeps pages out of an index once fetched — this file just
+# stops well-behaved crawlers fetching them in the first place.
+#
+# To make the site discoverable later, relax BOTH this file and that meta tag.
+# Changing only one leaves the site invisible.
 
 User-agent: *
-Disallow: /academics/admin
-Disallow: /academics/moderator
-Disallow: /academics/dashboard
-Disallow: /academics/login
-Disallow: /academics/register
-Disallow: /academics/reset-password
-Disallow: /academics/forgot-password
-Disallow: /academics/submissions
-
-Allow: /
+Disallow: /
