@@ -8,6 +8,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -103,9 +104,19 @@ const queryClient = new QueryClient({
 // ---------------------------------------------------------------------------
 
 function AppLayout({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+
+  // The admin panel ships its own full navigation — sidebar, profile, and a
+  // link back to Academics. Rendering the global header there duplicated all
+  // of it (two brands, two search bars, two profile menus) and, because the
+  // sidebar is fixed at top:0 with the same z-index, physically covered the
+  // header's left edge — which is why the brand read "Aid" instead of
+  // "PediAid".
+  const isAdminSurface = pathname.startsWith('/academics/admin');
+
   return (
     <div className="min-h-screen bg-bg">
-      <SiteHeader />
+      {!isAdminSurface && <SiteHeader />}
       <div className="min-w-0">{children}</div>
     </div>
   );
