@@ -109,16 +109,26 @@ export function LoginPage() {
     const signedIn = useAuthStore.getState().user;
     const role = signedIn?.role;
 
+    const destination = explicitNext ?? defaultDestinationFor(role);
+
     // A first sign-in yields a name and an email and nothing else, so offer
-    // the details step once. Skipped when the user asked for somewhere
-    // specific (a shared chapter link, an admin page) — that intent outranks
-    // our onboarding — and skipped for staff, who signed in to do a job.
-    if (!explicitNext && signedIn != null && needsProfileDetails(role, signedIn.profile)) {
-      navigate('/academics/complete-profile', { replace: true });
+    // the details step once.
+    //
+    // This used to be skipped whenever ?next= was present, on the reasoning
+    // that an explicit destination outranks onboarding. That was wrong: SIX
+    // screens bounce signed-out users here with ?next= (dashboard, submit CME,
+    // editor, both moderation pages, admin), so arriving from any of them
+    // silently suppressed the step — which is why it appeared to never show.
+    // The destination is carried through instead, so the user still lands
+    // where they were going once they've saved or skipped.
+    if (signedIn != null && needsProfileDetails(role, signedIn.profile)) {
+      navigate(`/academics/complete-profile?next=${encodeURIComponent(destination)}`, {
+        replace: true,
+      });
       return;
     }
 
-    navigate(explicitNext ?? defaultDestinationFor(role), { replace: true });
+    navigate(destination, { replace: true });
   }
 
   async function handleProvider(provider: Provider) {

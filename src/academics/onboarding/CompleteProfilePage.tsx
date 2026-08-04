@@ -15,7 +15,7 @@
 // =============================================================================
 
 import { useState, type FormEvent } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useSearchParams } from 'react-router-dom';
 import { Loader2, UserCircle2 } from 'lucide-react';
 import { useUpdateProfile } from '../dashboard/hooks/useDashboard';
 import { useAuthStore } from '../../store/authStore';
@@ -46,6 +46,7 @@ const SPECIALTY_SUGGESTIONS = [
 
 export function CompleteProfilePage() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const user = useAuthStore((s) => s.user);
   const updateProfile = useUpdateProfile();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated());
@@ -58,9 +59,14 @@ export function CompleteProfilePage() {
   const [error, setError] = useState('');
 
   function goToApp() {
-    // Role-aware: an admin who lands here and skips should still end up on
-    // their dashboard, not the public Academics index.
-    navigate(defaultDestinationFor(user?.role), { replace: true });
+    // Honour where the user was originally headed (LoginPage passes it
+    // through when a protected screen bounced them to sign in), falling back
+    // to the role's home. Only internal /academics/... paths are accepted, so
+    // a crafted ?next= can't turn this into an open redirect.
+    const raw = params.get('next');
+    const target =
+      raw && raw.startsWith('/academics/') ? raw : defaultDestinationFor(user?.role);
+    navigate(target, { replace: true });
   }
 
   function handleSkip() {
