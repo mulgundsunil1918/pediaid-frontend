@@ -20,6 +20,7 @@ import {
   useReactivateUser,
   type AdminUser,
 } from '../hooks/useAdmin';
+import { getInitials } from '../../../lib/initials';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -31,13 +32,6 @@ type RoleFilter = 'all' | 'reader' | 'author' | 'moderator' | 'admin';
 // Helpers
 // ---------------------------------------------------------------------------
 
-function getInitials(name: string): string {
-  return name
-    .split(' ')
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
-}
 
 function roleBadgeClass(role: AdminUser['role']): string {
   switch (role) {

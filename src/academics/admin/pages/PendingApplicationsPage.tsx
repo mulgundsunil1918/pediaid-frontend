@@ -37,19 +37,12 @@ import {
   useRejectPendingApplicant,
   type PendingApplicant,
 } from '../hooks/useAdmin';
+import { getInitials } from '../../../lib/initials';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-function getInitials(name: string | null): string {
-  if (!name) return '?';
-  return name
-    .split(' ')
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
-}
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-IN', {

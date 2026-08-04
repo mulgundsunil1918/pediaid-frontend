@@ -9,7 +9,8 @@ import type { Speaker } from '../hooks/useCME';
 // Helpers
 // ---------------------------------------------------------------------------
 
-function getInitials(name: string): string {
+function getInitials(name: string | null | undefined): string {
+  if (typeof name !== 'string' || !name.trim()) return '?';
   return name
     .split(' ')
     .filter(Boolean)

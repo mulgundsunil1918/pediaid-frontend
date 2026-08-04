@@ -19,18 +19,12 @@ import {
   useRejectCredentials,
   type PendingCredential,
 } from '../hooks/useAdmin';
+import { getInitials } from '../../../lib/initials';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-function getInitials(name: string): string {
-  return name
-    .split(' ')
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
-}
 
 function daysAgo(dateStr: string): number {
   const ms = Date.now() - new Date(dateStr).getTime();

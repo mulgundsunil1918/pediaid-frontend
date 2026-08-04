@@ -13,6 +13,7 @@ import {
   useFlagComment,
   type Comment,
 } from '../hooks/useChapterReader';
+import { getInitials } from '../../../lib/initials';
 
 const COMPOSE_MAX = 2000;
 const EDIT_WINDOW_MS = 15 * 60 * 1_000; // 15 min
@@ -35,9 +36,7 @@ function fullDate(iso: string): string {
   });
 }
 
-function initialsOf(name: string) {
-  return name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? '').join('');
-}
+const initialsOf = getInitials;
 
 // ---------------------------------------------------------------------------
 // Avatar

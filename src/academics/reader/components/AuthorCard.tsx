@@ -6,18 +6,14 @@ import { Link } from 'react-router-dom';
 import { ExternalLink } from 'lucide-react';
 import { VerifiedBadge } from '../../browse/components/VerifiedBadge';
 import type { ReaderAuthor } from '../hooks/useChapterReader';
+import { getInitials } from '../../../lib/initials';
 
 // ---------------------------------------------------------------------------
 // Initials avatar fallback
 // ---------------------------------------------------------------------------
 
 function InitialsAvatar({ name, size = 56 }: { name: string; size?: number }) {
-  const initials = name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
+  const initials = getInitials(name);
 
   return (
     <div

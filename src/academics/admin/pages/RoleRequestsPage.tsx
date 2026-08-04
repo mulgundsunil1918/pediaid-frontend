@@ -12,6 +12,7 @@ import {
   type RoleRequest,
   type RoleRequestStatus,
 } from '../hooks/useAdmin';
+import { getInitials } from '../../../lib/initials';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -34,13 +35,6 @@ function formatDate(dateStr: string): string {
   });
 }
 
-function getInitials(name: string): string {
-  return name
-    .split(' ')
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
-}
 
 // ---------------------------------------------------------------------------
 // Role badge
