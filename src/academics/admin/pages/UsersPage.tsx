@@ -509,10 +509,17 @@ export function UsersPage() {
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-white rounded-card shadow-card border border-border overflow-hidden mb-4">
+      {/*
+        No overflow-hidden here. It was clipping the Actions dropdown: the menu
+        is absolutely positioned inside the last cell, so anything below the
+        card's edge was cut off — which is why only "Reader" was visible and
+        Author and Moderator appeared to be missing entirely. The header row
+        carries rounded-t corners itself so the card still looks right.
+      */}
+      <div className="hidden md:block bg-white rounded-card shadow-card border border-border mb-4">
         <table className="w-full min-w-[600px]">
           <thead>
-            <tr className="bg-gray-50 border-b border-border">
+            <tr className="bg-gray-50 border-b border-border [&>th:first-child]:rounded-tl-card [&>th:last-child]:rounded-tr-card">
               <th className="px-4 py-3 text-left text-xs font-semibold text-ink-muted uppercase tracking-wide">
                 User
               </th>
