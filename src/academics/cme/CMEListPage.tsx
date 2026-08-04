@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useCMEEvents } from './hooks/useCME';
+import { CMEFilterBar } from './components/CMEFilterBar';
 import type { CMEFilters, CMEEvent } from './hooks/useCME';
 import { EventCard } from './components/EventCard';
 
@@ -90,11 +91,17 @@ function EmptyState({ statusFilter, typeFilter }: { statusFilter: StatusFilter; 
 export function CMEListPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
+  const [stateFilter, setStateFilter] = useState('');
+  const [modeFilter, setModeFilter] = useState<NonNullable<CMEFilters['mode']> | ''>('');
+  const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
   const filters: CMEFilters = {
     ...(statusFilter !== 'all' && { status: statusFilter }),
     ...(typeFilter !== 'all' && { eventType: typeFilter }),
+    ...(stateFilter && { state: stateFilter }),
+    ...(modeFilter && { mode: modeFilter }),
+    ...(search.trim() && { q: search.trim() }),
     page,
   };
 
@@ -112,6 +119,24 @@ export function CMEListPage() {
 
   function handleTypeChange(value: TypeFilter) {
     setTypeFilter(value);
+    setPage(1);
+  }
+
+  // Every filter resets paging. Staying on page 4 of a narrower result set
+  // usually lands on an empty page, which reads as "no results" rather than
+  // "you are past the end".
+  function handleStateChange(value: string) {
+    setStateFilter(value);
+    setPage(1);
+  }
+
+  function handleModeChange(value: NonNullable<CMEFilters['mode']> | '') {
+    setModeFilter(value);
+    setPage(1);
+  }
+
+  function handleSearchChange(value: string) {
+    setSearch(value);
     setPage(1);
   }
 
@@ -175,6 +200,16 @@ export function CMEListPage() {
             </button>
           ))}
         </div>
+
+        <CMEFilterBar
+          state={stateFilter}
+          mode={modeFilter}
+          search={search}
+          onStateChange={handleStateChange}
+          onModeChange={handleModeChange}
+          onSearchChange={handleSearchChange}
+          resultCount={isLoading ? undefined : total}
+        />
 
         {/* Error state */}
         {isError && (

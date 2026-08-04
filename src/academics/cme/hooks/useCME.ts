@@ -65,7 +65,17 @@ export interface Certificate {
 export interface CMEFilters {
   status?: 'upcoming' | 'ongoing' | 'completed';
   eventType?: string;
+  /** ISO 3166-2:IN subdivision code, e.g. 'KA'. */
+  state?: string;
+  mode?: 'online' | 'in_person' | 'hybrid';
+  /** Free-text search across title, description, speaker, venue and city. */
+  q?: string;
   page?: number;
+}
+
+export interface CMEFilterOptions {
+  states: Array<{ code: string; name: string }>;
+  modes: Array<'online' | 'in_person' | 'hybrid'>;
 }
 
 interface CMEEventsResponse {
@@ -126,6 +136,9 @@ export function useCMEEvents(filters: CMEFilters) {
   const params = new URLSearchParams();
   if (filters.status) params.set('status', filters.status);
   if (filters.eventType) params.set('eventType', filters.eventType);
+  if (filters.state) params.set('state', filters.state);
+  if (filters.mode) params.set('mode', filters.mode);
+  if (filters.q?.trim()) params.set('q', filters.q.trim());
   if (filters.page != null) params.set('page', String(filters.page));
 
   const qs = params.toString();
@@ -137,6 +150,22 @@ export function useCMEEvents(filters: CMEFilters) {
         `/api/academics/cme/events${qs ? `?${qs}` : ''}`,
       ),
     staleTime: 60_000,
+  });
+}
+
+/**
+ * GET /api/academics/cme/filter-options
+ *
+ * The state and mode vocabulary, served by the API so the dropdown and the
+ * validation are built from the same list. Static, so it is cached hard —
+ * refetching a list of Indian states on every visit would be silly.
+ */
+export function useCMEFilterOptions() {
+  return useQuery<CMEFilterOptions, AcademicsApiError>({
+    queryKey: ['cme', 'filter-options'],
+    queryFn: () => apiFetch<CMEFilterOptions>('/api/academics/cme/filter-options'),
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
   });
 }
 
