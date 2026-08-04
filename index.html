@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Keep the whole academics site out of search results.
+         This is a single-page app served from one index.html, so one tag here
+         covers every route rather than needing a component on each page.
+         Deliberate, not an oversight: the site is shared by direct link only.
+         To make it discoverable again, remove this tag AND relax robots.txt —
+         both, or crawlers will still stay away. Re-indexing after that can
+         take Google several weeks. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+
     <!-- Always revalidate this document.
 
          Each deploy emits a new hashed bundle and deletes the previous one.

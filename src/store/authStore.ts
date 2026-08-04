@@ -143,13 +143,19 @@ export const useAuthStore = create<AuthState>()(
       user: null,
 
       setAuth: (response: AuthResponse) => {
-        // Identity is changing, so nothing cached under the old one may
-        // survive. React Query keys here carry no user id (the profile is
-        // just ['dashboard','profile']), so without this the next account
-        // reads the previous account's rows straight out of memory — which
-        // is exactly how one user's name and qualification showed up in
-        // another user's session. See lib/queryClient.ts.
-        resetQueryCache();
+        // Nothing cached under a previous identity may survive. React Query
+        // keys here carry no user id (the profile is just
+        // ['dashboard','profile']), so without this the next account reads
+        // the previous account's rows straight out of memory — which is how
+        // one user's name and qualification showed up in another user's
+        // session. See lib/queryClient.ts.
+        //
+        // Only on an ACTUAL change of person. Re-authenticating as the same
+        // user (a token refresh, a repeated sign-in) must not wipe the cache:
+        // clearing mid-flight cancels queries that are already running.
+        if (get().user?.id !== response.user.id) {
+          resetQueryCache();
+        }
         set({
           accessToken: response.accessToken,
           refreshToken: response.refreshToken,
@@ -170,6 +176,17 @@ export const useAuthStore = create<AuthState>()(
       clearAuth: () => {
         // Covers explicit sign-out AND the 401 listener, so an expired
         // session leaves nothing personal behind at a shared browser.
+        //
+        // Guarded on there actually being someone to clear. Without this it
+        // span forever: a 401 dispatched 'acad:unauthorized', the listener
+        // called clearAuth, the cache wipe cancelled the in-flight query, the
+        // still-mounted observer refetched, that 401'd too — and the admin
+        // panel sat on "Checking access…" indefinitely instead of settling
+        // into an error and redirecting to sign-in.
+        if (get().user === null) {
+          set({ accessToken: null, refreshToken: null, user: null });
+          return;
+        }
         resetQueryCache();
         set({ accessToken: null, refreshToken: null, user: null });
       },
