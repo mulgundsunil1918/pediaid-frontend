@@ -1,0 +1,1 @@
+function i(r,t=1,e="—"){return typeof r!="number"||!Number.isFinite(r)?e:r.toFixed(t)}function n(r,t="—"){return typeof r!="number"||!Number.isFinite(r)?t:r>=1e6?`${(r/1e6).toFixed(1)}M`:r>=1e3?`${(r/1e3).toFixed(1)}k`:String(r)}export{n as a,i as s};

@@ -1,0 +1,20 @@
+# PediAid Academics
+#
+# Content is meant to be indexed — chapters, guidelines, CME listings and
+# the Never Again feed are the public product.
+#
+# The admin panel is not. It is protected by server-verified authentication
+# regardless of what a crawler does, but it should never appear in search
+# results or be discoverable by anyone who wasn't given the URL.
+
+User-agent: *
+Disallow: /academics/admin
+Disallow: /academics/moderator
+Disallow: /academics/dashboard
+Disallow: /academics/login
+Disallow: /academics/register
+Disallow: /academics/reset-password
+Disallow: /academics/forgot-password
+Disallow: /academics/submissions
+
+Allow: /
