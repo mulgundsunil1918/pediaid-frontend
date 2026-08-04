@@ -200,7 +200,11 @@ export interface AdminCMEEvent {
   slug: string;
   title: string;
   eventType: 'webinar' | 'workshop' | 'conference' | 'course';
-  status: 'scheduled' | 'live' | 'completed' | 'cancelled';
+  // The values acad_cme_events.status actually holds, per its CHECK
+  // constraint. This previously declared 'scheduled' | 'live' | 'completed',
+  // none of which the database can ever produce — so the admin list filtered
+  // on statuses that do not exist and showed nothing at all.
+  status: 'pending' | 'published' | 'rejected' | 'cancelled' | 'archived';
   startsAt: string;
   endsAt: string;
   registrationCount: number;

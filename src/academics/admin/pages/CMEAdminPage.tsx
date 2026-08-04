@@ -10,10 +10,12 @@ import {
   Check,
   AlertTriangle,
   Megaphone,
+  Trash2,
 } from 'lucide-react';
 import { AdminLayout } from '../AdminLayout';
 import {
   useAdminCMEEvents,
+  useDeleteCmeEvent,
   useCreateCMEEvent,
   useUpdateCMEEvent,
   useCancelCMEEvent,
@@ -58,14 +60,20 @@ function eventTypeBadgeClass(type: AdminCMEEvent['eventType']): string {
 
 function statusBadgeClass(status: AdminCMEEvent['status']): string {
   switch (status) {
-    case 'scheduled':
-      return 'bg-blue-50 text-blue-600';
-    case 'live':
-      return 'bg-green-100 text-green-700 animate-pulse';
-    case 'completed':
-      return 'bg-gray-100 text-gray-600';
+    case 'published':
+      return 'bg-green-100 text-green-700';
+    case 'pending':
+      return 'bg-amber-50 text-amber-700';
+    case 'rejected':
+      return 'bg-red-50 text-red-600';
     case 'cancelled':
       return 'bg-red-100 text-red-600 line-through';
+    case 'archived':
+      return 'bg-gray-100 text-gray-600';
+    default:
+      // Exhaustive over the CHECK constraint today, but a default keeps an
+      // added status from crashing the page instead of just looking plain.
+      return 'bg-gray-100 text-gray-600';
   }
 }
 
@@ -471,9 +479,14 @@ function EventAdminCard({ event }: EventAdminCardProps) {
   const [editingEvent, setEditingEvent] = useState<AdminCMEEvent | null>(null);
   const [cancellingEvent, setCancellingEvent] = useState<AdminCMEEvent | null>(null);
   const [issuingCerts, setIssuingCerts] = useState<AdminCMEEvent | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const deleteMutation = useDeleteCmeEvent();
 
-  const isCancellable = event.status === 'scheduled' || event.status === 'live';
-  const isCompleted = event.status === 'completed';
+  // Cancellable while it is published and has not finished; "completed" is a
+  // date fact, not a stored status — nothing ever writes one.
+  const hasEnded = new Date(event.endsAt ?? event.startsAt).getTime() < Date.now();
+  const isCancellable = event.status === 'published' && !hasEnded;
+  const isCompleted = event.status === 'published' && hasEnded;
 
   return (
     <>
@@ -555,6 +568,50 @@ function EventAdminCard({ event }: EventAdminCardProps) {
               Notify everyone
             </Link>
           )}
+
+          {/* Permanent delete, for fakes and junk that got through.
+              Pushed to the right and two-step, so it is never adjacent to the
+              routine actions above it. Cancel is the right verb for a real
+              event that is not happening; this is for one that should not
+              exist. */}
+          <div className="ml-auto">
+            {confirmDelete ? (
+              <span className="flex items-center gap-2">
+                <span className="text-xs text-ink-muted">Delete permanently?</span>
+                <button
+                  onClick={async () => {
+                    try {
+                      await deleteMutation.mutateAsync(event.id);
+                    } catch (err) {
+                      alert(err instanceof Error ? err.message : 'Delete failed.');
+                    } finally {
+                      setConfirmDelete(false);
+                    }
+                  }}
+                  disabled={deleteMutation.isPending}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg bg-danger text-white hover:opacity-90 disabled:opacity-50"
+                >
+                  <Trash2 size={14} />
+                  {deleteMutation.isPending ? 'Deleting…' : 'Yes, delete'}
+                </button>
+                <button
+                  onClick={() => setConfirmDelete(false)}
+                  className="px-2 py-1.5 text-sm text-ink-muted hover:text-ink"
+                >
+                  Cancel
+                </button>
+              </span>
+            ) : (
+              <button
+                onClick={() => setConfirmDelete(true)}
+                title="Permanently delete this event"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg text-ink-muted hover:text-danger hover:bg-red-50"
+              >
+                <Trash2 size={14} />
+                Delete
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -600,11 +657,26 @@ export function CMEAdminPage() {
   const { data: allEvents = [], isLoading } = useAdminCMEEvents();
   const events = typeFilter ? allEvents.filter((e) => e.eventType === typeFilter) : allEvents;
 
-  const upcomingEvents = events.filter(
-    (e) => e.status === 'scheduled' || e.status === 'live'
+  // Split by DATE, not by status.
+  //
+  // This used to filter on 'scheduled'/'live' and 'completed', which the
+  // status column cannot contain — its CHECK constraint allows only pending,
+  // published, rejected, cancelled and archived. So both tabs matched almost
+  // nothing and every published event was invisible.
+  //
+  // Whether an event has happened is a property of its dates, not its
+  // moderation state, so that is what decides the tab now. Status still
+  // decides visibility: pending and rejected belong in the moderation queue,
+  // not in this list.
+  const now = Date.now();
+  const visible = events.filter(
+    (e) => e.status !== 'pending' && e.status !== 'rejected',
   );
-  const pastEvents = events.filter(
-    (e) => e.status === 'completed' || e.status === 'cancelled'
+  const upcomingEvents = visible.filter(
+    (e) => e.status !== 'cancelled' && new Date(e.endsAt ?? e.startsAt).getTime() >= now,
+  );
+  const pastEvents = visible.filter(
+    (e) => e.status === 'cancelled' || new Date(e.endsAt ?? e.startsAt).getTime() < now,
   );
 
   const displayedEvents = activeTab === 'upcoming' ? upcomingEvents : pastEvents;
