@@ -17,11 +17,9 @@ import {
   browserLocalPersistence,
   browserSessionPersistence,
   inMemoryPersistence,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  sendPasswordResetEmail,
+  OAuthProvider,
   signOut as firebaseSignOut,
   type User,
   type AuthError,
@@ -58,26 +56,32 @@ const persistenceReady: Promise<void> = (async () => {
 
 // ── Firebase primitives ─────────────────────────────────────────────────
 
-export async function signInEmail(email: string, password: string): Promise<User> {
-  await persistenceReady;
-  const cred = await signInWithEmailAndPassword(auth, email.trim(), password);
-  return cred.user;
-}
-
-export async function registerEmailAccount(email: string, password: string): Promise<User> {
-  await persistenceReady;
-  const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);
-  return cred.user;
-}
-
 export async function signInGoogle(): Promise<User> {
   await persistenceReady;
   const cred = await signInWithPopup(auth, new GoogleAuthProvider());
   return cred.user;
 }
 
-export async function sendReset(email: string): Promise<void> {
-  await sendPasswordResetEmail(auth, email.trim());
+/**
+ * Sign in with Apple.
+ *
+ * Apple is the only provider that returns the user's name ONCE — on the very
+ * first authorisation and never again — so the name scope has to be requested
+ * here rather than fetched later. If a first sign-in is interrupted after
+ * Apple's side succeeds, the name is gone for good and the account falls back
+ * to its email; the details step exists partly to catch that.
+ *
+ * Users may also elect Apple's private relay address, in which case the email
+ * we store is a @privaterelay.appleid.com forwarder rather than their real
+ * one. That address is deliverable, so notifications still work.
+ */
+export async function signInApple(): Promise<User> {
+  await persistenceReady;
+  const provider = new OAuthProvider('apple.com');
+  provider.addScope('email');
+  provider.addScope('name');
+  const cred = await signInWithPopup(auth, provider);
+  return cred.user;
 }
 
 export async function signOutFirebase(): Promise<void> {
@@ -108,6 +112,16 @@ export function friendlyAuthError(error: unknown): string {
     case 'auth/popup-closed-by-user':
     case 'auth/cancelled-popup-request':
       return 'Sign-in was cancelled.';
+    case 'auth/account-exists-with-different-credential':
+      // The likeliest failure once both Google and Apple are offered: the
+      // same person, the same email, the other button. Firebase refuses
+      // rather than silently merging, and the generic message ("an account
+      // already exists") tells them nothing actionable — so name the fix.
+      return 'You already have an account with this email, created using the other sign-in button. Please use that one instead.';
+    case 'auth/popup-blocked':
+      return 'Your browser blocked the sign-in window. Allow pop-ups for this site and try again.';
+    case 'auth/operation-not-allowed':
+      return 'This sign-in method is not enabled yet — contact the admin.';
     case 'auth/unauthorized-domain':
       return 'This site is not yet authorized for sign-in — contact the admin.';
     case 'auth/internal-error':
@@ -136,22 +150,6 @@ export function friendlyAuthError(error: unknown): string {
 
 // ── Legacy backend bridge ───────────────────────────────────────────────
 
-interface RegisterExtra {
-  fullName?: string;
-  qualification?: string;
-  specialty?: string;
-  institution?: string;
-  bio?: string;
-  reason?: string;
-  requestedRole?: 'author' | 'moderator';
-}
-
-interface RegisterResponseBody {
-  message?: string;
-  userId?: string;
-  requiresApproval?: boolean;
-}
-
 /**
  * Exchanges the Firebase ID token this client already holds for the backend's
  * own token pair. The server verifies the token's signature against Google's
@@ -178,36 +176,6 @@ async function backendFirebaseLogin(user: User): Promise<AuthResponse> {
   return (await res.json()) as AuthResponse;
 }
 
-async function backendRegister(
-  email: string,
-  password: string,
-  extra: RegisterExtra,
-): Promise<RegisterResponseBody> {
-  const res = await fetch(`${API_BASE}/api/academics/auth/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password, ...extra }),
-  });
-  const body = (await res.json().catch(() => ({}))) as RegisterResponseBody;
-  if (!res.ok) {
-    throw new Error(body.message ?? 'Could not link your account to PediAid Academics.');
-  }
-  return body;
-}
-
-/**
- * A throwaway password for the /register call only. The account is always
- * signed into via the Firebase token exchange afterwards, so this value is
- * never needed again — it exists purely because /register requires the
- * field. Random, so unlike the old uid-derived scheme nobody can recompute it.
- */
-function throwawayPassword(): string {
-  const bytes = crypto.getRandomValues(new Uint8Array(32));
-  return Array.from(bytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
-}
-
 /**
  * Used from LoginPage after any successful Firebase sign-in (email/password
  * or Google): exchanges the Firebase ID token for a backend session,
@@ -224,27 +192,3 @@ export async function bridgeSignIn(user: User): Promise<AuthResponse> {
   return auth;
 }
 
-/**
- * Used from RegisterPage: an explicit new signup, optionally an
- * author/moderator application carrying the extra profile fields that
- * flow already collects. Always registers (never tries login first) — if
- * requiresApproval comes back, there's no session yet, matching the page's
- * existing pending-review behaviour exactly.
- */
-export async function bridgeRegister(
-  user: User,
-  extra: RegisterExtra,
-): Promise<{ requiresApproval: boolean; auth: AuthResponse | null }> {
-  const email = user.email!;
-
-  // /register still needs a password field, but it's never used to sign in —
-  // the token exchange below is what establishes the session.
-  const regBody = await backendRegister(email, throwawayPassword(), extra);
-  if (regBody.requiresApproval) {
-    return { requiresApproval: true, auth: null };
-  }
-
-  const fresh = await backendFirebaseLogin(user);
-  useAuthStore.getState().setAuth(fresh);
-  return { requiresApproval: false, auth: fresh };
-}

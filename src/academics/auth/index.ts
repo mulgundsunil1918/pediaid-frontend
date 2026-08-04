@@ -3,6 +3,5 @@
 // =============================================================================
 
 export { LoginPage } from './LoginPage';
-export { RegisterPage } from './RegisterPage';
 export { RoleRequestModal } from './RoleRequestModal';
 export type { RoleRequestModalProps } from './RoleRequestModal';

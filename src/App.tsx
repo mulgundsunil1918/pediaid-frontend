@@ -42,9 +42,6 @@ const HistoryPage      = lazy(() => import('./academics/moderation/HistoryPage')
 // already uses, so one account works on both. Restored after being pulled
 // out temporarily; see App.tsx git history for context.
 const LoginPage        = lazy(() => import('./academics/auth/index').then(m => ({ default: m.LoginPage })));
-const RegisterPage     = lazy(() => import('./academics/auth/index').then(m => ({ default: m.RegisterPage })));
-const ForgotPasswordPage = lazy(() => import('./academics/auth/ForgotPasswordPage').then(m => ({ default: m.ForgotPasswordPage })));
-const ResetPasswordPage  = lazy(() => import('./academics/auth/ResetPasswordPage').then(m => ({ default: m.ResetPasswordPage })));
 
 const DashboardPage    = lazy(() => import('./academics/dashboard/DashboardPage').then(m => ({ default: m.DashboardPage })));
 const MyChaptersPage   = lazy(() => import('./academics/dashboard/MyChaptersPage').then(m => ({ default: m.MyChaptersPage })));
@@ -199,9 +196,12 @@ export default function App() {
             <Route path="/academics/welcome" element={<WelcomePage />} />
             <Route path="/academics/complete-profile" element={<CompleteProfilePage />} />
             <Route path="/academics/login" element={<LoginPage />} />
-            <Route path="/academics/register" element={<RegisterPage />} />
-            <Route path="/academics/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/academics/reset-password" element={<ResetPasswordPage />} />
+            {/* Password auth is gone — these paths still exist in old
+                bookmarks, emails and search results, so send them to
+                sign-in rather than a 404. */}
+            <Route path="/academics/register" element={<Navigate to="/academics/login" replace />} />
+            <Route path="/academics/forgot-password" element={<Navigate to="/academics/login" replace />} />
+            <Route path="/academics/reset-password" element={<Navigate to="/academics/login" replace />} />
 
 
             {/* ── PediAid Academics browse routes ── */}
