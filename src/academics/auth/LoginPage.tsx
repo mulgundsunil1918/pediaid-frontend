@@ -12,6 +12,7 @@ import {
   friendlyAuthError,
 } from '../../lib/firebaseAuth';
 import { hasSeenTutorial } from '../onboarding/onboardingStorage';
+import { defaultDestinationFor, needsProfileDetails } from './destination';
 
 // localStorage key for the "Remember me on this device" saved email.
 // When set, the login page pre-fills the email field on mount and we also
@@ -36,12 +37,6 @@ export function LoginPage() {
   // Where to land when no ?next= was supplied. This used to be hardcoded to
   // the author dashboard, which sent an admin signing in straight to a
   // "create your first chapter" screen — not what they came for.
-  function defaultDestinationFor(role: string | undefined): string {
-    if (role === 'admin' || role === 'super_admin') return '/academics/admin';
-    if (role === 'author' || role === 'moderator') return '/academics/dashboard';
-    return '/academics';
-  }
-
   // Resolved before sign-in for the already-authenticated redirect below.
   const currentRole = useAuthStore.getState().user?.role;
   const nextPath = explicitNext ?? defaultDestinationFor(currentRole);
@@ -95,10 +90,7 @@ export function LoginPage() {
     // go somewhere specific — an explicit ?next= (a shared chapter link, an
     // admin page) is a stronger signal of intent than our onboarding.
     const needsDetails =
-      !explicitNext &&
-      signedIn != null &&
-      !signedIn.profile?.qualification?.trim() &&
-      !signedIn.profile?.specialty?.trim();
+      !explicitNext && signedIn != null && needsProfileDetails(role, signedIn.profile);
 
     if (needsDetails) {
       navigate('/academics/complete-profile', { replace: true });

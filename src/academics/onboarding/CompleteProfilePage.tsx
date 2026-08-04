@@ -20,6 +20,7 @@ import { Loader2, UserCircle2 } from 'lucide-react';
 import { useUpdateProfile } from '../dashboard/hooks/useDashboard';
 import { useAuthStore } from '../../store/authStore';
 import { dismissNudge } from './onboardingStorage';
+import { defaultDestinationFor } from '../auth/destination';
 
 /**
  * Common paediatric sub-specialties, offered as suggestions rather than a
@@ -57,7 +58,9 @@ export function CompleteProfilePage() {
   const [error, setError] = useState('');
 
   function goToApp() {
-    navigate('/academics', { replace: true });
+    // Role-aware: an admin who lands here and skips should still end up on
+    // their dashboard, not the public Academics index.
+    navigate(defaultDestinationFor(user?.role), { replace: true });
   }
 
   function handleSkip() {
