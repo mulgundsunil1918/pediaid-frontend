@@ -65,6 +65,12 @@ export function AdminGuard({ children, permission }: AdminGuardProps) {
     }
 
     // Genuinely not authenticated — the login page is the right destination.
+    console.warn(
+      '[AdminGuard] Redirecting to login. status=%s, hasSession=%s, error=%s',
+      status,
+      Boolean(signedInUser),
+      error?.message,
+    );
     return (
       <Navigate
         to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`}

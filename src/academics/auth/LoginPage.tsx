@@ -56,6 +56,11 @@ export function LoginPage() {
   }, []);
 
   function afterSignIn() {
+    try {
+      sessionStorage.removeItem(`pediaid_login_bounce:${nextPath}`);
+    } catch {
+      /* ignore */
+    }
     // Persist (or clear) the saved email depending on the checkbox.
     try {
       if (rememberMe) {
@@ -100,9 +105,31 @@ export function LoginPage() {
 
   // Already signed in — showing "Welcome back / Sign in" to someone with an
   // active session is nonsense, and signing in again as the same person
-  // changes nothing. This happens whenever a guard sends someone here for a
-  // permission problem rather than a missing session.
-  if (isAuthenticated) {
+  // changes nothing.
+  //
+  // But bouncing them onward is only safe ONCE. If the destination sends
+  // them straight back here, the two redirects ping-pong forever: neither
+  // throws, so React Router just spins and the page renders blank with no
+  // error — which is exactly the failure this guard caused. So the hop is
+  // recorded, and a second arrival with the same target shows the form
+  // instead. A visible login page is a bad outcome; an invisible infinite
+  // loop is a much worse one.
+  const bounceKey = `pediaid_login_bounce:${nextPath}`;
+  let alreadyBounced = false;
+  try {
+    alreadyBounced = sessionStorage.getItem(bounceKey) === '1';
+  } catch {
+    // sessionStorage unavailable — treat as "already bounced" so we can
+    // never loop, at the cost of one extra manual click.
+    alreadyBounced = true;
+  }
+
+  if (isAuthenticated && !alreadyBounced) {
+    try {
+      sessionStorage.setItem(bounceKey, '1');
+    } catch {
+      /* ignore */
+    }
     return <Navigate to={nextPath} replace />;
   }
 
