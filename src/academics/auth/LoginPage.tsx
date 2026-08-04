@@ -29,8 +29,21 @@ export function LoginPage() {
   // internal /academics/... path (never an absolute URL) so a crafted
   // ?next= query can't be used as an open redirect.
   const rawNext = searchParams.get('next');
-  const nextPath =
-    rawNext && rawNext.startsWith('/academics/') ? rawNext : '/academics/dashboard';
+  const explicitNext =
+    rawNext && rawNext.startsWith('/academics/') ? rawNext : null;
+
+  // Where to land when no ?next= was supplied. This used to be hardcoded to
+  // the author dashboard, which sent an admin signing in straight to a
+  // "create your first chapter" screen — not what they came for.
+  function defaultDestinationFor(role: string | undefined): string {
+    if (role === 'admin' || role === 'super_admin') return '/academics/admin';
+    if (role === 'author' || role === 'moderator') return '/academics/dashboard';
+    return '/academics';
+  }
+
+  // Resolved before sign-in for the already-authenticated redirect below.
+  const currentRole = useAuthStore.getState().user?.role;
+  const nextPath = explicitNext ?? defaultDestinationFor(currentRole);
 
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated());
 
@@ -71,7 +84,10 @@ export function LoginPage() {
     } catch {
       // localStorage blocked — non-fatal
     }
-    navigate(nextPath, { replace: true });
+    // Re-read the role: it's only known after the sign-in populated the
+    // store, so the value captured at render time may still be undefined.
+    const role = useAuthStore.getState().user?.role;
+    navigate(explicitNext ?? defaultDestinationFor(role), { replace: true });
   }
 
   async function handleSubmit(e: FormEvent) {
