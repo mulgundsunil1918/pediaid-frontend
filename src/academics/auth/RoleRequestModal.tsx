@@ -67,6 +67,7 @@ const ROLE_RANK: Record<AcadUserRole, number> = {
   pending_moderator: 1.5,
   moderator: 2,
   admin: 3,
+  super_admin: 4,
 };
 
 // ---------------------------------------------------------------------------

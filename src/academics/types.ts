@@ -8,6 +8,10 @@ export type AcadUserRole =
   | 'author'
   | 'moderator'
   | 'admin'
+  // Highest tier. Must be included in every role check that admits 'admin' —
+  // hasRole matches exactly, so omitting it silently strips a super_admin of
+  // all permissions.
+  | 'super_admin'
   // Intermediate states: visitor registered as Author or Moderator on the
   // landing page. They cannot write or moderate until an admin approves.
   | 'pending_author'

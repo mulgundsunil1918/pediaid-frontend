@@ -53,7 +53,7 @@ export function QuickActions() {
         onClick={() => navigate('/academics')}
       />
 
-      {hasRole('moderator', 'admin') && (
+      {hasRole('moderator', 'admin', 'super_admin') && (
         <ActionButton
           icon={<ListChecks size={16} />}
           label="View Queue"
@@ -61,7 +61,7 @@ export function QuickActions() {
         />
       )}
 
-      {hasRole('moderator', 'admin') && (
+      {hasRole('moderator', 'admin', 'super_admin') && (
         <ActionButton
           icon={<History size={16} />}
           label="History"

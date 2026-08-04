@@ -71,7 +71,7 @@ export function ChapterReaderPage() {
     return () => { document.title = 'PediAid Academics — PediAid'; };
   }, [chapter?.title]);
 
-  const isElevated = hasRole('moderator', 'admin');
+  const isElevated = hasRole('moderator', 'admin', 'super_admin');
   const isAuthor = chapter && user?.id === chapter.authorId;
   const showBanner = (isAuthor || isElevated) && chapter?.status !== 'approved';
 

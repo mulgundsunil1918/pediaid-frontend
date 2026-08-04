@@ -159,14 +159,19 @@ export const useAuthStore = create<AuthState>()(
       // Approved roles — does NOT include pending_author / pending_moderator.
       // Use this helper to gate "write" actions throughout the UI so anyone
       // waiting for admin approval is correctly locked out.
+      //
+      // super_admin must appear in every list. hasRole matches exactly, so
+      // omitting it made the highest tier fail every check — it was treated
+      // as having no permissions at all, which hid nav items and bounced it
+      // out of pages an ordinary admin could open.
       canAuthor: () => {
-        return get().hasRole('author', 'moderator', 'admin');
+        return get().hasRole('author', 'moderator', 'admin', 'super_admin');
       },
       canModerate: () => {
-        return get().hasRole('moderator', 'admin');
+        return get().hasRole('moderator', 'admin', 'super_admin');
       },
       canAdmin: () => {
-        return get().hasRole('admin');
+        return get().hasRole('admin', 'super_admin');
       },
       /** True while the user's role request is still awaiting admin approval. */
       isPendingRoleApproval: () => {
