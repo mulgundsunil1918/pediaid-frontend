@@ -56,6 +56,16 @@ function SubmissionCard({ submission }: { submission: NormalizedSubmission }) {
 
       <p className="text-xs text-ink-muted mb-2">
         {MODULE_LABELS[submission.moduleType]} · Submitted {formatDate(submission.createdAt)}
+        {submission.referenceCode && (
+          <>
+            {' · '}
+            {/* Selectable and monospaced: this is the string someone copies
+                into an email when they ask what happened to their submission. */}
+            <span className="font-mono select-all text-ink">
+              {submission.referenceCode}
+            </span>
+          </>
+        )}
       </p>
 
       {submission.adminFeedback && (submission.status === 'needs_edit' || submission.status === 'rejected') && (

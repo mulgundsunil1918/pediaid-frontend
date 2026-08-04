@@ -36,4 +36,6 @@ export interface NormalizedSubmission {
   reviewedBy: string | null;
   adminFeedback: string | null;
   slug: string | null;
+  /** Human-usable reference, e.g. PA-CME-00042. Null for pre-0018 rows. */
+  referenceCode: string | null;
 }
