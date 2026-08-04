@@ -144,6 +144,14 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           label="System Status"
           onClick={onNavClick}
         />
+        {/* The emergency lever. Sits next to System Status because that is
+            where someone looks when something is wrong. */}
+        <NavItem
+          to="/academics/admin/app-control"
+          icon={<ShieldAlert size={17} />}
+          label="App control"
+          onClick={onNavClick}
+        />
         <NavItem
           to="/academics/admin/taxonomy"
           icon={<TreePine size={17} />}

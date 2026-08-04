@@ -758,6 +758,41 @@ export interface NeverAgainPost extends PendingNeverAgainPost {
  * disappeared from the dashboard entirely and a fake that slipped through
  * could not be reached, even though the delete route existed.
  */
+export interface AppConfig {
+  minVersion: string | null;
+  disabledTools: string[];
+  notice: string | null;
+  noticeUrl: string | null;
+  updatedAt: string | null;
+}
+
+/** GET /api/app-config — public, but the admin page reads it to prefill. */
+export function useAppConfig() {
+  return useQuery<AppConfig, Error>({
+    queryKey: ['app-config'],
+    queryFn: () => apiFetch<AppConfig>('/api/app-config'),
+    staleTime: 0,
+  });
+}
+
+/** PUT /admin/app-config — the emergency lever. Admin only, audited. */
+export function useUpdateAppConfig() {
+  const qc = useQueryClient();
+  return useMutation<AppConfig, Error, Partial<AppConfig>>({
+    mutationFn: (body) =>
+      apiFetch<AppConfig>('/api/academics/admin/app-config', {
+        method: 'PUT',
+        body: JSON.stringify(body),
+      }),
+    onSuccess: (data) => {
+      // Write the response straight into the cache rather than invalidating:
+      // after changing something this consequential the page must show what
+      // the server actually stored, not an optimistic guess.
+      qc.setQueryData(['app-config'], data);
+    },
+  });
+}
+
 export function useAllNeverAgainPosts(status: string) {
   return useQuery<NeverAgainPost[], Error>({
     queryKey: ['admin', 'never-again-all', status],
