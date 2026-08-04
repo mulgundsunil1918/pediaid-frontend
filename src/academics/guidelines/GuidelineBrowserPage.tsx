@@ -21,6 +21,7 @@ import {
 import { getGuidelineSet } from './registry';
 import type { GuidelineSet } from './registry';
 import type { GuidelineChapter, GuidelineIndex } from './types';
+import { safeFixed } from '../../lib/safeNumber';
 
 // ---------------------------------------------------------------------------
 // Search scoring — same shape as the standalone HTML index
@@ -101,7 +102,7 @@ function ChapterRow({
           </span>
         ) : (
           c.pages != null && c.size_kb != null
-            ? `${c.pages} pp · ${(c.size_kb / 1024).toFixed(1)} MB`
+            ? `${c.pages} pp · ${safeFixed((c.size_kb ?? 0) / 1024)} MB`
             : null
         )}
       </span>

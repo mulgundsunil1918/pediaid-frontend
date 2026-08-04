@@ -2,18 +2,27 @@
 // moderation/HistoryPage.tsx
 // =============================================================================
 
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { ModerationHistory } from './components/ModerationHistory';
+import { useAuthStore } from '../../store/authStore';
 
 export function HistoryPage() {
   const navigate = useNavigate();
 
-  // Access is enforced by AdminGuard in AdminLayout, which asks the server
-  // (GET /admin/me). The old check here read the role from localStorage —
-  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
-  // redirected to login, which then bounced back here: an infinite loop
-  // that rendered a blank page.
+  // Moderator surface, not an admin one — it doesn't use AdminLayout, so it
+  // needs its own check. canModerate now includes super_admin; every action
+  // is enforced server-side regardless, so this is about not showing a
+  // review UI to someone who can't use it.
+  const canModerate = useAuthStore((s) => s.canModerate);
+  if (!canModerate()) {
+    return (
+      <Navigate
+        to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`}
+        replace
+      />
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">

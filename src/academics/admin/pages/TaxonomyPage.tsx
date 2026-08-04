@@ -20,6 +20,7 @@ import {
   type AdminSystem,
   type AdminTopic,
 } from '../hooks/useAdmin';
+import { AdminLayout } from '../AdminLayout';
 
 // ---------------------------------------------------------------------------
 // Toast
@@ -692,14 +693,17 @@ export function TaxonomyPage() {
 
   if (isLoading) {
     return (
-      <div className="h-96 flex items-center justify-center">
-        <div className="animate-pulse text-ink-muted text-sm">Loading taxonomy…</div>
-      </div>
+      <AdminLayout>
+        <div className="h-96 flex items-center justify-center">
+          <div className="animate-pulse text-ink-muted text-sm">Loading taxonomy…</div>
+        </div>
+      </AdminLayout>
     );
   }
 
   return (
-    <div className="animate-fadeSlideIn">
+    <AdminLayout>
+      <div className="animate-fadeSlideIn px-4 sm:px-6 lg:px-8 py-8">
       <h2 className="text-xl font-bold text-primary mb-4">Taxonomy</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[calc(100vh-180px)] min-h-[480px]">
         {/* Panel 1: Subjects */}
@@ -729,7 +733,8 @@ export function TaxonomyPage() {
       </div>
 
       <Toast msg={toast.msg} />
-    </div>
+      </div>
+    </AdminLayout>
   );
 }
 

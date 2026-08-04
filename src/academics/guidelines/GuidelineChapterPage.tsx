@@ -18,6 +18,7 @@ import {
 import { getGuidelineSet } from './registry';
 import { PdfViewer } from './PdfViewer';
 import type { GuidelineChapter, GuidelineIndex } from './types';
+import { safeFixed } from '../../lib/safeNumber';
 
 export function GuidelineChapterPage() {
   const { slug, chapterNo } = useParams<{ slug: string; chapterNo: string }>();
@@ -95,7 +96,7 @@ export function GuidelineChapterPage() {
                 {chapter.section || 'Uncategorised'}
                 {chapter.pages != null && <> · {chapter.pages} pp</>}
                 {chapter.size_kb != null && (
-                  <> · {(chapter.size_kb / 1024).toFixed(1)} MB</>
+                  <> · {safeFixed((chapter.size_kb ?? 0) / 1024)} MB</>
                 )}
                 {' · '}{guideline.fullName}
               </p>

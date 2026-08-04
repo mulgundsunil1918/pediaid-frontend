@@ -5,6 +5,7 @@
 import { Link } from 'react-router-dom';
 import { Award, Calendar, CheckCircle, MapPin, Users } from 'lucide-react';
 import type { CMEEvent } from '../hooks/useCME';
+import { safeFixed } from '../../../lib/safeNumber';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -191,7 +192,7 @@ export function EventCard({ event }: EventCardProps) {
           {/* Credit hours pill */}
           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
             <Award size={11} />
-            {event.creditHours.toFixed(1)} {event.creditType}
+            {safeFixed(event.creditHours)} {event.creditType}
           </span>
 
           {/* Price */}

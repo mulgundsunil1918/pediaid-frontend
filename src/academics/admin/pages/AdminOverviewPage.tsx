@@ -19,6 +19,7 @@ import {
 import { AdminLayout } from '../AdminLayout';
 import { usePlatformStats } from '../hooks/useAdmin';
 import type { RecentActivityEntry, TopChapter } from '../hooks/useAdmin';
+import { safeFixed, safeCompact } from '../../../lib/safeNumber';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -34,10 +35,8 @@ function relativeTime(iso: string): string {
   return `${Math.floor(hrs / 24)}d ago`;
 }
 
-function fmtNumber(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
-  return String(n);
+function fmtNumber(n: number | null | undefined): string {
+  return safeCompact(n);
 }
 
 // ---------------------------------------------------------------------------
@@ -323,7 +322,7 @@ export function AdminOverviewPage() {
         />
         <StatTile
           label="Avg Review Time"
-          value={`${stats.avgModerationHours.toFixed(1)}h`}
+          value={`${safeFixed(stats.avgModerationHours)}h`}
           sub="Moderation turnaround"
           color="bg-gray-50"
           icon={<Clock size={18} className="text-ink-muted" />}

@@ -16,6 +16,7 @@ import {
 import { useAuthStore } from '../../store/authStore';
 import { useMyCertificates } from './hooks/useCME';
 import type { Certificate } from './hooks/useCME';
+import { safeFixed } from '../../lib/safeNumber';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -106,7 +107,7 @@ function CertificateCard({ cert }: { cert: Certificate }) {
         {/* Credit hours */}
         <div className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-primary/10 text-primary rounded-full text-xs font-medium">
           <Award size={11} />
-          {cert.creditHours.toFixed(1)} {cert.creditType} Credits
+          {safeFixed(cert.creditHours)} {cert.creditType} Credits
         </div>
       </div>
 
@@ -229,7 +230,7 @@ export function CertificatePage() {
                     certificate{certificates.length !== 1 ? 's' : ''} earned
                     {' · '}
                     <span className="font-semibold text-ink">
-                      {certificates.reduce((sum, c) => sum + c.creditHours, 0).toFixed(1)}
+                      {safeFixed(certificates.reduce((sum, c) => sum + (c.creditHours ?? 0), 0))}
                     </span>{' '}
                     total credits
                   </span>

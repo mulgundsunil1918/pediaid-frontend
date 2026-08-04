@@ -1,3 +1,4 @@
+import { safeFixed } from '../../../lib/safeNumber';
 // =============================================================================
 // moderation/components/QueueStatsBar.tsx
 // =============================================================================
@@ -60,7 +61,7 @@ export function QueueStatsBar({ pending, reviewedToday, avgHoursInQueue }: Queue
         color="#38a169"
       />
       <StatTile
-        value={`${avgHoursInQueue.toFixed(1)} hrs`}
+        value={`${safeFixed(avgHoursInQueue)} hrs`}
         label="Avg. Wait Time"
         color="#718096"
       />

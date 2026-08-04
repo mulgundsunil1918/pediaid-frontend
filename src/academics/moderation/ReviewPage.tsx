@@ -21,6 +21,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import {
+  Navigate,
   useParams,
   useNavigate,
   } from 'react-router-dom';
@@ -40,6 +41,7 @@ import {
 } from './hooks/useModeration';
 import { ChapterRenderer } from '../reader/components/ChapterRenderer';
 import type { ApiBlock, ChapterReference } from '../editor/types/editor.types';
+import { useAuthStore } from '../../store/authStore';
 
 // ---------------------------------------------------------------------------
 // Loading / error states
@@ -177,12 +179,19 @@ export function ReviewPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // Guard: only moderators and admins may access this page
-  // Access is enforced by AdminGuard in AdminLayout, which asks the server
-  // (GET /admin/me). The old check here read the role from localStorage —
-  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
-  // redirected to login, which then bounced back here: an infinite loop
-  // that rendered a blank page.
+  // Moderator surface, not an admin one — it doesn't use AdminLayout, so it
+  // needs its own check. canModerate now includes super_admin; every action
+  // is enforced server-side regardless, so this is about not showing a
+  // review UI to someone who can't use it.
+  const canModerate = useAuthStore((s) => s.canModerate);
+  if (!canModerate()) {
+    return (
+      <Navigate
+        to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`}
+        replace
+      />
+    );
+  }
 
   const { data: chapter, isLoading, isError, error } = useChapterForReview(id);
   const notesRef = useRef<HTMLTextAreaElement>(null);

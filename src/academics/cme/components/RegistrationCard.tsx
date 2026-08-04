@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Award, CheckCircle, Loader2, Users, XCircle } from 'lucide-react';
 import type { CMEEvent } from '../hooks/useCME';
 import { AddToCalendar } from './AddToCalendar';
+import { safeFixed } from '../../../lib/safeNumber';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -78,7 +79,7 @@ export function RegistrationCard({
       {/* Credit hours badge */}
       <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium w-fit">
         <Award size={14} />
-        {event.creditHours.toFixed(1)} {event.creditType} Credits
+        {safeFixed(event.creditHours)} {event.creditType} Credits
       </div>
 
       {/* Registered count */}
