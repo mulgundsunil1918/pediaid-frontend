@@ -16,7 +16,6 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import {
   UserPlus,
   Check,
@@ -31,7 +30,6 @@ import {
   Stethoscope,
   Mail,
 } from 'lucide-react';
-import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
 import {
   useAdminPendingApplicants,
@@ -327,10 +325,11 @@ function ApplicantCard({ applicant }: ApplicantCardProps) {
 // ---------------------------------------------------------------------------
 
 export function PendingApplicationsPage() {
-  const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) {
-    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
-  }
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const { data: applicants, isLoading, isError, error } =
     useAdminPendingApplicants();

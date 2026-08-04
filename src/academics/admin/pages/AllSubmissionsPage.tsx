@@ -10,9 +10,7 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { Inbox, Loader2, Search, ShieldAlert } from 'lucide-react';
-import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
 import { useAdminSubmissions, type AdminSubmission } from '../hooks/useAdmin';
 import { SubmissionStatusBadge } from '../../submissions/components/SubmissionStatusBadge';
@@ -83,7 +81,6 @@ function SubmissionRow({ item }: { item: AdminSubmission }) {
 }
 
 export function AllSubmissionsPage() {
-  const hasRole = useAuthStore((s) => s.hasRole);
 
   const [moduleType, setModuleType] = useState('');
   const [status, setStatus] = useState('');
@@ -96,14 +93,11 @@ export function AllSubmissionsPage() {
     search: search || undefined,
   });
 
-  if (!hasRole('admin')) {
-    return (
-      <Navigate
-        to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`}
-        replace
-      />
-    );
-  }
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const submissions = data ?? [];
 

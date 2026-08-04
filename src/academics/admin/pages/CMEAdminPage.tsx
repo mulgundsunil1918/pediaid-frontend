@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { Navigate, Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   Award,
   X,
@@ -11,7 +11,6 @@ import {
   AlertTriangle,
   Megaphone,
 } from 'lucide-react';
-import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
 import {
   useAdminCMEEvents,
@@ -585,8 +584,11 @@ const CME_TYPE_LABELS: Record<string, string> = {
 
 export function CMEAdminPage() {
   // Auth guard
-  const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const { eventType } = useParams<{ eventType?: string }>();
   const typeFilter = eventType && CME_TYPE_LABELS[eventType] ? eventType : null;

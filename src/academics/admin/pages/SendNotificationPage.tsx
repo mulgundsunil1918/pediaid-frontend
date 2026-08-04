@@ -11,14 +11,12 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { Megaphone, Send, Loader2, CheckCircle2 } from 'lucide-react';
-import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
 import { useSendBroadcast } from '../hooks/useAdmin';
 
 export function SendNotificationPage() {
-  const hasRole = useAuthStore((s) => s.hasRole);
   const [params] = useSearchParams();
 
   const [title, setTitle] = useState(params.get('title') ?? '');
@@ -28,9 +26,11 @@ export function SendNotificationPage() {
 
   const broadcast = useSendBroadcast();
 
-  if (!hasRole('admin')) {
-    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
-  }
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const valid = title.trim().length > 0 && body.trim().length > 0;
 

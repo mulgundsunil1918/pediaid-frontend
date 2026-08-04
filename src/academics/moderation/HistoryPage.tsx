@@ -5,16 +5,15 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { ModerationHistory } from './components/ModerationHistory';
-import { Navigate } from 'react-router-dom';
-import { useAuthStore } from '../../store/authStore';
 
 export function HistoryPage() {
   const navigate = useNavigate();
-  const hasRole = useAuthStore((s) => s.hasRole);
 
-  if (!hasRole('moderator', 'admin')) {
-    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
-  }
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">

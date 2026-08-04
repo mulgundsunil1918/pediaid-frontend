@@ -23,8 +23,7 @@ import { useState, useEffect, useRef } from 'react';
 import {
   useParams,
   useNavigate,
-  Navigate,
-} from 'react-router-dom';
+  } from 'react-router-dom';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -40,7 +39,6 @@ import {
   useRequestChanges,
 } from './hooks/useModeration';
 import { ChapterRenderer } from '../reader/components/ChapterRenderer';
-import { useAuthStore } from '../../store/authStore';
 import type { ApiBlock, ChapterReference } from '../editor/types/editor.types';
 
 // ---------------------------------------------------------------------------
@@ -178,12 +176,13 @@ function RejectModal({
 export function ReviewPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const hasRole = useAuthStore((s) => s.hasRole);
 
   // Guard: only moderators and admins may access this page
-  if (!hasRole('moderator', 'admin')) {
-    return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
-  }
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const { data: chapter, isLoading, isError, error } = useChapterForReview(id);
   const notesRef = useRef<HTMLTextAreaElement>(null);

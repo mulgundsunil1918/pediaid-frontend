@@ -3,7 +3,7 @@
 // Route: /academics/admin
 // =============================================================================
 
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Users,
   BookOpen,
@@ -16,7 +16,6 @@ import {
   TrendingUp,
   ExternalLink,
 } from 'lucide-react';
-import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
 import { usePlatformStats } from '../hooks/useAdmin';
 import type { RecentActivityEntry, TopChapter } from '../hooks/useAdmin';
@@ -237,8 +236,11 @@ function TopChaptersTable({ chapters }: { chapters: TopChapter[] }) {
 // ---------------------------------------------------------------------------
 
 export function AdminOverviewPage() {
-  const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const navigate = useNavigate();
   const { data: stats, isLoading, isError, error } = usePlatformStats();

@@ -14,7 +14,6 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import {
   RadioTower,
   RefreshCw,
@@ -22,7 +21,6 @@ import {
   AlertTriangle,
   HelpCircle,
 } from 'lucide-react';
-import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
 import { API_BASE } from '../../../lib/apiBase';
 
@@ -107,15 +105,11 @@ function Pill({ tone, children }: { tone: Tone; children: React.ReactNode }) {
 // ---------------------------------------------------------------------------
 
 export function SystemStatusPage() {
-  const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) {
-    return (
-      <Navigate
-        to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`}
-        replace
-      />
-    );
-  }
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const [checking, setChecking] = useState(false);
   const [checkedOnce, setCheckedOnce] = useState(false);

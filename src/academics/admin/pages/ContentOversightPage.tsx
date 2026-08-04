@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { useState, useEffect, useRef } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
   FileText,
   Eye,
@@ -13,7 +13,6 @@ import {
   Search,
   X,
 } from 'lucide-react';
-import { useAuthStore } from '../../../store/authStore';
 import { AdminLayout } from '../AdminLayout';
 import {
   useAdminChapters,
@@ -271,8 +270,11 @@ function SkeletonRow() {
 
 export function ContentOversightPage() {
   // Auth guard
-  const hasRole = useAuthStore((s) => s.hasRole);
-  if (!hasRole('admin')) return <Navigate to={`/academics/login?next=${encodeURIComponent(window.location.pathname)}`} replace />;
+  // Access is enforced by AdminGuard in AdminLayout, which asks the server
+  // (GET /admin/me). The old check here read the role from localStorage —
+  // untrustworthy, and it matched 'admin' exactly, so a super_admin was
+  // redirected to login, which then bounced back here: an infinite loop
+  // that rendered a blank page.
 
   const [searchParams] = useSearchParams();
   const initialStatus = (searchParams.get('status') ?? '') as StatusFilter;
