@@ -17,6 +17,14 @@ import { isStaleChunkError, recoverFromStaleChunk } from '../lib/chunkRecovery';
 
 interface Props {
   children: ReactNode;
+  /**
+   * Change this to clear a caught error. Wired to the current pathname so one
+   * broken screen doesn't stay broken for the rest of the session: React keeps
+   * a boundary in its error state until something resets it, so without this,
+   * navigating away from a page that threw left the error card on screen and
+   * made every later page look broken too.
+   */
+  resetKey?: string;
 }
 
 interface State {
@@ -28,6 +36,14 @@ export class ErrorBoundary extends Component<Props, State> {
 
   static getDerivedStateFromError(error: Error): State {
     return { error };
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    // Only on an actual change of key, so this can't clear the error on the
+    // same render that set it.
+    if (this.state.error && prevProps.resetKey !== this.props.resetKey) {
+      this.setState({ error: null });
+    }
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {

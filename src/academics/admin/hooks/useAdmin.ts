@@ -219,7 +219,9 @@ export interface PendingCredential {
   institution: string | null;
   bio: string | null;
   orcid: string | null;
-  verificationDocuments: Array<{ name: string; url: string }>;
+  // Nullable in the DB (JSONB, no NOT NULL) — the hook normalises it to []
+  // but the raw shape is optional, so keep the type honest.
+  verificationDocuments?: Array<{ name: string; url: string }> | null;
   createdAt: string;
 }
 
@@ -229,7 +231,8 @@ export interface VerifiedCredential {
   fullName: string;
   specialty: string | null;
   institution: string | null;
-  verifiedAt: string;
+  // NULL for authors verified before credentials_verified_at existed (0016).
+  verifiedAt: string | null;
 }
 
 export interface CMERegistration {
@@ -378,7 +381,20 @@ export function useAdminUsers(filters: { role?: string; search?: string; page?: 
 export function usePendingCredentials() {
   return useQuery<PendingCredential[], Error>({
     queryKey: adminKeys.credentialsPending(),
-    queryFn: () => apiFetch<PendingCredential[]>('/api/academics/admin/credentials/pending'),
+    // acad_profiles.verification_documents is a nullable JSONB column, so rows
+    // predating the field — or rows where it was cleared — come back with the
+    // key absent. The type above claims it is always an array; it isn't, and
+    // CredentialsPage crashed the whole screen on `.length`. Normalise here
+    // rather than at each use site so every consumer is safe by construction.
+    queryFn: async () => {
+      const rows = await apiFetch<PendingCredential[]>('/api/academics/admin/credentials/pending');
+      return (rows ?? []).map((row) => ({
+        ...row,
+        verificationDocuments: Array.isArray(row.verificationDocuments)
+          ? row.verificationDocuments
+          : [],
+      }));
+    },
     staleTime: 30 * 1_000,
   });
 }

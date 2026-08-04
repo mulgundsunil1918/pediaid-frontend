@@ -154,6 +154,23 @@ function SessionRefreshBoot() {
 // Root
 // ---------------------------------------------------------------------------
 
+/**
+ * ErrorBoundary keyed to the current route.
+ *
+ * A React boundary stays in its error state until something resets it, so a
+ * single crashing screen used to leave the error card up for every page the
+ * user visited afterwards — making one bug look like many. Keying on the
+ * pathname clears it as soon as the user navigates somewhere else.
+ *
+ * Lives here rather than inside ErrorBoundary itself so the boundary stays
+ * router-agnostic, and because App() renders BrowserRouter and therefore
+ * cannot call useLocation() itself.
+ */
+function RoutedErrorBoundary({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+  return <ErrorBoundary resetKey={pathname}>{children}</ErrorBoundary>;
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -161,7 +178,7 @@ export default function App() {
         <UnauthorizedListener />
         <SessionRefreshBoot />
         <AppLayout>
-          <ErrorBoundary>
+          <RoutedErrorBoundary>
           <Suspense
             fallback={
               <div className="p-8 text-ink-muted text-sm">Loading…</div>
@@ -295,7 +312,7 @@ export default function App() {
             />
           </Routes>
           </Suspense>
-          </ErrorBoundary>
+          </RoutedErrorBoundary>
         </AppLayout>
       </BrowserRouter>
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}

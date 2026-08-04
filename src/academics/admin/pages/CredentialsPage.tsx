@@ -20,16 +20,12 @@ import {
   type PendingCredential,
 } from '../hooks/useAdmin';
 import { getInitials } from '../../../lib/initials';
+import { safeAgo, safeDate } from '../../../lib/safeDate';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-
-function daysAgo(dateStr: string): number {
-  const ms = Date.now() - new Date(dateStr).getTime();
-  return Math.floor(ms / (1000 * 60 * 60 * 24));
-}
 
 // ---------------------------------------------------------------------------
 // Reject Modal
@@ -124,7 +120,6 @@ function CredentialCard({ credential }: CredentialCardProps) {
   const [showRejectModal, setShowRejectModal] = useState(false);
   const verifyMutation = useVerifyCredentials();
 
-  const days = daysAgo(credential.createdAt);
 
   function handleVerify() {
     verifyMutation.mutate(credential.userId, {
@@ -153,19 +148,19 @@ function CredentialCard({ credential }: CredentialCardProps) {
               <p className="text-sm text-ink-muted">{credential.institution}</p>
             )}
             <p className="text-xs text-ink-muted mt-1">
-              Registered {days === 0 ? 'today' : `${days} day${days !== 1 ? 's' : ''} ago`}
+              Registered {safeAgo(credential.createdAt)}
             </p>
           </div>
         </div>
 
         {/* Documents */}
-        {credential.verificationDocuments.length > 0 && (
+        {(credential.verificationDocuments?.length ?? 0) > 0 && (
           <div>
             <p className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">
               Verification Documents
             </p>
             <div className="space-y-2">
-              {credential.verificationDocuments.map((doc, idx) => (
+              {(credential.verificationDocuments ?? []).map((doc, idx) => (
                 <div key={idx} className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2 min-w-0">
                     <FileText size={14} className="text-ink-muted flex-shrink-0" />
@@ -432,11 +427,7 @@ export function CredentialsPage() {
                     <td className="px-4 py-3 text-sm text-ink-muted">{v.specialty ?? '—'}</td>
                     <td className="px-4 py-3 text-sm text-ink-muted">{v.institution ?? '—'}</td>
                     <td className="px-4 py-3 text-sm text-ink-muted">
-                      {new Date(v.verifiedAt).toLocaleDateString('en-IN', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })}
+                      {safeDate(v.verifiedAt)}
                     </td>
                   </tr>
                 ))}
