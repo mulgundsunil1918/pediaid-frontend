@@ -263,10 +263,89 @@ export const adminKeys = {
 // Queries
 // ---------------------------------------------------------------------------
 
+/**
+ * Raw shape actually returned by GET /admin/stats.
+ *
+ * The backend groups by area (users / chapters / taxonomy); this hook's
+ * PlatformStats is flat. They were written against each other's assumptions
+ * and never matched, so every field the Overview page read was undefined —
+ * which is why it crashed on `stats.avgModerationHours.toFixed(1)` as soon
+ * as the query started succeeding.
+ *
+ * Mapped here rather than reshaping either side: the server grouping is
+ * reasonable, the UI's flat access is reasonable, and this is the seam.
+ */
+interface RawPlatformStats {
+  users: { total: number; byRole: Record<string, number> };
+  chapters: {
+    total: number;
+    byStatus: Record<string, number>;
+    totalViews: number;
+    avgPublishingHours: number | null;
+    top5ByViews: Array<{ id: string; title: string; slug: string; viewCount: number }>;
+  };
+  taxonomy: { totalSubjects: number; totalSystems: number; totalTopics: number };
+  totalComments: number;
+  totalCMEEvents: number;
+  pendingRoleRequests: number;
+  recentAuditLog: Array<{
+    id: string;
+    actorId: string;
+    action: string;
+    entityType: string;
+    entityId: string;
+    details: Record<string, unknown>;
+    createdAt: string;
+  }>;
+}
+
+function toPlatformStats(raw: RawPlatformStats): PlatformStats {
+  return {
+    totalUsers: raw.users?.total ?? 0,
+    usersByRole: raw.users?.byRole ?? {},
+    totalChapters: raw.chapters?.total ?? 0,
+    chaptersByStatus: raw.chapters?.byStatus ?? {},
+    totalSubjects: raw.taxonomy?.totalSubjects ?? 0,
+    totalSystems: raw.taxonomy?.totalSystems ?? 0,
+    totalTopics: raw.taxonomy?.totalTopics ?? 0,
+    totalViews: raw.chapters?.totalViews ?? 0,
+    totalComments: raw.totalComments ?? 0,
+    totalCMEEvents: raw.totalCMEEvents ?? 0,
+    pendingRoleRequests: raw.pendingRoleRequests ?? 0,
+    // The server reports how long publishing takes; the card is labelled
+    // moderation time. Same measurement, and null when nothing has been
+    // published yet — which must not become NaN in the UI.
+    avgModerationHours: raw.chapters?.avgPublishingHours ?? 0,
+    pendingReview: raw.chapters?.byStatus?.pending ?? 0,
+    topChapters: (raw.chapters?.top5ByViews ?? []).map((c) => ({
+      id: c.id,
+      title: c.title,
+      slug: c.slug,
+      // Not returned by this endpoint; the card falls back to a dash.
+      authorName: '',
+      viewCount: c.viewCount ?? 0,
+      publishedAt: '',
+    })),
+    recentActivity: (raw.recentAuditLog ?? []).map((a) => ({
+      id: a.id,
+      // The endpoint returns actor ids, not names — showing a raw UUID would
+      // be worse than showing nothing.
+      actorName: '',
+      action: a.action,
+      entityType: a.entityType ?? '',
+      entityTitle: a.entityId ?? '',
+      createdAt: String(a.createdAt ?? ''),
+    })),
+  };
+}
+
 export function usePlatformStats() {
   return useQuery<PlatformStats, Error>({
     queryKey: adminKeys.stats(),
-    queryFn: () => apiFetch<PlatformStats>('/api/academics/admin/stats'),
+    queryFn: async () => {
+      const raw = await apiFetch<RawPlatformStats>('/api/academics/admin/stats');
+      return toPlatformStats(raw);
+    },
     staleTime: 2 * 60 * 1_000,
     refetchInterval: 2 * 60 * 1_000,
   });
