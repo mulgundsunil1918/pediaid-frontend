@@ -1050,7 +1050,7 @@ export function SubjectsPage() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search chapters, topics, or authors…"
+                placeholder="Search guidelines, chapters and topics…"
                 className="w-full pl-10 pr-4 py-3 rounded-l-xl border-0
                            text-ink placeholder-ink-muted text-sm
                            focus:outline-none focus:ring-2 focus:ring-accent
@@ -1075,7 +1075,8 @@ export function SubjectsPage() {
             </button>
           </form>
           <p className="text-blue-200/70 text-xs mt-3 max-w-xl">
-            Tip: every chapter here is also searchable from the search bar on
+            Searches IAP STG, NNF CPG and the IAP Action Plan, plus any
+            peer-reviewed chapters. Everything here is also searchable from
             PediAid's home screen, alongside calculators, drugs and guides.
           </p>
         </div>

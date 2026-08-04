@@ -10,6 +10,9 @@ import { SearchResultCard } from './components/SearchResultCard';
 import { SearchResultsSummary } from './components/SearchResultsSummary';
 import { NoResultsState } from './components/NoResultsState';
 import { SearchPagination } from './components/SearchPagination';
+import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { searchGuidelines } from './guidelineSearch';
 import {
   useSearch,
   addRecentSearch,
@@ -79,6 +82,17 @@ export function SearchPage() {
 
   // React Query
   const { data, isLoading, isFetching, isPlaceholderData } = useSearch(filters);
+
+  // Guidelines live in static JSON, not Postgres, so the chapter search can
+  // never reach them — see guidelineSearch.ts. Searched separately and shown
+  // above chapters, because with no chapters authored yet they are the only
+  // thing anyone can actually find.
+  const { data: guidelineHits = [] } = useQuery({
+    queryKey: ['guideline-search', filters.q],
+    queryFn: () => searchGuidelines(filters.q),
+    enabled: filters.q.trim().length >= 2,
+    staleTime: 5 * 60 * 1000,
+  });
 
   const results = data?.results ?? [];
   const total = data?.total ?? 0;
@@ -173,6 +187,38 @@ export function SearchPage() {
               </div>
             )}
 
+            {/* Guidelines — from IAP STG, NNF CPG and the IAP Action Plan */}
+            {guidelineHits.length > 0 && (
+              <div className="mb-6">
+                <h2 className="text-sm font-bold text-ink-muted uppercase tracking-wide mb-3">
+                  Guidelines ({guidelineHits.length})
+                </h2>
+                <div className="space-y-2">
+                  {guidelineHits.map((hit) => (
+                    <Link
+                      key={hit.id}
+                      to={hit.href}
+                      className="block bg-white border border-border rounded-xl px-4 py-3 hover:border-accent transition-colors"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-ink leading-snug">
+                            {hit.title}
+                          </p>
+                          {hit.section && (
+                            <p className="text-xs text-ink-muted mt-0.5">{hit.section}</p>
+                          )}
+                        </div>
+                        <span className="text-[10px] font-semibold uppercase tracking-wide text-accent bg-accent/10 rounded-full px-2 py-1 whitespace-nowrap flex-shrink-0">
+                          {hit.setLabel}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Results list */}
             {!isFirstLoad && results.length > 0 && (
               <div
@@ -191,7 +237,7 @@ export function SearchPage() {
             )}
 
             {/* No results */}
-            {!isFirstLoad && !isFetching && results.length === 0 && data !== undefined && (
+            {!isFirstLoad && !isFetching && results.length === 0 && guidelineHits.length === 0 && data !== undefined && (
               <NoResultsState query={filters.q} />
             )}
 
