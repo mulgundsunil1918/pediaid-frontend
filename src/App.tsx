@@ -15,6 +15,7 @@ import { queryClient } from './lib/queryClient';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SiteHeader } from './components/nav/SiteHeader';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { isEmbedded } from './lib/embed';
 import { ProfileNudge } from './academics/onboarding/ProfileNudge';
 import { useAuthStore } from './store/authStore';
 import { initSessionRefresh } from './academics/auth/sessionRefresh';
@@ -111,6 +112,14 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   // "PediAid".
   const isAdminSurface = pathname.startsWith('/academics/admin');
 
+  // Inside the app's web view the site header is pure duplication: the app
+  // already supplies a title bar, a back button and a reload, so users saw two
+  // navigation bars stacked. With the brand link, the Academics/Dashboard
+  // links, the search box and the notification bell all removed there was
+  // nothing left in it worth keeping — and the bell belongs in PediAid proper,
+  // since a notification shown inside a web view is one nobody sees.
+  const embedded = isEmbedded();
+
   // The onboarding screens are their own full-page flow; a banner telling
   // someone to complete their profile while they are literally on the
   // complete-profile screen is noise.
@@ -119,7 +128,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-bg">
-      {!isAdminSurface && <SiteHeader />}
+      {!isAdminSurface && !embedded && <SiteHeader />}
       {!isAdminSurface && !isOnboarding && <ProfileNudge />}
       <div className="min-w-0">{children}</div>
     </div>
