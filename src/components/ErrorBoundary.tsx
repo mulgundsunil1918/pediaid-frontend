@@ -114,12 +114,12 @@ export class ErrorBoundary extends Component<Props, State> {
             >
               Clear cache and reload
             </button>
-            <a
-              href="/academics"
-              className="px-4 py-2.5 rounded-xl text-sm font-semibold text-ink-muted hover:text-ink"
-            >
-              Back to Academics
-            </a>
+            {/* No "Back to Academics" link.
+                Academics is deliberately not surfaced publicly, and an error
+                screen is reachable from a shared event link — so this was
+                advertising the section to exactly the audience it is meant to
+                stay away from. Reload and hard-reload are the useful actions
+                here anyway. */}
           </div>
         </div>
       </div>

@@ -110,7 +110,8 @@ async function shareEvent(event: CMEEvent) {
   if (event.referenceCode) {
     lines.push('', `PediAid ID no.: ${event.referenceCode}`);
   }
-  lines.push(window.location.href);
+  // No URL. Academics is kept off public surfaces, and the PediAid ID above
+  // is what identifies the event to anyone who needs to look it up.
 
   const text = lines.join('\n').trim();
   try {
