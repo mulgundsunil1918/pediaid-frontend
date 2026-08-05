@@ -110,3 +110,25 @@ export function useMarkAllNotificationsRead() {
 
 // Re-export the Notification type for convenience
 export type { Notification };
+
+// ---------------------------------------------------------------------------
+// useDeleteAllNotifications
+// ---------------------------------------------------------------------------
+
+/**
+ * Clears every notification for the signed-in user.
+ *
+ * Separate from mark-all-read: read notifications still accumulate, and a list
+ * that only ever grows is one people stop opening. The server scopes the
+ * delete to the authenticated account, so this cannot touch anyone else's.
+ */
+export function useDeleteAllNotifications() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, void>({
+    mutationFn: () =>
+      apiFetch<void>('/api/academics/notifications', { method: 'DELETE' }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: notificationKeys.all });
+    },
+  });
+}

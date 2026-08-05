@@ -10,12 +10,14 @@ import {
   Globe,
   Loader2,
   MapPin,
+  Share2,
   Tag,
 } from 'lucide-react';
 import {
   useCMEEvent,
   useRegisterForEvent,
   useCancelRegistration,
+  type CMEEvent,
 } from './hooks/useCME';
 import { CountdownTimer } from './components/CountdownTimer';
 import { SpeakerCard } from './components/SpeakerCard';
@@ -77,6 +79,50 @@ function SimpleMarkdown({ content }: { content: string }) {
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
+
+
+/**
+ * Shares an event with everything the page shows, including its PediAid ID.
+ *
+ * Uses the Web Share API where the browser has one (every mobile browser), and
+ * falls back to the clipboard elsewhere — desktop Firefox and Safari have no
+ * share sheet, and a button that silently does nothing there is worse than one
+ * that copies.
+ */
+async function shareEvent(event: CMEEvent) {
+  const start = new Date(event.startsAt);
+  const end = new Date(event.endsAt);
+  const fmtDate = start.toLocaleDateString('en-IN', {
+    day: 'numeric', month: 'short', year: 'numeric',
+  });
+  const fmtTime = (d: Date) =>
+    d.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
+
+  const lines = [
+    event.title,
+    `${event.eventType.charAt(0).toUpperCase()}${event.eventType.slice(1)} \u00b7 PediAid`,
+    '',
+    `${fmtDate}, ${fmtTime(start)} \u2013 ${fmtTime(end)}`,
+  ];
+  if (event.venue) lines.push(`Venue: ${event.venue}`);
+  if (event.creditHours) lines.push(`${event.creditHours} CME credits`);
+  if (event.onlineUrl) lines.push(`Join: ${event.onlineUrl}`);
+  if (event.referenceCode) {
+    lines.push('', `PediAid ID no.: ${event.referenceCode}`);
+  }
+  lines.push(window.location.href);
+
+  const text = lines.join('\n').trim();
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: event.title, text });
+      return;
+    }
+    await navigator.clipboard.writeText(text);
+  } catch {
+    /* user dismissed the share sheet, or clipboard denied — nothing to do */
+  }
+}
 
 export function CMEDetailPage() {
   const { slug = '' } = useParams<{ slug: string }>();
@@ -250,11 +296,16 @@ export function CMEDetailPage() {
             )}
 
             {/* Speakers */}
-            {event.speakers.length > 0 && (
+            {/* Optional-chained: the API does not return a `speakers` array
+                at all — it sends speakerName/speakerBio/speakerCredentials as
+                separate fields — so this read threw on every event and took
+                the whole detail page down with it. That made every shared
+                link a dead end. */}
+            {(event.speakers?.length ?? 0) > 0 && (
               <section>
                 <h2 className="text-lg font-semibold text-ink mb-4">Speakers</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {event.speakers.map((speaker) => (
+                  {event.speakers!.map((speaker) => (
                     <SpeakerCard key={speaker.id} speaker={speaker} />
                   ))}
                 </div>
@@ -262,11 +313,11 @@ export function CMEDetailPage() {
             )}
 
             {/* Tags */}
-            {event.tags.length > 0 && (
+            {(event.tags?.length ?? 0) > 0 && (
               <section>
                 <div className="flex items-center gap-2 flex-wrap">
                   <Tag size={14} className="text-ink-muted shrink-0" />
-                  {event.tags.map((tag) => (
+                  {event.tags!.map((tag) => (
                     <span
                       key={tag}
                       className="px-2.5 py-0.5 bg-card border border-border rounded-full text-xs text-ink-muted"
@@ -282,6 +333,27 @@ export function CMEDetailPage() {
             {event.isRegistered && (
               <div>
                 <AddToCalendar event={event} />
+              </div>
+            )}
+
+            {/* PediAid ID + share.
+                The id is what anyone quotes when referring to this listing, so
+                it is selectable and travels with the share text — a link alone
+                leaves the recipient unable to say which event they mean. */}
+            {event.referenceCode && (
+              <div className="flex items-center gap-3 pt-2 border-t border-border">
+                <span className="text-xs text-ink-muted">PediAid ID no.</span>
+                <code className="text-xs font-mono text-ink select-all">
+                  {event.referenceCode}
+                </code>
+                <button
+                  type="button"
+                  onClick={() => shareEvent(event)}
+                  className="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-ink-muted hover:text-ink hover:bg-surface-alt"
+                >
+                  <Share2 size={14} />
+                  Share
+                </button>
               </div>
             )}
 

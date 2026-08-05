@@ -19,11 +19,13 @@ import {
   AlertCircle,
   X as XIcon,
   CheckCheck,
+  Trash2,
 } from 'lucide-react';
 import {
   useNotifications,
   useMarkNotificationRead,
   useMarkAllNotificationsRead,
+  useDeleteAllNotifications,
   type Notification,
 } from '../academics/notifications/hooks/useNotifications';
 import { useAuthStore } from '../store/authStore';
@@ -113,6 +115,8 @@ export function NotificationBell({
   const { data, isLoading } = useNotifications();
   const markReadMutation = useMarkNotificationRead();
   const markAllMutation = useMarkAllNotificationsRead();
+  const deleteAllMutation = useDeleteAllNotifications();
+  const [confirmClear, setConfirmClear] = useState(false);
 
   const notifications = data?.data ?? [];
   const unreadCount = data?.unreadCount ?? 0;
@@ -236,6 +240,33 @@ export function NotificationBell({
                 >
                   <CheckCheck size={13} aria-hidden="true" />
                   Mark all read
+                </button>
+              )}
+              {notifications.length > 0 && (
+                /* Two-step, because this cannot be undone — the rows are gone,
+                   not hidden. A single tap next to "Mark all read" would be
+                   too easy to hit by accident. */
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!confirmClear) { setConfirmClear(true); return; }
+                    deleteAllMutation.mutate();
+                    setConfirmClear(false);
+                  }}
+                  onBlur={() => setConfirmClear(false)}
+                  disabled={deleteAllMutation.isPending}
+                  className={`
+                    inline-flex items-center gap-1
+                    px-2 py-1 rounded-md
+                    text-xs font-medium transition-colors
+                    disabled:opacity-50
+                    ${confirmClear
+                      ? 'text-white bg-danger'
+                      : 'text-ink-muted hover:bg-gray-100'}
+                  `}
+                >
+                  <Trash2 size={13} aria-hidden="true" />
+                  {confirmClear ? 'Delete all?' : 'Delete all'}
                 </button>
               )}
               <button

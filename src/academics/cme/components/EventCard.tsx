@@ -111,13 +111,15 @@ export function EventCard({ event }: EventCardProps) {
   const fallbackGradient = FALLBACK_GRADIENTS[event.eventType];
   const priceLabel = formatPrice(event.price, event.currency);
 
-  const firstSpeaker = event.speakers[0];
+  const firstSpeaker = event.speakers?.[0];
   const speakerLabel =
-    event.speakers.length === 0
+    // Optional-chained: the API sends no `speakers` array, so an unguarded
+    // read here crashed the list the same way it crashed the detail page.
+    (event.speakers?.length ?? 0) === 0
       ? null
-      : event.speakers.length === 1 && firstSpeaker
+      : event.speakers!.length === 1 && firstSpeaker
         ? firstSpeaker.name
-        : `${event.speakers.length} speakers`;
+        : `${event.speakers!.length} speakers`;
 
   return (
     <Link

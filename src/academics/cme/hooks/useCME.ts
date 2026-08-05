@@ -29,6 +29,15 @@ export interface CMEEvent {
   id: string;
   title: string;
   slug: string;
+  /**
+   * Human-usable identifier shown to users as "PediAid ID no.", e.g.
+   * PA-CME-00042.
+   *
+   * The API has returned this since reference codes were added; the type
+   * simply never declared it, so the web dropped the one identifier a user
+   * can quote in a query. Nullable because older rows predate the column.
+   */
+  referenceCode: string | null;
   description: string;
   longDescription: string | null;
   eventType: 'webinar' | 'workshop' | 'conference' | 'course';
@@ -45,7 +54,10 @@ export interface CMEEvent {
   price: number;
   currency: string;
   coverImageUrl: string | null;
-  speakers: Speaker[];
+  /// Absent from the API today — it sends speakerName/speakerBio/
+  /// speakerCredentials instead. Optional so the type stops promising a
+  /// field the server never sends.
+  speakers?: Speaker[];
   tags: string[];
   isRegistered: boolean;
   certificateAvailable: boolean;
