@@ -124,12 +124,13 @@ export function GuidelineNotesPage() {
         ) : (
           <div className="space-y-3">
             {notes.map((n) => (
-              <button key={n.id}
-                onClick={() => navigate(`/academics/guideline-notes/${n.slug}`)}
-                className="w-full text-left bg-white border border-border rounded-card p-4
+              <div key={n.id}
+                className="bg-white border border-border rounded-card p-4
                            hover:border-accent transition-colors">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
+                  <button
+                    onClick={() => navigate(`/academics/guideline-notes/${n.slug}`)}
+                    className="min-w-0 flex-1 text-left">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
                       <KindBadge kind={n.kind} />
                       {n.society && (
@@ -143,15 +144,18 @@ export function GuidelineNotesPage() {
                     {n.subtitle && (
                       <p className="text-xs text-ink-muted mt-0.5">{n.subtitle}</p>
                     )}
+                  </button>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    {n.likeCount > 0 && (
+                      <span className="inline-flex items-center gap-1 text-xs text-ink-muted">
+                        <Heart size={12} className={n.likedByMe ? 'fill-danger text-danger' : ''} />
+                        {n.likeCount}
+                      </span>
+                    )}
+                    <SaveButton itemType="guide" itemId={n.id} />
                   </div>
-                  {n.likeCount > 0 && (
-                    <span className="inline-flex items-center gap-1 text-xs text-ink-muted flex-shrink-0">
-                      <Heart size={12} className={n.likedByMe ? 'fill-danger text-danger' : ''} />
-                      {n.likeCount}
-                    </span>
-                  )}
                 </div>
-              </button>
+              </div>
             ))}
           </div>
         )}

@@ -22,6 +22,7 @@ import {
 import { CountdownTimer } from './components/CountdownTimer';
 import { SpeakerCard } from './components/SpeakerCard';
 import { AddToCalendar } from './components/AddToCalendar';
+import { SaveButton } from '../bookmarks/SaveButton';
 import { RegistrationCard } from './components/RegistrationCard';
 
 // ---------------------------------------------------------------------------
@@ -334,6 +335,7 @@ export function CMEDetailPage() {
             {event.isRegistered && (
               <div>
                 <AddToCalendar event={event} />
+                <SaveButton itemType="cme" itemId={event.id} withLabel />
               </div>
             )}
 

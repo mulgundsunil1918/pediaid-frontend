@@ -13,6 +13,7 @@ import { TableOfContents, MobileToc } from './components/TableOfContents';
 import { ReferencesDisplay } from './components/ReferencesDisplay';
 import { DiscussionSection } from './components/DiscussionSection';
 import { ModeratorBanner } from './components/ModeratorBanner';
+import { SaveButton } from '../bookmarks/SaveButton';
 import { useChapterBySlug } from './hooks/useChapterReader';
 
 // ---------------------------------------------------------------------------
@@ -110,6 +111,9 @@ export function ChapterReaderPage() {
                   },
                 ]}
               />
+              <div className="mt-2">
+                <SaveButton itemType="chapter" itemId={chapter.id} withLabel />
+              </div>
             </div>
 
             {/* Moderator / author status banner */}

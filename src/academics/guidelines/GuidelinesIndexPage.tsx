@@ -6,6 +6,7 @@
 import { Link } from 'react-router-dom';
 import { BookOpen, ChevronRight, FileText, Lock } from 'lucide-react';
 import { GUIDELINE_SETS } from './registry';
+import { SaveButton } from '../bookmarks/SaveButton';
 
 export function GuidelinesIndexPage() {
   return (
@@ -133,7 +134,10 @@ export function GuidelinesIndexPage() {
                       </span>
                     )}
                   </div>
-                  <div className="shrink-0 self-center">
+                  <div className="shrink-0 self-center flex items-center">
+                    {/* Keyed by slug: guideline sets live in this registry,
+                        not the database, so there is no row id to save. */}
+                    {isLive && <SaveButton itemType="stg" itemId={g.slug} />}
                     {isLive ? (
                       <ChevronRight
                         size={20}

@@ -3,6 +3,7 @@
 // =============================================================================
 
 import { Link } from 'react-router-dom';
+import { SaveButton } from '../../bookmarks/SaveButton';
 import { Award, Calendar, CheckCircle, MapPin, Users } from 'lucide-react';
 import type { CMEEvent } from '../hooks/useCME';
 import { safeFixed } from '../../../lib/safeNumber';
@@ -197,14 +198,18 @@ export function EventCard({ event }: EventCardProps) {
             {safeFixed(event.creditHours)} {event.creditType}
           </span>
 
-          {/* Price */}
-          <span
-            className={`text-sm font-semibold ${
-              event.price === 0 ? 'text-success' : 'text-ink'
-            }`}
-          >
-            {priceLabel}
-          </span>
+          {/* Price + save. The whole card is a Link, so SaveButton stops the
+              click from propagating — otherwise saving would navigate. */}
+          <div className="flex items-center gap-1">
+            <span
+              className={`text-sm font-semibold ${
+                event.price === 0 ? 'text-success' : 'text-ink'
+              }`}
+            >
+              {priceLabel}
+            </span>
+            <SaveButton itemType="cme" itemId={event.id} />
+          </div>
         </div>
       </div>
     </Link>

@@ -15,6 +15,7 @@ import { ArrowLeft, Baby, FlaskConical, Heart, Loader2, Plus, Search, Stethoscop
 import {
   useTrials, useTrialSystems, type Specialty,
 } from './useTrials';
+import { SaveButton } from '../bookmarks/SaveButton';
 
 const SPECIALTIES = [
   {
@@ -204,14 +205,18 @@ export function TrialsListPage() {
               : 'No trials published here yet.'}
           </div>
         ) : (
+          /* The card is a div, not a button: the save control is itself a
+             button, and nesting one inside another is invalid HTML with
+             unpredictable click behaviour. Content and save sit as siblings. */
           <div className="space-y-3">
             {trials.map((t) => (
-              <button key={t.id}
-                onClick={() => navigate(`/academics/trials/${specialty}/${t.slug}`)}
-                className="w-full text-left bg-white border border-border rounded-card p-4
+              <div key={t.id}
+                className="bg-white border border-border rounded-card p-4
                            hover:border-accent transition-colors">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
+                  <button
+                    onClick={() => navigate(`/academics/trials/${specialty}/${t.slug}`)}
+                    className="min-w-0 flex-1 text-left">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
                       {t.acronym && (
                         <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary
@@ -226,15 +231,18 @@ export function TrialsListPage() {
                     {t.subtitle && (
                       <p className="text-xs text-ink-muted mt-0.5">{t.subtitle}</p>
                     )}
+                  </button>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    {t.likeCount > 0 && (
+                      <span className="inline-flex items-center gap-1 text-xs text-ink-muted">
+                        <Heart size={12} className={t.likedByMe ? 'fill-danger text-danger' : ''} />
+                        {t.likeCount}
+                      </span>
+                    )}
+                    <SaveButton itemType="trial" itemId={t.id} />
                   </div>
-                  {t.likeCount > 0 && (
-                    <span className="inline-flex items-center gap-1 text-xs text-ink-muted flex-shrink-0">
-                      <Heart size={12} className={t.likedByMe ? 'fill-danger text-danger' : ''} />
-                      {t.likeCount}
-                    </span>
-                  )}
                 </div>
-              </button>
+              </div>
             ))}
           </div>
         )}

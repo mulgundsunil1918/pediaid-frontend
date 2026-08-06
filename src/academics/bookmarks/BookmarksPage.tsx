@@ -18,6 +18,21 @@ import {
   type Bookmark as Mark, type ItemType,
 } from './useBookmarks';
 import { useAuthStore } from '../../store/authStore';
+import { GUIDELINE_SETS } from '../guidelines/registry';
+
+/**
+ * Guideline sets live in a frontend registry, not the database, so the server
+ * has no name to send and returns the slug. Resolve it here, where the
+ * registry already is, and fall back to the slug if it was retired.
+ */
+function resolve(m: Mark): { title: string; linkPath: string | null } {
+  if (m.itemType !== 'stg') return { title: m.title, linkPath: m.linkPath };
+  const g = GUIDELINE_SETS.find((x) => x.slug === m.itemId);
+  return {
+    title: g?.name ?? m.itemId,
+    linkPath: g ? `/academics/guidelines/${g.slug}` : null,
+  };
+}
 
 function Row({ m }: { m: Mark }) {
   const navigate = useNavigate();
@@ -25,12 +40,13 @@ function Row({ m }: { m: Mark }) {
   const retag = useRetagBookmark();
   const [editing, setEditing] = useState(false);
   const [tag, setTag] = useState(m.tag ?? '');
+  const { title, linkPath } = resolve(m);
 
   return (
     <div className="bg-white border border-border rounded-card p-4 flex items-start gap-3">
       <button
-        onClick={() => m.linkPath && navigate(m.linkPath)}
-        disabled={!m.linkPath}
+        onClick={() => linkPath && navigate(linkPath)}
+        disabled={!linkPath}
         className="min-w-0 flex-1 text-left disabled:cursor-default"
       >
         <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -45,7 +61,7 @@ function Row({ m }: { m: Mark }) {
             </span>
           )}
         </div>
-        <p className="font-semibold text-ink text-sm">{m.title}</p>
+        <p className="font-semibold text-ink text-sm">{title}</p>
         {m.subtitle && (
           <p className="text-xs text-ink-muted mt-0.5 capitalize">{m.subtitle}</p>
         )}

@@ -22,6 +22,7 @@ import { ArrowLeft, Flame, Heart, Loader2, Plus, Search } from 'lucide-react';
 import {
   useGuidelineNotes, type GuideSpecialty,
 } from '../guidelines/notes/useGuidelineNotes';
+import { SaveButton } from '../bookmarks/SaveButton';
 
 const SPECIALTIES: { slug: GuideSpecialty; label: string }[] = [
   { slug: 'neonatology', label: 'Neonatology' },
@@ -131,12 +132,13 @@ export function RecentPage() {
         ) : (
           <div className="space-y-3">
             {notes.map((n) => (
-              <button key={n.id}
-                onClick={() => navigate(`/academics/guideline-notes/${n.slug}`)}
-                className="w-full text-left bg-white border border-border rounded-card p-4
+              <div key={n.id}
+                className="bg-white border border-border rounded-card p-4
                            hover:border-accent transition-colors">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
+                  <button
+                    onClick={() => navigate(`/academics/guideline-notes/${n.slug}`)}
+                    className="min-w-0 flex-1 text-left">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
                       <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold ${
                         n.kind === 'review' ? 'bg-accent/10 text-accent'
@@ -159,16 +161,18 @@ export function RecentPage() {
                         Review by {n.reviewAuthor}
                       </p>
                     )}
+                  </button>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    {n.likeCount > 0 && (
+                      <span className="inline-flex items-center gap-1 text-xs text-ink-muted">
+                        <Heart size={12} className={n.likedByMe ? 'fill-danger text-danger' : ''} />
+                        {n.likeCount}
+                      </span>
+                    )}
+                    <SaveButton itemType="guide" itemId={n.id} />
                   </div>
-                  {n.likeCount > 0 && (
-                    <span className="inline-flex items-center gap-1 text-xs text-ink-muted
-                                     flex-shrink-0">
-                      <Heart size={12} className={n.likedByMe ? 'fill-danger text-danger' : ''} />
-                      {n.likeCount}
-                    </span>
-                  )}
                 </div>
-              </button>
+              </div>
             ))}
           </div>
         )}
