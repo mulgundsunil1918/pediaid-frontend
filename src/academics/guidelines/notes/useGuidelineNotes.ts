@@ -7,9 +7,17 @@ import { apiFetch } from '../../api/academics.api';
 
 export type NoteKind = 'note' | 'review';
 
+export type GuideSpecialty = 'paediatrics' | 'neonatology';
+
 export interface GuidelineNote {
   id: string;
   slug: string;
+  specialty: GuideSpecialty;
+  status: string;
+  originalAuthors: string | null;
+  reviewAuthor: string | null;
+  otherNotes: string | null;
+  otherNotesLabel: string | null;
   /** PediAid ID no., e.g. PA-NOTE-00001. Stable; the slug is not. */
   referenceCode: string | null;
   kind: NoteKind;
@@ -30,15 +38,17 @@ export interface GuidelineNote {
 }
 
 export const noteKeys = {
-  list: (kind: string, q: string) => ['guideline-notes', 'list', kind, q] as const,
+  list: (kind: string, q: string, specialty = 'all') =>
+    ['guideline-notes', 'list', specialty, kind, q] as const,
   one: (slug: string) => ['guideline-notes', slug] as const,
 };
 
-export function useGuidelineNotes(kind = 'all', q = '') {
+export function useGuidelineNotes(kind = 'all', q = '', specialty = 'all') {
   return useQuery<GuidelineNote[], Error>({
-    queryKey: noteKeys.list(kind, q),
+    queryKey: noteKeys.list(kind, q, specialty),
     queryFn: async () => {
       const p = new URLSearchParams();
+      if (specialty && specialty !== 'all') p.set('specialty', specialty);
       if (kind && kind !== 'all') p.set('kind', kind);
       if (q.trim()) p.set('q', q.trim());
       const qs = p.toString();
@@ -102,5 +112,37 @@ export function useToggleNoteLike(slug: string) {
       void qc.invalidateQueries({ queryKey: noteKeys.one(slug) });
       void qc.invalidateQueries({ queryKey: ['guideline-notes', 'list'] });
     },
+  });
+}
+
+
+export interface GuideSubmission {
+  title: string;
+  kind: 'note' | 'review';
+  specialty: GuideSpecialty;
+  subtitle?: string;
+  society?: string;
+  guidelineYear?: number;
+  summary?: string;
+  whatChanged?: string[];
+  body?: string[];
+  takeaways?: string[];
+  otherNotes?: string;
+  otherNotesLabel?: string;
+  originalAuthors?: string;
+  reviewAuthor?: string;
+  externalUrl?: string;
+}
+
+/** Submits a guide for review. Requires sign-in — it carries a byline. */
+export function useSubmitGuide() {
+  const qc = useQueryClient();
+  return useMutation<GuidelineNote, Error, GuideSubmission>({
+    mutationFn: async (body) =>
+      (await apiFetch<{ note: GuidelineNote }>(
+        '/api/academics/guideline-notes/submit',
+        { method: 'POST', body: JSON.stringify(body) },
+      )).note,
+    onSuccess: () => void qc.invalidateQueries({ queryKey: ['submissions'] }),
   });
 }

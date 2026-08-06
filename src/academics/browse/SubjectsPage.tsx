@@ -284,7 +284,11 @@ export function RecentGuidesTab() {
 
   return (
     <div className="space-y-4">
-      <ExampleTrialsSection />
+      {/* The three hardcoded example trials (CAP, NeOProM, ADEPT) that used to
+          sit here are gone. They were badged "IN DEVELOPMENT" with invented
+          like counts and an invented author handle, and they are landmark
+          trials rather than guidelines — they now live in the Landmark Trials
+          module with real data behind them. */}
 
       {isLoading && (
         <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4 sm:-mx-0 sm:px-0">

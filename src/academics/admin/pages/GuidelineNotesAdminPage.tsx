@@ -16,6 +16,7 @@ import {
 import { AdminLayout } from '../AdminLayout';
 import {
   useAdminGuidelineNotes, useCreateGuidelineNote, useDeleteGuidelineNote,
+  useModerateGuidelineNote,
   usePublishGuidelineNote, useUpdateGuidelineNote,
   type AdminGuidelineNote,
 } from '../hooks/useAdmin';
@@ -248,9 +249,97 @@ function NoteRow({ n }: { n: AdminGuidelineNote }) {
   );
 }
 
+/** A reader submission awaiting a decision. Mirrors the trials queue. */
+function GuideSubmissionRow({ n }: { n: AdminGuidelineNote }) {
+  const moderate = useModerateGuidelineNote();
+  const [mode, setMode] = useState<'reject' | 'request_changes' | null>(null);
+  const [reason, setReason] = useState('');
+
+  function send(action: 'approve' | 'reject' | 'request_changes') {
+    if (action === 'approve') { moderate.mutate({ id: n.id, action }); return; }
+    if (!reason.trim()) return;
+    moderate.mutate({ id: n.id, action, reason: reason.trim() },
+      { onSuccess: () => { setMode(null); setReason(''); } });
+  }
+
+  return (
+    <div className="bg-white border border-warning/40 rounded-card p-4">
+      <div className="flex items-center gap-2 flex-wrap mb-1">
+        <span className="px-2 py-0.5 rounded-md bg-warning/15 text-warning
+                         text-[11px] font-bold">Awaiting review</span>
+        <span className="text-[11px] text-ink-muted capitalize">{n.specialty}</span>
+        <span className="text-[11px] text-ink-muted">
+          {n.kind === 'review' ? 'Review' : 'Note'}
+        </span>
+      </div>
+      <p className="text-sm font-semibold text-ink">{n.title}</p>
+      {n.subtitle && <p className="text-xs text-ink-muted mt-0.5">{n.subtitle}</p>}
+      {n.summary && <p className="text-xs text-ink mt-2 leading-relaxed">{n.summary}</p>}
+      {(n.originalAuthors || n.reviewAuthor) && (
+        <div className="mt-2 text-[11px] text-ink-muted space-y-0.5">
+          {n.originalAuthors && <p>Original authors: {n.originalAuthors}</p>}
+          {n.reviewAuthor && <p>Review by: {n.reviewAuthor}</p>}
+        </div>
+      )}
+
+      {mode && (
+        <div className="mt-3">
+          <label className="block text-xs font-semibold text-ink-muted mb-1">
+            {mode === 'reject' ? 'Why is this not being accepted?' : 'What needs to change?'}
+          </label>
+          <textarea className={input} rows={3} value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            placeholder="This is sent to the submitter." />
+        </div>
+      )}
+      {moderate.error && <p className="text-xs text-danger mt-2">{moderate.error.message}</p>}
+
+      <div className="flex flex-wrap gap-2 mt-3">
+        {mode === null ? (
+          <>
+            <button onClick={() => send('approve')} disabled={moderate.isPending}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-success
+                         text-white disabled:opacity-60">
+              Approve &amp; publish
+            </button>
+            <button onClick={() => setMode('request_changes')}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-ink-muted
+                         border border-border hover:text-ink">
+              Request changes
+            </button>
+            <button onClick={() => setMode('reject')}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-danger
+                         border border-danger/40 hover:bg-danger/5">
+              Reject
+            </button>
+          </>
+        ) : (
+          <>
+            <button onClick={() => send(mode)} disabled={moderate.isPending || !reason.trim()}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-primary
+                         text-white disabled:opacity-60">
+              {moderate.isPending ? 'Sending…' : 'Send to submitter'}
+            </button>
+            <button onClick={() => { setMode(null); setReason(''); }}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-ink-muted
+                         border border-border hover:text-ink">
+              Cancel
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function GuidelineNotesAdminPage() {
   const { data: notes = [], isLoading, isError, error } = useAdminGuidelineNotes();
   const [creating, setCreating] = useState(false);
+
+  // Submissions waiting on a decision are pulled out of the main list — they
+  // are the only rows where somebody is waiting on an answer.
+  const pending = notes.filter((n) => n.status === 'pending');
+  const reviewed = notes.filter((n) => n.status !== 'pending');
 
   return (
     <AdminLayout>
@@ -281,6 +370,19 @@ export function GuidelineNotesAdminPage() {
         </div>
       )}
 
+      {pending.length > 0 && (
+        <section className="mb-6">
+          <h2 className="text-sm font-bold text-ink mb-2">
+            Awaiting review
+            <span className="ml-2 px-2 py-0.5 rounded-full bg-warning/15 text-warning
+                             text-[11px] font-bold">{pending.length}</span>
+          </h2>
+          <div className="space-y-3">
+            {pending.map((n) => <GuideSubmissionRow key={n.id} n={n} />)}
+          </div>
+        </section>
+      )}
+
       {isLoading ? (
         <div className="py-16 text-center text-ink-muted text-sm">
           <Loader2 size={18} className="animate-spin inline mr-2" /> Loading…
@@ -291,7 +393,7 @@ export function GuidelineNotesAdminPage() {
         </div>
       ) : (
         <div className="space-y-3">
-          {notes.map((n) => <NoteRow key={n.id} n={n} />)}
+          {reviewed.map((n) => <NoteRow key={n.id} n={n} />)}
         </div>
       )}
     </div>

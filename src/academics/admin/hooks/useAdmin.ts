@@ -1351,6 +1351,12 @@ export function usePublishTrial() {
 export interface AdminGuidelineNote {
   id: string;
   slug: string;
+  specialty: 'paediatrics' | 'neonatology';
+  status: string;
+  originalAuthors: string | null;
+  reviewAuthor: string | null;
+  submittedBy: string | null;
+  rejectionReason: string | null;
   /** PediAid ID no., e.g. PA-NOTE-00001. Assigned on create, never changes. */
   referenceCode: string | null;
   kind: 'note' | 'review';
@@ -1433,6 +1439,24 @@ export function usePublishGuidelineNote() {
       apiFetch<{ note: AdminGuidelineNote; notified: boolean }>(
         `/api/academics/admin/guideline-notes/${id}/publish`,
         { method: 'POST', body: JSON.stringify({ publish, notify }) },
+      ),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: NOTES_KEY }),
+  });
+}
+
+
+/** Approve / reject / request changes on a submitted guide. */
+export function useModerateGuidelineNote() {
+  const qc = useQueryClient();
+  return useMutation<
+    { note: AdminGuidelineNote },
+    Error,
+    { id: string; action: 'approve' | 'reject' | 'request_changes'; reason?: string }
+  >({
+    mutationFn: ({ id, action, reason }) =>
+      apiFetch<{ note: AdminGuidelineNote }>(
+        `/api/academics/admin/guideline-notes/${id}/moderate`,
+        { method: 'POST', body: JSON.stringify({ action, reason }) },
       ),
     onSuccess: () => void qc.invalidateQueries({ queryKey: NOTES_KEY }),
   });
