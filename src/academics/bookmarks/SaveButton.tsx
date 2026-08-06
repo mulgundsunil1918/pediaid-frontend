@@ -6,6 +6,7 @@
 // the feature is broken rather than that it needs an account.
 // =============================================================================
 
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Bookmark } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
@@ -25,6 +26,7 @@ export function SaveButton({
   const signedIn = !!useAuthStore((s) => s.accessToken);
   const { data: ids } = useBookmarkIds();
   const toggle = useToggleBookmark();
+  const [err, setErr] = useState<string | null>(null);
 
   const saved = ids?.has(`${itemType}:${itemId}`) ?? false;
 
@@ -36,7 +38,18 @@ export function SaveButton({
       navigate(`/academics/login?next=${encodeURIComponent(location.pathname)}`);
       return;
     }
-    toggle.mutate({ itemType, itemId });
+    // Surface failures. Rolling back in silence is indistinguishable from a
+    // button that does nothing, which is exactly how this read.
+    setErr(null);
+    toggle.mutate(
+      { itemType, itemId },
+      {
+        onError: (e) => {
+          setErr(e.message || 'Could not save.');
+          setTimeout(() => setErr(null), 6000);
+        },
+      },
+    );
   }
 
   if (!withLabel) {
@@ -44,12 +57,26 @@ export function SaveButton({
       <button
         onClick={onClick}
         aria-label={saved ? 'Remove from saved' : 'Save'}
-        title={signedIn ? (saved ? 'Saved' : 'Save') : 'Sign in to save'}
+        title={err ?? (signedIn ? (saved ? 'Saved' : 'Save') : 'Sign in to save')}
         className="p-2 rounded-lg text-ink-muted hover:text-accent hover:bg-gray-50
                    transition-colors flex-shrink-0"
       >
-        <Bookmark size={16} className={saved ? 'fill-accent text-accent' : ''} />
+        <Bookmark size={16}
+          className={err ? 'text-danger' : saved ? 'fill-accent text-accent' : ''} />
       </button>
+    );
+  }
+
+  if (err) {
+    return (
+      <div className="inline-flex flex-col gap-1">
+        <button onClick={onClick}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm
+                     font-semibold border bg-white text-danger border-danger/40">
+          <Bookmark size={15} /> Save
+        </button>
+        <span className="text-[11px] text-danger max-w-[220px]">{err}</span>
+      </div>
     );
   }
 
