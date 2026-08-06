@@ -37,7 +37,8 @@ export function ProfileMenu() {
     navigate('/academics/login', { replace: true });
   }
 
-  const initial = (user.profile?.fullName || user.email)[0]?.toUpperCase() ?? '?';
+  const label = user.profile?.fullName || user.email;
+  const initial = label[0]?.toUpperCase() ?? '?';
 
   return (
     <div className="relative" ref={ref}>
@@ -52,6 +53,14 @@ export function ProfileMenu() {
           style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
         >
           {initial}
+        </span>
+        {/* The name, not just an initial. A lone "S" does not tell anyone
+            which account they are on — and when the app and this site could be
+            signed in as different people, that ambiguity is the whole problem.
+            Hidden on the narrowest screens where there is no room; the
+            dropdown still carries the full name and email. */}
+        <span className="hidden sm:block max-w-[140px] truncate text-sm font-medium text-white">
+          {label}
         </span>
         <ChevronDown size={14} className="text-blue-200" aria-hidden="true" />
       </button>
