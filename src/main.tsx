@@ -23,12 +23,20 @@ function mount() {
   );
 }
 
-// A session handed over from the PediAid app has to land before anything
-// auth-dependent renders — otherwise the first paint is signed-out and every
-// guarded page flashes its logged-out state before correcting itself.
-// consumeSsoHandoff resolves either way and returns immediately when there is
-// no code, so the normal path is not delayed.
-void consumeSsoHandoff().finally(mount);
+// MOUNT FIRST, ALWAYS.
+//
+// This used to await the sign-in handoff before rendering, to avoid a brief
+// signed-out flash on guarded pages. That made the entire app's first paint
+// depend on a network call: when the backend was cold — Render sleeps after
+// inactivity and can take ~30s to wake — the splash screen simply stayed up,
+// and a hung request meant it stayed up forever. A blank screen is far worse
+// than a flash, and it is worse in exactly the situation where the user is
+// already waiting.
+//
+// The handoff now runs alongside. When it completes it writes to the auth
+// store, React re-renders, and the page corrects itself.
+mount();
+void consumeSsoHandoff();
 
 // -----------------------------------------------------------------------------
 // Splash screen hand-off

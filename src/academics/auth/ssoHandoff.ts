@@ -48,10 +48,13 @@ export async function consumeSsoHandoff(): Promise<void> {
   // account is the one they mean — and silently keeping a different one is the
   // exact confusion this feature exists to end.
   try {
+    // Bounded. The code dies in 60 seconds anyway, so a request still in
+    // flight after 15 is not going to produce a usable session.
     const res = await fetch(`${API_BASE}/api/academics/auth/sso-exchange`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code }),
+      signal: AbortSignal.timeout(15_000),
     });
     if (!res.ok) return;
     const auth = (await res.json()) as AuthResponse;
