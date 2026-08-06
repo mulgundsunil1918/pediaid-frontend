@@ -24,6 +24,7 @@ const MODULE_LABELS: Record<ModuleType, string> = {
   course: 'Course',
   trial: 'Trial review',
   guide: 'Recent guide',
+  chapter: 'Chapter',
 };
 
 type FilterValue = 'all' | ModerationStatus;

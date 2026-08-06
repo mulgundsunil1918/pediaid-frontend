@@ -23,6 +23,7 @@ export const MODULE_TYPES = [
   'course',
   'trial',
   'guide',
+  'chapter',
 ] as const;
 
 export type ModuleType = (typeof MODULE_TYPES)[number];
