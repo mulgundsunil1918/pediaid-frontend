@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import { initChunkRecovery } from './lib/chunkRecovery';
 import { initVersionCheck } from './lib/versionCheck';
+import { consumeSsoHandoff } from './academics/auth/ssoHandoff';
 
 // Must run before the first lazy route resolves, so a stale cached
 // index.html asking for a deleted bundle self-recovers instead of
@@ -14,11 +15,20 @@ initVersionCheck();
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element #root not found');
 
-ReactDOM.createRoot(root).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+function mount() {
+  ReactDOM.createRoot(root!).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
+}
+
+// A session handed over from the PediAid app has to land before anything
+// auth-dependent renders — otherwise the first paint is signed-out and every
+// guarded page flashes its logged-out state before correcting itself.
+// consumeSsoHandoff resolves either way and returns immediately when there is
+// no code, so the normal path is not delayed.
+void consumeSsoHandoff().finally(mount);
 
 // -----------------------------------------------------------------------------
 // Splash screen hand-off
