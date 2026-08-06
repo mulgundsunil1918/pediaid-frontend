@@ -24,32 +24,106 @@ import {
 import { AdminLayout } from '../AdminLayout';
 import { API_BASE } from '../../../lib/apiBase';
 
-type CheckId = 'backend' | 'app' | 'academics' | 'landing';
+type CheckId =
+  | 'backend' | 'app' | 'academics' | 'landing'
+  | 'trials' | 'guides' | 'cme' | 'neverAgain' | 'bookmarks'
+  | 'submissions' | 'appConfig' | 'search';
 
-const CHECKS: { id: CheckId; title: string; sub: string; url: string }[] = [
+/**
+ * `authed: true` means the route is meant to reject an unauthenticated probe.
+ * For those a 401 is the healthy answer — it proves the route is mounted and
+ * the guard is working. Treating it as a failure would show every private
+ * endpoint permanently down.
+ */
+const CHECKS: {
+  id: CheckId;
+  title: string;
+  sub: string;
+  url: string;
+  group: 'hosting' | 'modules';
+  authed?: boolean;
+}[] = [
   {
     id: 'backend',
+    group: 'hosting',
     title: 'Backend API',
     sub: 'pediaid-backend.onrender.com — may take ~30s to wake from sleep',
     url: `${API_BASE}/api/academics/health`,
   },
   {
     id: 'app',
+    group: 'hosting',
     title: 'PediAid App',
     sub: 'pediaid.bridgr.co.in — the main app',
     url: 'https://pediaid.bridgr.co.in/',
   },
   {
     id: 'academics',
+    group: 'hosting',
     title: 'PediAid Academics',
     sub: 'academics.pediaid.bridgr.co.in — this site',
     url: 'https://academics.pediaid.bridgr.co.in/',
   },
   {
     id: 'landing',
+    group: 'hosting',
     title: 'Landing Page',
     sub: 'info.pediaid.bridgr.co.in — public front page',
     url: 'https://info.pediaid.bridgr.co.in/',
+  },
+
+  // ── Modules: each hits the route that module actually serves, so a broken
+  //    deploy shows as that module down rather than as a healthy backend.
+  {
+    id: 'trials',
+    group: 'modules',
+    title: 'Landmark Trials',
+    sub: 'systems lookup + public browse',
+    url: `${API_BASE}/api/academics/trials/systems`,
+  },
+  {
+    id: 'guides',
+    group: 'modules',
+    title: 'Recent Guides',
+    sub: 'guideline notes & reviews',
+    url: `${API_BASE}/api/academics/guideline-notes`,
+  },
+  {
+    id: 'cme',
+    group: 'modules',
+    title: 'CME & Events',
+    sub: 'conferences, webinars, workshops, courses',
+    url: `${API_BASE}/api/academics/cme/events`,
+  },
+  {
+    id: 'neverAgain',
+    group: 'modules',
+    title: 'Never Again',
+    sub: 'anonymous peer-learning feed',
+    url: `${API_BASE}/api/never-again`,
+  },
+  {
+    id: 'appConfig',
+    group: 'modules',
+    title: 'App control',
+    sub: 'minVersion, disabled tools, notice',
+    url: `${API_BASE}/api/app-config`,
+  },
+  {
+    id: 'bookmarks',
+    group: 'modules',
+    title: 'Saved items',
+    sub: 'bookmarks — 401 when signed out is correct',
+    url: `${API_BASE}/api/academics/bookmarks`,
+    authed: true,
+  },
+  {
+    id: 'submissions',
+    group: 'modules',
+    title: 'My Submissions',
+    sub: 'cross-module moderation view — 401 when signed out is correct',
+    url: `${API_BASE}/api/me/submissions`,
+    authed: true,
   },
 ];
 
@@ -151,6 +225,34 @@ export function SystemStatusPage() {
             };
             setHealth(null);
             setBackendReachable(false);
+          }
+          return;
+        }
+
+        // API routes send CORS headers, so read the real status code rather
+        // than falling through to the opaque probe below — a no-cors fetch
+        // resolves on a 500 just as happily as on a 200, which would report a
+        // broken module as healthy.
+        if (c.url.startsWith(API_BASE)) {
+          try {
+            const res = await fetch(c.url, { mode: 'cors', cache: 'no-store' });
+            // A guarded route answering 401/403 is working correctly: the
+            // route is mounted and the guard fired. Only a 5xx, a 404 or a
+            // network error means something is actually wrong.
+            const healthy = c.authed
+              ? res.ok || res.status === 401 || res.status === 403
+              : res.ok;
+            next[c.id] = {
+              up: healthy,
+              ms: Math.round(performance.now() - start),
+              checkedAt: stamp(),
+            };
+          } catch {
+            next[c.id] = {
+              up: false,
+              ms: Math.round(performance.now() - start),
+              checkedAt: stamp(),
+            };
           }
           return;
         }
@@ -296,7 +398,42 @@ export function SystemStatusPage() {
             Hosting
           </h2>
           <div className="bg-white rounded-2xl shadow-card border border-border divide-y divide-border overflow-hidden">
-            {CHECKS.map((c) => {
+            {CHECKS.filter((c) => c.group === 'hosting').map((c) => {
+              const r = hostResults[c.id];
+              const tone: Tone = !checkedOnce ? 'gray' : r?.up ? 'green' : 'red';
+              return (
+                <div
+                  key={c.id}
+                  className="flex items-center justify-between gap-3 px-5 py-3.5"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-ink">{c.title}</p>
+                    <p className="text-xs text-ink-muted mt-0.5">{c.sub}</p>
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0">
+                    {r && (
+                      <span className="text-xs text-ink-muted tabular-nums">
+                        {r.ms} ms
+                      </span>
+                    )}
+                    <Pill tone={tone}>
+                      {!checkedOnce ? 'Unchecked' : r?.up ? 'Live' : 'Not responding'}
+                    </Pill>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Modules — each hits the route that module actually serves, so a
+            broken deploy shows as that module down, not as a healthy backend. */}
+        <section className="mb-8">
+          <h2 className="text-xs font-bold uppercase tracking-wide text-ink-muted mb-2">
+            Modules
+          </h2>
+          <div className="bg-white rounded-2xl shadow-card border border-border divide-y divide-border overflow-hidden">
+            {CHECKS.filter((c) => c.group === 'modules').map((c) => {
               const r = hostResults[c.id];
               const tone: Tone = !checkedOnce ? 'gray' : r?.up ? 'green' : 'red';
               return (
