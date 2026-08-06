@@ -57,14 +57,23 @@
     <link rel="preconnect" href="https://pediaid-backend.onrender.com" crossorigin />
 
     <script>
-      // Restore path encoded by 404.html redirect
+      // Restore the path that 404.html encoded into ?p=
+      //
+      // Rebuilt against the app's base, not the domain root. This app used to
+      // live at the root of its own subdomain, so '/' + p was correct. It now
+      // sits under /academics, and dropping that prefix turned every shared
+      // deep link into a 404: /academics/trials/x redirected to
+      // /academics/?p=trials/x and was restored as /trials/x, which matches no
+      // route. The base is read from where this page actually is, so it stays
+      // right if the app is ever moved again.
       (function() {
-        var p = window.location.search.match(/p=([^&]*)/);
-        if (p) {
-          window.history.replaceState(null, null,
-            '/' + decodeURIComponent(p[1]) + window.location.hash
-          );
-        }
+        var m = window.location.search.match(/p=([^&]*)/);
+        if (!m) return;
+        var base = window.location.pathname.replace(/\/[^/]*$/, '');
+        var rest = decodeURIComponent(m[1]).replace(/^\/+/, '');
+        window.history.replaceState(
+          null, null, base + '/' + rest + window.location.hash
+        );
       })();
 
       // Kick the backend awake while the splash is on screen. Render's free
