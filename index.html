@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>
+      // Academics moved to pediaid.bridgr.co.in/academics so it shares one
+      // browser session with the app. Anyone still on the old subdomain —
+      // a bookmark, a shared link — is sent across, path and query intact.
+      //
+      // This must be the first thing in <head>: the build now points its
+      // asset URLs at /academics/, which do not exist on the old host, so
+      // that page can never finish loading. Redirect before it tries.
+      (function () {
+        try {
+          if (location.hostname === 'academics.pediaid.bridgr.co.in') {
+            var p = location.pathname;
+            // Paths already start with /academics on this app, so do not
+            // double it up when moving to the /academics base.
+            var rest = p.indexOf('/academics') === 0 ? p.slice('/academics'.length) : p;
+            location.replace(
+              'https://pediaid.bridgr.co.in/academics' + rest + location.search + location.hash
+            );
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
