@@ -31,6 +31,7 @@ const ChapterListPage  = lazy(() => import('./academics/browse/ChapterListPage')
 const TrialsHomePage   = lazy(() => import('./academics/trials/TrialsPage').then(m => ({ default: m.TrialsHomePage })));
 const TrialsListPage   = lazy(() => import('./academics/trials/TrialsPage').then(m => ({ default: m.TrialsListPage })));
 const TrialDetailPage  = lazy(() => import('./academics/trials/TrialDetailPage').then(m => ({ default: m.TrialDetailPage })));
+const SubmitTrialPage  = lazy(() => import('./academics/trials/SubmitTrialPage').then(m => ({ default: m.SubmitTrialPage })));
 const GuidelineNotesPage      = lazy(() => import('./academics/guidelines/notes/GuidelineNotesPage').then(m => ({ default: m.GuidelineNotesPage })));
 const GuidelineNoteDetailPage = lazy(() => import('./academics/guidelines/notes/GuidelineNotesPage').then(m => ({ default: m.GuidelineNoteDetailPage })));
 const RecentPage       = lazy(() => import('./academics/browse/RecentPage').then(m => ({ default: m.RecentPage })));
@@ -227,6 +228,7 @@ export default function App() {
             <Route path="/academics/guideline-notes" element={<GuidelineNotesPage />} />
             <Route path="/academics/guideline-notes/:slug" element={<GuidelineNoteDetailPage />} />
             <Route path="/academics/trials" element={<TrialsHomePage />} />
+            <Route path="/academics/trials/submit" element={<SubmitTrialPage />} />
             <Route path="/academics/trials/:specialty" element={<TrialsListPage />} />
             <Route path="/academics/trials/:specialty/:slug" element={<TrialDetailPage />} />
             <Route path="/academics/recent" element={<RecentPage />} />

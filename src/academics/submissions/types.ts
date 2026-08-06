@@ -21,6 +21,7 @@ export const MODULE_TYPES = [
   'webinar',
   'workshop',
   'course',
+  'trial',
 ] as const;
 
 export type ModuleType = (typeof MODULE_TYPES)[number];

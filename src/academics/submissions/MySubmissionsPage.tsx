@@ -22,6 +22,7 @@ const MODULE_LABELS: Record<ModuleType, string> = {
   webinar: 'Webinar',
   workshop: 'Workshop',
   course: 'Course',
+  trial: 'Trial review',
 };
 
 type FilterValue = 'all' | ModerationStatus;

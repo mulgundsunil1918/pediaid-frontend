@@ -119,6 +119,30 @@ export function TrialDetailPage() {
       </div>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+        {/* Attribution before the content, not buried at the bottom. A reader
+            deciding how much weight to give the takeaways needs to know whose
+            reading they are — the paper's authors or the reviewer's. */}
+        {(t.originalAuthors || t.reviewAuthor) && (
+          <div className="mb-6 rounded-card border border-border bg-white p-4 space-y-1.5">
+            {t.originalAuthors && (
+              <p className="text-xs text-ink">
+                <span className="font-semibold text-ink-muted">Original authors </span>
+                {t.originalAuthors}
+              </p>
+            )}
+            {t.reviewAuthor && (
+              <p className="text-xs text-ink">
+                <span className="font-semibold text-ink-muted">Review by </span>
+                {t.reviewAuthor}
+              </p>
+            )}
+            <p className="text-[11px] text-ink-muted pt-1">
+              Summary and takeaways are the reviewer's, not the authors'.
+              Always read the source before acting on it.
+            </p>
+          </div>
+        )}
+
         {t.summary && (
           <p className="text-sm text-ink leading-relaxed mb-6">{t.summary}</p>
         )}

@@ -1202,6 +1202,12 @@ export interface TrialSystem {
 export interface AdminTrial {
   id: string;
   slug: string;
+  status: string;
+  originalAuthors: string | null;
+  reviewAuthor: string | null;
+  submittedBy: string | null;
+  rejectionReason: string | null;
+  reviewedAt: string | null;
   /** PediAid ID no., e.g. PA-TRIAL-00001. Assigned on create, never changes. */
   referenceCode: string | null;
   specialty: 'paediatrics' | 'neonatology';
@@ -1279,6 +1285,29 @@ export function useUpdateTrial() {
         method: 'PUT',
         body: JSON.stringify(body),
       })).trial,
+    onSuccess: () => void qc.invalidateQueries({ queryKey: trialKeys.all }),
+  });
+}
+
+/**
+ * Approve / reject / request changes on a submitted trial.
+ *
+ * Approve publishes it; the other two leave it invisible and hand the reason
+ * back to the submitter. The reason is required for those two — nobody should
+ * be told "no" without being told why.
+ */
+export function useModerateTrial() {
+  const qc = useQueryClient();
+  return useMutation<
+    { trial: AdminTrial },
+    Error,
+    { id: string; action: 'approve' | 'reject' | 'request_changes'; reason?: string }
+  >({
+    mutationFn: ({ id, action, reason }) =>
+      apiFetch<{ trial: AdminTrial }>(
+        `/api/academics/admin/trials/${id}/moderate`,
+        { method: 'POST', body: JSON.stringify({ action, reason }) },
+      ),
     onSuccess: () => void qc.invalidateQueries({ queryKey: trialKeys.all }),
   });
 }

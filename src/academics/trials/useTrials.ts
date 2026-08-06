@@ -38,9 +38,53 @@ export interface Trial {
   limitations: string[];
   takeaways: string[];
   furtherReading: string[];
+  /** The paper's own author list, as printed. */
+  originalAuthors: string | null;
+  /** Who wrote the PediAid summary — not the same people. */
+  reviewAuthor: string | null;
+  status: string;
   likeCount: number;
   likedByMe: boolean;
   publishedAt: string | null;
+}
+
+export interface TrialSubmission {
+  title: string;
+  specialty: Specialty;
+  system: string;
+  subtitle?: string;
+  acronym?: string;
+  journal?: string;
+  year?: number;
+  doi?: string;
+  externalUrl?: string;
+  originalAuthors?: string;
+  reviewAuthor?: string;
+  population?: string;
+  intervention?: string;
+  comparator?: string;
+  outcome?: string;
+  timeframe?: string;
+  summary?: string;
+  results?: string[];
+  limitations?: string[];
+  takeaways?: string[];
+  furtherReading?: string[];
+}
+
+/** Submits a trial for review. Requires sign-in — a review carries a byline. */
+export function useSubmitTrial() {
+  const qc = useQueryClient();
+  return useMutation<Trial, Error, TrialSubmission>({
+    mutationFn: async (body) =>
+      (await apiFetch<{ trial: Trial }>('/api/academics/trials/submit', {
+        method: 'POST',
+        body: JSON.stringify(body),
+      })).trial,
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['submissions'] });
+    },
+  });
 }
 
 export const trialKeys = {
