@@ -13,6 +13,7 @@ import { useState } from 'react';
 import {
   Bell, Eye, EyeOff, FileText, Loader2, Pencil, Plus, Trash2, X,
 } from 'lucide-react';
+import { AdminLayout } from '../AdminLayout';
 import {
   useAdminGuidelineNotes, useCreateGuidelineNote, useDeleteGuidelineNote,
   usePublishGuidelineNote, useUpdateGuidelineNote,
@@ -247,11 +248,12 @@ function NoteRow({ n }: { n: AdminGuidelineNote }) {
   );
 }
 
-export default function GuidelineNotesAdminPage() {
+export function GuidelineNotesAdminPage() {
   const { data: notes = [], isLoading, isError, error } = useAdminGuidelineNotes();
   const [creating, setCreating] = useState(false);
 
   return (
+    <AdminLayout>
     <div className="p-6 max-w-4xl">
       {creating && <NoteForm onClose={() => setCreating(false)} />}
 
@@ -293,5 +295,6 @@ export default function GuidelineNotesAdminPage() {
         </div>
       )}
     </div>
+    </AdminLayout>
   );
 }

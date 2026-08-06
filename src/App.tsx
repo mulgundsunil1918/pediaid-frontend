@@ -96,7 +96,7 @@ const AllNeverAgainPage = lazy(() => import('./academics/admin/pages/AllNeverAga
 const SendNotificationPage = lazy(() => import('./academics/admin/pages/SendNotificationPage').then(m => ({ default: m.SendNotificationPage })));
 const SystemStatusPage = lazy(() => import('./academics/admin/pages/SystemStatusPage').then(m => ({ default: m.SystemStatusPage })));
 const TrialsAdminPage = lazy(() => import('./academics/admin/pages/TrialsAdminPage').then(m => ({ default: m.TrialsAdminPage })));
-const GuidelineNotesAdminPage = lazy(() => import('./academics/admin/pages/GuidelineNotesAdminPage'));
+const GuidelineNotesAdminPage = lazy(() => import('./academics/admin/pages/GuidelineNotesAdminPage').then(m => ({ default: m.GuidelineNotesAdminPage })));
 const AppControlPage = lazy(() => import('./academics/admin/pages/AppControlPage').then(m => ({ default: m.AppControlPage })));
 
 // ---------------------------------------------------------------------------
