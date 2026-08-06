@@ -168,6 +168,7 @@ export function GuidelineNoteDetailPage() {
   const like = useToggleNoteLike(slug);
   const isSignedIn = !!useAuthStore((s) => s.accessToken);
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState<string | null>(null);
 
   const publicUrl = `${window.location.origin}/academics/guideline-notes/${slug}`;
   const loginHref = `/academics/login?next=${encodeURIComponent(
@@ -189,16 +190,25 @@ export function GuidelineNoteDetailPage() {
       publicUrl,
     ].filter(Boolean);
     const text = lines.join('\n');
-    try {
-      if (navigator.share) {
+
+    // Same fallback chain as trials: navigator.share throws rather than
+    // returning false when unavailable, and a bare catch made a failed share
+    // indistinguishable from a successful one. A cancelled share is the user's
+    // choice, not a failure, so AbortError exits quietly.
+    if (navigator.share) {
+      try {
         await navigator.share({ title: n.title, text, url: publicUrl });
         return;
+      } catch (err) {
+        if ((err as Error)?.name === 'AbortError') return;
       }
+    }
+    try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* dismissed, or clipboard denied — nothing useful to say */
+      setShareError(text);
     }
   }
 
@@ -281,6 +291,24 @@ export function GuidelineNoteDetailPage() {
               {copied ? 'Link copied' : 'Share'}
             </button>
           </div>
+
+          {like.isError && (
+            <p className="text-xs text-danger mt-2.5">
+              Could not save your like: {like.error?.message ?? 'please try again.'}
+            </p>
+          )}
+
+          {shareError && (
+            <div className="mt-2.5">
+              <p className="text-xs text-ink-muted mb-1">
+                Sharing is not available here — copy this instead:
+              </p>
+              <textarea readOnly value={shareError} rows={4}
+                onFocus={(e) => e.currentTarget.select()}
+                className="w-full text-xs p-2 rounded-lg border border-border
+                           bg-white text-ink font-mono" />
+            </div>
+          )}
 
           {!isSignedIn && (
             <p className="text-xs text-ink-muted mt-2.5">

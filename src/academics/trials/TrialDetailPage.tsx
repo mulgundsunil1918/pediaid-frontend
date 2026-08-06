@@ -36,14 +36,30 @@ export function TrialDetailPage() {
   const like = useToggleTrialLike(slug);
   const isSignedIn = !!useAuthStore((s) => s.accessToken);
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState<string | null>(null);
 
   // Trial pages are deliberately public — no sign-in, no gate — so the link is
   // the point of sharing. Built from the live origin rather than a constant so
   // it stays right on the deployed domain and on a local build.
   const publicUrl = `${window.location.origin}/academics/trials/${specialty}/${slug}`;
 
+  /**
+   * Share, with an actual fallback chain.
+   *
+   * navigator.share only exists on some browsers, only in a secure context,
+   * and throws rather than returning false when it is unavailable to this
+   * page. The clipboard can be denied outright. The previous version swallowed
+   * every one of those in a bare catch, so a failed share looked identical to
+   * a successful one: nothing happened either way.
+   *
+   * A cancelled share is not a failure — the user chose that — so AbortError
+   * exits quietly. Everything else falls through to the clipboard, and if that
+   * fails too the text is put on screen to copy by hand.
+   */
   async function share() {
     if (!t) return;
+    setShareError(null);
+
     const lines = [
       t.acronym ? `${t.acronym} — ${t.title}` : t.title,
       'Trial review by PediAid',
@@ -55,16 +71,23 @@ export function TrialDetailPage() {
       publicUrl,
     ].filter(Boolean);
     const text = lines.join('\n');
-    try {
-      if (navigator.share) {
+
+    if (navigator.share) {
+      try {
         await navigator.share({ title: t.title, text, url: publicUrl });
         return;
+      } catch (err) {
+        if ((err as Error)?.name === 'AbortError') return; // user cancelled
+        // Anything else: fall through to the clipboard.
       }
+    }
+
+    try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* dismissed, or clipboard denied — nothing useful to say */
+      setShareError(text);
     }
   }
 
@@ -202,6 +225,26 @@ export function TrialDetailPage() {
               {copied ? 'Link copied' : 'Share'}
             </button>
           </div>
+
+          {/* A failed like used to roll back silently, so a expired session or
+              a dropped request looked exactly like a button that does nothing. */}
+          {like.isError && (
+            <p className="text-xs text-danger mt-2.5">
+              Could not save your like: {like.error?.message ?? 'please try again.'}
+            </p>
+          )}
+
+          {shareError && (
+            <div className="mt-2.5">
+              <p className="text-xs text-ink-muted mb-1">
+                Sharing is not available here — copy this instead:
+              </p>
+              <textarea readOnly value={shareError} rows={4}
+                onFocus={(e) => e.currentTarget.select()}
+                className="w-full text-xs p-2 rounded-lg border border-border
+                           bg-white text-ink font-mono" />
+            </div>
+          )}
 
           {!isSignedIn && (
             <p className="text-xs text-ink-muted mt-2.5">
