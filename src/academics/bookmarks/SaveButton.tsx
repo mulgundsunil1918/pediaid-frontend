@@ -35,6 +35,27 @@ export function SaveButton({
     e.preventDefault();
     e.stopPropagation();
     if (!signedIn) {
+      // Before sending anyone to sign in, check whether a session is actually
+      // on disk. The in-memory store can be empty while localStorage holds a
+      // perfectly good token — a hydration race, or a store created before the
+      // token was written. Redirecting in that case sends someone to sign in
+      // when they already are, which is what this button appeared to do.
+      const raw = (() => {
+        try {
+          return localStorage.getItem('acad_access_token');
+        } catch {
+          return null;
+        }
+      })();
+
+      if (raw) {
+        // There is a session; the store just did not have it. Reload so the
+        // store rehydrates from disk, then the tap works normally.
+        setErr('Session was out of sync — reloading, tap Save again.');
+        setTimeout(() => window.location.reload(), 800);
+        return;
+      }
+
       navigate(`/academics/login?next=${encodeURIComponent(location.pathname)}`);
       return;
     }
