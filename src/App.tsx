@@ -138,10 +138,27 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   const isOnboarding =
     pathname === '/academics/welcome' || pathname === '/academics/complete-profile';
 
+  // Reading pages carry no header. On a trial, a guideline note or a chapter
+  // the content is the whole point, and a brand link, Dashboard, a search box
+  // and a notification bell are all pointing away from it. Each of these
+  // pages has its own Back control, so nothing is stranded.
+  //
+  // Matched on shape rather than a list, so a new detail route under these
+  // prefixes inherits it instead of being forgotten:
+  //   /academics/trials/<specialty>/<slug>   4 segments
+  //   /academics/guideline-notes/<slug>      3 segments
+  //   /academics/chapter/<slug>              3 segments
+  const seg = pathname.split('/').filter(Boolean);
+  const isReadingSurface =
+    (seg[0] === 'academics' &&
+      ((seg[1] === 'trials' && seg.length === 4) ||
+        (seg[1] === 'guideline-notes' && seg.length === 3) ||
+        (seg[1] === 'chapter' && seg.length === 3)));
+
   return (
     <div className="min-h-screen bg-bg">
-      {!isAdminSurface && !embedded && <SiteHeader />}
-      {!isAdminSurface && !isOnboarding && <ProfileNudge />}
+      {!isAdminSurface && !embedded && !isReadingSurface && <SiteHeader />}
+      {!isAdminSurface && !isOnboarding && !isReadingSurface && <ProfileNudge />}
       <div className="min-w-0">{children}</div>
     </div>
   );
