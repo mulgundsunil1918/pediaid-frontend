@@ -232,19 +232,16 @@ export function LoginPage() {
               Continue with Google
             </button>
 
-            <button
-              type="button"
-              onClick={() => handleProvider('apple')}
-              disabled={anyBusy}
-              className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-white bg-black hover:bg-gray-900 disabled:opacity-60 transition-colors"
-            >
-              {busy === 'apple' ? (
-                <Loader2 size={18} className="animate-spin" aria-hidden="true" />
-              ) : (
-                <AppleMark />
-              )}
-              Continue with Apple
-            </button>
+            {/* Sign in with Apple is not offered on the web.
+                Making it work here needs an Apple Services ID, a Team ID, a
+                Key ID and a private key registered with Firebase — a
+                configuration chain that was never completed, so the button
+                only ever returned "This sign-in method is not enabled".
+                A button that always fails is worse than no button.
+
+                It stays in the iOS app, where it works and where guideline
+                4.8 requires a privacy-preserving option alongside Google.
+                4.8 governs apps, not websites, so nothing is owed here. */}
           </div>
 
           <p className="text-xs text-ink-muted text-center mt-7 leading-relaxed">

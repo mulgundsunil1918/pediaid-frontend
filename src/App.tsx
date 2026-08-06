@@ -216,7 +216,12 @@ function RoutedErrorBoundary({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      {/* basename stays '/', deliberately, even though the app is served from
+          /academics/. Every route path in this file already begins with
+          /academics, so a matching basename would demand
+          /academics/academics/... Vite's base handles the asset URLs; the
+          router keeps matching the whole path. */}
+      <BrowserRouter basename="/">
         <UnauthorizedListener />
         <SessionRefreshBoot />
         <AppLayout>

@@ -29,7 +29,10 @@ export default defineConfig({
     __BUILD_ID__: JSON.stringify(BUILD_ID),
   },
   // Custom domain pediaid.bridgr.co.in — always serve from root
-  base: '/',
+  // Served from a folder on the main origin now, not its own subdomain, so
+  // that Academics and the app share one browser session. Assets resolve
+  // under /academics/; the router still matches full paths — see App.tsx.
+  base: '/academics/',
   server: {
     port: 5173,
     proxy: {
