@@ -1202,6 +1202,8 @@ export interface TrialSystem {
 export interface AdminTrial {
   id: string;
   slug: string;
+  /** PediAid ID no., e.g. PA-TRIAL-00001. Assigned on create, never changes. */
+  referenceCode: string | null;
   specialty: 'paediatrics' | 'neonatology';
   system: string;
   title: string;

@@ -270,6 +270,11 @@ function TrialRow({ t }: { t: AdminTrial }) {
           <p className="text-[11px] text-ink-muted mt-1">
             {t.journal ? `${t.journal} ` : ''}{t.year ?? ''} · added {safeDate(t.createdAt)}
           </p>
+          {t.referenceCode && (
+            <p className="text-[11px] text-ink-muted mt-0.5 font-mono">
+              {t.referenceCode}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-1 flex-shrink-0">

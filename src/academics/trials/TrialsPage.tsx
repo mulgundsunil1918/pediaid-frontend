@@ -101,12 +101,13 @@ export function TrialsListPage() {
   const { data: trials = [], isLoading, isError, error } =
     useTrials(specialty as Specialty, system, q);
 
-  // Only offer chips that this specialty actually has trials for — a filter
-  // row full of options that all lead to "nothing here" is worse than no
-  // filter row. Uses the unfiltered list, so chips do not vanish as you type.
+  // Every system is shown, so the reader can see the full shape of what is
+  // planned rather than only what happens to exist today. Systems with nothing
+  // published yet are rendered as "Coming soon" and are not clickable — a chip
+  // that leads to an empty list reads as a bug, a labelled one reads as a plan.
+  // Counted from the unfiltered list so chips do not change as you type.
   const { data: all = [] } = useTrials(specialty as Specialty, 'all', '');
   const present = new Set(all.map((t) => t.system));
-  const chips = systems.filter((s) => present.has(s.slug));
 
   return (
     <div className="min-h-screen bg-bg" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
@@ -133,7 +134,7 @@ export function TrialsListPage() {
                        text-ink bg-white focus:outline-none focus:border-accent" />
         </div>
 
-        {chips.length > 0 && (
+        {systems.length > 0 && (
           <div className="flex gap-2 flex-wrap mb-5">
             <button onClick={() => setSystem('all')}
               className={`px-3.5 py-1.5 rounded-full text-sm font-medium border ${
@@ -141,14 +142,29 @@ export function TrialsListPage() {
                                  : 'bg-white text-ink-muted border-border hover:text-ink'}`}>
               All
             </button>
-            {chips.map((s) => (
-              <button key={s.slug} onClick={() => setSystem(s.slug)}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-medium border ${
-                  system === s.slug ? 'bg-primary text-white border-primary'
-                                    : 'bg-white text-ink-muted border-border hover:text-ink'}`}>
-                {s.label}
-              </button>
-            ))}
+            {systems.map((s) => {
+              const ready = present.has(s.slug);
+              return (
+                <button key={s.slug}
+                  onClick={() => ready && setSystem(s.slug)}
+                  disabled={!ready}
+                  title={ready ? undefined : `${s.label} — coming soon`}
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-medium border
+                              transition-colors ${
+                    !ready
+                      ? 'bg-bg text-ink-muted/60 border-dashed border-border cursor-default'
+                      : system === s.slug
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white text-ink-muted border-border hover:text-ink'}`}>
+                  {s.label}
+                  {!ready && (
+                    <span className="ml-1.5 text-[10px] uppercase tracking-wide">
+                      Coming soon
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         )}
 

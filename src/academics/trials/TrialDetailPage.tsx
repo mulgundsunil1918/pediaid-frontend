@@ -6,8 +6,9 @@
 // top — they are what you do once you have read it.
 // =============================================================================
 
-import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Heart, Loader2, Share2 } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Check, ExternalLink, Heart, Loader2, Share2 } from 'lucide-react';
 import { useTrial, useToggleTrialLike } from './useTrials';
 import { useAuthStore } from '../../store/authStore';
 
@@ -30,30 +31,38 @@ function Section({ title, items }: { title: string; items: string[] }) {
 
 export function TrialDetailPage() {
   const { specialty = '', slug = '' } = useParams();
+  const navigate = useNavigate();
   const { data: t, isLoading, isError, error } = useTrial(slug);
   const like = useToggleTrialLike(slug);
   const isSignedIn = !!useAuthStore((s) => s.accessToken);
+  const [copied, setCopied] = useState(false);
+
+  // Trial pages are deliberately public — no sign-in, no gate — so the link is
+  // the point of sharing. Built from the live origin rather than a constant so
+  // it stays right on the deployed domain and on a local build.
+  const publicUrl = `${window.location.origin}/academics/trials/${specialty}/${slug}`;
 
   async function share() {
     if (!t) return;
-    // Deliberately no URL: Academics is kept off public surfaces, so the text
-    // carries what identifies the trial rather than a link to an unlisted site.
     const lines = [
       t.acronym ? `${t.acronym} — ${t.title}` : t.title,
-      t.subtitle ?? '',
+      'Trial review by PediAid',
       '',
       t.journal || t.year ? `${t.journal ?? ''} ${t.year ?? ''}`.trim() : '',
       t.summary ?? '',
       '',
-      'via PediAid — Landmark Trials',
+      t.referenceCode ? `PediAid ID no. ${t.referenceCode}` : '',
+      publicUrl,
     ].filter(Boolean);
     const text = lines.join('\n');
     try {
       if (navigator.share) {
-        await navigator.share({ title: t.title, text });
+        await navigator.share({ title: t.title, text, url: publicUrl });
         return;
       }
       await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       /* dismissed, or clipboard denied — nothing useful to say */
     }
@@ -140,28 +149,54 @@ export function TrialDetailPage() {
           </a>
         )}
 
-        <div className="flex items-center gap-3 pt-5 border-t border-border">
-          {/* Signing in is required to like, because a like is per-account —
-              that is what stops one person counting twice. Anonymous readers
-              still see the count; the button just tells them why it is off. */}
-          <button
-            onClick={() => isSignedIn && like.mutate(t.id)}
-            disabled={!isSignedIn || like.isPending}
-            title={isSignedIn ? undefined : 'Sign in to like'}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm
-                        font-semibold border transition-colors disabled:opacity-60 ${
-              t.likedByMe
-                ? 'bg-danger/10 text-danger border-danger/40'
-                : 'bg-white text-ink-muted border-border hover:text-ink'}`}>
-            <Heart size={15} className={t.likedByMe ? 'fill-danger' : ''} />
-            {t.likeCount > 0 ? t.likeCount : 'Like'}
-          </button>
+        <div className="pt-5 border-t border-border">
+          <div className="flex items-center gap-3">
+            {/* Liking is per-account — that is what stops one person counting
+                twice. Signed out, the button is not dead: it sends them to
+                sign in and brings them straight back to this trial. */}
+            <button
+              onClick={() =>
+                isSignedIn
+                  ? like.mutate(t.id)
+                  : navigate(`/academics/login?next=${encodeURIComponent(
+                      `/academics/trials/${specialty}/${slug}`)}`)
+              }
+              disabled={like.isPending}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm
+                          font-semibold border transition-colors disabled:opacity-60 ${
+                t.likedByMe
+                  ? 'bg-danger/10 text-danger border-danger/40'
+                  : 'bg-white text-ink-muted border-border hover:text-ink'}`}>
+              <Heart size={15} className={t.likedByMe ? 'fill-danger' : ''} />
+              {t.likeCount > 0 ? t.likeCount : 'Like'}
+            </button>
 
-          <button onClick={share}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm
-                       font-semibold bg-white text-ink-muted border border-border hover:text-ink">
-            <Share2 size={15} /> Share
-          </button>
+            <button onClick={share}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm
+                         font-semibold bg-white text-ink-muted border border-border hover:text-ink">
+              {copied ? <Check size={15} className="text-success" /> : <Share2 size={15} />}
+              {copied ? 'Link copied' : 'Share'}
+            </button>
+          </div>
+
+          {!isSignedIn && (
+            <p className="text-xs text-ink-muted mt-2.5">
+              <Link
+                to={`/academics/login?next=${encodeURIComponent(
+                  `/academics/trials/${specialty}/${slug}`)}`}
+                className="text-accent font-semibold hover:underline">
+                Sign in
+              </Link>{' '}
+              to like this trial — the same PediAid account you use in the app.
+              Sharing needs no account.
+            </p>
+          )}
+
+          {t.referenceCode && (
+            <p className="text-[11px] text-ink-muted mt-3 font-mono">
+              PediAid ID no. {t.referenceCode}
+            </p>
+          )}
         </div>
       </main>
     </div>

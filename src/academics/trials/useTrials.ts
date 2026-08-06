@@ -15,6 +15,8 @@ export interface TrialSystem {
 export interface Trial {
   id: string;
   slug: string;
+  /** PediAid ID no., e.g. PA-TRIAL-00001. Stable; the slug is not. */
+  referenceCode: string | null;
   specialty: Specialty;
   system: string;
   title: string;
