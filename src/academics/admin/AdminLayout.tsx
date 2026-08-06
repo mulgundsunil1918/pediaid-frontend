@@ -74,7 +74,13 @@ function NavItem({ to, icon, label, badge = 0, onClick }: NavItemProps) {
   return (
     <NavLink
       to={to}
-      end={to === '/academics/admin'}
+      // Exact matching for every item, not just the dashboard root. NavLink
+      // matches on prefix by default, so "All Never Again"
+      // (/academics/admin/never-again) also lit up on its own child
+      // (/academics/admin/never-again/pending) and two entries appeared
+      // selected at once. The same pair exists under CME. Every entry here is
+      // a leaf page, so exact is the right rule throughout.
+      end
       onClick={onClick}
       className={({ isActive }) =>
         [
