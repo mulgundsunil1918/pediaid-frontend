@@ -25,6 +25,7 @@ import {
   Wrench,
   GraduationCap,
   LogOut,
+  FlaskConical,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { AdminGuard } from './AdminGuard';
@@ -146,6 +147,12 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
         />
         {/* The emergency lever. Sits next to System Status because that is
             where someone looks when something is wrong. */}
+        <NavItem
+          to="/academics/admin/trials"
+          icon={<FlaskConical size={17} />}
+          label="Landmark Trials"
+          onClick={onNavClick}
+        />
         <NavItem
           to="/academics/admin/app-control"
           icon={<ShieldAlert size={17} />}

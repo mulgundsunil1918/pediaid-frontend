@@ -1189,3 +1189,126 @@ export function useRejectRoleRequest() {
     },
   });
 }
+
+// ---------------------------------------------------------------------------
+// Landmark Trials
+// ---------------------------------------------------------------------------
+
+export interface TrialSystem {
+  slug: string;
+  label: string;
+}
+
+export interface AdminTrial {
+  id: string;
+  slug: string;
+  specialty: 'paediatrics' | 'neonatology';
+  system: string;
+  title: string;
+  subtitle: string | null;
+  acronym: string | null;
+  journal: string | null;
+  year: number | null;
+  doi: string | null;
+  pubmedId: string | null;
+  externalUrl: string | null;
+  picot: {
+    population: string | null;
+    intervention: string | null;
+    comparator: string | null;
+    outcome: string | null;
+    timeframe: string | null;
+  };
+  summary: string | null;
+  results: string[];
+  limitations: string[];
+  takeaways: string[];
+  furtherReading: string[];
+  isPublished: boolean;
+  publishedAt: string | null;
+  likeCount: number;
+  createdAt: string;
+}
+
+export const trialKeys = {
+  all: ['admin', 'trials'] as const,
+  systems: ['admin', 'trial-systems'] as const,
+};
+
+export function useTrialSystems() {
+  return useQuery<TrialSystem[], Error>({
+    queryKey: trialKeys.systems,
+    queryFn: async () =>
+      (await apiFetch<{ systems: TrialSystem[] }>(
+        '/api/academics/trials/systems',
+      )).systems,
+    // The list changes only when a row is added to acad_trial_systems, which
+    // is a deliberate act — no point re-fetching it on every focus.
+    staleTime: 60 * 60 * 1000,
+  });
+}
+
+export function useAdminTrials() {
+  return useQuery<AdminTrial[], Error>({
+    queryKey: trialKeys.all,
+    queryFn: async () =>
+      (await apiFetch<{ trials: AdminTrial[] }>('/api/academics/admin/trials'))
+        .trials,
+  });
+}
+
+export function useCreateTrial() {
+  const qc = useQueryClient();
+  return useMutation<AdminTrial, Error, Record<string, unknown>>({
+    mutationFn: async (body) =>
+      (await apiFetch<{ trial: AdminTrial }>('/api/academics/admin/trials', {
+        method: 'POST',
+        body: JSON.stringify(body),
+      })).trial,
+    onSuccess: () => void qc.invalidateQueries({ queryKey: trialKeys.all }),
+  });
+}
+
+export function useUpdateTrial() {
+  const qc = useQueryClient();
+  return useMutation<AdminTrial, Error, { id: string; body: Record<string, unknown> }>({
+    mutationFn: async ({ id, body }) =>
+      (await apiFetch<{ trial: AdminTrial }>(`/api/academics/admin/trials/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+      })).trial,
+    onSuccess: () => void qc.invalidateQueries({ queryKey: trialKeys.all }),
+  });
+}
+
+export function useDeleteTrial() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, string>({
+    mutationFn: async (id) =>
+      apiFetch<void>(`/api/academics/admin/trials/${id}`, { method: 'DELETE' }),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: trialKeys.all }),
+  });
+}
+
+/**
+ * Publish or unpublish, optionally announcing to every user.
+ *
+ * `notify` is passed explicitly rather than implied by publishing: a push
+ * cannot be recalled, and the usual rhythm is to publish several trials then
+ * announce once.
+ */
+export function usePublishTrial() {
+  const qc = useQueryClient();
+  return useMutation<
+    { trial: AdminTrial; notified: boolean },
+    Error,
+    { id: string; publish: boolean; notify?: boolean }
+  >({
+    mutationFn: ({ id, publish, notify }) =>
+      apiFetch<{ trial: AdminTrial; notified: boolean }>(
+        `/api/academics/admin/trials/${id}/publish`,
+        { method: 'POST', body: JSON.stringify({ publish, notify: !!notify }) },
+      ),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: trialKeys.all }),
+  });
+}
