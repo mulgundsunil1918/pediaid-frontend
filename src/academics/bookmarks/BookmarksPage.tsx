@@ -115,6 +115,7 @@ function Row({ m }: { m: Mark }) {
 
 export function BookmarksPage() {
   const signedIn = !!useAuthStore((s) => s.accessToken);
+  const account = useAuthStore((s) => s.user);
   const { data, isLoading, isError, error } = useBookmarks();
   const [type, setType] = useState<ItemType | 'all'>('all');
   const [tag, setTag] = useState<string | 'all'>('all');
@@ -172,6 +173,14 @@ export function BookmarksPage() {
               <p className="text-white/70 text-xs sm:text-sm mt-0.5">
                 Everything you bookmarked, on every device
               </p>
+              {/* Whose list this is. Saved items are per account, so an empty
+                  list is ambiguous without it — signed in on a second account
+                  it reads as lost data rather than as the wrong account. */}
+              {account?.email && (
+                <p className="text-white/55 text-[11px] mt-1">
+                  Signed in as {account.email}
+                </p>
+              )}
             </div>
           </div>
         </div>
