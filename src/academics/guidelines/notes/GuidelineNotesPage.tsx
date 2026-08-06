@@ -17,6 +17,7 @@ import {
   useGuidelineNote, useGuidelineNotes, useToggleNoteLike,
 } from './useGuidelineNotes';
 import { useAuthStore } from '../../../store/authStore';
+import { SaveButton } from '../../bookmarks/SaveButton';
 
 const KINDS = [
   { value: 'all', label: 'All' },
@@ -290,6 +291,8 @@ export function GuidelineNoteDetailPage() {
               {copied ? <Check size={15} className="text-success" /> : <Share2 size={15} />}
               {copied ? 'Link copied' : 'Share'}
             </button>
+
+            <SaveButton itemType="guide" itemId={n.id} withLabel />
           </div>
 
           {like.isError && (

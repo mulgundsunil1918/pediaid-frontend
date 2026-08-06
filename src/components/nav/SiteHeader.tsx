@@ -133,12 +133,20 @@ export function SiteHeader() {
           </div>
           <div className="px-1 pt-2 border-t border-white/10 mt-2">
             {isAuthenticated ? (
-              <Link
-                to="/academics/submissions"
-                className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-blue-200 hover:bg-white/10 hover:text-white"
-              >
-                My Submissions
-              </Link>
+              <>
+                <Link
+                  to="/academics/saved"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-blue-200 hover:bg-white/10 hover:text-white"
+                >
+                  Saved
+                </Link>
+                <Link
+                  to="/academics/submissions"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-blue-200 hover:bg-white/10 hover:text-white"
+                >
+                  My Submissions
+                </Link>
+              </>
             ) : (
               <Link
                 to="/academics/login"

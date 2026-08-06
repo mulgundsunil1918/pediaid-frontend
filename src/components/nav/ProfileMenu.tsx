@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { User, ClipboardList, LogOut, ChevronDown, PlayCircle } from 'lucide-react';
+import { User, Bookmark, ClipboardList, LogOut, ChevronDown, PlayCircle } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { signOutFirebase } from '../../lib/firebaseAuth';
 
@@ -73,6 +73,15 @@ export function ProfileMenu() {
             <User size={15} aria-hidden="true" />
             Account
           </Link>
+          <Link
+            to="/academics/saved"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-ink hover:bg-gray-50"
+          >
+            <Bookmark size={15} aria-hidden="true" />
+            Saved
+          </Link>
+
           <Link
             to="/academics/submissions"
             onClick={() => setOpen(false)}

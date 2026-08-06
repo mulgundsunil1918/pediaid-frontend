@@ -11,6 +11,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Check, ExternalLink, Heart, Loader2, Share2 } from 'lucide-react';
 import { useTrial, useToggleTrialLike } from './useTrials';
 import { useAuthStore } from '../../store/authStore';
+import { SaveButton } from '../bookmarks/SaveButton';
 
 function Section({ title, items }: { title: string; items: string[] }) {
   if (!items.length) return null;
@@ -224,6 +225,8 @@ export function TrialDetailPage() {
               {copied ? <Check size={15} className="text-success" /> : <Share2 size={15} />}
               {copied ? 'Link copied' : 'Share'}
             </button>
+
+            <SaveButton itemType="trial" itemId={t.id} withLabel />
           </div>
 
           {/* A failed like used to roll back silently, so a expired session or
