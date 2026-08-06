@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Lock,
   Stethoscope,
+  FlaskConical,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -45,6 +46,18 @@ const MODULES: ModuleDef[] = [
     icon: <Flame size={22} />,
     gradient: 'linear-gradient(135deg, #0ea5e9 0%, #1e3a5f 100%)',
     href: '/academics/recent',
+    status: 'live',
+  },
+  {
+    id: 'trials',
+    title: 'Landmark Trials',
+    subtitle: 'Paediatrics & Neonatology',
+    description:
+      'The studies that changed practice — what they asked, what they found, '
+      + 'and where they are weak. Filter by system.',
+    icon: <FlaskConical size={22} />,
+    gradient: 'linear-gradient(135deg, #0f766e 0%, #1e3a5f 100%)',
+    href: '/academics/trials',
     status: 'live',
   },
   // Browse by System / CME Events / Nelson Pediatrics tiles intentionally

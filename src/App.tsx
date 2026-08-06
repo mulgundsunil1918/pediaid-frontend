@@ -28,6 +28,9 @@ const SubjectsPage     = lazy(() => import('./academics/browse/SubjectsPage').th
 const SystemsPage      = lazy(() => import('./academics/browse/SystemsPage').then(m => ({ default: m.SystemsPage })));
 const TopicsPage       = lazy(() => import('./academics/browse/TopicsPage').then(m => ({ default: m.TopicsPage })));
 const ChapterListPage  = lazy(() => import('./academics/browse/ChapterListPage').then(m => ({ default: m.ChapterListPage })));
+const TrialsHomePage   = lazy(() => import('./academics/trials/TrialsPage').then(m => ({ default: m.TrialsHomePage })));
+const TrialsListPage   = lazy(() => import('./academics/trials/TrialsPage').then(m => ({ default: m.TrialsListPage })));
+const TrialDetailPage  = lazy(() => import('./academics/trials/TrialDetailPage').then(m => ({ default: m.TrialDetailPage })));
 const RecentPage       = lazy(() => import('./academics/browse/RecentPage').then(m => ({ default: m.RecentPage })));
 const BrowsePage       = lazy(() => import('./academics/browse/BrowsePage').then(m => ({ default: m.BrowsePage })));
 const ExampleGuidePost = lazy(() => import('./academics/browse/ExampleGuidePost').then(m => ({ default: m.ExampleGuidePost })));
@@ -218,6 +221,9 @@ export default function App() {
 
             {/* ── PediAid Academics browse routes ── */}
             <Route path="/academics" element={<SubjectsPage />} />
+            <Route path="/academics/trials" element={<TrialsHomePage />} />
+            <Route path="/academics/trials/:specialty" element={<TrialsListPage />} />
+            <Route path="/academics/trials/:specialty/:slug" element={<TrialDetailPage />} />
             <Route path="/academics/recent" element={<RecentPage />} />
             <Route path="/academics/example/:slug" element={<ExampleGuidePost />} />
             <Route path="/academics/browse" element={<BrowsePage />} />
