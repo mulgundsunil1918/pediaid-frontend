@@ -1314,3 +1314,97 @@ export function usePublishTrial() {
     onSuccess: () => void qc.invalidateQueries({ queryKey: trialKeys.all }),
   });
 }
+
+// ---------------------------------------------------------------------------
+// Guideline notes & reviews
+// ---------------------------------------------------------------------------
+
+export interface AdminGuidelineNote {
+  id: string;
+  slug: string;
+  /** PediAid ID no., e.g. PA-NOTE-00001. Assigned on create, never changes. */
+  referenceCode: string | null;
+  kind: 'note' | 'review';
+  title: string;
+  subtitle: string | null;
+  society: string | null;
+  guidelineYear: number | null;
+  summary: string | null;
+  body: string[];
+  whatChanged: string[];
+  takeaways: string[];
+  externalUrl: string | null;
+  isPublished: boolean;
+  publishedAt: string | null;
+  likeCount: number;
+  createdAt: string;
+}
+
+const NOTES_KEY = ['admin', 'guideline-notes'] as const;
+
+export function useAdminGuidelineNotes() {
+  return useQuery<AdminGuidelineNote[], Error>({
+    queryKey: NOTES_KEY,
+    queryFn: async () =>
+      (await apiFetch<{ notes: AdminGuidelineNote[] }>(
+        '/api/academics/admin/guideline-notes',
+      )).notes,
+  });
+}
+
+export function useCreateGuidelineNote() {
+  const qc = useQueryClient();
+  return useMutation<AdminGuidelineNote, Error, Record<string, unknown>>({
+    mutationFn: async (body) =>
+      (await apiFetch<{ note: AdminGuidelineNote }>(
+        '/api/academics/admin/guideline-notes',
+        { method: 'POST', body: JSON.stringify(body) },
+      )).note,
+    onSuccess: () => void qc.invalidateQueries({ queryKey: NOTES_KEY }),
+  });
+}
+
+export function useUpdateGuidelineNote() {
+  const qc = useQueryClient();
+  return useMutation<
+    AdminGuidelineNote,
+    Error,
+    { id: string; body: Record<string, unknown> }
+  >({
+    mutationFn: async ({ id, body }) =>
+      (await apiFetch<{ note: AdminGuidelineNote }>(
+        `/api/academics/admin/guideline-notes/${id}`,
+        { method: 'PATCH', body: JSON.stringify(body) },
+      )).note,
+    onSuccess: () => void qc.invalidateQueries({ queryKey: NOTES_KEY }),
+  });
+}
+
+export function useDeleteGuidelineNote() {
+  const qc = useQueryClient();
+  return useMutation<{ success: boolean }, Error, string>({
+    mutationFn: (id) =>
+      apiFetch<{ success: boolean }>(
+        `/api/academics/admin/guideline-notes/${id}`,
+        { method: 'DELETE' },
+      ),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: NOTES_KEY }),
+  });
+}
+
+/** Publish/unpublish. `notify` is opt-in — a push cannot be recalled. */
+export function usePublishGuidelineNote() {
+  const qc = useQueryClient();
+  return useMutation<
+    { note: AdminGuidelineNote; notified: boolean },
+    Error,
+    { id: string; publish: boolean; notify?: boolean }
+  >({
+    mutationFn: ({ id, publish, notify }) =>
+      apiFetch<{ note: AdminGuidelineNote; notified: boolean }>(
+        `/api/academics/admin/guideline-notes/${id}/publish`,
+        { method: 'POST', body: JSON.stringify({ publish, notify }) },
+      ),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: NOTES_KEY }),
+  });
+}

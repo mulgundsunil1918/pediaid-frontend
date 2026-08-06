@@ -31,6 +31,8 @@ const ChapterListPage  = lazy(() => import('./academics/browse/ChapterListPage')
 const TrialsHomePage   = lazy(() => import('./academics/trials/TrialsPage').then(m => ({ default: m.TrialsHomePage })));
 const TrialsListPage   = lazy(() => import('./academics/trials/TrialsPage').then(m => ({ default: m.TrialsListPage })));
 const TrialDetailPage  = lazy(() => import('./academics/trials/TrialDetailPage').then(m => ({ default: m.TrialDetailPage })));
+const GuidelineNotesPage      = lazy(() => import('./academics/guidelines/notes/GuidelineNotesPage').then(m => ({ default: m.GuidelineNotesPage })));
+const GuidelineNoteDetailPage = lazy(() => import('./academics/guidelines/notes/GuidelineNotesPage').then(m => ({ default: m.GuidelineNoteDetailPage })));
 const RecentPage       = lazy(() => import('./academics/browse/RecentPage').then(m => ({ default: m.RecentPage })));
 const BrowsePage       = lazy(() => import('./academics/browse/BrowsePage').then(m => ({ default: m.BrowsePage })));
 const ExampleGuidePost = lazy(() => import('./academics/browse/ExampleGuidePost').then(m => ({ default: m.ExampleGuidePost })));
@@ -94,6 +96,7 @@ const AllNeverAgainPage = lazy(() => import('./academics/admin/pages/AllNeverAga
 const SendNotificationPage = lazy(() => import('./academics/admin/pages/SendNotificationPage').then(m => ({ default: m.SendNotificationPage })));
 const SystemStatusPage = lazy(() => import('./academics/admin/pages/SystemStatusPage').then(m => ({ default: m.SystemStatusPage })));
 const TrialsAdminPage = lazy(() => import('./academics/admin/pages/TrialsAdminPage').then(m => ({ default: m.TrialsAdminPage })));
+const GuidelineNotesAdminPage = lazy(() => import('./academics/admin/pages/GuidelineNotesAdminPage'));
 const AppControlPage = lazy(() => import('./academics/admin/pages/AppControlPage').then(m => ({ default: m.AppControlPage })));
 
 // ---------------------------------------------------------------------------
@@ -221,6 +224,8 @@ export default function App() {
 
             {/* ── PediAid Academics browse routes ── */}
             <Route path="/academics" element={<SubjectsPage />} />
+            <Route path="/academics/guideline-notes" element={<GuidelineNotesPage />} />
+            <Route path="/academics/guideline-notes/:slug" element={<GuidelineNoteDetailPage />} />
             <Route path="/academics/trials" element={<TrialsHomePage />} />
             <Route path="/academics/trials/:specialty" element={<TrialsListPage />} />
             <Route path="/academics/trials/:specialty/:slug" element={<TrialDetailPage />} />
@@ -288,6 +293,7 @@ export default function App() {
             <Route path="/academics/admin" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AdminOverviewPage /></Suspense>} />
             <Route path="/academics/admin/status" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><SystemStatusPage /></Suspense>} />
             <Route path="/academics/admin/trials" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><TrialsAdminPage /></Suspense>} />
+            <Route path="/academics/admin/guideline-notes" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><GuidelineNotesAdminPage /></Suspense>} />
             <Route path="/academics/admin/app-control" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AppControlPage /></Suspense>} />
             <Route path="/academics/admin/taxonomy" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><TaxonomyPage /></Suspense>} />
             <Route path="/academics/admin/users" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><UsersPage /></Suspense>} />

@@ -154,6 +154,12 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           onClick={onNavClick}
         />
         <NavItem
+          to="/academics/admin/guideline-notes"
+          icon={<FileText size={17} />}
+          label="Guideline Notes"
+          onClick={onNavClick}
+        />
+        <NavItem
           to="/academics/admin/app-control"
           icon={<ShieldAlert size={17} />}
           label="App control"

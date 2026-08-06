@@ -4,7 +4,7 @@
 // =============================================================================
 
 import { Link } from 'react-router-dom';
-import { BookOpen, ChevronRight, Lock } from 'lucide-react';
+import { BookOpen, ChevronRight, FileText, Lock } from 'lucide-react';
 import { GUIDELINE_SETS } from './registry';
 
 export function GuidelinesIndexPage() {
@@ -30,6 +30,33 @@ export function GuidelinesIndexPage() {
             the original PDF inline.
           </p>
         </div>
+
+        {/* Notes & reviews — written commentary, as opposed to the source
+            PDFs in the tiles below. Sits above them because "what changed"
+            is what someone checks first when a guideline is updated. */}
+        <Link
+          to="/academics/guideline-notes"
+          className="group flex items-center gap-4 mb-8 p-5 rounded-2xl border
+                     border-border bg-white hover:border-accent transition-colors"
+        >
+          <div
+            className="shrink-0 w-11 h-11 rounded-2xl flex items-center
+                       justify-center text-white"
+            style={{ background: 'linear-gradient(135deg,#0ea5e9 0%,#1e3a5f 100%)' }}
+          >
+            <FileText size={20} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h2 className="font-bold text-ink">Guideline Notes &amp; Reviews</h2>
+            <p className="text-sm text-ink-muted mt-0.5">
+              What changed in a recent guideline, and what it means in practice
+            </p>
+          </div>
+          <ChevronRight
+            size={18}
+            className="text-ink-muted group-hover:text-accent flex-shrink-0"
+          />
+        </Link>
 
         {/* Guideline-set tiles */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
