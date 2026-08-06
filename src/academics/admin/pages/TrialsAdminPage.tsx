@@ -239,6 +239,9 @@ function TrialRow({ t }: { t: AdminTrial }) {
   const del = useDeleteTrial();
   const [editing, setEditing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [moderating, setModerating] = useState<'reject' | 'request_changes' | null>(null);
+  const [reason, setReason] = useState('');
+  const moderate = useModerateTrial();
   const [confirmNotify, setConfirmNotify] = useState(false);
 
   if (editing) return <TrialForm initial={t} onDone={() => setEditing(false)} />;
@@ -277,17 +280,32 @@ function TrialRow({ t }: { t: AdminTrial }) {
           )}
         </div>
 
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <button onClick={() => setEditing(true)} title="Edit"
-            className="p-2 rounded-lg text-ink-muted hover:text-ink hover:bg-gray-50">
-            <Pencil size={15} />
-          </button>
+        {/* Same words as the review queue below — Publish, Ask for edits,
+            Reject. An eye icon meant nothing to anyone and made this row
+            speak a different language from every other moderation surface. */}
+        <div className="flex items-center gap-1.5 flex-shrink-0 flex-wrap justify-end">
           <button
             onClick={() => publish.mutate({ id: t.id, publish: !t.isPublished })}
             disabled={publish.isPending}
-            title={t.isPublished ? 'Unpublish' : 'Publish'}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${
+              t.isPublished
+                ? 'text-ink-muted border border-border hover:text-ink'
+                : 'bg-success text-white'}`}>
+            {t.isPublished ? 'Unpublish' : 'Publish'}
+          </button>
+          <button onClick={() => setModerating('request_changes')}
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold text-ink-muted
+                       border border-border hover:text-ink">
+            Ask for edits
+          </button>
+          <button onClick={() => setModerating('reject')}
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold text-danger
+                       border border-danger/40 hover:bg-danger/5">
+            Reject
+          </button>
+          <button onClick={() => setEditing(true)} title="Edit"
             className="p-2 rounded-lg text-ink-muted hover:text-ink hover:bg-gray-50">
-            {t.isPublished ? <EyeOff size={15} /> : <Eye size={15} />}
+            <Pencil size={15} />
           </button>
           {confirmDelete ? (
             <>
@@ -422,7 +440,7 @@ function SubmissionRow({ t }: { t: AdminTrial }) {
             <button onClick={() => setMode('request_changes')}
               className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-ink-muted
                          border border-border hover:text-ink">
-              Request changes
+              Ask for edits
             </button>
             <button onClick={() => setMode('reject')}
               className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-danger

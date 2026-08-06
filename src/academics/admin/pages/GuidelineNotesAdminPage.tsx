@@ -224,9 +224,11 @@ function NoteRow({ n }: { n: AdminGuidelineNote }) {
           <button
             onClick={() => publish.mutate({ id: n.id, publish: !n.isPublished })}
             disabled={publish.isPending}
-            title={n.isPublished ? 'Unpublish' : 'Publish'}
-            className="p-2 rounded-lg text-ink-muted hover:text-ink hover:bg-gray-50">
-            {n.isPublished ? <EyeOff size={15} /> : <Eye size={15} />}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${
+              n.isPublished
+                ? 'text-ink-muted border border-border hover:text-ink'
+                : 'bg-success text-white'}`}>
+            {n.isPublished ? 'Unpublish' : 'Publish'}
           </button>
           <button onClick={announce} disabled={!n.isPublished || publish.isPending}
             title={n.isPublished ? 'Announce to everyone' : 'Publish first'}
@@ -305,7 +307,7 @@ function GuideSubmissionRow({ n }: { n: AdminGuidelineNote }) {
             <button onClick={() => setMode('request_changes')}
               className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-ink-muted
                          border border-border hover:text-ink">
-              Request changes
+              Ask for edits
             </button>
             <button onClick={() => setMode('reject')}
               className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-danger
