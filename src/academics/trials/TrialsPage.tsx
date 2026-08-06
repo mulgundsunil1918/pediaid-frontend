@@ -2,16 +2,17 @@
 // academics/trials/TrialsPage.tsx
 //
 //   /academics/trials                  — two specialty cards
-//   /academics/trials/:specialty       — flat list + system filter chips
+//   /academics/trials/:specialty       — flat list + a system filter
 //
 // Systems filter the list; they do not nest it. A trial that spans two systems
 // should not have to pick a folder, and nobody should click twice to see
-// anything. So one list, chips on top, tap to narrow.
+// anything. So one list, one filter above it, narrow as needed.
 // =============================================================================
 
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Baby, FlaskConical, Heart, Loader2, Plus, Search, Stethoscope } from 'lucide-react';
+import { ArrowLeft, Baby, ChevronDown, FlaskConical, Heart, Loader2, Plus, Search,
+  SlidersHorizontal, Stethoscope } from 'lucide-react';
 import {
   useTrials, useTrialSystems, type Specialty,
 } from './useTrials';
@@ -121,11 +122,11 @@ export function TrialsListPage() {
   const { data: trials = [], isLoading, isError, error } =
     useTrials(specialty as Specialty, system, q);
 
-  // Every system is shown, so the reader can see the full shape of what is
-  // planned rather than only what happens to exist today. Systems with nothing
-  // published yet are rendered as "Coming soon" and are not clickable — a chip
-  // that leads to an empty list reads as a bug, a labelled one reads as a plan.
-  // Counted from the unfiltered list so chips do not change as you type.
+  // Every system is offered, so the reader sees the full shape of what is
+  // planned rather than only what exists today. Systems with nothing published
+  // are disabled and labelled "coming soon" — an option that leads to an empty
+  // list reads as a bug, a labelled one reads as a plan. Counted from the
+  // unfiltered list so the options do not change as you type.
   const { data: all = [] } = useTrials(specialty as Specialty, 'all', '');
   const present = new Set(all.map((t) => t.system));
 
@@ -154,37 +155,57 @@ export function TrialsListPage() {
                        text-ink bg-white focus:outline-none focus:border-accent" />
         </div>
 
+        {/* A dropdown, not a row of chips.
+            Fifteen systems wrapped to five or six lines on a phone and pushed
+            the trials themselves off the screen — the reader arrived at a
+            filter and had to scroll to find any content. A select collapses
+            that to one line and opens the platform's own picker on mobile.
+            Systems with nothing published are disabled and labelled, so the
+            full shape is still visible without being clickable. */}
         {systems.length > 0 && (
-          <div className="flex gap-2 flex-wrap mb-5">
-            <button onClick={() => setSystem('all')}
-              className={`px-3.5 py-1.5 rounded-full text-sm font-medium border ${
-                system === 'all' ? 'bg-primary text-white border-primary'
-                                 : 'bg-white text-ink-muted border-border hover:text-ink'}`}>
-              All
-            </button>
-            {systems.map((s) => {
-              const ready = present.has(s.slug);
-              return (
-                <button key={s.slug}
-                  onClick={() => ready && setSystem(s.slug)}
-                  disabled={!ready}
-                  title={ready ? undefined : `${s.label} — coming soon`}
-                  className={`px-3.5 py-1.5 rounded-full text-sm font-medium border
-                              transition-colors ${
-                    !ready
-                      ? 'bg-bg text-ink-muted/60 border-dashed border-border cursor-default'
-                      : system === s.slug
-                        ? 'bg-primary text-white border-primary'
-                        : 'bg-white text-ink-muted border-border hover:text-ink'}`}>
-                  {s.label}
-                  {!ready && (
-                    <span className="ml-1.5 text-[10px] uppercase tracking-wide">
-                      Coming soon
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+          <div className="mb-5 flex items-center gap-2">
+            <label htmlFor="system-filter" className="sr-only">
+              Filter by system
+            </label>
+            <div className="relative w-full max-w-md">
+              <SlidersHorizontal
+                size={15}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-muted
+                           pointer-events-none"
+              />
+              <select
+                id="system-filter"
+                value={system}
+                onChange={(e) => setSystem(e.target.value)}
+                className="w-full appearance-none pl-10 pr-9 py-2.5 rounded-xl border
+                           border-border bg-white text-sm font-medium text-ink
+                           focus:outline-none focus:border-accent"
+              >
+                <option value="all">All systems</option>
+                {systems.map((s) => {
+                  const ready = present.has(s.slug);
+                  return (
+                    <option key={s.slug} value={s.slug} disabled={!ready}>
+                      {s.label}{ready ? '' : ' — coming soon'}
+                    </option>
+                  );
+                })}
+              </select>
+              <ChevronDown
+                size={16}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted
+                           pointer-events-none"
+              />
+            </div>
+
+            {system !== 'all' && (
+              <button
+                onClick={() => setSystem('all')}
+                className="text-xs font-semibold text-accent hover:underline flex-shrink-0"
+              >
+                Clear
+              </button>
+            )}
           </div>
         )}
 
