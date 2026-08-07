@@ -29,8 +29,13 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const { accessToken } = useAuthStore.getState();
 
+  // Content-Type only when there is a body. Stamping application/json on a
+  // bodyless POST makes Fastify reject it outright — "Body cannot be empty
+  // when content-type is set to 'application/json'" — which is what broke
+  // Like the moment sign-in started working: the like endpoints take no
+  // payload at all.
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    ...(options.body != null ? { 'Content-Type': 'application/json' } : {}),
     ...(options.headers as Record<string, string>),
   };
 
