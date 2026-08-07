@@ -168,7 +168,6 @@ export function SubmitNeverAgainPage() {
             <textarea
               className={inputCls}
               rows={4}
-              maxLength={500}
               value={whatHappened}
               onChange={(e) => setWhatHappened(e.target.value)}
               placeholder="Briefly describe the clinical scenario…"
@@ -180,7 +179,6 @@ export function SubmitNeverAgainPage() {
             <textarea
               className={inputCls}
               rows={4}
-              maxLength={500}
               value={whatWentWrong}
               onChange={(e) => setWhatWentWrong(e.target.value)}
               placeholder="What was the root cause or missed step?"
@@ -192,7 +190,6 @@ export function SubmitNeverAgainPage() {
             <textarea
               className={inputCls}
               rows={3}
-              maxLength={500}
               value={theLesson}
               onChange={(e) => setTheLesson(e.target.value)}
               placeholder="What would you do differently? What should others know?"

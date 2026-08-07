@@ -325,7 +325,6 @@ export function RoleRequestModal({ open, onClose }: RoleRequestModalProps) {
               <textarea
                 id="role-request-reason"
                 rows={4}
-                maxLength={500}
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Share your background, qualifications, or motivation…"
@@ -334,9 +333,6 @@ export function RoleRequestModal({ open, onClose }: RoleRequestModalProps) {
                            outline-none focus:border-accent focus:ring-2 focus:ring-accent/20
                            transition-colors"
               />
-              <p className="text-xs text-ink-muted text-right mt-1">
-                {reason.length} / 500
-              </p>
             </div>
 
             {/* ------------------------------------------------------------ */}
