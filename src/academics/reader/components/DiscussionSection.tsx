@@ -3,6 +3,7 @@
 // =============================================================================
 
 import { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Flag, MessageSquare, Edit2, Check, X } from 'lucide-react';
 import { VerifiedBadge } from '../../browse/components/VerifiedBadge';
 import { useAuthStore } from '../../../store/authStore';
@@ -335,9 +336,13 @@ export function DiscussionSection({ chapterId }: { chapterId: string }) {
       ) : (
         <div className="mb-6 rounded-xl border border-border bg-gray-50 px-5 py-4 text-center">
           <p className="text-sm text-ink-muted">
-            <a href="/login" className="text-accent hover:underline font-medium">
+            {/* /academics/login, and a Link rather than an anchor. "/login"
+                was a subdomain-era path: on the shared origin it belongs to
+                the app, so signing in from a discussion left Academics
+                entirely. Every other sign-in link already points here. */}
+            <Link to="/academics/login" className="text-accent hover:underline font-medium">
               Sign in
-            </a>{' '}
+            </Link>{' '}
             to join the discussion.
           </p>
         </div>

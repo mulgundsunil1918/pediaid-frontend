@@ -41,7 +41,20 @@ async function fetchDeployedBuildId(): Promise<string | null> {
     // no-store, not no-cache: no-cache still revalidates through the HTTP
     // cache, while no-store refuses to involve it at all. That distinction is
     // the entire point of this file.
-    const res = await fetch(`/version.json?t=${Date.now()}`, { cache: 'no-store' });
+    //
+    // Base-relative, not '/version.json'. Academics moved from its own
+    // subdomain to a folder on the main origin, and the root of that origin
+    // belongs to the app, whose version.json describes the APK
+    // ({"app_name","version","build_number"}) and carries no buildId at all.
+    // So the absolute path resolved to a real 200 that could never match,
+    // fetchDeployedBuildId returned null every time, and this whole check sat
+    // dead — silently, because "no buildId" is indistinguishable from
+    // "offline" here. BASE_URL is whatever vite.config base is set to, so it
+    // stays correct if the mount point ever moves again.
+    const res = await fetch(
+      `${import.meta.env.BASE_URL}version.json?t=${Date.now()}`,
+      { cache: 'no-store' },
+    );
     if (!res.ok) return null;
     const body = (await res.json()) as { buildId?: string };
     return typeof body.buildId === 'string' ? body.buildId : null;

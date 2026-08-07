@@ -2,22 +2,28 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <title>Redirecting…</title>
     <script>
-      // GitHub Pages SPA redirect — encodes the path into a query string
-      // so index.html can restore it via history.replaceState.
+      // This file is now only ever served by the retired subdomain,
+      // academics.pediaid.bridgr.co.in. The live Academics app moved to
+      // pediaid.bridgr.co.in/academics, which is served from the app repo's
+      // gh-pages branch and has its own 404 shim at the domain root.
       //
-      // This site deploys at the domain root (vite base: '/'), not under a
-      // /reponame/ project-pages subpath, so the redirect target must be
-      // the true root '/' — there is no real '/academics/' page for GitHub
-      // Pages to serve. Redirecting there previously 404'd again, and each
-      // pass re-encoded the already-encoded query string, growing it until
-      // the browser hit "URI Too Long".
+      // So this is no longer an SPA path-restorer — it is a forwarder, and it
+      // sends the visitor straight to the new origin instead of bouncing them
+      // through ?p= first. The old two-step went wrong: 404.html encoded
+      // "academics/admin" into ?p=, index.html then forwarded to the new
+      // origin from a pathname of "/", and the new origin restored ?p= on top
+      // of its own /academics base — landing on /academics/academics/admin.
+      // One hop, no encoding, nothing to double up.
+      //
+      // Bookmarks on the old subdomain are the reason this matters: they point
+      // at deep paths, not the root, and the root redirect never sees them.
       var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        '/?p=' + encodeURIComponent(l.pathname.slice(1) + l.search) +
-        (l.hash || '')
-      );
+      var p = l.pathname;
+      var rest = p.indexOf('/academics') === 0 ? p.slice('/academics'.length) : p;
+      if (rest.charAt(0) !== '/') rest = '/' + rest;
+      l.replace('https://pediaid.bridgr.co.in/academics' + rest + l.search + l.hash);
     </script>
   </head>
   <body></body>

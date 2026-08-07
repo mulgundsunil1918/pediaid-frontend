@@ -250,8 +250,16 @@ export function NelsonBrowser() {
   const [selected, setSelected] = useState<{ number: string; title: string; isSubchapter?: boolean } | null>(null);
 
   useEffect(() => {
-    fetch('/nelson_toc.json')
-      .then(r => r.json())
+    // Base-relative: this file ships in public/, so it lands wherever the app
+    // is mounted — /academics/ now, not the origin root. The absolute path was
+    // left over from the subdomain days and resolved to the app's 404 page,
+    // whose HTML body then failed to parse as JSON, so the whole browser
+    // showed "Failed to load index". Same idiom as guidelines/registry.ts.
+    fetch(`${import.meta.env.BASE_URL}nelson_toc.json`)
+      .then(r => {
+        if (!r.ok) throw new Error(`${r.status}`);
+        return r.json();
+      })
       .then((data: NelsonPart[]) => { setParts(data); setLoading(false); })
       .catch(() => { setError('Failed to load index'); setLoading(false); });
   }, []);
