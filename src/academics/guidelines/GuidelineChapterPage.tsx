@@ -79,7 +79,13 @@ export function GuidelineChapterPage() {
 
         {/* Header */}
         {chapter && (
-          <div className="flex items-start gap-3 mb-4">
+          /* Wraps, because this row does not fit on a phone. The two actions
+             are shrink-0 and cost about 300px together, which left the title
+             and the meta line a sliver to render in — the section, page count
+             and size broke one word per line, and the title ran under the
+             buttons. Wrapping drops the actions onto their own full-width row
+             below 640px and keeps them inline from sm up. */
+          <div className="flex flex-wrap items-start gap-3 mb-4">
             <div
               className="shrink-0 w-10 h-10 rounded-xl flex items-center
                          justify-center text-white text-sm font-bold"
@@ -101,7 +107,7 @@ export function GuidelineChapterPage() {
                 {' · '}{guideline.fullName}
               </p>
             </div>
-            <div className="shrink-0 flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto sm:shrink-0">
               <a
                 href={chapter.url}
                 target="_blank"
