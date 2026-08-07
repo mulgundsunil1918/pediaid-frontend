@@ -62,10 +62,30 @@ export function refreshAccessToken(): Promise<boolean> {
       });
 
       if (!res.ok) {
-        // Refresh token is truly dead (expired, revoked, or rotated out
-        // by another device). Clear everything and let the user log in
-        // again from scratch.
-        clearAuth();
+        // The refresh token is dead — expired, revoked, or rotated out by
+        // another surface. Drop ONLY the refresh token.
+        //
+        // This used to clearAuth(), and that was the engine of the "Save
+        // keeps asking me to sign in" loop inside the app. Refresh tokens
+        // here are single-use: the backend revokes one the moment it is
+        // spent. The app hands its session to this web view, this app
+        // rotates the pair on boot — revoking the app's copy — and the next
+        // time the web view opened, the app re-injected that now-revoked
+        // token over our good one. Boot rotation then failed, landed here,
+        // and clearAuth() threw away a perfectly valid access token along
+        // with the dead refresh token. Result: signed out on arrival, every
+        // Save and Like bouncing to Google, intermittently, for days.
+        //
+        // A dead refresh token says nothing about the access token, which
+        // has a 7-day TTL of its own. Keep it. If it is genuinely expired,
+        // the next real API call 401s, the retry finds no refresh token,
+        // and THAT path signs the user out — the only place that should.
+        const { accessToken } = useAuthStore.getState();
+        if (accessToken) {
+          useAuthStore.setState({ refreshToken: null });
+        } else {
+          clearAuth();
+        }
         return false;
       }
 

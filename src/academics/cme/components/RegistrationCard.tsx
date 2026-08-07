@@ -87,7 +87,10 @@ export function RegistrationCard({
         <div className="flex items-center justify-between text-sm">
           <span className="flex items-center gap-1.5 text-ink-muted">
             <Users size={14} />
-            {event.registeredCount.toLocaleString('en-IN')} registered
+            {/* ?? 0 — events reached from a saved-items link can arrive
+                without a count, and .toLocaleString on undefined took the
+                whole detail page down with it. */}
+            {(event.registeredCount ?? 0).toLocaleString('en-IN')} registered
           </span>
           {capacity != null && (
             <span className="text-ink-muted">
