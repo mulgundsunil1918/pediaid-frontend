@@ -159,7 +159,14 @@ function ModuleTile({ m }: { m: ModuleDef }) {
                         tracking-wider mb-2">
             {m.subtitle}
           </p>
-          <p className="text-sm text-ink leading-relaxed">{m.description}</p>
+          {/* Name and kicker only on a phone. These paragraphs run to four or
+              five lines each on a narrow screen, so a five-module grid became
+              a wall of prose you had to scroll past to reach the modules —
+              the descriptions cost more than they explained. Kept from sm up,
+              where the space is free. */}
+          <p className="hidden sm:block text-sm text-ink leading-relaxed">
+            {m.description}
+          </p>
           {m.lastUpdated && (
             <span
               className="inline-flex items-center gap-1.5 mt-2.5 w-fit
