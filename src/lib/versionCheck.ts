@@ -93,8 +93,18 @@ async function checkOnce(): Promise<void> {
   // an ordinary, cacheable navigation.
   const { pathname, search, hash } = window.location;
   const cleanSearch = search.replace(/[?&]_cb=\d+/g, '').replace(/^&/, '?');
-  const encoded = encodeURIComponent(pathname.slice(1) + cleanSearch);
-  window.location.replace(`/?p=${encoded}&_cb=${Date.now()}${hash}`);
+  // Base-relative, exactly as in chunkRecovery: '/' is the main app on this
+  // origin now, and this reload used to land there — which is how a routine
+  // new-build reload opened PediAid's own login screen inside the Academics
+  // web view. Ironically this only started firing once the fetch above was
+  // pointed at the right version.json; while the check was dead, so was the
+  // landmine.
+  const base = import.meta.env.BASE_URL;
+  const rest = pathname.startsWith(base)
+    ? pathname.slice(base.length)
+    : pathname.replace(/^\//, '');
+  const encoded = encodeURIComponent(rest + cleanSearch);
+  window.location.replace(`${base}?p=${encoded}&_cb=${Date.now()}${hash}`);
 }
 
 /**

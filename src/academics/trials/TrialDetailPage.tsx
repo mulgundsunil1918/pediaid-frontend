@@ -8,27 +8,12 @@
 
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Check, ExternalLink, Heart, Loader2, Share2 } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, BarChart3, BookOpen, Check, ExternalLink,
+  Heart, HelpCircle, Lightbulb, Loader2, PenLine, Share2, Users } from 'lucide-react';
 import { useTrial, useToggleTrialLike } from './useTrials';
 import { useAuthStore } from '../../store/authStore';
 import { SaveButton } from '../bookmarks/SaveButton';
-
-function Section({ title, items }: { title: string; items: string[] }) {
-  if (!items.length) return null;
-  return (
-    <section className="mb-6">
-      <h2 className="text-sm font-bold text-ink mb-2">{title}</h2>
-      <ul className="space-y-1.5">
-        {items.map((t, i) => (
-          <li key={i} className="flex gap-2 text-sm text-ink leading-relaxed">
-            <span className="text-accent mt-1.5 w-1 h-1 rounded-full bg-accent flex-shrink-0" />
-            <span>{t}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
+import { InfoSection, TONES } from '../components/InfoSection';
 
 export function TrialDetailPage() {
   const { specialty = '', slug = '' } = useParams();
@@ -122,8 +107,12 @@ export function TrialDetailPage() {
     <div className="min-h-screen bg-bg" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       <div className="border-b border-border" style={{ backgroundColor: '#1e3a5f' }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
-          <Link to={`/academics/trials/${specialty}`}
-            className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white mb-4">
+          {/* replace: an in-page Back must not add history, or the phone's
+              back button walks the reader forward through every page they
+              already left. block w-fit: inline, it shared a line with the
+              acronym chip and the two collided. */}
+          <Link to={`/academics/trials/${specialty}`} replace
+            className="flex w-fit items-center gap-1.5 text-xs text-white/70 hover:text-white mb-4">
             <ArrowLeft size={13} /> Back
           </Link>
           {t.acronym && (
@@ -147,20 +136,28 @@ export function TrialDetailPage() {
             deciding how much weight to give the takeaways needs to know whose
             reading they are — the paper's authors or the reviewer's. */}
         {(t.originalAuthors || t.reviewAuthor) && (
-          <div className="mb-6 rounded-card border border-border bg-white p-4 space-y-1.5">
+          <div className="mb-5 rounded-2xl border p-4 space-y-2"
+               style={{ backgroundColor: '#F8FAFC', borderColor: '#E2E8F0',
+                        borderLeft: '3px solid #64748B' }}>
             {t.originalAuthors && (
-              <p className="text-xs text-ink">
-                <span className="font-semibold text-ink-muted">Original authors </span>
-                {t.originalAuthors}
+              <p className="flex gap-2 text-xs text-ink items-start">
+                <Users size={13} className="mt-0.5 flex-shrink-0 text-slate-500" />
+                <span>
+                  <span className="font-bold text-slate-600">Original authors </span>
+                  {t.originalAuthors}
+                </span>
               </p>
             )}
             {t.reviewAuthor && (
-              <p className="text-xs text-ink">
-                <span className="font-semibold text-ink-muted">Review by </span>
-                {t.reviewAuthor}
+              <p className="flex gap-2 text-xs text-ink items-start">
+                <PenLine size={13} className="mt-0.5 flex-shrink-0 text-slate-500" />
+                <span>
+                  <span className="font-bold text-slate-600">Review by </span>
+                  {t.reviewAuthor}
+                </span>
               </p>
             )}
-            <p className="text-[11px] text-ink-muted pt-1">
+            <p className="text-[11px] text-ink-muted pt-0.5">
               Summary and takeaways are the reviewer's, not the authors'.
               Always read the source before acting on it.
             </p>
@@ -168,27 +165,44 @@ export function TrialDetailPage() {
         )}
 
         {t.summary && (
-          <p className="text-sm text-ink leading-relaxed mb-6">{t.summary}</p>
+          <p className="text-[15px] text-ink leading-relaxed mb-5 font-medium">
+            {t.summary}
+          </p>
         )}
 
         {picot.length > 0 && (
-          <section className="mb-6 rounded-card border border-border bg-white p-4">
-            <h2 className="text-sm font-bold text-ink mb-3">The question</h2>
-            <dl className="space-y-2">
+          <section className="mb-4 rounded-2xl border p-4 sm:p-5"
+                   style={{ backgroundColor: TONES.blue.bg, borderColor: TONES.blue.border }}>
+            <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase
+                           tracking-wide mb-3"
+                style={{ color: TONES.blue.heading }}>
+              <span className="w-6 h-6 rounded-lg flex items-center justify-center
+                               flex-shrink-0 bg-white/70">
+                <HelpCircle size={14} />
+              </span>
+              The question
+            </h2>
+            <dl className="space-y-2.5">
               {picot.map(([k, v]) => (
                 <div key={k} className="flex gap-3 text-sm">
-                  <dt className="w-24 flex-shrink-0 font-semibold text-ink-muted">{k}</dt>
-                  <dd className="text-ink">{v}</dd>
+                  <dt className="w-24 flex-shrink-0 pt-0.5">
+                    <span className="inline-block px-1.5 py-0.5 rounded-md bg-white/80
+                                     text-[10.5px] font-bold uppercase tracking-wide"
+                          style={{ color: TONES.blue.heading }}>
+                      {k}
+                    </span>
+                  </dt>
+                  <dd className="text-ink leading-relaxed">{v}</dd>
                 </div>
               ))}
             </dl>
           </section>
         )}
 
-        <Section title="What it found" items={t.results} />
-        <Section title="Where it is weak" items={t.limitations} />
-        <Section title="What to take away" items={t.takeaways} />
-        <Section title="Further reading" items={t.furtherReading} />
+        <InfoSection tone={TONES.green}  icon={BarChart3}     title="What it found"     items={t.results} />
+        <InfoSection tone={TONES.amber}  icon={AlertTriangle} title="Where it is weak"  items={t.limitations} />
+        <InfoSection tone={TONES.violet} icon={Lightbulb}     title="What to take away" items={t.takeaways} />
+        <InfoSection tone={TONES.slate}  icon={BookOpen}      title="Further reading"   items={t.furtherReading} />
 
         {t.externalUrl && (
           <a href={t.externalUrl} target="_blank" rel="noreferrer"

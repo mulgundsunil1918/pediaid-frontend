@@ -11,8 +11,10 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
-  ArrowLeft, Check, ExternalLink, FileText, Heart, Loader2, Search, Share2,
+  ArrowLeft, Check, ExternalLink, FileText, GitCompareArrows, Heart,
+  Lightbulb, ListChecks, Loader2, Search, Share2,
 } from 'lucide-react';
+import { InfoSection, TONES } from '../../components/InfoSection';
 import {
   useGuidelineNote, useGuidelineNotes, useToggleNoteLike,
 } from './useGuidelineNotes';
@@ -239,8 +241,11 @@ export function GuidelineNoteDetailPage() {
     <div className="min-h-screen bg-bg" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       <div className="border-b border-border" style={{ backgroundColor: '#1e3a5f' }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
-          <Link to="/academics/guideline-notes"
-            className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white mb-4">
+          {/* replace + block: an in-page Back must not add history (or the
+              phone's back button replays every page already left), and inline
+              it shared a line with the kind chip and collided with it. */}
+          <Link to="/academics/guideline-notes" replace
+            className="flex w-fit items-center gap-1.5 text-xs text-white/70 hover:text-white mb-4">
             <ArrowLeft size={13} /> Back
           </Link>
           <span className="inline-block px-2 py-0.5 rounded-md bg-white/15 text-white
@@ -261,12 +266,14 @@ export function GuidelineNoteDetailPage() {
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         {n.summary && (
-          <p className="text-sm text-ink leading-relaxed mb-6">{n.summary}</p>
+          <p className="text-[15px] text-ink leading-relaxed mb-5 font-medium">
+            {n.summary}
+          </p>
         )}
 
-        <Section title="What changed" items={n.whatChanged} />
-        <Section title="Key points" items={n.body} />
-        <Section title="What to take away" items={n.takeaways} />
+        <InfoSection tone={TONES.blue}   icon={GitCompareArrows} title="What changed"      items={n.whatChanged} />
+        <InfoSection tone={TONES.green}  icon={ListChecks}       title="Key points"        items={n.body} />
+        <InfoSection tone={TONES.violet} icon={Lightbulb}        title="What to take away" items={n.takeaways} />
 
         {n.externalUrl && (
           <a href={n.externalUrl} target="_blank" rel="noreferrer"

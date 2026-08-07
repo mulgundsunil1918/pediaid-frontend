@@ -79,8 +79,17 @@ export function recoverFromStaleChunk(message: string): void {
     const { pathname, search, hash } = window.location;
     // Strip any previous cache-buster so it can't accumulate.
     const cleanSearch = search.replace(/[?&]_cb=\d+/g, '').replace(/^&/, '?');
-    const encoded = encodeURIComponent(pathname.slice(1) + cleanSearch);
-    window.location.replace(`/?p=${encoded}&_cb=${Date.now()}${hash}`);
+    // Base-relative, NOT the origin root. On the old subdomain '/' was this
+    // app; on the shared origin '/' is the main PediAid app — so this line
+    // used to teleport a stale Academics tab into the app's login screen,
+    // nested inside the Academics screen of the app itself. The path after
+    // the base is what index.html's ?p= restore expects.
+    const base = import.meta.env.BASE_URL; // '/academics/'
+    const rest = pathname.startsWith(base)
+      ? pathname.slice(base.length)
+      : pathname.replace(/^\//, '');
+    const encoded = encodeURIComponent(rest + cleanSearch);
+    window.location.replace(`${base}?p=${encoded}&_cb=${Date.now()}${hash}`);
   };
 
   // A stale Cache Storage entry would survive the cache-busted URL, so clear
