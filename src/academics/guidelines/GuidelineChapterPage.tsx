@@ -118,9 +118,20 @@ export function GuidelineChapterPage() {
               >
                 <ExternalLink size={12} /> Open in new tab
               </a>
+              {/* target=_blank alongside download, for two reasons. The PDFs
+                  live on another origin, where the download attribute is
+                  ignored by every browser — and inside the app's web view a
+                  plain navigation to a PDF does nothing at all, because web
+                  views neither render nor download PDFs on their own. A new
+                  window, though, is exactly what the app's onCreateWindow
+                  bridge hands to the system browser — the same route that
+                  makes "Open in new tab" work. Browsers that can honour
+                  download still do. */}
               <a
                 href={chapter.url}
                 download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg
                            text-xs font-semibold text-white"
                 style={{ backgroundColor: guideline.color }}
