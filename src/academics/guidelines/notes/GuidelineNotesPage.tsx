@@ -232,8 +232,8 @@ export function GuidelineNoteDetailPage() {
     return (
       <div className="min-h-screen bg-bg flex flex-col items-center justify-center gap-3">
         <p className="text-danger text-sm">{error?.message ?? 'Not found.'}</p>
-        <Link to="/academics/guideline-notes" className="text-sm text-accent hover:underline">
-          Back to Guideline Notes
+        <Link to="/academics/recent" className="text-sm text-accent hover:underline">
+          Back to Recent Guides
         </Link>
       </div>
     );
@@ -246,7 +246,7 @@ export function GuidelineNoteDetailPage() {
           {/* replace + block: an in-page Back must not add history (or the
               phone's back button replays every page already left), and inline
               it shared a line with the kind chip and collided with it. */}
-          <Link to="/academics/guideline-notes" replace
+          <Link to="/academics/recent" replace
             className="flex w-fit items-center gap-1.5 text-xs text-white/70 hover:text-white mb-4">
             <ArrowLeft size={13} /> Back
           </Link>

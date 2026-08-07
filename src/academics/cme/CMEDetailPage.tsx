@@ -53,6 +53,17 @@ const EVENT_TYPE_STYLES: Record<string, string> = {
   course: 'bg-teal-100 text-teal-700',
 };
 
+// One gradient per event type, matching the chip colours the lists already
+// use — so a webinar is blue everywhere, a workshop purple, a conference
+// amber, a course teal. The header wears it; the body stays neutral.
+const EVENT_TYPE_THEME: Record<string, { from: string; to: string; tint: string; border: string }> = {
+  webinar:    { from: '#3B82F6', to: '#1E40AF', tint: '#EFF6FF', border: '#BFDBFE' },
+  workshop:   { from: '#8B5CF6', to: '#5B21B6', tint: '#F5F3FF', border: '#DDD6FE' },
+  conference: { from: '#F59E0B', to: '#B45309', tint: '#FFFBEB', border: '#FDE68A' },
+  course:     { from: '#14B8A6', to: '#0F766E', tint: '#F0FDFA', border: '#99F6E4' },
+};
+const DEFAULT_THEME = { from: '#475569', to: '#1E293B', tint: '#F8FAFC', border: '#E2E8F0' };
+
 const STATUS_STYLES: Record<string, string> = {
   upcoming: 'bg-accent/15 text-accent',
   ongoing: 'bg-success/15 text-success',
@@ -176,6 +187,8 @@ export function CMEDetailPage() {
   const isCountdownVisible =
     event.status === 'upcoming' || event.status === 'ongoing';
 
+  const theme = EVENT_TYPE_THEME[event.eventType] ?? DEFAULT_THEME;
+
   return (
     <div className="min-h-screen bg-bg">
 
@@ -207,69 +220,76 @@ export function CMEDetailPage() {
           {/* ── Left: content column ── */}
           <div className="flex-1 min-w-0 flex flex-col gap-6">
 
-            {/* Type + status badges */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${EVENT_TYPE_STYLES[event.eventType] ?? 'bg-gray-100 text-gray-600'}`}>
-                {event.eventType}
-              </span>
-              <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${STATUS_STYLES[event.status] ?? 'bg-gray-100 text-gray-600'}`}>
-                {event.status}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1 className="text-2xl sm:text-3xl font-bold text-primary leading-snug">
-              {event.title}
-            </h1>
-
-            {/* Meta row */}
-            <div className="flex flex-col gap-2.5">
-              {/* Date/time */}
-              <div className="flex items-start gap-2 text-sm text-ink-muted">
-                <Calendar size={15} className="mt-0.5 shrink-0 text-accent" />
-                <div>
-                  <span>{formatDateTime(event.startsAt, event.timezone)}</span>
-                  <span className="mx-2 text-border">—</span>
-                  <span>{formatDateTime(event.endsAt, event.timezone)}</span>
-                </div>
+            {/* Header band in the event type's colour — chips, title and the
+                when/where all live on the gradient, so a webinar reads blue
+                and a conference amber before a single word is read. */}
+            <div
+              className="rounded-2xl p-5 sm:p-6 text-white"
+              style={{
+                background: `linear-gradient(135deg, ${theme.from} 0%, ${theme.to} 100%)`,
+              }}
+            >
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-white/20 text-white">
+                  {event.eventType}
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-black/20 text-white/90">
+                  {event.status}
+                </span>
               </div>
 
-              {/* Timezone */}
-              <div className="flex items-center gap-2 text-sm text-ink-muted">
-                <Clock size={15} className="shrink-0 text-accent" />
-                <span>{event.timezone}</span>
-              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold leading-snug mb-4">
+                {event.title}
+              </h1>
 
-              {/* Location */}
-              {event.venue ? (
-                <div className="flex items-start gap-2 text-sm text-ink-muted">
-                  <MapPin size={15} className="mt-0.5 shrink-0 text-accent" />
-                  <span>{event.venue}</span>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-start gap-2 text-sm text-white/90">
+                  <Calendar size={15} className="mt-0.5 shrink-0 text-white/75" />
+                  <div>
+                    <span>{formatDateTime(event.startsAt, event.timezone)}</span>
+                    <span className="mx-2 text-white/50">—</span>
+                    <span>{formatDateTime(event.endsAt, event.timezone)}</span>
+                  </div>
                 </div>
-              ) : (
-                <div className="flex items-center gap-2 text-sm text-ink-muted">
-                  <Globe size={15} className="shrink-0 text-accent" />
-                  <span>
-                    {event.isRegistered && event.onlineUrl ? (
-                      <a
-                        href={event.onlineUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-accent hover:underline"
-                      >
-                        {event.onlineUrl}
-                      </a>
-                    ) : (
-                      'Online — link shown after registration'
-                    )}
-                  </span>
+
+                <div className="flex items-center gap-2 text-sm text-white/90">
+                  <Clock size={15} className="shrink-0 text-white/75" />
+                  <span>{event.timezone}</span>
                 </div>
-              )}
+
+                {event.venue ? (
+                  <div className="flex items-start gap-2 text-sm text-white/90">
+                    <MapPin size={15} className="mt-0.5 shrink-0 text-white/75" />
+                    <span>{event.venue}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-sm text-white/90">
+                    <Globe size={15} className="shrink-0 text-white/75" />
+                    <span>
+                      {event.isRegistered && event.onlineUrl ? (
+                        <a
+                          href={event.onlineUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-white underline underline-offset-2"
+                        >
+                          {event.onlineUrl}
+                        </a>
+                      ) : (
+                        'Online — link shown after registration'
+                      )}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Countdown */}
+            {/* Countdown, tinted in the type colour */}
             {isCountdownVisible && (
-              <div className="flex items-center gap-2 p-3 bg-card border border-border rounded-lg w-fit">
+              <div
+                className="flex items-center gap-2 p-3 rounded-xl border w-fit"
+                style={{ backgroundColor: theme.tint, borderColor: theme.border }}
+              >
                 <span className="text-sm text-ink-muted font-medium">
                   {event.status === 'upcoming' ? 'Starts in:' : 'Status:'}
                 </span>
@@ -283,8 +303,14 @@ export function CMEDetailPage() {
 
             {/* Long description */}
             {event.longDescription && (
-              <section>
-                <h2 className="text-lg font-semibold text-ink mb-3">About this event</h2>
+              <section
+                className="rounded-2xl border p-4 sm:p-5"
+                style={{ backgroundColor: theme.tint, borderColor: theme.border }}
+              >
+                <h2 className="text-[13px] font-bold uppercase tracking-wide mb-3"
+                    style={{ color: theme.to }}>
+                  About this event
+                </h2>
                 <SimpleMarkdown content={event.longDescription} />
               </section>
             )}

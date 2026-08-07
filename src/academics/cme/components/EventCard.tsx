@@ -93,15 +93,6 @@ function formatEventDate(iso: string, timezone: string): string {
   }
 }
 
-function formatPrice(price: number, currency: string): string {
-  if (price === 0) return 'Free';
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0,
-  }).format(price);
-}
-
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -110,7 +101,6 @@ export function EventCard({ event }: EventCardProps) {
   const typeBadgeClass = EVENT_TYPE_STYLES[event.eventType];
   const typeLabel = EVENT_TYPE_LABELS[event.eventType];
   const fallbackGradient = FALLBACK_GRADIENTS[event.eventType];
-  const priceLabel = formatPrice(event.price, event.currency);
 
   const firstSpeaker = event.speakers?.[0];
   const speakerLabel =
@@ -198,16 +188,10 @@ export function EventCard({ event }: EventCardProps) {
             {safeFixed(event.creditHours)} {event.creditType}
           </span>
 
-          {/* Price + save. The whole card is a Link, so SaveButton stops the
-              click from propagating — otherwise saving would navigate. */}
+          {/* Save only — no price label. Sunil's call: events do not show
+              pricing anywhere, paid or free. The whole card is a Link, so
+              SaveButton stops the click from propagating. */}
           <div className="flex items-center gap-1">
-            <span
-              className={`text-sm font-semibold ${
-                event.price === 0 ? 'text-success' : 'text-ink'
-              }`}
-            >
-              {priceLabel}
-            </span>
             <SaveButton itemType="cme" itemId={event.id} />
           </div>
         </div>

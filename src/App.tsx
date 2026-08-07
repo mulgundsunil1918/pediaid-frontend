@@ -248,7 +248,11 @@ export default function App() {
 
             {/* ── PediAid Academics browse routes ── */}
             <Route path="/academics" element={<SubjectsPage />} />
-            <Route path="/academics/guideline-notes" element={<GuidelineNotesPage />} />
+            {/* Retired duplicate list — "Recent Guides" at /academics/recent is
+                the same content with specialty filters and the submit card.
+                Only the reading page below survives; saved items and shared
+                links point at it. */}
+            <Route path="/academics/guideline-notes" element={<Navigate to="/academics/recent" replace />} />
             <Route path="/academics/guideline-notes/:slug" element={<GuidelineNoteDetailPage />} />
             <Route path="/academics/saved" element={<BookmarksPage />} />
             <Route path="/academics/trials" element={<TrialsHomePage />} />

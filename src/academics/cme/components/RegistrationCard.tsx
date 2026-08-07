@@ -23,15 +23,6 @@ interface RegistrationCardProps {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function formatPrice(price: number, currency: string): string {
-  if (price === 0) return 'Free';
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0,
-  }).format(price);
-}
-
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -44,7 +35,6 @@ export function RegistrationCard({
 }: RegistrationCardProps) {
   const navigate = useNavigate();
 
-  const priceLabel = formatPrice(event.price, event.currency);
   const isCompleted = event.status === 'completed';
   const isCancelled = event.status === 'cancelled';
   const isActiveEvent = !isCompleted && !isCancelled;
@@ -66,15 +56,7 @@ export function RegistrationCard({
 
   return (
     <div className="sticky top-6 bg-card border border-border rounded-card shadow-card p-5 flex flex-col gap-4">
-      {/* Price */}
-      <div className="flex items-baseline justify-between">
-        <span className="text-2xl font-bold text-ink">
-          {priceLabel}
-        </span>
-        {event.price > 0 && (
-          <span className="text-xs text-ink-muted">{event.currency}</span>
-        )}
-      </div>
+      {/* No price display — events do not show pricing here at all. */}
 
       {/* Credit hours badge */}
       <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium w-fit">
@@ -163,9 +145,7 @@ export function RegistrationCard({
           {isPending ? (
             <Loader2 size={16} className="animate-spin" />
           ) : null}
-          {event.price === 0
-            ? 'Register Now'
-            : `Register — ${priceLabel}`}
+          Register Now
         </button>
       )}
     </div>
