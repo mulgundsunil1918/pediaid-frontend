@@ -79,7 +79,6 @@ const NelsonBrowser = lazy(() => import('./academics/nelson/NelsonBrowser').then
 
 
 // Guidelines (IAP STG, NNF CPG, ...)
-const GuidelinesIndexPage = lazy(() => import('./academics/guidelines/GuidelinesIndexPage').then(m => ({ default: m.GuidelinesIndexPage })));
 const GuidelineBrowserPage = lazy(() => import('./academics/guidelines/GuidelineBrowserPage').then(m => ({ default: m.GuidelineBrowserPage })));
 const GuidelineChapterPage = lazy(() => import('./academics/guidelines/GuidelineChapterPage').then(m => ({ default: m.GuidelineChapterPage })));
 
@@ -313,7 +312,13 @@ export default function App() {
             <Route path="/academics/nelson" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><NelsonBrowser /></Suspense>} />
 
             {/* ── Guidelines (IAP STG, NNF CPG, ...) ── */}
-            <Route path="/academics/guidelines" element={<GuidelinesIndexPage />} />
+            {/* Retired. This was a second, guidelines-only hub from before the
+                All-modules page existed — it duplicated the guideline cards
+                and knew nothing about trials or Recent Guides, so pressing
+                back from a trial surfaced a page that looked like an outdated
+                copy of home. One hub now: /academics. The redirect replaces
+                itself in history, so back can never land here either. */}
+            <Route path="/academics/guidelines" element={<Navigate to="/academics" replace />} />
             <Route path="/academics/guidelines/:slug" element={<GuidelineBrowserPage />} />
             <Route path="/academics/guidelines/:slug/c/:chapterNo" element={<GuidelineChapterPage />} />
 

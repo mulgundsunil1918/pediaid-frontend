@@ -66,9 +66,11 @@ export function GuidelineNotesPage() {
     <div className="min-h-screen bg-bg" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       <div className="border-b border-border" style={{ backgroundColor: '#1e3a5f' }}>
         <div className="max-w-browse mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-          <Link to="/academics/guidelines"
-            className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white mb-4">
-            <ArrowLeft size={13} /> Guidelines
+          {/* Straight to the Academics home — the guidelines-only hub this
+              used to target is retired. replace, so back never replays it. */}
+          <Link to="/academics" replace
+            className="flex w-fit items-center gap-1.5 text-xs text-white/70 hover:text-white mb-4">
+            <ArrowLeft size={13} /> Academics
           </Link>
           <div className="flex items-center gap-3">
             <div className="shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center text-white"
