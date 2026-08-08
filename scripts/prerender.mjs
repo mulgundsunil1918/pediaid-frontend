@@ -138,7 +138,11 @@ const hubs = [
 const template = readFileSync(resolve(DIST, 'index.html'), 'utf8');
 
 function render(page) {
-  const canonical = `${ORIGIN}${page.url}`;
+  // Trailing slash: these are directory index.html files, so GitHub Pages
+  // 301s the bare path to the slashed one. A canonical pointing at the URL
+  // that redirects makes Google resolve a hop to reach the page it was just
+  // told is canonical — so name the form actually served.
+  const canonical = `${ORIGIN}${page.url}/`;
   const head = `
     <title>${esc(page.title)}</title>
     <meta name="description" content="${esc(page.description)}" />
@@ -189,7 +193,7 @@ const urls = [...hubs, ...pages]
       d && !Number.isNaN(d.getTime())
         ? `\n    <lastmod>${d.toISOString().slice(0, 10)}</lastmod>`
         : '';
-    return `  <url>\n    <loc>${ORIGIN}${p.url}</loc>${lastmod}\n  </url>`;
+    return `  <url>\n    <loc>${ORIGIN}${p.url}/</loc>${lastmod}\n  </url>`;
   })
   .join('\n');
 
