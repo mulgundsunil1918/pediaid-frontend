@@ -26,15 +26,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Keep the whole academics site out of search results.
-         This is a single-page app served from one index.html, so one tag here
-         covers every route rather than needing a component on each page.
-         Deliberate, not an oversight: the site is shared by direct link only.
-         To make it discoverable again, remove this tag AND relax robots.txt —
-         both, or crawlers will still stay away. Re-indexing after that can
-         take Google several weeks. -->
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="googlebot" content="noindex, nofollow" />
+    <!-- Indexable, deliberately.
+         Academics used to carry noindex/nofollow here because it was shared by
+         direct link only. The public library — landmark trial reviews,
+         guideline notes, CME events — is now meant to be found: someone
+         searching "FEAST trial review" or "AAP 2022 jaundice guideline"
+         should land on it.
+         Signed-in surfaces (admin, dashboard, editor, moderation) are not
+         listed in any sitemap and sit behind auth, so nothing private becomes
+         reachable by removing this. The prerender step below writes per-page
+         titles and descriptions; this default covers routes it does not
+         cover. Expect Google to take a few weeks to re-crawl. -->
+    <meta name="robots" content="index, follow" />
 
     <!-- Always revalidate this document.
 

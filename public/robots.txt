@@ -1,18 +1,25 @@
 # PediAid Academics
 #
-# The entire site is intentionally kept out of search results. It is shared by
-# direct link only — with contributors, reviewers and invited clinicians —
-# rather than being discoverable by anyone who searches for it.
+# The public library — landmark trial reviews, guideline notes and reviews,
+# CME events — is meant to be found. Someone searching "FEAST trial review"
+# or "AAP 2022 jaundice guideline" should be able to land here.
 #
-# Note that robots.txt is a request, not a control: a crawler that ignores it,
-# or anyone who is given a URL, can still reach these pages. Actual protection
-# comes from authentication on the routes that need it, and that is unchanged
-# by this file. The <meta name="robots" content="noindex"> tag in index.html
-# is what actually keeps pages out of an index once fetched — this file just
-# stops well-behaved crawlers fetching them in the first place.
+# Signed-in surfaces are disallowed below. That is tidiness, not security:
+# robots.txt is a request, not a control. Actual protection comes from
+# authentication on those routes, which is unchanged by this file.
 #
-# To make the site discoverable later, relax BOTH this file and that meta tag.
-# Changing only one leaves the site invisible.
+# Note: this file is served at /academics/robots.txt, which crawlers ignore —
+# only the one at the origin root counts. The real one lives at the root of
+# the app repo's gh-pages branch and points at the sitemap below.
 
 User-agent: *
-Disallow: /
+Allow: /
+
+Disallow: /academics/admin
+Disallow: /academics/dashboard
+Disallow: /academics/editor
+Disallow: /academics/moderation
+Disallow: /academics/login
+Disallow: /academics/my-submissions
+
+Sitemap: https://pediaid.bridgr.co.in/academics/sitemap.xml
