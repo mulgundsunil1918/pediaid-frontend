@@ -10,7 +10,7 @@
 // =============================================================================
 
 import { useQuery } from '@tanstack/react-query';
-import { apiFetch } from '../../api/academics.api';
+import { apiFetch, AcademicsApiError } from '../../api/academics.api';
 
 export interface AdminSession {
   userId: string;
@@ -32,7 +32,22 @@ export function useAdminSession() {
     // Short-lived: a revoked permission or deactivated account should take
     // effect without a full reload.
     staleTime: 30 * 1_000,
-    retry: false,
+    // Retry TRANSIENT failures (network blip, 5xx, serverless DB cold-start
+    // after a long idle session) so a single hiccup doesn't wrongly boot an
+    // admin. Never retry a genuine 401/403 — those won't change on repeat.
+    //
+    // Our Neon Postgres scales to zero when idle, so the FIRST admin/me after
+    // a quiet spell can 5xx for several seconds while the DB (and a cold
+    // backend) wake up. Three quick retries (~5s) gave up before the wake
+    // finished and flashed "Couldn't verify your access". Retry patiently over
+    // ~25s so the gate resolves silently on a cold-start; the "Checking
+    // access…" spinner just lingers a beat instead of showing a false error.
+    retry: (failureCount, err) => {
+      const status = err instanceof AcademicsApiError ? err.statusCode : 0;
+      if (status === 401 || status === 403) return false;
+      return failureCount < 7;
+    },
+    retryDelay: (attempt) => Math.min(1_000 * 2 ** attempt, 5_000),
   });
 }
 
