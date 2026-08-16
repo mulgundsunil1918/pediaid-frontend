@@ -26,6 +26,9 @@ import {
   useDeleteTrial, usePublishTrial, useModerateTrial, type AdminTrial,
 } from '../hooks/useAdmin';
 import { safeDate } from '../../../lib/safeDate';
+import { AnnounceButton } from '../components/AnnounceButton';
+import { RichTextEditor } from '../../components/RichTextEditor';
+import { RichText } from '../../components/RichText';
 
 const SPECIALTIES = [
   { value: 'paediatrics', label: 'Paediatrics' },
@@ -194,8 +197,11 @@ function TrialForm({
 
       <div className="mt-5 space-y-4">
         <Field label="Summary">
-          <textarea className={`${input} min-h-[80px]`} value={f.summary}
-                    onChange={set('summary')} />
+          <RichTextEditor
+            value={f.summary}
+            onChange={(html) => setF((p) => ({ ...p, summary: html }))}
+            minHeight={100}
+          />
         </Field>
         {/* One line per point: paste from notes and it becomes a list, with no
             bullet syntax to learn or get wrong. */}
@@ -242,7 +248,6 @@ function TrialRow({ t }: { t: AdminTrial }) {
   const [moderating, setModerating] = useState<'reject' | 'request_changes' | null>(null);
   const [reason, setReason] = useState('');
   const moderate = useModerateTrial();
-  const [confirmNotify, setConfirmNotify] = useState(false);
 
   if (editing) return <TrialForm initial={t} onDone={() => setEditing(false)} />;
 
@@ -325,31 +330,12 @@ function TrialRow({ t }: { t: AdminTrial }) {
         </div>
       </div>
 
-      {/* Announce is separate from publish, and confirmed, because it reaches
-          every device at once and cannot be taken back. */}
+      {/* Announce is separate from publish and confirmed, because it reaches
+          every device at once and cannot be taken back. Shared with every
+          other module through the one /admin/announce endpoint. */}
       {t.isPublished && (
-        <div className="mt-3 pt-3 border-t border-border flex items-center gap-3">
-          {confirmNotify ? (
-            <>
-              <button
-                onClick={() => {
-                  publish.mutate({ id: t.id, publish: true, notify: true });
-                  setConfirmNotify(false);
-                }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
-                           text-xs font-semibold text-white bg-danger">
-                <Send size={13} /> Yes, notify everyone
-              </button>
-              <button onClick={() => setConfirmNotify(false)}
-                className="text-xs text-ink-muted">Cancel</button>
-            </>
-          ) : (
-            <button onClick={() => setConfirmNotify(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
-                         text-xs font-semibold text-accent hover:bg-blue-50">
-              <Send size={13} /> Announce to all users
-            </button>
-          )}
+        <div className="mt-3 pt-3 border-t border-border flex items-center gap-3 flex-wrap">
+          <AnnounceButton module="trial" id={t.id} />
           <span className="text-[11px] text-ink-muted">
             Sends a push and an in-app notification. Cannot be undone.
           </span>
@@ -371,6 +357,11 @@ function SubmissionRow({ t }: { t: AdminTrial }) {
   const moderate = useModerateTrial();
   const [mode, setMode] = useState<'reject' | 'request_changes' | null>(null);
   const [reason, setReason] = useState('');
+  const [editing, setEditing] = useState(false);
+
+  // See the full submission — and fix anything — before approving: the same
+  // editor used for live trials, pre-filled with exactly what the reader sent.
+  if (editing) return <TrialForm initial={t} onDone={() => setEditing(false)} />;
 
   function send(action: 'approve' | 'reject' | 'request_changes') {
     if (action === 'approve') {
@@ -400,7 +391,7 @@ function SubmissionRow({ t }: { t: AdminTrial }) {
       </p>
       {t.subtitle && <p className="text-xs text-ink-muted mt-0.5">{t.subtitle}</p>}
       {t.summary && (
-        <p className="text-xs text-ink mt-2 leading-relaxed">{t.summary}</p>
+        <RichText html={t.summary} className="text-xs text-ink mt-2 leading-relaxed" />
       )}
 
       {(t.originalAuthors || t.reviewAuthor) && (
@@ -432,6 +423,11 @@ function SubmissionRow({ t }: { t: AdminTrial }) {
       <div className="flex flex-wrap gap-2 mt-3">
         {mode === null ? (
           <>
+            <button onClick={() => setEditing(true)}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-accent
+                         border border-accent/40 hover:bg-blue-50 inline-flex items-center gap-1.5">
+              <Pencil size={13} /> View / Edit
+            </button>
             <button onClick={() => send('approve')} disabled={moderate.isPending}
               className="px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-success
                          text-white disabled:opacity-60">

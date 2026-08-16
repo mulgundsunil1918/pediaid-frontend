@@ -11,6 +11,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AlertTriangle, ArrowLeft, BarChart3, BookOpen, Check, ExternalLink,
   Heart, HelpCircle, Lightbulb, Loader2, PenLine, Share2, Users } from 'lucide-react';
 import { useTrial, useToggleTrialLike } from './useTrials';
+import { RichText } from '../components/RichText';
 import { useAuthStore } from '../../store/authStore';
 import { SaveButton } from '../bookmarks/SaveButton';
 import { InfoSection, TONES } from '../components/InfoSection';
@@ -165,9 +166,10 @@ export function TrialDetailPage() {
         )}
 
         {t.summary && (
-          <p className="text-[15px] text-ink leading-relaxed mb-5 font-medium">
-            {t.summary}
-          </p>
+          <RichText
+            html={t.summary}
+            className="text-[15px] text-ink leading-relaxed mb-5 font-medium"
+          />
         )}
 
         {picot.length > 0 && (
