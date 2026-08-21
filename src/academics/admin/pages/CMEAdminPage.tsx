@@ -13,6 +13,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { AdminLayout } from '../AdminLayout';
+import { AnnounceButton } from '../components/AnnounceButton';
 import {
   useAdminCMEEvents,
   useDeleteCmeEvent,
@@ -555,19 +556,7 @@ function EventAdminCard({ event }: EventAdminCardProps) {
               Issue Certificates
             </button>
           )}
-          {isCancellable && (
-            <Link
-              to={`/academics/admin/notify?${new URLSearchParams({
-                title: event.title,
-                body: `New ${event.eventType}: "${event.title}" — check it out on PediAid Academics.`,
-                linkPath: `/academics/cme/${event.slug}`,
-              })}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-border rounded-lg hover:bg-gray-50 text-ink"
-            >
-              <Megaphone size={14} />
-              Notify everyone
-            </Link>
-          )}
+          {isCancellable && <AnnounceButton module="cme" id={String(event.id)} />}
 
           {/* Permanent delete, for fakes and junk that got through.
               Pushed to the right and two-step, so it is never adjacent to the

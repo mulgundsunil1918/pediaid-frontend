@@ -24,6 +24,7 @@ import {
   type NeverAgainPost,
 } from '../hooks/useAdmin';
 import { safeDate } from '../../../lib/safeDate';
+import { AnnounceButton } from '../components/AnnounceButton';
 
 const STATUS_TABS = [
   { value: 'all', label: 'All' },
@@ -128,6 +129,16 @@ function PostRow({ post }: { post: NeverAgainPost }) {
           )}
         </div>
       </div>
+      {/* Anonymous by design — "A new lesson was shared", no author, opens the
+          feed. Only for published posts (nothing to announce before approval). */}
+      {post.status === 'published' && (
+        <div className="mt-2 pt-2 border-t border-border flex items-center gap-3 flex-wrap">
+          <AnnounceButton module="never-again" id={String(post.id)} />
+          <span className="text-[11px] text-ink-muted">
+            Anonymous — “A new lesson was shared”. Cannot be undone.
+          </span>
+        </div>
+      )}
     </article>
   );
 }
@@ -157,7 +168,7 @@ export function AllNeverAgainPage() {
         <h1 className="text-xl font-bold text-ink">All Never Again posts</h1>
         <p className="text-sm text-ink-muted mt-0.5">
           Everything ever submitted, newest first — for finding and removing a
-          specific post. Use "Pending Never Again" in the sidebar to moderate.
+          specific post. Use "Never Again" in the sidebar to moderate submissions.
         </p>
       </div>
 

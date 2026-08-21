@@ -354,7 +354,7 @@ export function SubmitCMEEventPage() {
             type="submit"
             disabled={submitMutation.isPending}
             className="mt-8 w-full py-3.5 rounded-xl text-sm font-bold text-white disabled:opacity-60 flex items-center justify-center gap-2"
-            style={{ backgroundColor: '#1e3a5f' }}
+            style={{ backgroundColor: '#e53e3e' }}
           >
             {submitMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : null}
             {submitMutation.isPending ? 'Submitting…' : 'Submit for review'}

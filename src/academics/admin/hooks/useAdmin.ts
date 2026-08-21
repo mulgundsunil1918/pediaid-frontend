@@ -380,6 +380,35 @@ export function useAdminUsers(filters: { role?: string; search?: string; page?: 
   });
 }
 
+/**
+ * Fetches every user (all roles) for a full CSV export. Pages through the
+ * admin users endpoint until it has `total`, so it works regardless of any
+ * server-side page-size cap. Optionally filtered by role/search.
+ */
+export async function fetchAllUsersForExport(filters?: {
+  role?: string;
+  search?: string;
+}): Promise<AdminUser[]> {
+  const all: AdminUser[] = [];
+  const pageSize = 200;
+  let page = 1;
+  // Hard loop cap as a runaway guard (200 × 500 = 100k users).
+  for (let i = 0; i < 500; i++) {
+    const params = new URLSearchParams();
+    if (filters?.role) params.set('role', filters.role);
+    if (filters?.search) params.set('search', filters.search);
+    params.set('page', String(page));
+    params.set('pageSize', String(pageSize));
+    const res = await apiFetch<AdminUsersResponse>(
+      `/api/academics/admin/users?${params.toString()}`,
+    );
+    all.push(...res.users);
+    if (res.users.length === 0 || all.length >= res.total) break;
+    page += 1;
+  }
+  return all;
+}
+
 export function usePendingCredentials() {
   return useQuery<PendingCredential[], Error>({
     queryKey: adminKeys.credentialsPending(),
@@ -840,6 +869,68 @@ export function useDeleteNeverAgainPost() {
   });
 }
 
+/** PUT /admin/never-again/:id — edit an anonymous post's content before approving. */
+export function useUpdateNeverAgainPost() {
+  const qc = useQueryClient();
+  return useMutation<
+    void,
+    Error,
+    {
+      id: number;
+      what_happened: string;
+      what_went_wrong: string;
+      the_lesson: string;
+      category: string;
+      role: string | null;
+    }
+  >({
+    mutationFn: ({ id, ...body }) =>
+      apiFetch<void>(`/api/academics/admin/never-again/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin', 'never-again-pending'] });
+      void qc.invalidateQueries({ queryKey: adminKeys.all });
+    },
+  });
+}
+
+/**
+ * PUT /admin/cme/:id with the SNAKE_CASE fields the update route actually
+ * persists. The older useUpdateCMEEvent sends camelCase (startsAt, onlineUrl…),
+ * which the route's allow-list ignores — so pending-event editing uses this.
+ */
+export interface PendingCmeEventEdit {
+  title?: string;
+  description?: string;
+  long_description?: string;
+  starts_at?: string;
+  ends_at?: string;
+  timezone?: string;
+  venue?: string | null;
+  online_url?: string | null;
+  speaker_name?: string | null;
+  speaker_credentials?: string | null;
+  speaker_bio?: string | null;
+  credit_hours?: number | null;
+  credit_type?: string | null;
+  price?: number;
+}
+export function useUpdatePendingCmeEvent() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: string } & PendingCmeEventEdit>({
+    mutationFn: ({ id, ...body }) =>
+      apiFetch<void>(`/api/academics/admin/cme/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+      }),
+    onSuccess: () => {
+      void qc.invalidateQueries();
+    },
+  });
+}
+
 /** DELETE /admin/cme/:id — permanent. Same purpose as the above. */
 export function useDeleteCmeEvent() {
   const qc = useQueryClient();
@@ -908,6 +999,26 @@ export function useSendBroadcast() {
   >({
     mutationFn: (payload) =>
       apiFetch('/api/push/broadcast', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+  });
+}
+
+/**
+ * POST /api/academics/admin/announce — notify everyone about ONE published
+ * item. The server composes the title/body + the correct deep link from
+ * { module, id }, so the caller just says which item. One button, every module.
+ */
+export type AnnounceModule = 'trial' | 'guideline' | 'cme' | 'never-again';
+export function useAnnounce() {
+  return useMutation<
+    { ok: boolean; notified: boolean },
+    Error,
+    { module: AnnounceModule; id: string }
+  >({
+    mutationFn: (payload) =>
+      apiFetch('/api/academics/admin/announce', {
         method: 'POST',
         body: JSON.stringify(payload),
       }),

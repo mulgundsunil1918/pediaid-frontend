@@ -87,7 +87,7 @@ export function NeverAgainFeedPage() {
           <Link
             to="/academics/never-again/submit"
             className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold text-white"
-            style={{ backgroundColor: '#1e3a5f' }}
+            style={{ backgroundColor: '#e53e3e' }}
           >
             <Plus size={16} aria-hidden="true" />
             Share

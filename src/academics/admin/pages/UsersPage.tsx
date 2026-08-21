@@ -11,6 +11,8 @@ import {
   X,
   Search,
   Shield,
+  Download,
+  Loader2,
 } from 'lucide-react';
 import { AdminLayout } from '../AdminLayout';
 import {
@@ -18,9 +20,55 @@ import {
   useChangeUserRole,
   useDeactivateUser,
   useReactivateUser,
+  fetchAllUsersForExport,
   type AdminUser,
 } from '../hooks/useAdmin';
 import { getInitials } from '../../../lib/initials';
+
+// ---------------------------------------------------------------------------
+// CSV export helpers
+// ---------------------------------------------------------------------------
+
+function csvCell(v: unknown): string {
+  const s = v === null || v === undefined ? '' : String(v);
+  return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+function usersToCsv(users: AdminUser[]): string {
+  const cols: [string, (u: AdminUser) => unknown][] = [
+    ['Name', (u) => u.fullName],
+    ['Email', (u) => u.email],
+    ['Role', (u) => u.role],
+    ['Active', (u) => (u.isActive ? 'yes' : 'no')],
+    ['Verified', (u) => (u.isVerified ? 'yes' : 'no')],
+    ['Credentials verified', (u) => (u.credentialsVerified ? 'yes' : 'no')],
+    ['Qualification', (u) => u.qualification],
+    ['Specialty', (u) => u.specialty],
+    ['Institution', (u) => u.institution],
+    ['Chapters published', (u) => u.chaptersPublished],
+    ['Chapters pending', (u) => u.chaptersPending],
+    ['Member since', (u) => u.memberSince],
+    ['User ID', (u) => u.id],
+  ];
+  const header = cols.map((c) => c[0]).join(',');
+  const rows = users.map((u) => cols.map((c) => csvCell(c[1](u))).join(','));
+  return [header, ...rows].join('\r\n');
+}
+
+function downloadCsv(csv: string, filename: string): void {
+  // Leading BOM so Excel opens UTF-8 (accented names) correctly.
+  const blob = new Blob(['﻿' + csv], {
+    type: 'text/csv;charset=utf-8;',
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 // ---------------------------------------------------------------------------
 // Types
@@ -433,6 +481,21 @@ export function UsersPage() {
   const deactivate = useDeactivateUser();
   const reactivate = useReactivateUser();
 
+  const [exporting, setExporting] = useState(false);
+  async function handleExport() {
+    setExporting(true);
+    try {
+      // Export the full database, ignoring the on-screen role/search filter.
+      const all = await fetchAllUsersForExport();
+      const stamp = new Date().toISOString().slice(0, 10);
+      downloadCsv(usersToCsv(all), `pediaid-users-${stamp}.csv`);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Export failed. Please try again.');
+    } finally {
+      setExporting(false);
+    }
+  }
+
   // Debounce search
   useEffect(() => {
     const t = setTimeout(() => {
@@ -469,7 +532,7 @@ export function UsersPage() {
   return (
     <AdminLayout>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between gap-3 mb-6">
         <div className="flex items-center gap-3">
           <Users size={22} className="text-primary" />
           <div>
@@ -477,6 +540,23 @@ export function UsersPage() {
             <p className="text-xs text-ink-muted">{total} total users</p>
           </div>
         </div>
+        {/* Full-database CSV export — always the entire user list, not just the
+            current filter/page. */}
+        <button
+          type="button"
+          onClick={handleExport}
+          disabled={exporting}
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold
+                     text-white bg-primary hover:opacity-90 disabled:opacity-60 whitespace-nowrap"
+          style={{ backgroundColor: '#1e3a5f' }}
+        >
+          {exporting ? (
+            <Loader2 size={15} className="animate-spin" />
+          ) : (
+            <Download size={15} />
+          )}
+          {exporting ? 'Exporting…' : 'Export CSV'}
+        </button>
       </div>
 
       {/* Role filter tabs */}

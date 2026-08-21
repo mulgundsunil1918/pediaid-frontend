@@ -294,7 +294,7 @@ export function SubmitTrialPage() {
             Cancel
           </Link>
           <button type="submit" disabled={submit.isPending || !f.title.trim() || !f.system}
-            className="px-5 py-2 rounded-xl text-sm font-semibold bg-primary text-white
+            className="px-5 py-2 rounded-xl text-sm font-semibold bg-danger text-white
                        disabled:opacity-60">
             {submit.isPending ? 'Submitting…' : 'Submit for review'}
           </button>

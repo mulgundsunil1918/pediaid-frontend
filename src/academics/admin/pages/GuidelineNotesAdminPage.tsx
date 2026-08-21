@@ -17,7 +17,7 @@ import { AdminLayout } from '../AdminLayout';
 import {
   useAdminGuidelineNotes, useCreateGuidelineNote, useDeleteGuidelineNote,
   useModerateGuidelineNote,
-  usePublishGuidelineNote, useUpdateGuidelineNote,
+  usePublishGuidelineNote, useUpdateGuidelineNote, useAnnounce,
   type AdminGuidelineNote,
 } from '../hooks/useAdmin';
 
@@ -178,6 +178,7 @@ function NoteRow({ n }: { n: AdminGuidelineNote }) {
   const publish = usePublishGuidelineNote();
   const del = useDeleteGuidelineNote();
   const [editing, setEditing] = useState(false);
+  const announceMut = useAnnounce();
 
   function announce() {
     // Confirm first: this reaches every device and cannot be recalled.
@@ -185,7 +186,7 @@ function NoteRow({ n }: { n: AdminGuidelineNote }) {
       `Send a notification about "${n.title}" to every PediAid user?\n\n` +
         'This cannot be undone.',
     );
-    if (ok) publish.mutate({ id: n.id, publish: true, notify: true });
+    if (ok) announceMut.mutate({ module: 'guideline', id: String(n.id) });
   }
 
   return (
@@ -230,8 +231,8 @@ function NoteRow({ n }: { n: AdminGuidelineNote }) {
                 : 'bg-success text-white'}`}>
             {n.isPublished ? 'Unpublish' : 'Publish'}
           </button>
-          <button onClick={announce} disabled={!n.isPublished || publish.isPending}
-            title={n.isPublished ? 'Announce to everyone' : 'Publish first'}
+          <button onClick={announce} disabled={!n.isPublished || announceMut.isPending}
+            title={n.isPublished ? 'Notify everyone' : 'Publish first'}
             className="p-2 rounded-lg text-ink-muted hover:text-accent hover:bg-gray-50
                        disabled:opacity-40 disabled:hover:text-ink-muted">
             <Bell size={15} />
@@ -256,6 +257,7 @@ function GuideSubmissionRow({ n }: { n: AdminGuidelineNote }) {
   const moderate = useModerateGuidelineNote();
   const [mode, setMode] = useState<'reject' | 'request_changes' | null>(null);
   const [reason, setReason] = useState('');
+  const [editing, setEditing] = useState(false);
 
   function send(action: 'approve' | 'reject' | 'request_changes') {
     if (action === 'approve') { moderate.mutate({ id: n.id, action }); return; }
@@ -265,7 +267,9 @@ function GuideSubmissionRow({ n }: { n: AdminGuidelineNote }) {
   }
 
   return (
-    <div className="bg-white border border-warning/40 rounded-card p-4">
+    <>
+      {editing && <NoteForm initial={n} onClose={() => setEditing(false)} />}
+      <div className="bg-white border border-warning/40 rounded-card p-4">
       <div className="flex items-center gap-2 flex-wrap mb-1">
         <span className="px-2 py-0.5 rounded-md bg-warning/15 text-warning
                          text-[11px] font-bold">Awaiting review</span>
@@ -299,6 +303,11 @@ function GuideSubmissionRow({ n }: { n: AdminGuidelineNote }) {
       <div className="flex flex-wrap gap-2 mt-3">
         {mode === null ? (
           <>
+            <button onClick={() => setEditing(true)}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-accent
+                         border border-accent/40 hover:bg-blue-50 inline-flex items-center gap-1.5">
+              <Pencil size={13} /> View / Edit
+            </button>
             <button onClick={() => send('approve')} disabled={moderate.isPending}
               className="px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-success
                          text-white disabled:opacity-60">
@@ -330,7 +339,8 @@ function GuideSubmissionRow({ n }: { n: AdminGuidelineNote }) {
           </>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

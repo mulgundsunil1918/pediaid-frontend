@@ -14,6 +14,7 @@
 // this page and PendingNeverAgainPage both use.
 // =============================================================================
 
+import { useState } from 'react';
 import { Navigate, useParams, Link } from 'react-router-dom';
 import {
   Calendar,
@@ -29,6 +30,7 @@ import {
   Loader2,
   Sparkles,
   ArrowRight,
+  Pencil,
 } from 'lucide-react';
 import { AdminLayout } from '../AdminLayout';
 import {
@@ -37,6 +39,7 @@ import {
   useRejectCmeEvent,
   useDeleteCmeEvent,
   useRequestCmeEventChanges,
+  useUpdatePendingCmeEvent,
   type PendingCmeEvent,
 } from '../hooks/useAdmin';
 import { ModerationActions, type ModerationCopy } from '../components/ModerationActions';
@@ -83,11 +86,134 @@ function daysAgo(iso: string): string {
 // Event card
 // ---------------------------------------------------------------------------
 
+const cmeInput =
+  'mt-1 w-full px-3 py-2 rounded-lg border border-border text-sm text-ink bg-white ' +
+  'focus:outline-none focus:border-accent';
+
+/** ISO → a datetime-local input value (YYYY-MM-DDTHH:mm) in the browser's zone. */
+function toLocalInput(iso: string): string {
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+/**
+ * Full inline editor for a pending event — the admin can fix anything before
+ * approving. Sends the SNAKE_CASE fields the update route actually persists.
+ */
+function CmeEditForm({ event, onDone }: { event: PendingCmeEvent; onDone: () => void }) {
+  const update = useUpdatePendingCmeEvent();
+  const [f, setF] = useState({
+    title: event.title,
+    description: event.description ?? '',
+    long_description: event.long_description ?? '',
+    starts_at: toLocalInput(event.starts_at),
+    ends_at: toLocalInput(event.ends_at),
+    venue: event.venue ?? '',
+    online_url: event.online_url ?? '',
+    speaker_name: event.speaker_name ?? '',
+    speaker_credentials: event.speaker_credentials ?? '',
+    speaker_bio: event.speaker_bio ?? '',
+    credit_hours: event.credit_hours == null ? '' : String(event.credit_hours),
+    credit_type: event.credit_type ?? '',
+    price: event.price == null ? '' : String(event.price),
+  });
+  const set = (k: keyof typeof f, v: string) => setF((p) => ({ ...p, [k]: v }));
+
+  function save() {
+    update.mutate(
+      {
+        id: event.id,
+        title: f.title.trim(),
+        description: f.description,
+        long_description: f.long_description,
+        starts_at: f.starts_at ? new Date(f.starts_at).toISOString() : undefined,
+        ends_at: f.ends_at ? new Date(f.ends_at).toISOString() : undefined,
+        venue: f.venue.trim() || null,
+        online_url: f.online_url.trim() || null,
+        speaker_name: f.speaker_name.trim() || null,
+        speaker_credentials: f.speaker_credentials.trim() || null,
+        speaker_bio: f.speaker_bio.trim() || null,
+        credit_hours: f.credit_hours === '' ? null : Number(f.credit_hours),
+        credit_type: f.credit_type.trim() || null,
+        price: f.price === '' ? undefined : Number(f.price),
+      },
+      { onSuccess: onDone },
+    );
+  }
+
+  const lbl = 'block text-xs font-semibold text-ink-muted';
+  return (
+    <div className="space-y-3">
+      <label className={lbl}>Title
+        <input value={f.title} onChange={(e) => set('title', e.target.value)} className={cmeInput} />
+      </label>
+      <div className="grid grid-cols-2 gap-3">
+        <label className={lbl}>Starts
+          <input type="datetime-local" value={f.starts_at} onChange={(e) => set('starts_at', e.target.value)} className={cmeInput} />
+        </label>
+        <label className={lbl}>Ends
+          <input type="datetime-local" value={f.ends_at} onChange={(e) => set('ends_at', e.target.value)} className={cmeInput} />
+        </label>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <label className={lbl}>Venue
+          <input value={f.venue} onChange={(e) => set('venue', e.target.value)} className={cmeInput} />
+        </label>
+        <label className={lbl}>Online URL
+          <input value={f.online_url} onChange={(e) => set('online_url', e.target.value)} className={cmeInput} />
+        </label>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <label className={lbl}>Speaker
+          <input value={f.speaker_name} onChange={(e) => set('speaker_name', e.target.value)} className={cmeInput} />
+        </label>
+        <label className={lbl}>Speaker credentials
+          <input value={f.speaker_credentials} onChange={(e) => set('speaker_credentials', e.target.value)} className={cmeInput} />
+        </label>
+      </div>
+      <label className={lbl}>Speaker bio
+        <textarea rows={2} value={f.speaker_bio} onChange={(e) => set('speaker_bio', e.target.value)} className={`${cmeInput} resize-y`} />
+      </label>
+      <div className="grid grid-cols-3 gap-3">
+        <label className={lbl}>Credit hours
+          <input type="number" step="0.5" value={f.credit_hours} onChange={(e) => set('credit_hours', e.target.value)} className={cmeInput} />
+        </label>
+        <label className={lbl}>Credit type
+          <input value={f.credit_type} onChange={(e) => set('credit_type', e.target.value)} className={cmeInput} />
+        </label>
+        <label className={lbl}>Price
+          <input type="number" step="1" value={f.price} onChange={(e) => set('price', e.target.value)} className={cmeInput} />
+        </label>
+      </div>
+      <label className={lbl}>Short description
+        <textarea rows={3} value={f.description} onChange={(e) => set('description', e.target.value)} className={`${cmeInput} resize-y`} />
+      </label>
+      <label className={lbl}>Full description
+        <textarea rows={5} value={f.long_description} onChange={(e) => set('long_description', e.target.value)} className={`${cmeInput} resize-y`} />
+      </label>
+      {update.isError && <p className="text-xs text-danger">{update.error.message}</p>}
+      <div className="flex gap-2 pt-1">
+        <button type="button" onClick={save} disabled={update.isPending}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white disabled:opacity-50"
+          style={{ backgroundColor: '#38a169' }}>
+          {update.isPending && <Loader2 size={14} className="animate-spin" />} Save changes
+        </button>
+        <button type="button" onClick={onDone} disabled={update.isPending}
+          className="px-4 py-2 rounded-xl text-sm font-medium text-ink border border-border hover:bg-gray-50">
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function PendingEventCard({ event }: { event: PendingCmeEvent }) {
   const approveMutation = useApproveCmeEvent();
   const rejectMutation = useRejectCmeEvent();
   const deleteMutation = useDeleteCmeEvent();
   const changesMutation = useRequestCmeEventChanges();
+  const [editing, setEditing] = useState(false);
 
   const moderationCopy: ModerationCopy = {
     rejectTitle: 'Reject event',
@@ -135,8 +261,21 @@ function PendingEventCard({ event }: { event: PendingCmeEvent }) {
             <h3 className="font-sans font-bold text-xl text-primary leading-tight">{event.title}</h3>
             {event.subtitle && <p className="text-sm text-ink-muted mt-0.5">{event.subtitle}</p>}
           </div>
+          {!editing && (
+            <button
+              type="button"
+              onClick={() => setEditing(true)}
+              className="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline"
+            >
+              <Pencil size={12} /> Edit
+            </button>
+          )}
         </div>
 
+        {editing ? (
+          <CmeEditForm event={event} onDone={() => setEditing(false)} />
+        ) : (
+        <>
         <div className="flex items-center gap-2 text-xs text-ink-muted mt-2 mb-4 pb-3 border-b border-border">
           <User2 size={12} />
           Posted by{' '}
@@ -274,6 +413,8 @@ function PendingEventCard({ event }: { event: PendingCmeEvent }) {
           onDelete={() => deleteMutation.mutateAsync(event.id).then(() => undefined)}
           isDeleting={deleteMutation.isPending}
         />
+        </>
+        )}
       </div>
     </article>
   );

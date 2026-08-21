@@ -156,7 +156,7 @@ export function CMEListPage() {
             <Link
               to={`/academics/cme/submit/${typeFilter}`}
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold text-white shrink-0"
-              style={{ backgroundColor: '#1e3a5f' }}
+              style={{ backgroundColor: '#e53e3e' }}
             >
               <Plus size={16} /> Submit a {typeFilter}
             </Link>

@@ -1110,14 +1110,8 @@ export function SubjectsPage() {
           </div>
         )}
 
-        {/* Join banner — authenticated readers only */}
-        {isReader && (
-          <JoinBanner
-            hasPending={hasPending}
-            isPendingLoading={isPendingLoading}
-            onOpenModal={() => setRoleModalOpen(true)}
-          />
-        )}
+        {/* Contribute / "Join as Author / Moderator / Admin" banner removed
+            per request — role applications still work from the web directly. */}
 
         <ModulesHub />
       </main>

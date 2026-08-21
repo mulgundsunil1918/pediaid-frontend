@@ -90,16 +90,16 @@ export function TrialsHomePage() {
             in the header — reading is the main job here, submitting is the
             occasional one. */}
         <Link to="/academics/trials/submit"
-          className="group flex items-center gap-3 mt-5 p-4 rounded-2xl border
-                     border-dashed border-border bg-white hover:border-accent
-                     transition-colors">
-          <div className="shrink-0 w-9 h-9 rounded-xl bg-accent/10 flex items-center
-                          justify-center text-accent">
+          className="group flex items-center gap-3 mt-5 p-4 rounded-2xl text-white
+                     transition hover:brightness-95"
+          style={{ backgroundColor: '#e53e3e' }}>
+          <div className="shrink-0 w-9 h-9 rounded-xl bg-white/20 flex items-center
+                          justify-center text-white">
             <Plus size={18} />
           </div>
           <div className="min-w-0">
-            <p className="font-semibold text-ink text-sm">Submit a trial review</p>
-            <p className="text-xs text-ink-muted mt-0.5">
+            <p className="font-semibold text-white text-sm">Submit a trial review</p>
+            <p className="text-xs text-white/80 mt-0.5">
               Reviewed before publication, credited to you
             </p>
           </div>

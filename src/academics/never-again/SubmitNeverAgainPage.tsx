@@ -243,7 +243,7 @@ export function SubmitNeverAgainPage() {
             type="submit"
             disabled={!canSubmit}
             className="w-full py-3.5 rounded-xl text-sm font-bold text-white disabled:opacity-60 flex items-center justify-center gap-2"
-            style={{ backgroundColor: '#1e3a5f' }}
+            style={{ backgroundColor: '#e53e3e' }}
           >
             {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : null}
             {isSubmitting ? 'Submitting…' : 'Submit anonymously'}

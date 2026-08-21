@@ -36,6 +36,8 @@ import {
   useAdminPendingApplicants,
   useAdminPendingCmeEvents,
   useAdminPendingNeverAgainPosts,
+  useAdminTrials,
+  useAdminGuidelineNotes,
 } from './hooks/useAdmin';
 
 // ---------------------------------------------------------------------------
@@ -108,6 +110,8 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const { data: pendingApplicants } = useAdminPendingApplicants();
   const { data: pendingCmeEvents } = useAdminPendingCmeEvents();
   const { data: pendingNeverAgainPosts } = useAdminPendingNeverAgainPosts();
+  const { data: trials } = useAdminTrials();
+  const { data: guidelineNotes } = useAdminGuidelineNotes();
 
   const pendingCredentials = stats?.usersByRole
     ? (stats.usersByRole['pending_credentials'] ?? 0)
@@ -115,6 +119,11 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const pendingChapters = stats?.chaptersByStatus?.['pending'] ?? 0;
   const pendingApplicationsCount = pendingApplicants?.length ?? 0;
   const pendingNeverAgainCount = pendingNeverAgainPosts?.length ?? 0;
+  // Reader-submitted trials / notes awaiting a decision (status 'pending').
+  const pendingTrialsCount =
+    trials?.filter((t) => t.status === 'pending').length ?? 0;
+  const pendingGuidelineCount =
+    guidelineNotes?.filter((n) => n.status === 'pending').length ?? 0;
   const pendingConferenceCount =
     pendingCmeEvents?.filter((e) => e.event_type === 'conference').length ?? 0;
   const pendingWebinarCount =
@@ -157,12 +166,14 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           to="/academics/admin/trials"
           icon={<FlaskConical size={17} />}
           label="Landmark Trials"
+          badge={pendingTrialsCount}
           onClick={onNavClick}
         />
         <NavItem
           to="/academics/admin/guideline-notes"
           icon={<FileText size={17} />}
           label="Guideline Notes"
+          badge={pendingGuidelineCount}
           onClick={onNavClick}
         />
         <NavItem
@@ -232,20 +243,15 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           badge={pendingCourseCount}
           onClick={onNavClick}
         />
+        {/* One Never Again entry: the moderation queue (with the pending
+            badge). Browsing/deleting an already-approved post lives behind a
+            "Browse all posts" link on that page, so the sidebar isn't doubled
+            up while the "find and remove a fake" capability is still reachable. */}
         <NavItem
           to="/academics/admin/never-again/pending"
           icon={<ShieldAlert size={17} />}
           label="Never Again"
           badge={pendingNeverAgainCount}
-          onClick={onNavClick}
-        />
-        {/* The queue above is for moderating; this is for finding a post
-            afterwards. Without it an approved post was unreachable from the
-            panel, so a fake that got through could not be removed. */}
-        <NavItem
-          to="/academics/admin/never-again"
-          icon={<ShieldAlert size={17} />}
-          label="All Never Again"
           onClick={onNavClick}
         />
         <NavItem

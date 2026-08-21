@@ -11,12 +11,16 @@
 // ModerationActions component, which the CME queue also uses.
 // =============================================================================
 
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Clock,
   Inbox,
   Loader2,
   ShieldAlert,
   Mail,
+  Pencil,
+  Library,
 } from 'lucide-react';
 import { AdminLayout } from '../AdminLayout';
 import {
@@ -25,6 +29,7 @@ import {
   useRejectNeverAgainPost,
   useDeleteNeverAgainPost,
   useRequestNeverAgainChanges,
+  useUpdateNeverAgainPost,
   type PendingNeverAgainPost,
 } from '../hooks/useAdmin';
 import { ModerationActions, type ModerationCopy } from '../components/ModerationActions';
@@ -47,6 +52,30 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
   const rejectMutation = useRejectNeverAgainPost();
   const deleteMutation = useDeleteNeverAgainPost();
   const changesMutation = useRequestNeverAgainChanges();
+  const updateMutation = useUpdateNeverAgainPost();
+
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState({
+    what_happened: post.what_happened,
+    what_went_wrong: post.what_went_wrong,
+    the_lesson: post.the_lesson,
+    category: post.category,
+    role: post.role ?? '',
+  });
+
+  function saveEdit() {
+    updateMutation.mutate(
+      {
+        id: post.id,
+        what_happened: draft.what_happened.trim(),
+        what_went_wrong: draft.what_went_wrong.trim(),
+        the_lesson: draft.the_lesson.trim(),
+        category: draft.category.trim(),
+        role: draft.role.trim() || null,
+      },
+      { onSuccess: () => setEditing(false) },
+    );
+  }
 
   // Never Again posts are anonymous, so whether the submitter left a contact
   // email decides whether they'll ever see this feedback by email at all.
@@ -100,50 +129,124 @@ function PendingPostCard({ post }: { post: PendingNeverAgainPost }) {
             <Mail size={10} /> {post.submitter_email}
           </span>
         )}
+        {!editing && (
+          <button
+            type="button"
+            onClick={() => setEditing(true)}
+            className="ml-auto inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline"
+          >
+            <Pencil size={12} /> Edit
+          </button>
+        )}
       </div>
 
-      <div className="space-y-3 mb-4">
-        <div>
-          <p className="text-[10px] font-semibold text-ink-muted uppercase mb-1">
-            What happened
-          </p>
-          <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">
-            {post.what_happened}
-          </p>
+      {editing ? (
+        <div className="space-y-3 mb-2">
+          <div className="grid grid-cols-2 gap-3">
+            <label className="block text-xs font-semibold text-ink-muted">
+              Category
+              <input
+                value={draft.category}
+                onChange={(e) => setDraft((d) => ({ ...d, category: e.target.value }))}
+                className="mt-1 w-full px-3 py-2 rounded-lg border border-border text-sm text-ink"
+              />
+            </label>
+            <label className="block text-xs font-semibold text-ink-muted">
+              Role (optional)
+              <input
+                value={draft.role}
+                onChange={(e) => setDraft((d) => ({ ...d, role: e.target.value }))}
+                className="mt-1 w-full px-3 py-2 rounded-lg border border-border text-sm text-ink"
+              />
+            </label>
+          </div>
+          {(
+            [
+              ['what_happened', 'What happened'],
+              ['what_went_wrong', 'What went wrong'],
+              ['the_lesson', 'The lesson'],
+            ] as const
+          ).map(([key, label]) => (
+            <label key={key} className="block text-xs font-semibold text-ink-muted">
+              {label}
+              <textarea
+                rows={3}
+                value={draft[key]}
+                onChange={(e) => setDraft((d) => ({ ...d, [key]: e.target.value }))}
+                className="mt-1 w-full px-3 py-2 rounded-lg border border-border text-sm text-ink resize-y"
+              />
+            </label>
+          ))}
+          {updateMutation.isError && (
+            <p className="text-xs text-danger">{updateMutation.error.message}</p>
+          )}
+          <div className="flex gap-2 pt-1">
+            <button
+              type="button"
+              onClick={saveEdit}
+              disabled={updateMutation.isPending}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white disabled:opacity-50"
+              style={{ backgroundColor: '#38a169' }}
+            >
+              {updateMutation.isPending && <Loader2 size={14} className="animate-spin" />}
+              Save changes
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditing(false)}
+              disabled={updateMutation.isPending}
+              className="px-4 py-2 rounded-xl text-sm font-medium text-ink border border-border hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-        <div>
-          <p className="text-[10px] font-semibold text-ink-muted uppercase mb-1">
-            What went wrong
-          </p>
-          <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">
-            {post.what_went_wrong}
-          </p>
-        </div>
-        <div>
-          <p className="text-[10px] font-semibold text-ink-muted uppercase mb-1">
-            The lesson
-          </p>
-          <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">
-            {post.the_lesson}
-          </p>
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="space-y-3 mb-4">
+            <div>
+              <p className="text-[10px] font-semibold text-ink-muted uppercase mb-1">
+                What happened
+              </p>
+              <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">
+                {post.what_happened}
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold text-ink-muted uppercase mb-1">
+                What went wrong
+              </p>
+              <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">
+                {post.what_went_wrong}
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold text-ink-muted uppercase mb-1">
+                The lesson
+              </p>
+              <p className="text-sm text-ink leading-relaxed whitespace-pre-wrap">
+                {post.the_lesson}
+              </p>
+            </div>
+          </div>
 
-      <ModerationActions
-        copy={moderationCopy}
-        onApprove={() => approveMutation.mutateAsync(post.id).then(() => undefined)}
-        onReject={(reason) =>
-          rejectMutation.mutateAsync({ id: post.id, reason }).then(() => undefined)
-        }
-        onRequestChanges={(reason) =>
-          changesMutation.mutateAsync({ id: post.id, reason }).then(() => undefined)
-        }
-        isApproving={approveMutation.isPending}
-        isRejecting={rejectMutation.isPending}
-        isRequestingChanges={changesMutation.isPending}
-        onDelete={() => deleteMutation.mutateAsync(post.id).then(() => undefined)}
-        isDeleting={deleteMutation.isPending}
-      />
+          <ModerationActions
+            copy={moderationCopy}
+            onApprove={() => approveMutation.mutateAsync(post.id).then(() => undefined)}
+            onReject={(reason) =>
+              rejectMutation.mutateAsync({ id: post.id, reason }).then(() => undefined)
+            }
+            onRequestChanges={(reason) =>
+              changesMutation.mutateAsync({ id: post.id, reason }).then(() => undefined)
+            }
+            isApproving={approveMutation.isPending}
+            isRejecting={rejectMutation.isPending}
+            isRequestingChanges={changesMutation.isPending}
+            onDelete={() => deleteMutation.mutateAsync(post.id).then(() => undefined)}
+            isDeleting={deleteMutation.isPending}
+          />
+        </>
+      )}
     </article>
   );
 }
@@ -182,6 +285,15 @@ export function PendingNeverAgainPage() {
                 go live in the public feed.
               </p>
             </div>
+            {/* Reaches the full library (any status) for finding and removing
+                an already-approved post — the capability that used to be its
+                own sidebar entry. */}
+            <Link
+              to="/academics/admin/never-again"
+              className="ml-auto inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold text-accent border border-border hover:bg-gray-50 whitespace-nowrap"
+            >
+              <Library size={15} /> Browse all posts
+            </Link>
           </div>
         </header>
 
