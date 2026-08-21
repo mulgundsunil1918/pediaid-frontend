@@ -20,6 +20,7 @@ import { AdminLayout } from '../AdminLayout';
 import { usePlatformStats } from '../hooks/useAdmin';
 import type { RecentActivityEntry, TopChapter } from '../hooks/useAdmin';
 import { safeFixed, safeCompact } from '../../../lib/safeNumber';
+import { SignupGrowthChart } from '../components/SignupGrowthChart';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -328,6 +329,11 @@ export function AdminOverviewPage() {
           icon={<Clock size={18} className="text-ink-muted" />}
         />
       </div>
+
+      {/* Signup growth — directly under the tiles, because "how many users"
+          is the first question the tiles raise and the only one they cannot
+          answer on their own. */}
+      <SignupGrowthChart points={stats.signupsByDay} />
 
       {/* Role + Status breakdown */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

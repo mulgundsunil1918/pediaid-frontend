@@ -177,9 +177,18 @@ export interface TopChapter {
   publishedAt: string;
 }
 
+export interface SignupPoint {
+  /** YYYY-MM-DD */
+  date: string;
+  /** New signups on that day. */
+  count: number;
+}
+
 export interface PlatformStats {
   totalUsers: number;
   usersByRole: Record<string, number>;
+  /** Daily signups, oldest first, all time. Empty on older backends. */
+  signupsByDay: SignupPoint[];
   totalChapters: number;
   chaptersByStatus: Record<string, number>;
   totalSubjects: number;
@@ -281,7 +290,11 @@ export const adminKeys = {
  * reasonable, the UI's flat access is reasonable, and this is the seam.
  */
 interface RawPlatformStats {
-  users: { total: number; byRole: Record<string, number> };
+  users: {
+    total: number;
+    byRole: Record<string, number>;
+    signupsByDay?: Array<{ date: string; count: number }>;
+  };
   chapters: {
     total: number;
     byStatus: Record<string, number>;
@@ -308,6 +321,7 @@ function toPlatformStats(raw: RawPlatformStats): PlatformStats {
   return {
     totalUsers: raw.users?.total ?? 0,
     usersByRole: raw.users?.byRole ?? {},
+    signupsByDay: raw.users?.signupsByDay ?? [],
     totalChapters: raw.chapters?.total ?? 0,
     chaptersByStatus: raw.chapters?.byStatus ?? {},
     totalSubjects: raw.taxonomy?.totalSubjects ?? 0,
