@@ -16,7 +16,7 @@
 // March" cannot be reconstructed. Deliberately not implied anywhere here.
 // =============================================================================
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { SignupPoint } from '../hooks/useAdmin';
 
 export type Range = '7d' | '30d' | '12m' | 'all';
@@ -84,6 +84,8 @@ export function bucketise(points: SignupPoint[], range: Range): Bucket[] {
 
 export function SignupGrowthChart({ points }: { points: SignupPoint[] }) {
   const [range, setRange] = useState<Range>('all');
+  const [hover, setHover] = useState<number | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
   const buckets = useMemo(() => bucketise(points, range), [points, range]);
 
   const total = points.reduce((n, p) => n + p.count, 0);
@@ -102,6 +104,19 @@ export function SignupGrowthChart({ points }: { points: SignupPoint[] }) {
   const x = (i: number) =>
     PAD.left + (buckets.length <= 1 ? plotW / 2 : (i / (buckets.length - 1)) * plotW);
   const y = (v: number) => PAD.top + plotH - (v / maxCum) * plotH;
+
+  // Nearest bucket to a viewport x, mapped through the SVG's own box so it
+  // stays correct at any rendered width.
+  const indexAt = (clientX: number): number | null => {
+    const rect = svgRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0 || buckets.length === 0) return null;
+    if (buckets.length === 1) return 0;
+    const svgX = ((clientX - rect.left) / rect.width) * W;
+    const i = Math.round(((svgX - PAD.left) / plotW) * (buckets.length - 1));
+    return Math.min(buckets.length - 1, Math.max(0, i));
+  };
+
+  const active = hover !== null && hover >= 0 && hover < buckets.length ? hover : null;
 
   const line = buckets.map((b, i) => `${i === 0 ? 'M' : 'L'} ${x(i).toFixed(1)} ${y(b.cumulative).toFixed(1)}`).join(' ');
   const area = buckets.length
@@ -153,44 +168,93 @@ export function SignupGrowthChart({ points }: { points: SignupPoint[] }) {
         <p className="mt-6 pb-4 text-center text-sm text-slate-400">No signups in this period.</p>
       ) : (
         <>
-          <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img"
-               aria-label={`Cumulative signups, ${total} total`} className="mt-3 overflow-visible">
-            <defs>
-              <linearGradient id="signupFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#3182ce" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="#3182ce" stopOpacity="0" />
-              </linearGradient>
-            </defs>
+          {/* Hover readout.
+              The first attempt used SVG <title> elements as siblings of the
+              shapes, which does nothing useful: only the FIRST <title> child
+              of an element is its tooltip, so all of them collapsed into one
+              label for the entire chart. This tracks the pointer against the
+              nearest bucket instead, and works on touch too. */}
+          <div className="relative mt-3">
+            <svg
+              ref={svgRef}
+              viewBox={`0 0 ${W} ${H}`}
+              width="100%"
+              role="img"
+              aria-label={`Cumulative signups, ${total} total`}
+              className="touch-none overflow-visible"
+              onMouseLeave={() => setHover(null)}
+              onMouseMove={(e) => setHover(indexAt(e.clientX))}
+              onTouchStart={(e) => setHover(indexAt(e.touches[0]!.clientX))}
+              onTouchMove={(e) => setHover(indexAt(e.touches[0]!.clientX))}
+              onTouchEnd={() => setHover(null)}
+            >
+              <defs>
+                <linearGradient id="signupFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3182ce" stopOpacity="0.22" />
+                  <stop offset="100%" stopColor="#3182ce" stopOpacity="0" />
+                </linearGradient>
+              </defs>
 
-            {[0.25, 0.5, 0.75, 1].map((f) => (
-              <line key={f} x1={PAD.left} x2={W - PAD.right}
-                    y1={PAD.top + plotH - f * plotH} y2={PAD.top + plotH - f * plotH}
-                    stroke="#e2e8f0" strokeWidth="1" strokeDasharray="3 3" />
-            ))}
+              {[0.25, 0.5, 0.75, 1].map((f) => (
+                <line key={f} x1={PAD.left} x2={W - PAD.right}
+                      y1={PAD.top + plotH - f * plotH} y2={PAD.top + plotH - f * plotH}
+                      stroke="#e2e8f0" strokeWidth="1" strokeDasharray="3 3" />
+              ))}
 
-            {area && <path d={area} fill="url(#signupFill)" />}
-            <path d={line} fill="none" stroke="#3182ce" strokeWidth="2.25"
-                  strokeLinejoin="round" strokeLinecap="round" />
+              {area && <path d={area} fill="url(#signupFill)" />}
+              <path d={line} fill="none" stroke="#3182ce" strokeWidth="2.25"
+                    strokeLinejoin="round" strokeLinecap="round" />
 
-            {/* Only the endpoint is emphasised — a dot per bucket is noise on a
-                long series and unreadable on a short one. */}
-            {buckets.length > 0 && (
-              <circle cx={x(buckets.length - 1)} cy={y(buckets[buckets.length - 1]!.cumulative)}
-                      r="3.5" fill="#fff" stroke="#3182ce" strokeWidth="2.25" />
+              {active !== null && (
+                <>
+                  <line x1={x(active)} x2={x(active)} y1={PAD.top} y2={PAD.top + plotH}
+                        stroke="#94a3b8" strokeWidth="1" strokeDasharray="3 3" />
+                  <circle cx={x(active)} cy={y(buckets[active]!.cumulative)} r="4.5"
+                          fill="#fff" stroke="#3182ce" strokeWidth="2.5" />
+                </>
+              )}
+
+              {/* Endpoint marker hides while hovering so two dots never overlap. */}
+              {active === null && buckets.length > 0 && (
+                <circle cx={x(buckets.length - 1)} cy={y(buckets[buckets.length - 1]!.cumulative)}
+                        r="3.5" fill="#fff" stroke="#3182ce" strokeWidth="2.25" />
+              )}
+
+              {/* Full-height catcher: a 2px line is far too thin to aim at. */}
+              <rect x={PAD.left} y={PAD.top} width={plotW} height={plotH} fill="transparent" />
+            </svg>
+
+            {active !== null && (
+              <div
+                className="pointer-events-none absolute top-0 z-10 rounded-lg bg-slate-900 px-2.5 py-1.5 text-center shadow-lg"
+                style={{
+                  left: `${(x(active) / W) * 100}%`,
+                  // Nudge in at the edges so the card never spills outside.
+                  transform: `translateX(${
+                    x(active) / W < 0.12 ? '-8%' : x(active) / W > 0.88 ? '-92%' : '-50%'
+                  })`,
+                }}
+              >
+                <div className="text-[11px] font-medium text-slate-300">{buckets[active]!.label}</div>
+                <div className="text-sm font-bold tabular-nums text-white">
+                  {buckets[active]!.cumulative.toLocaleString()}
+                </div>
+                <div className="text-[11px] font-semibold tabular-nums text-emerald-400">
+                  +{buckets[active]!.count.toLocaleString()} new
+                </div>
+              </div>
             )}
+          </div>
 
-            {buckets.map((b, i) => (
-              <title key={i}>{`${b.label}: +${b.count} (${b.cumulative} total)`}</title>
-            ))}
-          </svg>
-
-          {/* New-per-bucket, sharing the x-axis above. */}
           <div className="mt-1 flex items-end gap-[2px]" style={{ height: 34 }}>
             {buckets.map((b, i) => (
               <div
                 key={i}
-                title={`${b.label}: +${b.count}`}
-                className="min-w-[2px] flex-1 rounded-t-sm bg-slate-300 transition hover:bg-blue-400"
+                onMouseEnter={() => setHover(i)}
+                onMouseLeave={() => setHover(null)}
+                className={`min-w-[2px] flex-1 rounded-t-sm transition ${
+                  active === i ? 'bg-blue-500' : 'bg-slate-300 hover:bg-blue-400'
+                }`}
                 style={{ height: `${Math.max(2, (b.count / maxNew) * 34)}px` }}
               />
             ))}
