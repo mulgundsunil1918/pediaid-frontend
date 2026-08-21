@@ -66,10 +66,20 @@ export function useNotifications() {
     queryFn: () =>
       apiFetch<NotificationListResponse>('/api/academics/notifications'),
     enabled,
-    // Poll every 60s, but React Query pauses polling while the tab is hidden
-    // by default — no extra work needed.
-    refetchInterval: 60_000,
-    staleTime: 30_000,
+    // Hourly timer; the tab regaining focus is what actually keeps this fresh.
+    //
+    // Was 60s. React Query does pause polling on a hidden tab, so this was
+    // never as bad as the app's bell — but it still fired once a minute for
+    // every signed-in user sitting on the page, and Neon bills compute-hours,
+    // so a handful of open tabs kept the database from ever auto-suspending.
+    //
+    // Web has no push, so the timer cannot be removed outright the way the
+    // moderation queue's was. An hour is the backstop; refetchOnWindowFocus
+    // is what makes it feel live, and it must be set explicitly because the
+    // global default in lib/queryClient.ts is `false`.
+    refetchInterval: 60 * 60 * 1_000,
+    refetchOnWindowFocus: true,
+    staleTime: 60_000,
     retry: false,
   });
 }

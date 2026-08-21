@@ -155,7 +155,10 @@ export function useModerationQueue() {
   return useQuery({
     queryKey: ['moderation', 'queue'],
     queryFn: () => apiFetch<QueueItem[]>('/api/academics/moderation/queue'),
-    refetchInterval: 60_000,
+    // No timer: a moderation queue does not need to change while you are
+    // reading one item, and two queries a minute per open tab kept Neon awake
+    // for no benefit. Focus is set explicitly — the global default is `false`.
+    refetchOnWindowFocus: true,
     staleTime: 30_000,
   });
 }
@@ -175,7 +178,10 @@ export function useModerationStats() {
   return useQuery({
     queryKey: ['moderation', 'stats'],
     queryFn: () => apiFetch<ModerationStats>('/api/academics/moderation/stats'),
-    refetchInterval: 60_000,
+    // No timer: a moderation queue does not need to change while you are
+    // reading one item, and two queries a minute per open tab kept Neon awake
+    // for no benefit. Focus is set explicitly — the global default is `false`.
+    refetchOnWindowFocus: true,
     staleTime: 30_000,
   });
 }

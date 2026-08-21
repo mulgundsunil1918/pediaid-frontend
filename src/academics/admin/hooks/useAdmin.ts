@@ -351,8 +351,20 @@ export function usePlatformStats() {
       const raw = await apiFetch<RawPlatformStats>('/api/academics/admin/stats');
       return toPlatformStats(raw);
     },
-    staleTime: 2 * 60 * 1_000,
-    refetchInterval: 2 * 60 * 1_000,
+    // Refresh when the admin comes back to the tab, NOT on a timer.
+    //
+    // This was `refetchInterval: 2 * 60 * 1_000`, which re-queried every two
+    // minutes for as long as the dashboard was open — including in a
+    // background tab nobody was looking at. Neon bills compute-hours and
+    // auto-suspends when idle, so a standing timer keeps the database awake
+    // and turns "a tab left open" into a running cost. Exactly the shape of
+    // the notification-bell bug, at admin scale rather than user scale.
+    //
+    // refetchOnWindowFocus is set explicitly because the global default in
+    // lib/queryClient.ts is `false`; without this, dropping the interval would
+    // leave the stats never refreshing at all.
+    staleTime: 5 * 60 * 1_000,
+    refetchOnWindowFocus: true,
   });
 }
 
