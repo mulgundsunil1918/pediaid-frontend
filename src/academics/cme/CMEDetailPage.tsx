@@ -24,6 +24,7 @@ import { SpeakerCard } from './components/SpeakerCard';
 import { AddToCalendar } from './components/AddToCalendar';
 import { SaveButton } from '../bookmarks/SaveButton';
 import { RegistrationCard } from './components/RegistrationCard';
+import { prettyUrl, toExternalUrl } from '../../lib/externalUrl';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -148,6 +149,11 @@ export function CMEDetailPage() {
 
   const isPending = registerMutation.isPending || cancelMutation.isPending;
 
+  // Both are typed by hand into the submit form, so neither can go into an
+  // href raw. See lib/externalUrl.ts.
+  const registrationUrl = toExternalUrl(event?.registrationUrl);
+  const joinUrl = toExternalUrl(event?.onlineUrl);
+
   function handleRegister() {
     if (!event) return;
     registerMutation.mutate(event.id);
@@ -266,17 +272,31 @@ export function CMEDetailPage() {
                   <div className="flex items-center gap-2 text-sm text-white/90">
                     <Globe size={15} className="shrink-0 text-white/75" />
                     <span>
-                      {event.isRegistered && event.onlineUrl ? (
+                      {event.isRegistered && joinUrl !== null ? (
                         <a
-                          href={event.onlineUrl}
+                          href={joinUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-white underline underline-offset-2"
                         >
-                          {event.onlineUrl}
+                          {prettyUrl(joinUrl)}
                         </a>
+                      ) : registrationUrl !== null ? (
+                        /* An organiser registration page is public by design —
+                           promising it "after registration" hid the only link
+                           on the page behind a registration it does not gate. */
+                        <a
+                          href={registrationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-white underline underline-offset-2"
+                        >
+                          Online — click for registration details
+                        </a>
+                      ) : joinUrl !== null ? (
+                        'Online — joining link shown after registration'
                       ) : (
-                        'Online — link shown after registration'
+                        'Online'
                       )}
                     </span>
                   </div>
@@ -393,6 +413,11 @@ export function CMEDetailPage() {
             <RegistrationCard
               event={event}
               onRegister={handleRegister}
+              errorMessage={
+                registerMutation.error?.message ??
+                cancelMutation.error?.message ??
+                null
+              }
               onCancel={handleCancel}
               isPending={isPending}
             />

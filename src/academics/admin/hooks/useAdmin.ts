@@ -936,6 +936,8 @@ export interface PendingCmeEventEdit {
   timezone?: string;
   venue?: string | null;
   online_url?: string | null;
+  registration_url?: string | null;
+  brochure_url?: string | null;
   speaker_name?: string | null;
   speaker_credentials?: string | null;
   speaker_bio?: string | null;

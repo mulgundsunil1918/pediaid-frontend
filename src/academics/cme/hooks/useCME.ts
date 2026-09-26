@@ -54,6 +54,18 @@ export interface CMEEvent {
   price: number;
   currency: string;
   coverImageUrl: string | null;
+  /**
+   * The organiser's own registration page — a Google Form, an IAP chapter
+   * page, whatever they pasted into the submit form.
+   *
+   * Sent by the API since user-submitted events went in (toCmeEventJson maps
+   * it on the public list AND the detail route); the type never declared it,
+   * so the web quietly dropped the one link an attendee actually needs and
+   * "Register Now" had nothing to open. Same drift as referenceCode above.
+   */
+  registrationUrl: string | null;
+  /** The brochure PDF, also sent and also never declared. */
+  brochureUrl: string | null;
   /// Absent from the API today — it sends speakerName/speakerBio/
   /// speakerCredentials instead. Optional so the type stops promising a
   /// field the server never sends.

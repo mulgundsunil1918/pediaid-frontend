@@ -111,6 +111,8 @@ function CmeEditForm({ event, onDone }: { event: PendingCmeEvent; onDone: () => 
     ends_at: toLocalInput(event.ends_at),
     venue: event.venue ?? '',
     online_url: event.online_url ?? '',
+    registration_url: event.registration_url ?? '',
+    brochure_url: event.brochure_url ?? '',
     speaker_name: event.speaker_name ?? '',
     speaker_credentials: event.speaker_credentials ?? '',
     speaker_bio: event.speaker_bio ?? '',
@@ -131,6 +133,8 @@ function CmeEditForm({ event, onDone }: { event: PendingCmeEvent; onDone: () => 
         ends_at: f.ends_at ? new Date(f.ends_at).toISOString() : undefined,
         venue: f.venue.trim() || null,
         online_url: f.online_url.trim() || null,
+        registration_url: f.registration_url.trim() || null,
+        brochure_url: f.brochure_url.trim() || null,
         speaker_name: f.speaker_name.trim() || null,
         speaker_credentials: f.speaker_credentials.trim() || null,
         speaker_bio: f.speaker_bio.trim() || null,
@@ -162,6 +166,16 @@ function CmeEditForm({ event, onDone }: { event: PendingCmeEvent; onDone: () => 
         </label>
         <label className={lbl}>Online URL
           <input value={f.online_url} onChange={(e) => set('online_url', e.target.value)} className={cmeInput} />
+        </label>
+      </div>
+      {/* The registration page is what "Register Now" opens, so a typo here is
+          a dead button on the public page. Editable now; it was read-only. */}
+      <div className="grid grid-cols-2 gap-3">
+        <label className={lbl}>Registration page
+          <input value={f.registration_url} onChange={(e) => set('registration_url', e.target.value)} className={cmeInput} placeholder="Google Form, event page, etc." />
+        </label>
+        <label className={lbl}>Brochure URL
+          <input value={f.brochure_url} onChange={(e) => set('brochure_url', e.target.value)} className={cmeInput} />
         </label>
       </div>
       <div className="grid grid-cols-2 gap-3">

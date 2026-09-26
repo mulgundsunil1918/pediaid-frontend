@@ -3,10 +3,18 @@
 // =============================================================================
 
 import { useNavigate } from 'react-router-dom';
-import { Award, CheckCircle, Loader2, Users, XCircle } from 'lucide-react';
+import {
+  Award,
+  CheckCircle,
+  ExternalLink,
+  Loader2,
+  Users,
+  XCircle,
+} from 'lucide-react';
 import type { CMEEvent } from '../hooks/useCME';
 import { AddToCalendar } from './AddToCalendar';
 import { safeFixed } from '../../../lib/safeNumber';
+import { prettyUrl, toExternalUrl } from '../../../lib/externalUrl';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -17,6 +25,14 @@ interface RegistrationCardProps {
   onRegister: () => void;
   onCancel: () => void;
   isPending: boolean;
+  /**
+   * Why the last attempt failed, if it did.
+   *
+   * The mutation had no error surface at all: a 401 from an expired session
+   * or a 409 for an already-registered account resolved into nothing on
+   * screen, so pressing Register Now genuinely looked like it did nothing.
+   */
+  errorMessage?: string | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -32,12 +48,18 @@ export function RegistrationCard({
   onRegister,
   onCancel,
   isPending,
+  errorMessage = null,
 }: RegistrationCardProps) {
   const navigate = useNavigate();
 
   const isCompleted = event.status === 'completed';
   const isCancelled = event.status === 'cancelled';
   const isActiveEvent = !isCompleted && !isCancelled;
+
+  // The organiser's own registration page. Normalised because it is typed by
+  // hand into a free-text field — "forms.gle/abc" without a scheme would
+  // resolve against the current route and go nowhere.
+  const registrationUrl = toExternalUrl(event.registrationUrl);
 
   const capacity = event.maxAttendees;
   const capacityPercent =
@@ -135,8 +157,25 @@ export function RegistrationCard({
       ) : isCancelled ? (
         /* ── Cancelled ── */
         <p className="text-sm text-danger text-center font-medium">Event cancelled</p>
+      ) : registrationUrl !== null ? (
+        /* ── Not registered, and the organiser gave us their own page ──
+           A real anchor, not a button with window.open in a callback: popup
+           blockers kill a window opened after an await, and an anchor also
+           gives middle-click, "open in new tab" and a visible destination on
+           hover. The internal registration still fires so the attendee count
+           and the certificate flow keep working. */
+        <a
+          href={registrationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onRegister}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-accent text-white rounded-lg font-semibold text-sm hover:bg-accent/90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40"
+        >
+          Register Now
+          <ExternalLink size={15} />
+        </a>
       ) : (
-        /* ── Not registered, event active ── */
+        /* ── Not registered, event active, no external page ── */
         <button
           onClick={onRegister}
           disabled={isPending}
@@ -147,6 +186,31 @@ export function RegistrationCard({
           ) : null}
           Register Now
         </button>
+      )}
+
+      {errorMessage !== null && (
+        <p
+          role="alert"
+          className="flex items-start gap-1.5 text-xs text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2"
+        >
+          <XCircle size={13} className="shrink-0 mt-0.5" />
+          <span>{errorMessage}</span>
+        </p>
+      )}
+
+      {/* The link itself, always visible when there is one — including after
+          registering, so it can be reopened. Sunil: "the link should be
+          visible to open, like click the link for more details". */}
+      {registrationUrl !== null && isActiveEvent && (
+        <a
+          href={registrationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-start gap-1.5 text-xs text-accent hover:underline break-all"
+        >
+          <ExternalLink size={13} className="shrink-0 mt-0.5" />
+          <span>Registration page — {prettyUrl(registrationUrl)}</span>
+        </a>
       )}
     </div>
   );
