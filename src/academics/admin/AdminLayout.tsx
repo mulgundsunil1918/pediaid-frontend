@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   TreePine,
   Users,
+  BarChart3,
   BadgeCheck,
   FileText,
   Award,
@@ -192,6 +193,12 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           to="/academics/admin/users"
           icon={<Users size={17} />}
           label="Users"
+          onClick={onNavClick}
+        />
+        <NavItem
+          to="/academics/admin/analytics"
+          icon={<BarChart3 size={17} />}
+          label="Analytics"
           onClick={onNavClick}
         />
         <NavItem

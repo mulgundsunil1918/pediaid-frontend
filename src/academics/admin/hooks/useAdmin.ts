@@ -1600,3 +1600,46 @@ export function useModerateGuidelineNote() {
     onSuccess: () => void qc.invalidateQueries({ queryKey: NOTES_KEY }),
   });
 }
+
+// ---------------------------------------------------------------------------
+// Profile analytics — the dashboard charts
+// ---------------------------------------------------------------------------
+
+export interface AnalyticsBucket {
+  label: string;
+  count: number;
+}
+
+export interface ProfileAnalytics {
+  totals: {
+    users: number;
+    withProfile: number;
+    complete: number;
+    completionRate: number;
+  };
+  qualifications: AnalyticsBucket[];
+  specialties: AnalyticsBucket[];
+  genders: AnalyticsBucket[];
+  ageBands: AnalyticsBucket[];
+  signupsByMonth: AnalyticsBucket[];
+  cached: boolean;
+}
+
+/**
+ * GET /api/academics/admin/analytics/profiles
+ *
+ * Aggregates only — nothing here identifies a person.
+ *
+ * staleTime matches the server's five-minute cache. Without it React Query
+ * refetches on every window focus and each one is another reason the database
+ * compute does not suspend, for numbers that move in days.
+ */
+export function useProfileAnalytics() {
+  return useQuery<ProfileAnalytics, Error>({
+    queryKey: ['admin', 'analytics', 'profiles'],
+    queryFn: () =>
+      apiFetch<ProfileAnalytics>('/api/academics/admin/analytics/profiles'),
+    staleTime: 5 * 60_000,
+    refetchOnWindowFocus: false,
+  });
+}
