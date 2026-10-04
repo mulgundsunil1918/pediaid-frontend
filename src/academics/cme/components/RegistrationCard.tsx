@@ -12,6 +12,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import type { CMEEvent } from '../hooks/useCME';
+import { eventPhase } from '../lib/phase';
 import { AddToCalendar } from './AddToCalendar';
 import { safeFixed } from '../../../lib/safeNumber';
 import { prettyUrl, toExternalUrl } from '../../../lib/externalUrl';
@@ -52,7 +53,10 @@ export function RegistrationCard({
 }: RegistrationCardProps) {
   const navigate = useNavigate();
 
-  const isCompleted = event.status === 'completed';
+  // Over when its END has passed. The API's `status` is the moderation state
+  // ('published'), never 'completed', so this used to be false for every event
+  // and a conference that ended in April still offered Register Now.
+  const isCompleted = eventPhase(event) === 'finished' || event.status === 'completed';
   const isCancelled = event.status === 'cancelled';
   const isActiveEvent = !isCompleted && !isCancelled;
 
@@ -125,7 +129,7 @@ export function RegistrationCard({
             <span className="text-sm font-medium text-success">You're registered!</span>
           </div>
 
-          <AddToCalendar event={event} />
+          {isActiveEvent && <AddToCalendar event={event} />}
 
           {isActiveEvent && (
             <button

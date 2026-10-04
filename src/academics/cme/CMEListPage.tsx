@@ -2,13 +2,14 @@
 // academics/cme/CMEListPage.tsx — /academics/cme route
 // =============================================================================
 
-import { useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ArrowDown, ArrowUp, BookOpen, ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
 import { useCMEEvents } from './hooks/useCME';
 import { CMEFilterBar } from './components/CMEFilterBar';
 import type { CMEFilters, CMEEvent } from './hooks/useCME';
 import { EventCard } from './components/EventCard';
+import { eventPhase, sortEvents, type EventPhase } from './lib/phase';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -16,14 +17,16 @@ import { EventCard } from './components/EventCard';
 
 const PAGE_SIZE = 12;
 
-type StatusFilter = CMEFilters['status'] | 'all';
+// Where the event is in time - judged from its dates in the browser (see
+// lib/phase.ts), not from the API's `status`, which is the moderation state.
+type StatusFilter = EventPhase | 'all';
 type TypeFilter = CMEEvent['eventType'] | 'all';
 
 const STATUS_TABS: { label: string; value: StatusFilter }[] = [
   { label: 'All', value: 'all' },
   { label: 'Upcoming', value: 'upcoming' },
-  { label: 'Ongoing', value: 'ongoing' },
-  { label: 'Completed', value: 'completed' },
+  { label: 'Live now', value: 'ongoing' },
+  { label: 'Finished', value: 'finished' },
 ];
 
 const TYPE_PILLS: { label: string; value: TypeFilter }[] = [
@@ -96,20 +99,43 @@ export function CMEListPage() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
+  // Soonest first is "current to future": what is on now, then what is next.
+  // Events that have finished always sit below the rest, whichever way this is
+  // set (lib/phase.ts).
+  const [ascending, setAscending] = useState(true);
+
+  // Only what the server filters on. No `page` and no `status`: the server
+  // ignores the second and pages in 50s, which never agreed with the 12 this
+  // page used to count by, so paging is done here over what comes back.
   const filters: CMEFilters = {
-    ...(statusFilter !== 'all' && { status: statusFilter }),
     ...(typeFilter !== 'all' && { eventType: typeFilter }),
     ...(stateFilter && { state: stateFilter }),
     ...(modeFilter && { mode: modeFilter }),
     ...(search.trim() && { q: search.trim() }),
-    page,
   };
 
   const { data, isLoading, isError, error } = useCMEEvents(filters);
 
-  const events = data?.data ?? [];
-  const total = data?.total ?? 0;
+  const fetched = data?.data ?? [];
+  const serverTotal = data?.total ?? 0;
+
+  const now = Date.now();
+  const visible = useMemo(() => {
+    const sorted = sortEvents(fetched, ascending, now);
+    return statusFilter === 'all'
+      ? sorted
+      : sorted.filter((e) => eventPhase(e, now) === statusFilter);
+    // `now` is read once per render on purpose: a list that re-sorts itself
+    // while someone is reading it would be worse than one a minute stale.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetched, ascending, statusFilter]);
+
+  const total = visible.length;
   const totalPages = Math.ceil(total / PAGE_SIZE);
+  const events = visible.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const firstFinishedIndex = visible.findIndex((e) => eventPhase(e, now) === 'finished');
+  // The label only means something when there is something still to come above it.
+  const dividerAt = firstFinishedIndex > 0 ? firstFinishedIndex : -1;
 
   // Reset to page 1 on filter change
   function handleStatusChange(value: StatusFilter) {
@@ -132,6 +158,11 @@ export function CMEListPage() {
 
   function handleModeChange(value: NonNullable<CMEFilters['mode']> | '') {
     setModeFilter(value);
+    setPage(1);
+  }
+
+  function handleSortChange(value: boolean) {
+    setAscending(value);
     setPage(1);
   }
 
@@ -201,6 +232,32 @@ export function CMEListPage() {
           ))}
         </div>
 
+        {/* Sort by date */}
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          <span className="text-xs font-medium text-ink-muted">Sort by date</span>
+          <div className="flex gap-1 p-1 bg-card border border-border rounded-xl" role="group" aria-label="Sort by date">
+            {[
+              { value: true, label: 'Soonest first', Icon: ArrowUp },
+              { value: false, label: 'Latest first', Icon: ArrowDown },
+            ].map(({ value, label, Icon }) => (
+              <button
+                key={label}
+                type="button"
+                onClick={() => handleSortChange(value)}
+                aria-pressed={ascending === value}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors focus:outline-none ${
+                  ascending === value
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'text-ink-muted hover:text-ink'
+                }`}
+              >
+                <Icon size={13} aria-hidden="true" />
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <CMEFilterBar
           state={stateFilter}
           mode={modeFilter}
@@ -225,7 +282,21 @@ export function CMEListPage() {
           ) : events.length === 0 ? (
             <EmptyState statusFilter={statusFilter} typeFilter={typeFilter} />
           ) : (
-            events.map((event) => <EventCard key={event.id} event={event} />)
+            events.map((event, i) => {
+              const overall = (page - 1) * PAGE_SIZE + i;
+              return (
+                <Fragment key={event.id}>
+                  {overall === dividerAt && (
+                    <div className="col-span-full flex items-center gap-3 pt-4 text-xs font-extrabold tracking-wider text-ink-muted">
+                      <X size={14} aria-hidden="true" />
+                      FINISHED EVENTS
+                      <span className="flex-1 border-t border-border" />
+                    </div>
+                  )}
+                  <EventCard event={event} />
+                </Fragment>
+              );
+            })
           )}
         </div>
 
@@ -270,6 +341,12 @@ export function CMEListPage() {
         {!isLoading && events.length > 0 && (
           <p className="mt-4 text-center text-xs text-ink-muted">
             Showing {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, total)} of {total} events
+          </p>
+        )}
+        {!isLoading && serverTotal > fetched.length && (
+          <p className="mt-2 text-center text-xs text-ink-muted">
+            {serverTotal} events match; the first {fetched.length} are listed. Narrow it with
+            search or a filter to find the rest.
           </p>
         )}
 

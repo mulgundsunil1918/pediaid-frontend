@@ -12,6 +12,7 @@ import {
   MapPin,
   Share2,
   Tag,
+  X,
 } from 'lucide-react';
 import {
   useCMEEvent,
@@ -24,6 +25,7 @@ import { SpeakerCard } from './components/SpeakerCard';
 import { AddToCalendar } from './components/AddToCalendar';
 import { SaveButton } from '../bookmarks/SaveButton';
 import { RegistrationCard } from './components/RegistrationCard';
+import { endedLabel, eventPhase } from './lib/phase';
 import { prettyUrl, toExternalUrl } from '../../lib/externalUrl';
 
 // ---------------------------------------------------------------------------
@@ -190,10 +192,29 @@ export function CMEDetailPage() {
     );
   }
 
-  const isCountdownVisible =
-    event.status === 'upcoming' || event.status === 'ongoing';
+  // From the dates, not `event.status` - that is the moderation state
+  // ('published') and is never 'upcoming' or 'completed'. See lib/phase.ts.
+  const phase = eventPhase(event);
+  const finished = phase === 'finished';
+  const isCountdownVisible = !finished;
 
-  const theme = EVENT_TYPE_THEME[event.eventType] ?? DEFAULT_THEME;
+  // A finished event loses its colour, like its card in the list: the type
+  // colour says "this is on and for you".
+  const theme = finished
+    ? { from: '#64748B', to: '#334155', tint: '#F8FAFC', border: '#E2E8F0' }
+    : (EVENT_TYPE_THEME[event.eventType] ?? DEFAULT_THEME);
+
+  // Under review / rejected / cancelled: the moderation state is what matters
+  // and is only ever visible to the owner or an admin. Otherwise: where the
+  // event is in time.
+  const moderationState = String(event.status);
+  const stateChip =
+    moderationState !== 'published' && moderationState !== 'upcoming' &&
+    moderationState !== 'ongoing' && moderationState !== 'completed'
+      ? moderationState.replace(/_/g, ' ')
+      : phase === 'ongoing'
+        ? 'live now'
+        : phase;
 
   return (
     <div className="min-h-screen bg-bg">
@@ -240,9 +261,31 @@ export function CMEDetailPage() {
                   {event.eventType}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-black/20 text-white/90">
-                  {event.status}
+                  {stateChip}
                 </span>
               </div>
+
+              {finished && (
+                <div
+                  className="flex items-center gap-3 mb-4 rounded-xl border-2 border-red-700 bg-white/95 px-3.5 py-2.5 text-slate-700"
+                  role="status"
+                >
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-700 text-white"
+                    aria-hidden="true"
+                  >
+                    <X size={15} strokeWidth={3} />
+                  </span>
+                  <span>
+                    <span className="block text-sm font-extrabold tracking-wide text-red-700">
+                      EVENT FINISHED
+                    </span>
+                    <span className="block text-xs font-medium">
+                      {endedLabel(event)} · no longer active
+                    </span>
+                  </span>
+                </div>
+              )}
 
               <h1 className="text-2xl sm:text-3xl font-bold leading-snug mb-4">
                 {event.title}
@@ -311,12 +354,10 @@ export function CMEDetailPage() {
                 style={{ backgroundColor: theme.tint, borderColor: theme.border }}
               >
                 <span className="text-sm text-ink-muted font-medium">
-                  {event.status === 'upcoming' ? 'Starts in:' : 'Status:'}
+                  {phase === 'upcoming' ? 'Starts in:' : 'Ends in:'}
                 </span>
                 <CountdownTimer
-                  targetDate={
-                    event.status === 'upcoming' ? event.startsAt : event.endsAt
-                  }
+                  targetDate={phase === 'upcoming' ? event.startsAt : event.endsAt}
                 />
               </div>
             )}
@@ -380,7 +421,7 @@ export function CMEDetailPage() {
             {/* Add to Calendar (if registered) */}
             {event.isRegistered && (
               <div>
-                <AddToCalendar event={event} />
+                {!finished && <AddToCalendar event={event} />}
                 <SaveButton itemType="cme" itemId={event.id} withLabel />
               </div>
             )}

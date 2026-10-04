@@ -4,9 +4,10 @@
 
 import { Link } from 'react-router-dom';
 import { SaveButton } from '../../bookmarks/SaveButton';
-import { Award, Calendar, CheckCircle, MapPin, Users } from 'lucide-react';
+import { Award, Calendar, CheckCircle, MapPin, Users, X } from 'lucide-react';
 import type { CMEEvent } from '../hooks/useCME';
 import { safeFixed } from '../../../lib/safeNumber';
+import { endedLabel, eventPhase, type EventPhase } from '../lib/phase';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -42,33 +43,24 @@ const FALLBACK_GRADIENTS: Record<CMEEvent['eventType'], string> = {
   course: 'from-teal-600 to-teal-400',
 };
 
-function StatusBadge({ status }: { status: CMEEvent['status'] }) {
-  switch (status) {
+function StatusBadge({ phase }: { phase: EventPhase }) {
+  switch (phase) {
     case 'upcoming':
       return (
-        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-accent/15 text-accent">
+        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-white/90 text-accent">
           Upcoming
         </span>
       );
     case 'ongoing':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-success/15 text-success">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-white/90 text-success">
           <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-          Live
+          Live now
         </span>
       );
-    case 'completed':
-      return (
-        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
-          Completed
-        </span>
-      );
-    case 'cancelled':
-      return (
-        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-danger/10 text-danger line-through">
-          Cancelled
-        </span>
-      );
+    case 'finished':
+      // The cross itself is the stamp over the cover; no second badge needed.
+      return null;
   }
 }
 
@@ -98,6 +90,8 @@ function formatEventDate(iso: string, timezone: string): string {
 // ---------------------------------------------------------------------------
 
 export function EventCard({ event }: EventCardProps) {
+  const phase = eventPhase(event);
+  const finished = phase === 'finished';
   const typeBadgeClass = EVENT_TYPE_STYLES[event.eventType];
   const typeLabel = EVENT_TYPE_LABELS[event.eventType];
   const fallbackGradient = FALLBACK_GRADIENTS[event.eventType];
@@ -116,6 +110,7 @@ export function EventCard({ event }: EventCardProps) {
     <Link
       to={`/academics/cme/${event.slug}`}
       className="group flex flex-col bg-card border border-border rounded-card shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+      aria-label={finished ? `${event.title} - event finished` : undefined}
     >
       {/* Cover image / gradient banner */}
       <div className="relative h-40 overflow-hidden">
@@ -123,10 +118,14 @@ export function EventCard({ event }: EventCardProps) {
           <img
             src={event.coverImageUrl}
             alt={event.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${finished ? 'grayscale opacity-70' : ''}`}
           />
         ) : (
-          <div className={`w-full h-full bg-gradient-to-br ${fallbackGradient} opacity-90`} />
+          <div
+            className={`w-full h-full bg-gradient-to-br ${
+              finished ? 'from-slate-600 to-slate-400' : fallbackGradient
+            } opacity-90`}
+          />
         )}
 
         {/* Overlay badges */}
@@ -137,11 +136,32 @@ export function EventCard({ event }: EventCardProps) {
         </div>
 
         <div className="absolute top-3 right-3 flex items-center gap-2">
-          <StatusBadge status={event.status} />
+          <StatusBadge phase={phase} />
         </div>
 
+        {/* The cross: a finished event cannot be mistaken for one you can still
+            go to. A strip across the foot of the cover, not a colour tweak. */}
+        {finished && (
+          <div className="absolute inset-x-0 bottom-0 flex items-center gap-2.5 bg-white/95 border-t-2 border-danger px-3 py-2">
+            <span
+              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-danger text-white"
+              aria-hidden="true"
+            >
+              <X size={13} strokeWidth={3} />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-xs font-extrabold tracking-wide text-danger">
+                EVENT FINISHED
+              </span>
+              <span className="block text-[11px] font-medium text-slate-600 truncate">
+                {endedLabel(event)} · no longer active
+              </span>
+            </span>
+          </div>
+        )}
+
         {/* Registered badge */}
-        {event.isRegistered && (
+        {event.isRegistered && !finished && (
           <div className="absolute bottom-3 right-3">
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-success text-white shadow">
               <CheckCircle size={11} />
