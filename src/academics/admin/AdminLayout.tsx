@@ -3,7 +3,7 @@
 // =============================================================================
 
 import { useState } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Settings,
   LayoutDashboard,
@@ -27,11 +27,17 @@ import {
   GraduationCap,
   LogOut,
   FlaskConical,
+  UserCog,
+  ScrollText,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { AdminGuard } from './AdminGuard';
 import { signOutFirebase } from '../../lib/firebaseAuth';
 import { NoIndex } from '../../components/NoIndex';
+import { Dialog } from './components/Dialog';
+import { permissionForPath } from './pagePermissions';
+import { can, useAdminSession } from './hooks/useAdminSession';
+import { useIdleSignOut } from './hooks/useIdleSignOut';
 import {
   usePlatformStats,
   useAdminPendingApplicants,
@@ -74,6 +80,14 @@ interface NavItemProps {
 }
 
 function NavItem({ to, icon, label, badge = 0, onClick }: NavItemProps) {
+  // A menu entry the account cannot open is noise at best and a dead end at
+  // worst. Hidden by the same table the page guard uses (pagePermissions.ts),
+  // so the menu and the guard cannot disagree. While the session loads, show
+  // nothing rather than flashing entries that then vanish.
+  const { data: session } = useAdminSession();
+  const needs = permissionForPath(to);
+  if (!session || (needs && !can(session, needs))) return null;
+
   return (
     <NavLink
       to={to}
@@ -107,12 +121,20 @@ function NavItem({ to, icon, label, badge = 0, onClick }: NavItemProps) {
 // ---------------------------------------------------------------------------
 
 function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
-  const { data: stats } = usePlatformStats();
-  const { data: pendingApplicants } = useAdminPendingApplicants();
-  const { data: pendingCmeEvents } = useAdminPendingCmeEvents();
-  const { data: pendingNeverAgainPosts } = useAdminPendingNeverAgainPosts();
-  const { data: trials } = useAdminTrials();
-  const { data: guidelineNotes } = useAdminGuidelineNotes();
+  const { data: session } = useAdminSession();
+  // Each badge count is a request the server refuses unless the account holds
+  // that area's permission. Ask only for the ones it can have.
+  const may = (permission: string) => can(session, permission);
+  const { data: stats } = usePlatformStats({ enabled: may('reports.read') });
+  const { data: pendingApplicants } = useAdminPendingApplicants({ enabled: may('users.read') });
+  const { data: pendingCmeEvents } = useAdminPendingCmeEvents({
+    enabled: may('conferences.read') || may('workshops.read'),
+  });
+  const { data: pendingNeverAgainPosts } = useAdminPendingNeverAgainPosts({
+    enabled: may('content.read'),
+  });
+  const { data: trials } = useAdminTrials({ enabled: may('content.read') });
+  const { data: guidelineNotes } = useAdminGuidelineNotes({ enabled: may('content.read') });
 
   const pendingCredentials = stats?.usersByRole
     ? (stats.usersByRole['pending_credentials'] ?? 0)
@@ -281,6 +303,28 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           label="Send Notification"
           onClick={onNavClick}
         />
+
+        {/* Super admins only (the entries hide themselves for everyone else,
+            but the heading is only drawn when there is something under it). */}
+        {may('admins.manage') && (
+          <>
+            <p className="px-4 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-blue-300">
+              Security
+            </p>
+            <NavItem
+              to="/academics/admin/admins"
+              icon={<UserCog size={17} />}
+              label="Administrators"
+              onClick={onNavClick}
+            />
+            <NavItem
+              to="/academics/admin/activity"
+              icon={<ScrollText size={17} />}
+              label="Activity log"
+              onClick={onNavClick}
+            />
+          </>
+        )}
       </nav>
 
       {/* Back to Academics */}
@@ -314,8 +358,11 @@ interface AdminLayoutProps {
  * the user controls.
  */
 export function AdminLayout({ children }: AdminLayoutProps) {
+  // The permission this URL needs, from the same table as the menu. Typing a
+  // page's address no longer gets a restricted admin past the menu.
+  const { pathname } = useLocation();
   return (
-    <AdminGuard>
+    <AdminGuard permission={permissionForPath(pathname) ?? undefined}>
       {/* Keeps the admin panel out of search results even if a URL leaks. */}
       <NoIndex />
       <AdminLayoutInner>{children}</AdminLayoutInner>
@@ -327,15 +374,25 @@ function AdminLayoutInner({ children }: AdminLayoutProps) {
   const navigate = useNavigate();
   const clearAuth = useAuthStore((s) => s.clearAuth);
 
-  async function handleSignOut() {
+  async function handleSignOut(reason?: 'idle') {
     try {
       await signOutFirebase();
     } catch {
       // Firebase sign-out failing must not block ending the local session.
     }
     clearAuth();
-    navigate('/academics', { replace: true });
+    navigate(
+      reason === 'idle'
+        ? `/academics/login?next=${encodeURIComponent('/academics/admin')}&reason=idle`
+        : '/academics',
+      { replace: true },
+    );
   }
+
+  // 30 idle minutes, with a minute's warning. See hooks/useIdleSignOut.ts.
+  const { status: idle, stay } = useIdleSignOut(() => {
+    void handleSignOut('idle');
+  });
 
   const user = useAuthStore((s) => s.user);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -429,7 +486,7 @@ function AdminLayoutInner({ children }: AdminLayoutProps) {
               */}
               <button
                 type="button"
-                onClick={handleSignOut}
+                onClick={() => void handleSignOut()}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-danger border border-red-200 hover:bg-red-50 transition-colors"
               >
                 <LogOut size={14} aria-hidden="true" />
@@ -442,6 +499,39 @@ function AdminLayoutInner({ children }: AdminLayoutProps) {
         {/* Page content */}
         <main className="flex-1 p-4 md:p-6 overflow-auto">{children}</main>
       </div>
+
+      {idle.state === 'warning' && (
+        <Dialog
+          title="Still there?"
+          onClose={stay}
+          footer={
+            <>
+              <button
+                type="button"
+                onClick={() => void handleSignOut()}
+                className="px-4 py-2.5 rounded-xl text-sm font-medium text-ink border border-border hover:bg-gray-50"
+              >
+                Sign out now
+              </button>
+              <button
+                type="button"
+                onClick={stay}
+                className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+                style={{ backgroundColor: '#1e3a5f' }}
+              >
+                Stay signed in
+              </button>
+            </>
+          }
+        >
+          <p className="text-sm text-ink leading-relaxed">
+            You'll be signed out of the admin panel in{' '}
+            <strong>{idle.secondsLeft} second{idle.secondsLeft === 1 ? '' : 's'}</strong> because
+            nothing has happened for a while. This protects the panel if you walked away from an
+            open screen.
+          </p>
+        </Dialog>
+      )}
     </div>
   );
 }

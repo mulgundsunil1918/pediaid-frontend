@@ -101,6 +101,8 @@ const SystemStatusPage = lazy(() => import('./academics/admin/pages/SystemStatus
 const TrialsAdminPage = lazy(() => import('./academics/admin/pages/TrialsAdminPage').then(m => ({ default: m.TrialsAdminPage })));
 const GuidelineNotesAdminPage = lazy(() => import('./academics/admin/pages/GuidelineNotesAdminPage').then(m => ({ default: m.GuidelineNotesAdminPage })));
 const AppControlPage = lazy(() => import('./academics/admin/pages/AppControlPage').then(m => ({ default: m.AppControlPage })));
+const AdminsPage = lazy(() => import('./academics/admin/pages/AdminsPage').then(m => ({ default: m.AdminsPage })));
+const ActivityPage = lazy(() => import('./academics/admin/pages/ActivityPage').then(m => ({ default: m.ActivityPage })));
 
 // ---------------------------------------------------------------------------
 // React Query client
@@ -347,6 +349,8 @@ export default function App() {
             <Route path="/academics/admin/content" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><ContentOversightPage /></Suspense>} />
             <Route path="/academics/admin/cme" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><CMEAdminPage /></Suspense>} />
             <Route path="/academics/admin/role-requests" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><RoleRequestsPage /></Suspense>} />
+            <Route path="/academics/admin/admins" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><AdminsPage /></Suspense>} />
+            <Route path="/academics/admin/activity" element={<Suspense fallback={<div className="p-8 text-ink-muted text-sm">Loading…</div>}><ActivityPage /></Suspense>} />
 
             {/* Placeholder routes for other PediAid sections */}
             <Route

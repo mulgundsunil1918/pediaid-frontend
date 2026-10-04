@@ -211,6 +211,13 @@ export function LoginPage() {
             </p>
           </div>
 
+          {searchParams.get('reason') === 'idle' && !error && (
+            <div className="mb-5 px-4 py-3 rounded-xl border border-border bg-gray-50 text-sm text-ink">
+              You were signed out of the admin panel after 30 minutes without activity.
+              Sign in again to carry on.
+            </div>
+          )}
+
           {error && (
             <div className="mb-5 px-4 py-3 rounded-xl border border-red-200 bg-red-50 text-sm text-danger">
               {error}

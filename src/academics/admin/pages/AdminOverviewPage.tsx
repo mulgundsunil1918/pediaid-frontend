@@ -21,6 +21,7 @@ import { usePlatformStats } from '../hooks/useAdmin';
 import type { RecentActivityEntry, TopChapter } from '../hooks/useAdmin';
 import { safeFixed, safeCompact } from '../../../lib/safeNumber';
 import { SignupGrowthChart } from '../components/SignupGrowthChart';
+import { can, useAdminSession } from '../hooks/useAdminSession';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -243,7 +244,27 @@ export function AdminOverviewPage() {
   // that rendered a blank page.
 
   const navigate = useNavigate();
-  const { data: stats, isLoading, isError, error } = usePlatformStats();
+  const { data: session } = useAdminSession();
+  // The numbers need the Reports permission. An administrator without it would
+  // otherwise see a red "couldn't load" box on their landing page for no fault
+  // of their own; give them a plain welcome and the menu instead.
+  const canSeeStats = can(session, 'reports.read');
+  const { data: stats, isLoading, isError, error } = usePlatformStats({ enabled: canSeeStats });
+
+  if (session && !canSeeStats) {
+    return (
+      <AdminLayout>
+        <div className="max-w-xl">
+          <h2 className="text-xl font-bold text-primary mb-2">Welcome</h2>
+          <p className="text-sm text-ink-muted leading-relaxed">
+            Your account has access to specific areas of the admin panel — they're in the menu on
+            the left. The platform-wide numbers that usually appear here are part of the
+            Reports area, which isn't included. Ask a super admin if you need it.
+          </p>
+        </div>
+      </AdminLayout>
+    );
+  }
 
   if (isError) {
     return (

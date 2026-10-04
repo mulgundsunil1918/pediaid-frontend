@@ -57,6 +57,15 @@ async function apiFetch<T>(
   return res.json() as Promise<T>;
 }
 
+/**
+ * Lets the sidebar skip a badge count the signed-in admin has no permission to
+ * read. Without it every restricted administrator fired six requests that the
+ * server was always going to refuse, and the failed queries retried.
+ */
+export interface QueryGate {
+  enabled?: boolean;
+}
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -358,8 +367,9 @@ function toPlatformStats(raw: RawPlatformStats): PlatformStats {
   };
 }
 
-export function usePlatformStats() {
+export function usePlatformStats(opts: QueryGate = {}) {
   return useQuery<PlatformStats, Error>({
+    enabled: opts.enabled ?? true,
     queryKey: adminKeys.stats(),
     queryFn: async () => {
       const raw = await apiFetch<RawPlatformStats>('/api/academics/admin/stats');
@@ -653,8 +663,9 @@ export function useChangeUserRole() {
 // ---------------------------------------------------------------------------
 
 /** GET /admin/users/pending — everyone awaiting author/moderator approval */
-export function useAdminPendingApplicants() {
+export function useAdminPendingApplicants(opts: QueryGate = {}) {
   return useQuery<PendingApplicant[], Error>({
+    enabled: opts.enabled ?? true,
     queryKey: ['admin', 'pending-applicants'],
     queryFn: async () => {
       const res = await apiFetch<{ data: PendingApplicant[] }>(
@@ -726,8 +737,9 @@ export interface PendingCmeEvent {
 }
 
 /** GET /admin/cme/pending — every pending user-posted event */
-export function useAdminPendingCmeEvents() {
+export function useAdminPendingCmeEvents(opts: QueryGate = {}) {
   return useQuery<PendingCmeEvent[], Error>({
+    enabled: opts.enabled ?? true,
     queryKey: ['admin', 'cme-pending'],
     queryFn: async () => {
       const res = await apiFetch<{ data: PendingCmeEvent[] }>(
@@ -859,8 +871,9 @@ export function useAllNeverAgainPosts(status: string) {
 }
 
 /** GET /admin/never-again/pending — every pending anonymous post */
-export function useAdminPendingNeverAgainPosts() {
+export function useAdminPendingNeverAgainPosts(opts: QueryGate = {}) {
   return useQuery<PendingNeverAgainPost[], Error>({
+    enabled: opts.enabled ?? true,
     queryKey: ['admin', 'never-again-pending'],
     queryFn: async () => {
       const res = await apiFetch<{ data: PendingNeverAgainPost[] }>(
@@ -1395,8 +1408,9 @@ export function useTrialSystems() {
   });
 }
 
-export function useAdminTrials() {
+export function useAdminTrials(opts: QueryGate = {}) {
   return useQuery<AdminTrial[], Error>({
+    enabled: opts.enabled ?? true,
     queryKey: trialKeys.all,
     queryFn: async () =>
       (await apiFetch<{ trials: AdminTrial[] }>('/api/academics/admin/trials'))
@@ -1516,8 +1530,9 @@ export interface AdminGuidelineNote {
 
 const NOTES_KEY = ['admin', 'guideline-notes'] as const;
 
-export function useAdminGuidelineNotes() {
+export function useAdminGuidelineNotes(opts: QueryGate = {}) {
   return useQuery<AdminGuidelineNote[], Error>({
+    enabled: opts.enabled ?? true,
     queryKey: NOTES_KEY,
     queryFn: async () =>
       (await apiFetch<{ notes: AdminGuidelineNote[] }>(
